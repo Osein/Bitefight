@@ -941,7 +941,7 @@ a:hover.headlines {
     top: 0px;
     z-index: -1;
     display: none;
-    background-image: url(/img/payment_bg.gif);
+    background-image: url(../img/payment_bg.gif);
     background-repeat: no-repeat;
     overflow: hidden;
     width: 844px;
@@ -1032,7 +1032,7 @@ a:hover.headlines {
     width:50px;
 }
 
-.arrow {background:transparent url(/img/symbols/pw_arrow.gif) no-repeat 22px 0;}
+.arrow {background:transparent url(../img/symbols/pw_arrow.gif) no-repeat 22px 0;}
 .weak {background:#D43635;}
 .medium {background:#D29D00;}
 .strong {background:#ff9600;}
@@ -1702,7 +1702,7 @@ div .msgline td{
 
 /* the overlayed element */
 .aspect_overview {
-    background-image:url("/img/story/aspects_background.jpg");
+    background-image:url("../img/story/aspects_background.jpg");
     z-index:10000;
     background-color:#333;
     width:700px;
