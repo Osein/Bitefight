@@ -222,9 +222,9 @@
 }
 
 #fancybox-bg-s {
-	bottom: -6px;
-	left: 0;
-	width: 100%;
+    bottom: -6px;
+    left: 0;
+    width: 100%;
     background: url('../img/fancybox/bf_border_horizontally.png') 0 -6px;
 }
 
@@ -329,15 +329,15 @@
 .fancybox-ie6 #fancybox-title-float-right { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/fancybox//fancy_title_right.png', sizingMethod='scale'); }
 
 .fancybox-ie6 #fancybox-bg-w, .fancybox-ie6 #fancybox-bg-e, .fancybox-ie6 #fancybox-left, .fancybox-ie6 #fancybox-right, #fancybox-hide-sel-frame {
-	height: expression(this.parentNode.clientHeight + "px");
+    height: expression(this.parentNode.clientHeight + "px");
 }
 
 #fancybox-loading.fancybox-ie6 {
-	position: absolute; margin-top: 0;
-	top: expression( (-20 + (document.documentElement.clientHeight ? document.documentElement.clientHeight/2 : document.body.clientHeight/2 ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop )) + 'px');
+    position: absolute; margin-top: 0;
+    top: expression( (-20 + (document.documentElement.clientHeight ? document.documentElement.clientHeight/2 : document.body.clientHeight/2 ) + ( ignoreMe = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop )) + 'px');
 }
 
-#fancybox-loading.fancybox-ie6 div	{ background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/fancybox//fancy_loading.png', sizingMethod='scale'); }
+#fancybox-loading.fancybox-ie6 div  { background: transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../img/fancybox//fancy_loading.png', sizingMethod='scale'); }
 
 /* IE6, IE7, IE8 */
 

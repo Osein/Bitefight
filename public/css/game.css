@@ -335,8 +335,6 @@ input.btn-small {
 
 /*---------------- Contentstrukturierung --------------- */
 
-/* ï¿½bersicht */
-
 .table-wrap {width:100%; overflow:hidden;}
 
 #playerUserPic,
@@ -1303,7 +1301,7 @@ a:hover.headlines {
 #content .talent_buyed
 {
     border:1px solid #34819f;
-    background-image:url("../img/background/talents_blue.gif");
+    background-image:url(../img/background/talents_blue.gif);
     background-repeat: repeat;
 }
 
@@ -1313,14 +1311,14 @@ a:hover.headlines {
 #content .talent_buyable
 {
     border:1px solid #3c984f;
-    background-image:url("../img/background/talents_green.gif");
+    background-image:url(../img/background/talents_green.gif);
     background-repeat: repeat;
 }
 
 #content .talent_inactive
 {
     border:1px solid #7c877f;
-    background-image:url("../img/background/talents_grey.gif");
+    background-image:url(../img/background/talents_grey.gif);
     background-repeat: repeat;
 }
 
@@ -1335,7 +1333,7 @@ a:hover.headlines {
 
 #content .talents_headline {
     height: 35px;
-    background-image:url("../img/background/talents_headline.gif");
+    background-image:url(../img/background/talents_headline.gif);
     background-repeat: repeat;
 }
 
@@ -1401,6 +1399,18 @@ a:hover.headlines {
     z-index:-1;
 }
 
+/* tooltip styling */
+div.tooltip {
+    display:none;
+    background:#000;
+    border:1px solid #999;
+    padding:2px;
+    font-size:12px;
+    color:#B09795;
+    z-index:800;
+    min-width:200px;
+}
+
 div .msgline td{
     padding:0px 5px;
 }
@@ -1461,10 +1471,10 @@ div .msgline td{
 }
 
 /*
-	root element for scrollable items. Must be absolutely positioned
-	and it should have a extremely large width to accommodate scrollable items.
-	it's enough that you set width and height for the root element and
-	not for this element.
+    root element for scrollable items. Must be absolutely positioned
+    and it should have a extremely large width to accommodate scrollable items.
+    it's enough that you set width and height for the root element and
+    not for this element.
 */
 .scrollable .items {
     /* this cannot be too large */
@@ -1473,9 +1483,9 @@ div .msgline td{
 }
 
 /*
-	a single item. must be floated in horizontal scrolling.
-	typically, this element is the one that *you* will style
-	the most.
+    a single item. must be floated in horizontal scrolling.
+    typically, this element is the one that *you* will style
+    the most.
 */
 .items .buddy {
     border-color: #625E55 #343231 #393838 #393838;
@@ -2279,7 +2289,7 @@ seal.activatable
 
 div.littlegirl
 {
-    background: url('/img/gameEvent/littlegirl.png') no-repeat scroll 0 30px;
+    background: url('../img/gameEvent/littlegirl.png') no-repeat scroll 0 30px;
     width: 30px;
     height: 60px;
     position: absolute;
@@ -2289,12 +2299,12 @@ div.littlegirl
 }
 div.littlegirl.healingBrother
 {
-    background: url('/img/gameEvent/healingBoth.png') no-repeat scroll 0 30px;
+    background: url('../img/gameEvent/healingBoth.png') no-repeat scroll 0 30px;
 }
 
 div.littlegirl.recoveredBrother
 {
-    background: url('/img/gameEvent/recoveredBoth.png') no-repeat scroll 0 30px;
+    background: url('../img/gameEvent/recoveredBoth.png') no-repeat scroll 0 30px;
 }
 
 div.littlegirl div#npcMark {
@@ -2474,156 +2484,4 @@ div#easterEgg.blue
 div#easterEgg.green
 {
     background: url('../img/gameEvent/EggHunt/green.png') no-repeat;
-}
-
-.icon
-{
-    background-image: url(../img/layout/icon_sprite.png);
-    border: 0;
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-}
-
-/**********************************************************************************************************************/
-
-/**
- * Icon-Button
- */
-
-.iconButton
-{
-    width: 20px;
-    height: 20px;
-    position: relative;
-    display: inline-block;
-    margin: 3px;
-}
-
-.iconButtonOverlay /* The icon button overlay makes tooltips on disabled icon buttons possible */
-{
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #fff;
-    opacity: 0;
-    z-index: 10000;
-    cursor: pointer;
-}
-
-.iconButtonOverlay.disabled
-{
-    cursor: default;
-}
-
-.iconButton button
-{
-    width: 20px;
-    height: 20px;
-    border: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.iconButton button.icon.add
-{
-    background-position: -20px -16px;
-}
-
-.iconButton:hover button.icon.add
-{
-    background-position: -20px -36px;
-}
-
-.iconButton.disabled button.icon.add
-{
-    background-position: -20px -56px;
-}
-
-.iconButton button.icon.change
-{
-    background-position: 0px -16px;
-}
-
-.iconButton:hover button.icon.change
-{
-    background-position: 0px -36px;
-}
-
-.iconButton.disabled button.icon.change
-{
-    background-position: 0px -56px;
-}
-
-.iconButton button.icon.delete
-{
-    background-position: -40px -16px;
-}
-
-.iconButton:hover button.icon.delete
-{
-    background-position: -40px -36px;
-}
-
-.iconButton.disabled button.icon.delete
-{
-    background-position: -40px -56px;
-}
-
-.iconButton button.icon.undo
-{
-    background-position: -60px -16px;
-}
-
-.iconButton:hover button.icon.undo
-{
-    background-position: -60px -36px;
-}
-
-.iconButton.disabled button.icon.undo
-{
-    background-position: -60px -56px;
-}
-
-/**
- * /Icon-Button
- */
-
- /********** tooltips **********/
-.tooltipHead
-{
-    font-size:1.2em;
-    font-weight:bold;
-    padding-bottom:13px;
-    background: transparent url(../img/layout/tooltips/separator.png) no-repeat center bottom;
-}
-
-.tooltipContent
-{
-    max-width:300px;
-    text-align:left;
-}
-
-.tooltipContent table
-{
-    width:100%;
-}
-
-.tooltipContent td
-{
-    color:#ddd;
-}
-
-.item_comparison_tooltip
-{
-    color: #fff;
-}
-/********** /tooltips **********/
-
-.left
-{
-    float: left;
 }
