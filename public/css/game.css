@@ -1,10 +1,9 @@
 html, body {
     width:100%;
     height:100%;
-    margin:0px;
-    padding:0px;
+    padding:0;
     min-height: 100%;
-    margin-bottom: 1px;
+    margin: 0 0 1px;
     min-width:1014px;
 }
 body {
@@ -83,7 +82,7 @@ td {font-size:12px;}
 #premium img {
     left: -13px;
     position: absolute;
-    top: 0px;
+    top: 0;
     z-index: 20
 }
 
@@ -140,20 +139,18 @@ td {font-size:12px;}
 
 * html #decoLamp {
     background: none;
-    filter: progid:dximagetransform.microsoft.alphaimageloader(src='../img/layout/deco-lamp.png', sizingmethod='crop');
+    filter: progid:dximagetransform.microsoft.alphaimageloader(src='../img/layout/deco-lamp.png', sizingmethod=crop);
 }
 
 * html #decoLampGateOpen {
     background: none;
-    filter: progid:dximagetransform.microsoft.alphaimageloader(src='../img/layout/deco-lamp2.gif', sizingmethod='crop');
+    filter: progid:dximagetransform.microsoft.alphaimageloader(src='../img/layout/deco-lamp2.gif', sizingmethod=crop);
 }
 
 #container {
     background:url("../img/layout/container.gif") repeat-y scroll 25px 0 transparent;
     height:auto !important;
     margin:0 auto;
-    height:auto;
-    height:515px;
     min-height:515px;
     padding:0;
     position:relative;
@@ -262,13 +259,10 @@ input.btn-small {
 }
 
 .side_more {
-    text-align:left;
     margin-left:8px;
     margin-right:8px;
     background-image:url(../img/darkstone.jpg);
-    border-width:1px;
-    border-style:inset;
-    border-color:#000000;
+    border: 1px inset #000000;
     padding:4px;
     text-align:center;
 }
@@ -276,7 +270,7 @@ input.btn-small {
 .side_more a:link{
     display:block;
     margin-bottom:5px;
-    font-family: tahoma;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
     text-decoration: none;
     font-size: 0.7em;
     color: #C00C0C;
@@ -430,13 +424,12 @@ input.btn-small {
 
 #humanhunt .mjs div {
     background-color:#000000;
-    bottom:0px;
+    bottom:0;
     display: block;
     height: 35px;
     left:0;
     filter:alpha(opacity=75);
     -moz-opacity:0.75;
-    -khtml-opacity: 0.75;
     opacity: 0.75;
     position: absolute;
     width:344px;
@@ -482,7 +475,7 @@ input.btn-small {
 
 
 #content p {
-    margin-top:0px;
+    margin-top:0;
     margin-bottom:20px;
 }
 
@@ -492,7 +485,7 @@ input.btn-small {
 
 #content div p {
     font-size:12px;
-    margin-top:0px;
+    margin-top:0;
     margin-bottom:2px;
     padding:5px 10px;
 }
@@ -526,8 +519,7 @@ input.btn-small {
 .wrap-left {background:url(../img/layout/wrap-left.gif) repeat-y scroll 0 0; padding-left:5px;}
 
 .wrap-right {
-    background:url(../img/layout/wrap-right.gif) repeat-y scroll right 0;
-    background-color:rgba(0,0,0, 0.5);
+    background: rgba(0, 0, 0, 0.5) url(../img/layout/wrap-right.gif) repeat-y scroll right 0;
     padding-right:5px;
 }
 
@@ -668,9 +660,9 @@ input.btn-small {
 
 .gold,
 h1 {
-    padding-left:0px;
+    padding-left:0;
     font-family:"Times New Roman", Times, serif;
-    margin-top:0px;
+    margin-top:0;
     margin-bottom:14px;
     color: #BEC1C3;
     font-size:26px;
@@ -689,7 +681,6 @@ h1 .gold {
 
 h2 {
     background:url("../img/layout/h2.jpg") no-repeat scroll 50% 0 transparent;
-    color:#cad0d6;
     color:#BEC1C3;
     font-family:"Times New Roman", Times, serif;
     font-size:18px;
@@ -745,7 +736,7 @@ form {margin:0; padding:0;}
 }
 #content td.top { vertical-align:top;}
 .tdi {
-    margin-top:0px;
+    margin-top:0;
     padding:4px;
     text-align: center;
     font-size: 11px;
@@ -754,7 +745,7 @@ form {margin:0; padding:0;}
 
 .tdnp {
     text-align:left;
-    margin-top:0px;
+    margin-top:0;
     margin-bottom:2px;
 }
 
@@ -791,42 +782,40 @@ input:disabled {
 }
 
 a {
-    -moz-user-focus: none;
-    -moz-outline: none;
     outline: none;
 }
 
 a.copyright {
     text-decoration: none;
-    font-family: tahoma;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-size: 8pt;
     color: #C00C0C;
     font-weight: bold;
 }
 a.headlines {
     text-decoration: none;
-    font-family: tahoma;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-size: 12pt;
     color: #C00C0C;
     font-weight: bold;
 }
 a:visited.headlines {
     text-decoration: none;
-    font-family: tahoma;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-size: 12pt;
     color: #C00C0C;
     font-weight: bold;
 }
 a:link.headlines {
     text-decoration: none;
-    font-family: tahoma;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-size: 12pt;
     color: #C00C0C;
     font-weight: bold;
 }
 a:hover.headlines {
     text-decoration: underline;
-    font-family: tahoma;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
     font-size: 12pt;
     color: #C00C0C;
     font-weight: bold;
@@ -837,11 +826,10 @@ a:hover.headlines {
 
 #speedserverbig {
     position: absolute;
-    top: 232px;
     left: 212px;
     top: 170px;
-    height: 46;
-    width: 281;
+    height: 46px;
+    width: 281px;
     color: #fed698;
     display: block;
     font-family: Verdana,Arial,Helvetica,sans-serif;
@@ -851,7 +839,6 @@ a:hover.headlines {
     font-size: 26px;
     font-size-adjust: none;
     font-stretch: normal;
-    -x-system-font: none;
     line-height: 40px;
 }
 
@@ -859,8 +846,8 @@ a:hover.headlines {
     position: absolute;
     top: 224px;
     left: 671px;
-    height: 21;
-    width: 131;
+    height: 21px;
+    width: 131px;
     color: #fed698;
     display: block;
     font-family: Verdana,Arial,Helvetica,sans-serif;
@@ -870,7 +857,6 @@ a:hover.headlines {
     font-size: 12px;
     font-size-adjust: none;
     font-stretch: normal;
-    -x-system-font: none;
     line-height: 20px;
 }
 
@@ -878,8 +864,8 @@ a:hover.headlines {
     position: absolute;
     top: 105px;
     left: 671px;
-    height: 21;
-    width: 131;
+    height: 21px;
+    width: 131px;
     color: #fed698;
     display: block;
     font-family: Verdana,Arial,Helvetica,sans-serif;
@@ -889,7 +875,6 @@ a:hover.headlines {
     font-size: 12px;
     font-size-adjust: none;
     font-stretch: normal;
-    -x-system-font: none;
     line-height: 20px;
 }
 
@@ -915,14 +900,14 @@ a:hover.headlines {
 .demon_animation_gif {
     position:absolute;
     left:-37px;
-    top:0px;
+    top:0;
 }
 
 .message_screen
 {
     position:absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     z-index: -1;
     display: none;
     overflow: hidden;
@@ -935,12 +920,11 @@ a:hover.headlines {
 .payment_screen
 {
     position:absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     z-index: -1;
     display: none;
-    background-image: url(../img/payment_bg.gif);
-    background-repeat: no-repeat;
+    background: url(../img/payment_bg.gif) no-repeat;
     overflow: hidden;
     width: 844px;
     height: 706px;
@@ -948,10 +932,7 @@ a:hover.headlines {
 
 .payment_frame
 {
-    margin-top: 12px;
-    margin-left: 12px;
-    margin-right: 12px;
-    margin-bottom: 0px;
+    margin: 12px 12px 0;
     overflow-x: auto;
     overflow-y: auto;
 }
@@ -967,10 +948,10 @@ a:hover.headlines {
     opacity: 0.60;
     background-color: black;
     position: absolute;
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
     cursor:pointer;
 }
 
@@ -1052,7 +1033,7 @@ a:hover.headlines {
     background:#3C0008 url(../img/symbols/info.png) no-repeat 5px 5px;
     border:1px solid #333333;
     color:#FFFFFF;
-    font-family:Arial;
+    font-family:Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size:13px;
     font-weight:bold;
     margin:15px;
@@ -1247,7 +1228,7 @@ a:hover.headlines {
 
 #grotteOptions {
     float:left;
-    margin: 0px 20px;
+    margin: 0 20px;
     width:300px
 }
 
@@ -1284,7 +1265,7 @@ a:hover.headlines {
 #market_filter .search {width:150px;}
 #market_filter .btn-left {margin:0 40px 0 0;}
 
-#market .tooltip {left:0px !important;}
+#market .tooltip {left:0 !important;}
 
 #content td.center-text {text-align:center;}
 
@@ -1301,8 +1282,7 @@ a:hover.headlines {
 #content .talent_buyed
 {
     border:1px solid #34819f;
-    background-image:url(../img/background/talents_blue.gif);
-    background-repeat: repeat;
+    background: url(../img/background/talents_blue.gif) repeat;
 }
 
 #content .talents_bg td{padding:0;}
@@ -1311,20 +1291,17 @@ a:hover.headlines {
 #content .talent_buyable
 {
     border:1px solid #3c984f;
-    background-image:url(../img/background/talents_green.gif);
-    background-repeat: repeat;
+    background: url(../img/background/talents_green.gif) repeat;
 }
 
 #content .talent_inactive
 {
     border:1px solid #7c877f;
-    background-image:url(../img/background/talents_grey.gif);
-    background-repeat: repeat;
+    background: url(../img/background/talents_grey.gif) repeat;
 }
 
 #content .talent_level {
-    background-image:url("../img/background/talents_number.gif");
-    background-repeat:no-repeat;
+    background: url("../img/background/talents_number.gif") no-repeat;
     font-size:16px;
     height:50px;
     text-align:center;
@@ -1333,8 +1310,7 @@ a:hover.headlines {
 
 #content .talents_headline {
     height: 35px;
-    background-image:url(../img/background/talents_headline.gif);
-    background-repeat: repeat;
+    background: url(../img/background/talents_headline.gif) repeat;
 }
 
 #content .char-desc {text-align:center;}
@@ -1394,7 +1370,7 @@ a:hover.headlines {
     height:119px;
     left:408px;
     position:absolute;
-    top:0px;
+    top:0;
     width:387px;
     z-index:-1;
 }
@@ -1412,7 +1388,7 @@ div.tooltip {
 }
 
 div .msgline td{
-    padding:0px 5px;
+    padding:0 5px;
 }
 
 .proposalreceiver {
@@ -1456,10 +1432,9 @@ div .msgline td{
 
 #buddyScroller {
     background:url(../img/buddylist/buddylist-bg.jpg);
-    border-top:1px solid #625e55;
-    border-left:1px solid #393838;
-    border-bottom:1px solid #1c1614;
-    border-right:1px solid #1c1614;
+    border: 1px solid #1c1614;
+    border-top-color: #625e55;
+    border-left-color: #393838;
     height:145px;
 }
 .scrollable {
@@ -1498,7 +1473,7 @@ div .msgline td{
 }
 
 #buddyScroller .next:hover {background-position:-31px -143px;}
-#buddyScroller .prev:hover {background-position:0px -143px;}
+#buddyScroller .prev:hover {background-position:0 -143px;}
 #buddyScroller a.prev.disabled,
 #buddyScroller .next,
 #buddyScroller .prev {
@@ -1559,7 +1534,7 @@ div .msgline td{
 .buddy-locked {background-position:-35px -345px}
 
 .buddy-option {
-    background:url(../img/buddylist/buddy-icons.gif) no-repeat scroll 0px 0;
+    background:url(../img/buddylist/buddy-icons.gif) no-repeat scroll 0 0;
     float:left;
     height:40px;
     width:33px;
@@ -1578,10 +1553,10 @@ div .msgline td{
 
 /* ### Full Moon ### */
 #fullMoon {
-    margin: 0px;
+    margin: 0;
     padding:25px;
     color:#ffffff;
-    background: url("../img/layout/td-bg.png") repeat-x scroll 0 0%, url("../img/layout/td-bg-repeat.png") repeat scroll 0 0 transparent
+    background: url("../img/layout/td-bg.png") repeat-x scroll 0 0, url("../img/layout/td-bg-repeat.png") repeat scroll 0 0 transparent
 }
 #fullMoon .description {
     margin: 0 0 15px;
@@ -1609,7 +1584,6 @@ div .msgline td{
     border: 1px solid #3d3d3d;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
-    -o-border-radius:5px;
     border-radius:5px;
     margin: 0 0 15px;
     padding: 10px;
@@ -1618,8 +1592,7 @@ div .msgline td{
 #fullMoon li {
     color: #ffffff;
     font-weight: bold;
-    margin:0 0 5px;
-    margin-left:10px;
+    margin: 0 0 5px 10px;
 }
 #fullMoon span.countdown_row {
     border: 0;
@@ -1645,7 +1618,6 @@ div .msgline td{
     border: 1px solid #3d3d3d;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
-    -o-border-radius:5px;
     border-radius:5px;
     display:none;
     margin:15px;
@@ -1712,9 +1684,8 @@ div .msgline td{
 
 /* the overlayed element */
 .aspect_overview {
-    background-image:url("../img/story/aspects_background.jpg");
     z-index:10000;
-    background-color:#333;
+    background: #333 url("../img/story/aspects_background.jpg");
     width:700px;
     border:1px solid #666;
     -moz-box-shadow:0 0 90px 5px #000;
@@ -1777,14 +1748,14 @@ div .msgline td{
     background: url("../img/layout/h2.jpg") no-repeat scroll 50% 0 transparent;
     border: 1px solid #000000;
     font-weight: normal;
-    -moz-border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0 0;
 }
 
 #tabs .ui-state-active,#tabs .ui-widget-content .ui-state-active,#tabs .ui-widget-header .ui-state-active {
     background: url("../img/layout/h2.jpg") no-repeat scroll 50% 0 transparent;
     border: 1px solid #AAAAAA;
     font-weight: normal;
-    -moz-border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0 0;
 }
 
 #tabs .ui-state-hover a:hover,
@@ -1886,8 +1857,7 @@ div .msgline td{
     width: 700px;
     height: 400px;
     position: absolute;
-    background-repeat:no-repeat;
-    background-position:center;
+    background: no-repeat center;
 }
 
 #gameEvent
@@ -1927,7 +1897,6 @@ div .msgline td{
 {
     position: fixed;
     *position: absolute;
-    position: absolute\9;
 }
 
 .popup_content
@@ -1945,10 +1914,10 @@ div .msgline td{
     opacity: 0.40;
     background-color: black;
     position: absolute;
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
     cursor:pointer;
 }
 
@@ -1991,7 +1960,6 @@ div .msgline td{
     border-top: 1px solid #3d3d3d;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
-    -o-border-radius:5px;
     border-radius:5px;
     z-index: 200;
 }
@@ -2026,9 +1994,9 @@ div .msgline td{
 }
 
 .ui-chatbox-content {
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
+    padding: 0;
+    margin: 0;
+    border: 0;
 }
 
 .ui-chatbox-log {
@@ -2062,7 +2030,6 @@ div .msgline td{
     /* Source: http://snipplr.com/view/10979/css-cross-browser-word-wrap */
     white-space: pre-wrap; /* CSS3 */
     white-space: -moz-pre-wrap; /* Firefox */
-    white-space: -pre-wrap; /* Opera <7 */
     white-space: -o-pre-wrap; /* Opera 7 */
     word-wrap: break-word; /* IE */
 }
@@ -2175,7 +2142,6 @@ div .msgline td{
 {
     position: fixed;
     *position: absolute;
-    position: absolute\9;
 }
 
 .blackoutdialog_content
@@ -2193,10 +2159,10 @@ div .msgline td{
     opacity: 0.40;
     background-color: black;
     position: absolute;
-    left:0px;
-    top:0px;
-    right:0px;
-    bottom:0px;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0;
     cursor:pointer;
 }
 
@@ -2227,7 +2193,7 @@ div .msgline td{
     margin: 5px;
 }
 
-seal.activatable
+.seal.activatable
 {
     cursor: pointer;
 }
