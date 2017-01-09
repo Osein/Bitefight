@@ -825,6 +825,7 @@ a:hover.headlines {
 }
 
 #speedserverbig {
+    background: transparent url(../img/speedserver_bg_gross.gif) no-repeat scroll center center;
     position: absolute;
     left: 212px;
     top: 170px;

@@ -8,6 +8,10 @@
 
 define('APP_PATH', dirname(dirname(__FILE__)));
 
+include APP_PATH . DIRECTORY_SEPARATOR . 'config.php';
+
+include APP_PATH . DIRECTORY_SEPARATOR . 'helpers.php';
+
 /*
  * If you don't want your ide to warn you about missing phalcon
  * classes, go download phalcon developer tools
@@ -28,21 +32,24 @@ $di->set('router', function () {
     return $router;
 });
 
+$di->set('dispatcher', function() {
+    $dispatcher = new \Phalcon\Mvc\Dispatcher();
+    $dispatcher->setActionSuffix('');
+    return $dispatcher;
+});
+
 $di->set('view', function () {
-    $view = new \Phalcon\Mvc\View\Simple();
-
-    $view->setViewsDir("../app/views/");
-
+    $view = new \Phalcon\Mvc\View();
+    $view->setViewsDir(APP_PATH . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR);
+    $view->disableLevel([
+        \Phalcon\Mvc\View::LEVEL_LAYOUT
+    ]);
     return $view;
 }, true);
 
 try {
     $application = new \Phalcon\Mvc\Application($di);
-
-    $application->useImplicitView(false);
-
     $response = $application->handle();
-
     $response->send();
 } catch (Exception $e) {
     echo $e->getMessage();

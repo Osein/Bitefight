@@ -9,4 +9,9 @@
 class HomeController extends BaseController
 {
 
+    public function getIndex() {
+
+        $this->view->pick('home/index');
+    }
+
 }
