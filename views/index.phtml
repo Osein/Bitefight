@@ -40,14 +40,16 @@
                     <li><a href="http://s202.en.bitefight.gameforge.com/user/highscore" target="_top">Highscore</a></li>
                     <li id="time">09.01.2017 12:07</li>
                     <script type="text/javascript">
-                        var currentPage = $('#menuHead .active').text();
+                        var $menuHead = $('#menuHead'),
+                            $active = $menuHead.find('.active');
+                        var currentPage = $active.text();
                         if (currentPage) {
-                            $('#header h1').text(currentPage);
+                            $('#header').find('h1').text(currentPage);
                         }
 
                         $(document).ready(function () {
-                            $('#menuHead li').live('click', function () {
-                                $('#menuHead .active').removeClass('active');
+                            $menuHead.find('li').on('click', function () {
+                                $active.removeClass('active');
                                 $(this).addClass('active');
                             });
                         });
@@ -64,7 +66,7 @@
                     <div class="wrap-left clearfix">
                         <div class="wrap-content wrap-right clearfix">
                             <div id="speedserverbig">Speed server x4</div>
-                            <img src="http://s202.en.bitefight.gameforge.com/img//layout/home_splash.jpg" width="710" height="381" border="0" alt="Bitefight" usemap="#Map"/>
+                            <img src="<?php echo getAssetLink('img/layout/home_splash.jpg') ?>" width="710" height="381" border="0" alt="Bitefight" usemap="#Map"/>
                             <!--<map name="Map">
                             <area shape="poly" coords="120,292,234,243" href="#">
                             <area shape="poly" coords="1,388,226,265,167,148,91,60,1,27" href="http://s202.en.bitefight.gameforge.com/user/register/0/2" target="_top" title="Become a werewolf">
@@ -77,9 +79,9 @@
                             </p>
                             <a href="http://s202.en.bitefight.gameforge.com/user/register/0" id="regBtn" target="_top">Play now for free!</a> <br class="clearfloat">
                             <div id="features" class="clearfix">
-                                <p>Roam the city<br>looking for new victims.<img src="http://s202.en.bitefight.gameforge.com/img/home_thumb01.jpg" width="170" height="86"/></p>
-                                <p>Equip yourself to defeat <br> your enemies.<img src="http://s202.en.bitefight.gameforge.com/img/home_thumb02.jpg" width="170" height="86"/></p>
-                                <p>Build an immense stronghold<br> with your friends.<img src="http://s202.en.bitefight.gameforge.com/img/home_thumb03.jpg" width="170" height="86"/></p>
+                                <p>Roam the city<br>looking for new victims.<img src="<?php echo getAssetLink('img/home_thumb01.jpg'); ?>" width="170" height="86"/></p>
+                                <p>Equip yourself to defeat <br> your enemies.<img src="<?php echo getAssetLink('img/home_thumb02.jpg'); ?>" width="170" height="86"/></p>
+                                <p>Build an immense stronghold<br> with your friends.<img src="<?php echo getAssetLink('img/home_thumb03.jpg'); ?>" width="170" height="86"/></p>
                             </div>
                             <br class="clearfloat"/>
                         </div>
