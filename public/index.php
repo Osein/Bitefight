@@ -8,8 +8,8 @@
 
 define('APP_PATH', dirname(dirname(__FILE__)));
 
+include APP_PATH . DIRECTORY_SEPARATOR . 'libs' . DIRECTORY_SEPARATOR . 'idiorm.php';
 include APP_PATH . DIRECTORY_SEPARATOR . 'config.php';
-
 include APP_PATH . DIRECTORY_SEPARATOR . 'helpers.php';
 
 /*
