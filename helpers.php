@@ -22,3 +22,12 @@ function headLink($file) {
 function headJs($file) {
     return '<script type="text/javascript" src="'.getAssetLink('js/'.$file).'"></script>'.PHP_EOL;
 }
+
+function getUrl($link) {
+    /**
+     * @var \Phalcon\Config $config
+     */
+    global $config;
+
+    return $config->get('baseUrl') . $link;
+}

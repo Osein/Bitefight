@@ -9,6 +9,7 @@
 
 $config = new \Phalcon\Config(array(
     'cdn' => 'http://bf.127.0.0.1.xip.io/',
+    'baseUrl' => 'http://bf.127.0.0.1.xip.io/',
     'version' => '0.1a1',
     "database" => array(
         "adapter" => "Mysql",

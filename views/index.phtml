@@ -32,12 +32,12 @@
         <div id="container" class="clearfix">
             <div id="menu">
                 <ul id="menuHead">
-                    <li><a href="http://s202.en.bitefight.gameforge.com/main/news" target="_top" class="newmessage">News</a></li>
-                    <li><a href="http://support.en.bitefight.gameforge.com" target="_blank">Support</a></li>
-                    <li><a href="http://s202.en.bitefight.gameforge.com/user/register/0" target="_top">Register</a></li>
-                    <li><a href="http://s202.en.bitefight.gameforge.com/user/login" target="_top">Login</a></li>
-                    <li><a href="http://board.en.bitefight.gameforge.com" target="_blank">Forum</a></li>
-                    <li><a href="http://s202.en.bitefight.gameforge.com/user/highscore" target="_top">Highscore</a></li>
+                    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top" class="newmessage">News</a></li>-->
+                    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank">Support</a></li>-->
+                    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top">Register</a></li>-->
+                    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top">Login</a></li>-->
+                    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank">Forum</a></li>-->
+                    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top">Highscore</a></li>-->
                     <li id="time">09.01.2017 12:07</li>
                     <script type="text/javascript">
                         var $menuHead = $('#menuHead'),
@@ -66,18 +66,17 @@
                     <div class="wrap-left clearfix">
                         <div class="wrap-content wrap-right clearfix">
                             <div id="speedserverbig">Speed server x4</div>
-                            <img src="<?php echo getAssetLink('img/layout/home_splash.jpg') ?>" width="710" height="381" border="0" alt="Bitefight" usemap="#Map"/>
-                            <!--<map name="Map">
-                            <area shape="poly" coords="120,292,234,243" href="#">
-                            <area shape="poly" coords="1,388,226,265,167,148,91,60,1,27" href="http://s202.en.bitefight.gameforge.com/user/register/0/2" target="_top" title="Become a werewolf">
-                            <area shape="poly" coords="779,3,706,3,624,53,585,170,658,375,780,367" href="http://s202.en.bitefight.gameforge.com/user/register/0/1" target="_top" title="Become a vampire">
-                            </map>-->
+                            <img src="<?php echo getAssetLink('img/layout/home_splash.jpg') ?>" width="710" height="381" border="0" alt="Bitefight" usemap="#home-splash-map"/>
+                            <map name="home-splash-map" id="home-splash-map">
+                                <area  alt="" title="" href="werewolf" shape="poly" coords="708,7,641,9,608,21,582,40,559,69,551,95,536,136,526,162,536,187,538,209,543,226,552,246,566,269,573,306,589,338,614,357,641,374,708,376" style="outline:none;" />
+                                <area  alt="" title="" href="vampire" shape="poly" coords="5,36,23,46,52,63,84,76,97,105,120,120,134,142,141,167,152,179,164,203,178,226,190,242,181,265,150,287,3,374" style="outline:none;" />
+                            </map>
                             <p id="splashText">
                                 The struggle between Vampires and <br>
                                 Werewolves has been rampaging for centuries.<br>
                                 It`s your destiny to decide this battle`s outcome!
                             </p>
-                            <a href="http://s202.en.bitefight.gameforge.com/user/register/0" id="regBtn" target="_top">Play now for free!</a> <br class="clearfloat">
+                            <a href="<?php echo getUrl('news'); ?>" id="regBtn" target="_top">Play now for free!</a> <br class="clearfloat">
                             <div id="features" class="clearfix">
                                 <p>Roam the city<br>looking for new victims.<img src="<?php echo getAssetLink('img/home_thumb01.jpg'); ?>" width="170" height="86"/></p>
                                 <p>Equip yourself to defeat <br> your enemies.<img src="<?php echo getAssetLink('img/home_thumb02.jpg'); ?>" width="170" height="86"/></p>
