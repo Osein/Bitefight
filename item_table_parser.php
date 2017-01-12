@@ -39,12 +39,47 @@ $htmlstring = <<<EOT
 				  </tr>
 EOT;
 
+set_time_limit(600);
 
 $html = str_get_html($htmlstring);
 
 if(!$html) {
     echo 6;
     die;
+}
+
+class Item
+{
+    public $img;
+    public $stern;
+    public $model;
+    public $name;
+    public $level;
+    public $gcost;
+    public $slcost;
+    public $scost;
+    public $str;
+    public $def;
+    public $dex;
+    public $end;
+    public $cha;
+    public $hpbonus;
+    public $regen;
+    public $sbschc;
+    public $sbscdmg;
+    public $sbsctlnt;
+    public $sbnshc;
+    public $sbnsdmg;
+    public $sbnstlnt;
+    public $ebschc;
+    public $ebscdmg;
+    public $ebsctlnt;
+    public $ebnshc;
+    public $ebnsdmg;
+    public $ebnstlnt;
+    public $apup;
+    public $cooldown;
+    public $duration;
 }
 
 foreach($html->childNodes() as $tr) {
@@ -57,6 +92,8 @@ foreach($html->childNodes() as $tr) {
      * @var simple_html_dom $attributeTd
      */
 
+    $item = new Item();
+
     $imgTd = $tr->childNodes(0);
     $itemImg = $imgTd->childNodes(0);
     $nameTd = $tr->childNodes(1);
@@ -64,62 +101,105 @@ foreach($html->childNodes() as $tr) {
     $sternTd = $tr->childNodes(3);
     $priceTd = $tr->childNodes(4);
     $attributeTd = $tr->childNodes(5);
+    $attributesTbody = $attributeTd->childNodes(0)->childNodes(0);
 
-    $itemImgLink = $itemImg->src;
-    $itemName = trim($nameTd->plaintext);
-    $itemLevel = trim($levelTd->plaintext);
-    $itemStern = count($sternTd->childNodes());
-    $itemPriceGold = $priceTd->find('.pricecell')[0]->plaintext;
-    $itemPriceStone = $priceTd->find('.pricecell')[1]->plaintext;
+    $item->img = $itemImg->src;
+    $item->name = trim($nameTd->plaintext);
+    $item->level = (int)trim($levelTd->plaintext);
+    $item->stern = (int)count($sternTd->childNodes());
+    $item->gcost = (int)$priceTd->find('.pricecell')[0]->plaintext;
+    $item->scost = (int)$priceTd->find('.pricecell')[1]->plaintext;
+    $item->slcost = (int)floor($item->gcost / 4);
+    $item->model = 1;
 
-    var_dump($priceTd->find('.pricecell')[1]->plaintext);
+    foreach($attributesTbody->childNodes() as $attrTr) {
+        /**
+         * @var simple_html_dom $attrTr
+         * @var simple_html_dom $attrName
+         * @var simple_html_dom $attrValue
+         */
+
+        $attrName = trim($attrTr->childNodes(0)->plaintext);
+        $attrValue = (int)trim($attrTr->childNodes(1)->plaintext);
+
+        switch(strtolower($attrName)) {
+            case 'strength':
+                $item->str = $attrValue;
+                break;
+            case 'defence':
+                $item->def = $attrValue;
+                break;
+            case 'dexterity':
+                $item->dex = $attrValue;
+                break;
+            case 'endurance':
+                $item->end = $attrValue;
+                break;
+            case 'charisma':
+                $item->cha = $attrValue;
+                break;
+            case 'basic damage':
+                $item->sbscdmg = $attrValue;
+                break;
+            case 'hit chance':
+                $item->sbschc = $attrValue;
+                break;
+            case 'basic talent':
+                $item->sbsctlnt = $attrValue;
+                break;
+            case 'bonus damage':
+                $item->sbnsdmg = $attrValue;
+                break;
+            case 'bonus hit chance':
+                $item->sbnshc = $attrValue;
+                break;
+            case 'bonus talent':
+                $item->sbnstlnt = $attrValue;
+                break;
+            case 'basic damage on opponent':
+                $item->ebscdmg = $attrValue;
+                break;
+            case 'hit chance on opponent':
+                $item->ebschc = $attrValue;
+                break;
+            case 'basic talent on opponent':
+                $item->ebsctlnt = $attrValue;
+                break;
+            case 'bonus damage on opponent':
+                $item->ebnsdmg = $attrValue;
+                break;
+            case 'bonus hit chance on opponent':
+                $item->ebnshc = $attrValue;
+                break;
+            case 'bonus talent on opponent':
+                $item->ebnstlnt = $attrValue;
+                break;
+            case 'basic damage (on opponent)':
+                $item->ebscdmg = $attrValue;
+                break;
+            case 'hit chance (on opponent)':
+                $item->ebschc = $attrValue;
+                break;
+            case 'basic talent (on opponent)':
+                $item->ebsctlnt = $attrValue;
+                break;
+            case 'bonus damage (on opponent)':
+                $item->ebnsdmg = $attrValue;
+                break;
+            case 'bonus hit chance (on opponent)':
+                $item->ebnshc = $attrValue;
+                break;
+            case 'bonus talent (on opponent)':
+                $item->ebnstlnt = $attrValue;
+                break;
+            case 'regeneration':
+                $item->regen = $attrValue;
+                break;
+            case 'health':
+                $item->hpbonus = $attrValue;
+                break;
+        }
+    }
+
+    var_dump($item);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
