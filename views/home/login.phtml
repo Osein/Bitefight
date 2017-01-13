@@ -1,23 +1,18 @@
 <div id="login">
-    <!-- box HEADER START -->
     <div class="wrap-top-left clearfix">
         <div class="wrap-top-right clearfix">
             <div class="wrap-top-middle clearfix"></div>
         </div>
     </div>
-    <!-- box HEADER END -->
-    <!-- box CONTENT START -->
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <!-- CONTENT START -->
             <h2>Please enter your name and password to login</h2>
-
             <div class="table-wrap">
                 <table width="100%">
                     <tr>
-                        <td><img src="/img/race1.gif" alt="Vampire" ></td>
+                        <td><img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampire" ></td>
                         <td>
-                            <form id="loginForm" name="loginForm" action="/user/login"  method="POST">
+                            <form id="loginForm" name="loginForm" action="<?php echo getUrl('login'); ?>"  method="POST">
                                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                     <tr>
                                         <td>Name:</td>
@@ -27,40 +22,8 @@
                                         <td>Password:</td>
                                         <td><input class="input" type="password" name="pass" size="30" MAXLENGTH="30">
                                             <br />
-                                            <a href="/user/lostpw" target="_top" id="pwlostLink">Have you forgotten your password?</a>
+                                            <!--<a href="/user/lostpw" target="_top" id="pwlostLink">Have you forgotten your password?</a>-->
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>County:</td>
-                                        <td>
-                                            <select name="server" style="width: 210px;">
-                                                <option value="s3.en.bitefight.gameforge.com">
-                                                    County 3                                        </option>
-                                                <option value="s9.en.bitefight.gameforge.com">
-                                                    County 9                                        </option>
-                                                <option value="s19.en.bitefight.gameforge.com">
-                                                    County 19                                        </option>
-                                                <option value="s20.en.bitefight.gameforge.com">
-                                                    County 20                                        </option>
-                                                <option value="s21.en.bitefight.gameforge.com">
-                                                    County 21                                        </option>
-                                                <option value="s101.en.bitefight.gameforge.com">
-                                                    County 101                                        </option>
-                                                <option value="s102.en.bitefight.gameforge.com">
-                                                    County 102                                        </option>
-                                                <option value="s202.en.bitefight.gameforge.com" selected>
-                                                    County 202                                        </option>
-                                                <option value="s210.en.bitefight.gameforge.com">
-                                                    County 210                                        </option>
-                                            </select>
-
-                                            <input type="hidden" id="origin_server_country" name="origin_server_country" value="" />
-                                            <input type="hidden" id="origin_server_nr" name="origin_server_nr" value="" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td class="fontsmall">With my login I accept the <a href="http://agbserver.gameforge.com/rewrite.php?game=bitefight&page=terms&lang=en"  class="copyright" target="blank" >Terms and Conditions</a>.</td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -68,22 +31,17 @@
                                 </table>
                             </form>
                         </td>
-                        <td><img src="/img/race2.gif" alt="Werewolf" ></td>
+                        <td><img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="Werewolf" ></td>
                     </tr>
                 </table>
-
-
+                <?php if($error) echo '<div class="error">The entered username or password is wrong.</div>'; ?>
                 <br class="clearfloat" />
             </div>
-            <!-- CONTENT END -->
         </div>
     </div>
-    <!-- box CONTENT END -->
-    <!-- box FOOTER START -->
     <div class="wrap-bottom-left">
         <div class="wrap-bottom-right">
             <div class="wrap-bottom-middle"></div>
         </div>
     </div>
-    <!-- box CONTENT END -->
 </div>

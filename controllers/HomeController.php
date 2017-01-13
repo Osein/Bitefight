@@ -183,11 +183,29 @@ class HomeController extends BaseController
     }
 
     public function getLogin() {
-        $this->view->name = $this->session->get('login_name');
-        $this->session->remove('login_name');
+        $this->view->error = $this->session->get('login_error');
+        $this->session->remove('login_error');
 
         $this->view->menu_active = 'login';
         $this->view->pick('home/login');
+    }
+
+    public function postLogin() {
+        $name = $this->request->get('user');
+        $pass = $this->request->get('pass');
+
+        $user = ORM::for_table('user')
+            ->where('name', $name)
+            ->where('pass', $pass)
+            ->find_one();
+
+        if($user) {
+            $this->session->set('user_id', $user->id);
+            return $this->response->redirect(getUrl('user/profile'));
+        } else {
+            $this->session->set('login_error', true);
+            return $this->response->redirect(getUrl('login'));
+        }
     }
 
 }

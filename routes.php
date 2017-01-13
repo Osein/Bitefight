@@ -27,6 +27,7 @@ $router->mount($register);
 $login = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
 $login->setPrefix('/login');
 $login->addGet('', ['action' => 'getLogin']);
+$login->addPost('', ['action' => 'postLogin']);
 $router->mount($login);
 
 return $router;
