@@ -10,8 +10,17 @@ class HomeController extends BaseController
 {
 
     public function getIndex() {
-
         $this->view->pick('home/index');
+    }
+
+    public function getNews() {
+
+        $news = ORM::for_table('news')
+            ->find_many();
+
+        $this->view->news = $news;
+
+        $this->view->pick('home/news');
     }
 
 }

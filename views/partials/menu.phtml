@@ -1,0 +1,24 @@
+<ul id="menuHead">
+    <li><a href="<?php echo getUrl('news'); ?>" target="_top" class="newmessage">News</a></li>
+    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank">Support</a></li>-->
+    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top">Register</a></li>-->
+    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top">Login</a></li>-->
+    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank">Forum</a></li>-->
+    <!--<li><a href="<?php echo getUrl('news'); ?>" target="_top">Highscore</a></li>-->
+    <li id="time">09.01.2017 12:07</li>
+    <script type="text/javascript">
+        var $menuHead = $('#menuHead'),
+            $active = $menuHead.find('.active');
+        var currentPage = $active.text();
+        if (currentPage) {
+            $('#header').find('h1').text(currentPage);
+        }
+
+        $(document).ready(function () {
+            $menuHead.find('li').on('click', function () {
+                $active.removeClass('active');
+                $(this).addClass('active');
+            });
+        });
+    </script>
+</ul>

@@ -12,6 +12,10 @@ include APP_PATH . DIRECTORY_SEPARATOR . 'libs' . DIRECTORY_SEPARATOR . 'idiorm.
 include APP_PATH . DIRECTORY_SEPARATOR . 'config.php';
 include APP_PATH . DIRECTORY_SEPARATOR . 'helpers.php';
 
+ORM::configure($config->database->adapter.':host='.$config->database->host.';dbname='.$config->database->dbname);
+ORM::configure('username', $config->database->username);
+ORM::configure('password', $config->database->password);
+
 /*
  * If you don't want your ide to warn you about missing phalcon
  * classes, go download phalcon developer tools
