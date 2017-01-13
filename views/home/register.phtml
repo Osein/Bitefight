@@ -87,28 +87,28 @@
 
                             $("#agb").change(function () {
                                 if ($("#agb").is(':checked')){
-                                    $("#agb_status").html('<img src="<?php echo getAssetLink('img/tick.gif'); ?>"/>');
+                                    $("#agb_status").html('<img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>"/>');
                                 } else {
-                                    $("#agb_status").html('<img src="<?php echo getAssetLink('img/cross.gif'); ?>"/>');
+                                    $("#agb_status").html('<img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>"/>');
                                 }
                             });
                         });
 
                         function ajaxCheck(name){
-                            $.getJSON("/user/ajaxcheck",
+                            $.getJSON("/register/ajaxcheck",
                                 $("#"+name).serialize(),
                                 function(data){
                                     if (data.status){
-                                        $("#"+name+"_status").html('<img src="<?php echo getAssetLink('img/tick.gif'); ?>" style="vertical-align:middle;"/>');
+                                        $("#"+name+"_status").html('<img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" style="vertical-align:middle;"/>');
                                     } else {
-                                        $("#"+name+"_status").html('<img src="<?php echo getAssetLink('img/cross.gif'); ?>" style="vertical-align:middle;"/><b style="color:yellow" class="fontsmall">'+data.messages+'</b>');
+                                        $("#"+name+"_status").html('<img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/><b style="color:yellow" class="fontsmall">'+data.messages+'</b>');
                                     }
                                 })
                         }
                     </script>
                     <h3>BiteFight can be played for free.</h3>
                     <p>Please click "send" after filling out all given fields,<br> to join the game</p>
-                    <form id="registerForm" name="registerForm" action="/user/register/0/1/save"  method="POST"><br>
+                    <form id="registerForm" name="registerForm" action="<?php echo getUrl('register/'.$id); ?>"  method="POST"><br>
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
                                 <td align="center" valign="top">
@@ -164,141 +164,13 @@
                         </table>
                     </form>
                 </div>
-                <!-- CONTENT END -->
             </div>
         </div>
-        <!-- box CONTENT END -->
-        <!-- box FOOTER START -->
         <div class="wrap-bottom-left">
             <div class="wrap-bottom-right">
                 <div class="wrap-bottom-middle"></div>
             </div>
         </div>
-        <!-- box CONTENT END -->
     </div>
-    <!-- box-model END --><script type="text/javascript">
-        standard = new Image;
-        unsecure = new Image;
-        secure = new Image;
-        highlysecure = new Image;
-        standard.src = "<?php echo getAssetLink('img/passsecure0.gif'); ?>";
-        unsecure.src = "<?php echo getAssetLink('img/passsecure1.gif'); ?>";
-        secure.src = "<?php echo getAssetLink('img/passsecure2.gif'); ?>";
-        highlysecure.src = "<?php echo getAssetLink('img/passsecure3.gif'); ?>";
-        function checkInput() {
-            var TestNumberOfChars = false;
-            var TestUppercaseChars = false;
-            var TestLowercaseChars = false;
-            var TestDigits = false;
-            var TestSpecialChars = false;
-            var TestCounter = false;
-            var TestWhiteSpaces = false;
-            var TestSecondPassword = false;
-            var counter = 0;
-            hilfe = document.getElementById('pass').value;
-
-            /* Passwort länger als 7 Zeichen*/
-            if(hilfe.length >= 8) {
-                if(!TestNumberOfChars) {
-                    TestNumberOfChars = true;
-                }
-            } else {
-                TestNumberOfChars = false;
-            }
-            if(hilfe.length < 5) {
-                TestNumberOfChars = false;
-            }
-
-            if (hilfe.length < 3){
-                $("#pass_status").html('<img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>');
-            } else if ($("#pass").val() == $("#name").val()) {
-                $("#pass_status").html('<img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>');
-            } else {
-                $("#pass_status").html('<img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" style="vertical-align:middle;"/>');
-            }
-
-            /* Passwort enthält min. 2 Grossbuchstagben */
-            if(hilfe.match(/[A-Z].*[A-Z]/)) {
-                TestUppercaseChars = true;
-            } else {
-                TestUppercaseChars = false;
-            }
-            if(hilfe.length < 5) {
-                TestUppercaseChars = false;
-            }
-
-            /* Passwort enthält min. 2 Kleinbuchstaben */
-            if(hilfe.match(/[a-z].*[a-z]/)) {
-                TestLowercaseChars = true;
-            } else {
-                TestLowercaseChars = false;
-            }
-            if(hilfe.length < 5) {
-                TestLowercaseChars = false;
-            }
-
-            /* Passwort enthält min. 2 Zahlen */
-            if(hilfe.match(/[0-9].*[0-9]/)) {
-                TestDigits = true;
-            } else {
-                TestDigits = false;
-            }
-            if(hilfe.length < 5) {
-                TestDigits = false;
-            }
-
-            /* Passwort enthält min. 2 Sonderzeichen */
-            var specCharCounter = 0;
-            if(hilfe.length > 0) {
-                characters = hilfe.split("");
-                for(var i = 0; i < characters.length; i++) {
-                    singleChar = characters[i];
-                    if(singleChar.match(/[^a-zA-Z0-9]/)) {
-                        specCharCounter++;
-                    }
-                }
-                if(specCharCounter >= 2) {
-                    TestSpecialChars = true;
-                } else {
-                    TestSpecialChars = false;
-                }
-            }
-            if(hilfe.length < 5) {
-                TestSpecialChars = false;
-            }
-
-            /* Sonderprüfung */
-            if(hilfe.match(/\s/)) {
-                TestWhiteSpaces = true;
-            } else {
-                TestWhiteSpaces = false;
-            }
-            if(hilfe.length < 5) {
-                TestWhiteSpaces = false;
-            }
-
-            /* Auswertung */
-            if(TestUppercaseChars) { counter++; }
-            if(TestLowercaseChars) { counter++; }
-            if(TestDigits)         { counter++; }
-            if(TestSpecialChars)   { counter++; }
-
-            if(counter == 0) {
-                window.document.images['seclevel'].src = standard.src;
-            }
-            if(counter == 1) {
-                window.document.images['seclevel'].src = unsecure.src;
-            }
-            if(counter == 2) {
-                window.document.images['seclevel'].src = secure.src;
-            }
-            if(counter == 3) {
-                window.document.images['seclevel'].src = highlysecure.src;
-            }
-        }
-        $(document).ready(function(){
-            ajaxCheck("email");
-        });
-    </script>
 
 <?php endif; ?>

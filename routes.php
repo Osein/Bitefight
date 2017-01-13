@@ -20,6 +20,8 @@ $router->mount($news);
 $register = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
 $register->setPrefix('/register');
 $register->addGet('/{id:[0-9]}', ['action' => 'getRegister']);
+$register->addPost('/{id:[0-9]}', ['action' => 'postRegister']);
+$register->addGet('/ajaxcheck', ['action' => 'postAjaxCheck']);
 $router->mount($register);
 
 $login = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);

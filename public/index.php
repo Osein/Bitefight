@@ -12,8 +12,11 @@ include APP_PATH . DIRECTORY_SEPARATOR . 'libs' . DIRECTORY_SEPARATOR . 'idiorm.
 include APP_PATH . DIRECTORY_SEPARATOR . 'config.php';
 include APP_PATH . DIRECTORY_SEPARATOR . 'helpers.php';
 
+/** @noinspection PhpUndefinedFieldInspection */
 ORM::configure($config->database->adapter.':host='.$config->database->host.';dbname='.$config->database->dbname);
+/** @noinspection PhpUndefinedFieldInspection */
 ORM::configure('username', $config->database->username);
+/** @noinspection PhpUndefinedFieldInspection */
 ORM::configure('password', $config->database->password);
 
 /*
@@ -36,9 +39,34 @@ $di->set('router', function () {
     return $router;
 });
 
-$di->set('dispatcher', function() {
+$di->set('dispatcher', function() use ($di) {
     $dispatcher = new \Phalcon\Mvc\Dispatcher();
     $dispatcher->setActionSuffix('');
+
+    $evManager = $di->getShared('eventsManager');
+
+    /** @noinspection PhpUnusedParameterInspection */
+    $evManager->attach("dispatch:beforeException", function($event, $dispatcher, $exception) {
+            /**
+             * @var Exception $exception
+             * @var \Phalcon\Mvc\Dispatcher $dispatcher
+             */
+            switch ($exception->getCode()) {
+                case \Phalcon\Mvc\Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                case \Phalcon\Mvc\Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                    $dispatcher->forward(
+                        array(
+                            'controller' => 'error',
+                            'action'     => 'show404',
+                        )
+                    );
+                    return false;
+            }
+
+            return true;
+        }
+    );
+
     return $dispatcher;
 });
 
