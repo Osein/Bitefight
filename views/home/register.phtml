@@ -87,9 +87,9 @@
 
                             $("#agb").change(function () {
                                 if ($("#agb").is(':checked')){
-                                    $("#agb_status").html('<img src="/img/tick.gif"/>');
+                                    $("#agb_status").html('<img src="<?php echo getAssetLink('img/tick.gif'); ?>"/>');
                                 } else {
-                                    $("#agb_status").html('<img src="/img/cross.gif"/>');
+                                    $("#agb_status").html('<img src="<?php echo getAssetLink('img/cross.gif'); ?>"/>');
                                 }
                             });
                         });
@@ -115,21 +115,23 @@
                                     <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                         <tr>
                                             <td>Choose your name:</td>
-                                            <td><input class="input" type="text" id="name" name="name" size="30" MAXLENGTH="30" value=""><span id="name_status"><img src="/img/cross.gif" style="vertical-align:middle;"/></span></td>
+                                            <td>
+                                                <input class="input" type="text" id="name" name="name" size="30" MAXLENGTH="30" value="">
+                                                <span id="name_status"><img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/></span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Please enter a password:</td>
-                                            <td><input class="input" type="password" name="pass" onkeyup="checkInput()" id="pass"  MAXLENGTH="20"  value="">
-                                                <!--
-                                                <script type="text/javascript">
-                                                    document.write('<img src="http://s202.en.bitefight.gameforge.com/img/passsecure0.gif" name="seclevel" style="width: 86px; vertical-align:middle;" \/>');
-                                                </script><span id="pass_status"><img src="/img/cross.gif" style="vertical-align:middle;"/></span>
-                                                -->
+                                            <td>
+                                                <input class="input" type="password" name="pass" onkeyup="checkInput()" id="pass"  MAXLENGTH="20"  value="">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Your e-mail address:</td>
-                                            <td><input class="input" type="text" id="email" name="email" size="30" MAXLENGTH="120" value=""><span id="email_status"><img src="/img/cross.gif" style="vertical-align:middle;"/></span></td>
+                                            <td>
+                                                <input class="input" type="text" id="email" name="email" size="30" MAXLENGTH="120" value="">
+                                                <span id="email_status"><img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/></span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td></td>
@@ -137,21 +139,26 @@
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <span class="fontsmall"><input type="checkbox" id="agb" name="agb" value="ok">I accept the <a href="http://agbserver.gameforge.com/rewrite.php?game=bitefight&page=terms&lang=en"  class="copyright" target="blank" >Terms and Conditions</a> and the <a href="http://agbserver.gameforge.com/rewrite.php?game=bitefight&page=privacy&lang=en"  class="copyright" target="blank" >Privacy Policy</a>.<span id="agb_status" style="margin-left:12px;"><img src="/img/cross.gif" style="vertical-align:middle;"/></span></span>
+                                                <span class="fontsmall">
+                                                    <input type="checkbox" id="agb" name="agb" value="ok">I accept the Terms and Conditions.
+                                                    <span id="agb_status" style="margin-left:12px;">
+                                                        <img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>
+                                                    </span>
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td align="center" colspan="2">
                                                 <div class="btn-left left"><div class="btn-right">
                                                         <input type="submit" id="registerButton" class="btn" value="send">
-                                                    </div></div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
                                 </td>
                                 <td valign="top">
-                                    <img src="/img/race1.gif" alt="Vampire" >
-
+                                    <img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampire" >
                                 </td>
                             </tr>
                         </table>
@@ -203,11 +210,11 @@
             }
 
             if (hilfe.length < 3){
-                $("#pass_status").html('<img src="/img/cross.gif" style="vertical-align:middle;"/>');
+                $("#pass_status").html('<img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>');
             } else if ($("#pass").val() == $("#name").val()) {
-                $("#pass_status").html('<img src="/img/cross.gif" style="vertical-align:middle;"/>');
+                $("#pass_status").html('<img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>');
             } else {
-                $("#pass_status").html('<img src="/img/tick.gif" style="vertical-align:middle;"/>');
+                $("#pass_status").html('<img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" style="vertical-align:middle;"/>');
             }
 
             /* Passwort enthält min. 2 Grossbuchstagben */
