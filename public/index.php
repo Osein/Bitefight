@@ -70,6 +70,25 @@ $di->set('dispatcher', function() use ($di) {
     return $dispatcher;
 });
 
+$di->setShared("session", function () {
+    $session = new \Phalcon\Session\Adapter\Files();
+    $session->start();
+    return $session;
+});
+
+$di->set("flashSession", function () {
+    $flash = new \Phalcon\Flash\Session(
+        [
+            "error"   => "error",
+            "success" => "success",
+            "notice"  => "info",
+            "warning" => "warning",
+        ]
+    );
+
+    return $flash;
+});
+
 $di->set('view', function () {
     $view = new \Phalcon\Mvc\View();
     $view->setViewsDir(APP_PATH . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR);

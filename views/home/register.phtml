@@ -108,7 +108,9 @@
                     </script>
                     <h3>BiteFight can be played for free.</h3>
                     <p>Please click "send" after filling out all given fields,<br> to join the game</p>
-                    <form id="registerForm" name="registerForm" action="<?php echo getUrl('register/'.$id); ?>"  method="POST"><br>
+                    <?php echo $this->flashSession->output(); ?>
+                    <br>
+                    <form id="registerForm" name="registerForm" action="<?php echo getUrl('register/'.$id); ?>"  method="POST">
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
                                 <td align="center" valign="top">
@@ -116,21 +118,25 @@
                                         <tr>
                                             <td>Choose your name:</td>
                                             <td>
-                                                <input class="input" type="text" id="name" name="name" size="30" MAXLENGTH="30" value="">
-                                                <span id="name_status"><img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/></span>
+                                                <input class="input" type="text" id="name" name="name" size="30" MAXLENGTH="30" value="<?php echo $name; ?>">
+                                                <span id="name_status">
+                                                    <img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Please enter a password:</td>
                                             <td>
-                                                <input class="input" type="password" name="pass" onkeyup="checkInput()" id="pass"  MAXLENGTH="20"  value="">
+                                                <input class="input" type="password" name="pass" id="pass" maxlength="20" value="<?php echo $pass; ?>">
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Your e-mail address:</td>
                                             <td>
-                                                <input class="input" type="text" id="email" name="email" size="30" MAXLENGTH="120" value="">
-                                                <span id="email_status"><img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/></span>
+                                                <input class="input" type="text" id="email" name="email" size="30" maxlength="120" value="<?php echo $email; ?>">
+                                                <span id="email_status">
+                                                    <img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>
+                                                </span>
                                             </td>
                                         </tr>
                                         <tr>
@@ -140,7 +146,7 @@
                                         <tr>
                                             <td colspan="2">
                                                 <span class="fontsmall">
-                                                    <input type="checkbox" id="agb" name="agb" value="ok">I accept the Terms and Conditions.
+                                                    <input type="checkbox" id="agb" name="agb" value="ok" <?php if($agb) echo 'checked'; ?>>I accept the Terms and Conditions.
                                                     <span id="agb_status" style="margin-left:12px;">
                                                         <img src="<?php echo getAssetLink('img/symbols/cross.gif'); ?>" style="vertical-align:middle;"/>
                                                     </span>
