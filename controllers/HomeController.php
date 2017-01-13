@@ -10,10 +10,12 @@ class HomeController extends BaseController
 {
 
     public function getIndex() {
+        $this->view->menu_active = 'home';
         $this->view->pick('home/index');
     }
 
     public function getNews() {
+        $this->view->menu_active = 'news';
         $news = ORM::for_table('news')
             ->find_many();
 
@@ -23,6 +25,7 @@ class HomeController extends BaseController
 
     public function getRegister($id = 0) {
         $this->view->id = $id;
+        $this->view->menu_active = 'register';
 
         $this->view->name = $this->session->get('register_name');
         $this->view->email = $this->session->get('register_email');
@@ -180,7 +183,11 @@ class HomeController extends BaseController
     }
 
     public function getLogin() {
+        $this->view->name = $this->session->get('login_name');
+        $this->session->remove('login_name');
 
+        $this->view->menu_active = 'login';
+        $this->view->pick('home/login');
     }
 
 }
