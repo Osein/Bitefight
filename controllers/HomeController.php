@@ -14,13 +14,20 @@ class HomeController extends BaseController
     }
 
     public function getNews() {
-
         $news = ORM::for_table('news')
             ->find_many();
 
         $this->view->news = $news;
-
         $this->view->pick('home/news');
+    }
+
+    public function getRegister($id = 0) {
+        $this->view->id = $id;
+        $this->view->pick('home/register');
+    }
+
+    public function getLogin() {
+
     }
 
 }

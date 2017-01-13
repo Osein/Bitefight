@@ -14,7 +14,17 @@ $router->setDefaultAction('getIndex');
 
 $news = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
 $news->setPrefix('/news');
-$news->add('', ['action' => 'getNews']);
+$news->addGet('', ['action' => 'getNews']);
 $router->mount($news);
+
+$register = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
+$register->setPrefix('/register');
+$register->addGet('/{id:[0-9]}', ['action' => 'getRegister']);
+$router->mount($register);
+
+$login = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
+$login->setPrefix('/login');
+$login->addGet('', ['action' => 'getLogin']);
+$router->mount($login);
 
 return $router;
