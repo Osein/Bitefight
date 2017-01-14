@@ -60,7 +60,7 @@
         </div>
         <div class="wrap-left clearfix">
             <div class="wrap-content wrap-right clearfix">
-                <h2><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>Register</h2>
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$id.'small.gif'); ?>" alt=""/>Register</h2>
                 <div class="table-wrap">
                     <script type="text/javascript">
                         $(function () {
@@ -164,7 +164,7 @@
                                     </table>
                                 </td>
                                 <td valign="top">
-                                    <img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampire" >
+                                    <img src="<?php echo getAssetLink('img/symbols/race'.$id.'.gif'); ?>" alt="<?php if($id == 1) echo 'Vampire'; else echo 'Werewolf'; ?>" >
                                 </td>
                             </tr>
                         </table>
