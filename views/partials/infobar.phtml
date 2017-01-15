@@ -11,13 +11,13 @@
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
             <div class="gold" style="margin-bottom:0px;">
-                4.541&nbsp;<img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">&nbsp;&nbsp;
-                3&nbsp;<img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>&nbsp;&nbsp;
-                3.213&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="Fragments" align="absmiddle" border="0"></a>&nbsp;&nbsp;
-                126&nbsp;/&nbsp;126&nbsp;<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" align="absmiddle" border="0">&nbsp;&nbsp;
-                157.100&nbsp;/&nbsp;157.100&nbsp;<img src="<?php echo getAssetLink('img/symbols/herz.png'); ?>" alt="Health" align="absmiddle" border="0">&nbsp;&nbsp;
-                <img src="<?php echo getAssetLink('img/symbols/level.gif'); ?>" alt="Level" align="absmiddle" border="0">&nbsp;258&nbsp;&nbsp;
-                <img src="<?php echo getAssetLink('img/symbols/fightvalue.gif'); ?>" alt="Battle value" align="absmiddle" border="0">&nbsp;2923</div>
+                <?php echo prettyNumber($user->gold); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">&nbsp;&nbsp;
+                <?php echo prettyNumber($user->hellstone); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>&nbsp;&nbsp;
+                <?php echo prettyNumber($user->fragment); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="Fragments" align="absmiddle" border="0"></a>&nbsp;&nbsp;
+                <?php echo prettyNumber($user->ap_now); ?>&nbsp;/&nbsp;<?php echo prettyNumber($user->ap_max); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" align="absmiddle" border="0">&nbsp;&nbsp;
+                <?php echo prettyNumber($user->hp_now); ?>&nbsp;/&nbsp;<?php echo prettyNumber($user->hp_max); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/herz.png'); ?>" alt="Health" align="absmiddle" border="0">&nbsp;&nbsp;
+                <img src="<?php echo getAssetLink('img/symbols/level.gif'); ?>" alt="Level" align="absmiddle" border="0">&nbsp;<?php echo prettyNumber(getLevel($user->exp)); ?>&nbsp;&nbsp;
+                <img src="<?php echo getAssetLink('img/symbols/fightvalue.gif'); ?>" alt="Battle value" align="absmiddle" border="0">&nbsp;<?php echo prettyNumber($user->battle_value); ?></div>
         </div>
     </div>
     <div class="wrap-bottom-left">
