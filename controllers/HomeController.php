@@ -9,6 +9,13 @@
 class HomeController extends BaseController
 {
 
+    public function initialize()
+    {
+        if($this->session->get('user_id')) {
+            return $this->response->redirect(getUrl('user/profile'));
+        }
+    }
+
     public function getIndex() {
         $this->view->menu_active = 'home';
         $this->view->pick('home/index');
