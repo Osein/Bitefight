@@ -8,19 +8,26 @@
 
 
 $config = new \Phalcon\Config(array(
-    'cdn' => 'http://bf.127.0.0.1.xip.io/',
-    'baseUrl' => 'http://bf.127.0.0.1.xip.io/',
+    'cdn' => 'http://bfd.osein.tk/',
+    'baseUrl' => 'http:///bfd.osein.tk/',
     'version' => '0.1a1',
-    "database" => array(
-        "adapter" => "Mysql",
-        "host" => "localhost",
-        "username" => "scott",
-        "password" => "cheetah",
-        "dbname" => "test_db"
+    'database' => array(
+        'adapter' => 'mysql',
+        'host' => 'host',
+        'username' => 'user',
+        'password' => 'pass',
+        'dbname' => 'dbname'
     ),
-    "phalcon" => array(
-        "controllersDir" => "../app/controllers/",
-        "modelsDir" => "../app/models/",
-        "viewsDir" => "../app/views/"
-    )
+    'basicHp' => 20000,
+    'defHpRatio' => 300,
+    'basicRegen' => 8000,
+    'endRegenRatio' => 125,
+    'basicAttack' => 5,
+    'basicDamage' => 50,
+    'bonusDamage' => 150,
+    'hitChance' => 50,
+    'bonusHitChance' => 60,
+    'basicTalent' => 20,
+    'bonusTalent' => 80,
+    'churchHealTime' => 3600,
 ));

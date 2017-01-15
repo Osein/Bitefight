@@ -9,4 +9,16 @@
 class GameController extends BaseController
 {
 
+    protected $user;
+
+    public function initialize()
+    {
+        if(!$this->session->get('user_id')) {
+            return $this->response->redirect(getUrl(''));
+        }
+
+        $user = ORM::for_table('user')->find_one($this->session->get('user_id'));
+        $this->view->user = $user;
+    }
+
 }

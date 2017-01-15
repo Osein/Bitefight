@@ -30,4 +30,9 @@ $login->addGet('', ['action' => 'getLogin']);
 $login->addPost('', ['action' => 'postLogin']);
 $router->mount($login);
 
+$login = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
+$login->setPrefix('/user');
+$login->addGet('/profile', ['action' => 'getProfile']);
+$router->mount($login);
+
 return $router;
