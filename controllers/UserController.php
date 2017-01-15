@@ -10,7 +10,7 @@ class UserController extends GameController
 {
 
     public function getProfile() {
-
+        $this->view->pick('user/profile');
     }
 
 }
