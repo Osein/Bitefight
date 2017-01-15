@@ -13,4 +13,13 @@ class UserController extends GameController
         $this->view->pick('user/profile');
     }
 
+    public function getNews() {
+        $this->view->menu_active = 'news';
+        $news = ORM::for_table('news')
+            ->find_many();
+
+        $this->view->news = $news;
+        $this->view->pick('home/news');
+    }
+
 }
