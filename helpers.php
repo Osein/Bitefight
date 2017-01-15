@@ -32,6 +32,10 @@ function getUrl($link) {
     return $config->get('baseUrl') . $link;
 }
 
+function getSkillCost($skillLevel) {
+    return floor(pow($skillLevel - 4, 2.4));
+}
+
 function e($str)
 {
     return htmlspecialchars($str, ENT_QUOTES, "UTF-8");

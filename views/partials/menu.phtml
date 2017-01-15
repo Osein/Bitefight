@@ -49,12 +49,17 @@
         -->
         <li id="time">14.01.2017 00:25</li>
         <script type="text/javascript">
-            var currentPage = $('#menuHead .active').text();
-            $('#header h1').text(currentPage);
+            var $menuHead = $('#menuHead'),
+                $active = $menuHead.find('.active');
+            var currentPage = $active.text();
+
+            if (currentPage) {
+                $('#header').find('h1').text(currentPage);
+            }
 
             $(document).ready(function () {
-                $('#menuHead li').live('click', function () {
-                    $('#menuHead .active').removeClass('active');
+                $menuHead.find('li').on('click', function () {
+                    $active.removeClass('active');
                     $(this).addClass('active');
                 });
             });

@@ -17,8 +17,8 @@ class GameController extends BaseController
             return $this->response->redirect(getUrl(''));
         }
 
-        $user = ORM::for_table('user')->find_one($this->session->get('user_id'));
-        $this->view->user = $user;
+        $this->user = ORM::for_table('user')->find_one($this->session->get('user_id'));
+        $this->view->user = $this->user;
     }
 
 }
