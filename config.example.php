@@ -30,4 +30,6 @@ $config = new \Phalcon\Config(array(
     'basicTalent' => 20,
     'bonusTalent' => 80,
     'churchHealTime' => 3600,
+    'apPerHour' => 8,
+    'serverName' => 'Bitefight Private Server'
 ));
