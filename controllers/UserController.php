@@ -44,26 +44,25 @@ class UserController extends GameController
         $this->view->pick('user/profile');
     }
 
+    public function postTrainingUp() {
+
+
+        return $this->response->redirect(getUrl('user/profile#tabs-2'));
+    }
+
     public function getProfileLogo() {
         $this->view->pick('user/logo');
     }
 
     public function postProfileLogo() {
-        if ($this->security->checkToken()) {
-            $gender = $this->request->getPost('gender');
-            $type = $this->request->getPost('type');
+        $gender = $this->request->getPost('gender');
+        $type = $this->request->getPost('type');
 
-            $this->user->gender = $gender;
-            $this->user->image_type = $type;
-            $this->user->save();
+        $this->user->gender = $gender;
+        $this->user->image_type = $type;
+        $this->user->save();
 
-            return $this->response->redirect(getUrl('user/profile'));
-        } else {
-            return $this->dispatcher->forward(array(
-                'controller' => 'error',
-                'action'     => 'show404',
-            ));
-        }
+        return $this->response->redirect(getUrl('user/profile'));
     }
 
     public function getNews() {

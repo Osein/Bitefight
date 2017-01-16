@@ -13,6 +13,7 @@
                         <td><img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampire" ></td>
                         <td>
                             <form id="loginForm" name="loginForm" action="<?php echo getUrl('login'); ?>"  method="POST">
+                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                     <tr>
                                         <td>Name:</td>

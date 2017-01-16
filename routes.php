@@ -33,6 +33,7 @@ $router->mount($login);
 $user = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
 $user->setPrefix('/user');
 $user->addGet('/profile', ['action' => 'getProfile']);
+$user->addGet('/profile/training', ['action' => 'postTrainingUp']);
 $user->addGet('/profile/logo', ['action' => 'getProfileLogo']);
 $user->addPost('/profile/logo', ['action' => 'postProfileLogo']);
 $user->addGet('/news', ['action' => 'getNews']);

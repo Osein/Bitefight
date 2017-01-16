@@ -9,4 +9,23 @@
 class BaseController extends \Phalcon\Mvc\Controller
 {
 
+    /**
+     * Called before the execution of handler
+     *
+     * @return bool
+     */
+    public function beforeExecuteRoute()
+    {
+        if ($this->request->isPost() && !$this->security->checkToken()) {
+            $this->dispatcher->forward(array(
+                'controller' => 'error',
+                'action'     => 'show404',
+            ));
+
+            return false;
+        }
+
+        return true;
+    }
+
 }

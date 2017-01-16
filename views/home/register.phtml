@@ -111,6 +111,7 @@
                     <?php echo $this->flashSession->output(); ?>
                     <br>
                     <form id="registerForm" name="registerForm" action="<?php echo getUrl('register/'.$id); ?>"  method="POST">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
                                 <td align="center" valign="top">
