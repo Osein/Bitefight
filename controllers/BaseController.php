@@ -28,4 +28,14 @@ class BaseController extends \Phalcon\Mvc\Controller
         return true;
     }
 
+    /**
+     * @return mixed
+     */
+    public function notFound() {
+        return $this->dispatcher->forward(array(
+            'controller' => 'error',
+            'action'     => 'show404',
+        ));
+    }
+
 }

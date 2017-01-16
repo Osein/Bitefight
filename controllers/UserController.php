@@ -45,7 +45,22 @@ class UserController extends GameController
     }
 
     public function postTrainingUp() {
+        $stat_type = $this->request->getPost('stat_type');
 
+        if(!in_array($stat_type, array('str', 'def', 'dex', 'end', 'cha'))) {
+            return $this->notFound();
+        }
+
+        $userStat = $this->user->{$stat_type};
+        $cost = getSkillCost($userStat);
+
+        if($this->user->gold < $cost) {
+            return $this->notFound();
+        }
+
+        $this->user->gold -= $cost;
+        $this->user->{$stat_type}++;
+        $this->user->save();
 
         return $this->response->redirect(getUrl('user/profile#tabs-2'));
     }
