@@ -42,6 +42,7 @@ $router->mount($user);
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);
 $hunt->setPrefix('/hunt');
 $hunt->addGet('/index', ['action' => 'getHunt']);
+$hunt->addPost('/human', ['action' => 'postHuntHuman']);
 $router->mount($hunt);
 
 return $router;

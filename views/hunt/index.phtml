@@ -67,6 +67,10 @@
                     <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
                     Man Hunt                </h2>
                 <div onclick="doHunt(1)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <form id="doHunt1" action="<?php echo getUrl('hunt/human'); ?>" method="post">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                        <input type="hidden" name="huntNo" value="1">
+                    </form>
                     <img src="<?php echo getAssetLink('img/hunt/city1.jpg'); ?>" alt="Farm"/>
                     <div id="mjInfo_1" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -79,10 +83,10 @@
                                 <td nowrap style='font-size: 1.1em;'><b>Farm</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: 99%</td>
+                                <td nowrap>Chance of success: <?php echo $hunt1Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap>1.511 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 1 Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt1Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt1Exp; ?> Experience</td>
                             </tr>
                         </table>
                     </div>
@@ -92,7 +96,12 @@
                         <button onclick="doHunt(1)" class="btn">Farm</button>
                     </div>
                 </div>
-                <br/>                    <div onclick="doHunt(2)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                <br/>
+                <div onclick="doHunt(2)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <form id="doHunt2" action="<?php echo getUrl('hunt/human'); ?>" method="post">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                        <input type="hidden" name="huntNo" value="2">
+                    </form>
                     <img src="<?php echo getAssetLink('img/hunt/city2.jpg'); ?>" alt="Village"/>
                     <div id="mjInfo_2" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -105,10 +114,10 @@
                                 <td nowrap style='font-size: 1.1em;'><b>Village</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: 78%</td>
+                                <td nowrap>Chance of success: <?php echo $hunt2Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap>2.075 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 2 Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt2Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt2Exp; ?> Experience</td>
                             </tr>
                         </table>
                     </div>
@@ -118,7 +127,12 @@
                         <button onclick="doHunt(2)" class="btn">Village</button>
                     </div>
                 </div>
-                <br/>                    <div onclick="doHunt(3)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                <br/>
+                <div onclick="doHunt(3)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <form id="doHunt3" action="<?php echo getUrl('hunt/human'); ?>" method="post">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                        <input type="hidden" name="huntNo" value="3">
+                    </form>
                     <img src="<?php echo getAssetLink('img/hunt/city3.jpg'); ?>" alt="Small Town"/>
                     <div id="mjInfo_3" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -131,10 +145,10 @@
                                 <td nowrap style='font-size: 1.1em;'><b>Small Town</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: 56%</td>
+                                <td nowrap>Chance of success: <?php echo $hunt3Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap>2.554 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 3 Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt3Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt3Exp; ?> Experience</td>
                             </tr>
                         </table>
                     </div>
@@ -144,7 +158,12 @@
                         <button onclick="doHunt(3)" class="btn">Small Town</button>
                     </div>
                 </div>
-                <br/>                    <div onclick="doHunt(4)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                <br/>
+                <div onclick="doHunt(4)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <form id="doHunt4" action="<?php echo getUrl('hunt/human'); ?>" method="post">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                        <input type="hidden" name="huntNo" value="4">
+                    </form>
                     <img src="<?php echo getAssetLink('img/hunt/city4.jpg'); ?>" alt="City"/>
                     <div id="mjInfo_4" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -157,10 +176,10 @@
                                 <td nowrap style='font-size: 1.1em;'><b>City</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: 61%</td>
+                                <td nowrap>Chance of success: <?php echo $hunt4Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap>4.039 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 4 Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt4Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt4Exp; ?> Experience</td>
                             </tr>
                         </table>
                     </div>
@@ -170,7 +189,12 @@
                         <button onclick="doHunt(4)" class="btn">City</button>
                     </div>
                 </div>
-                <br/>                    <div onclick="doHunt(5)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                <br/>
+                <div onclick="doHunt(5)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <form id="doHunt5" action="<?php echo getUrl('hunt/human'); ?>" method="post">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                        <input type="hidden" name="huntNo" value="5">
+                    </form>
                     <img src="<?php echo getAssetLink('img/hunt/city5.jpg'); ?>" alt="Metropolis"/>
                     <div id="mjInfo_5" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -183,10 +207,10 @@
                                 <td nowrap style='font-size: 1.1em;'><b>Metropolis</b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: 53%</td>
+                                <td nowrap>Chance of success: <?php echo $hunt5Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap>6.854 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 5 Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt5Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt5Exp; ?> Experience</td>
                             </tr>
                         </table>
                     </div>
@@ -221,19 +245,21 @@
     <script type="text/javascript">
         function doHunt(type)
         {
-            var url = "http://s202.en.bitefight.gameforge.com/robbery/humanhunt/"+type;
-            window.location.replace(url);
+            document.forms["doHunt"+type].submit();
         }
 
         function docheckbox(id)
         {
-            if ($('#totemsearch').is(':checked') && id == 'totemsearch')
+            var $totemSearch = $('#totemsearch'),
+                $onlyTotemSearch = $('#onlytotemsearch');
+
+            if ($totemSearch.is(':checked') && id == 'totemsearch')
             {
-                $('#onlytotemsearch').removeAttr('checked');
+                $onlyTotemSearch.removeAttr('checked');
             }
-            if ($('#onlytotemsearch').is(':checked') && id == 'onlytotemsearch')
+            if ($onlyTotemSearch.is(':checked') && id == 'onlytotemsearch')
             {
-                $('#totemsearch').removeAttr('checked');
+                $totemSearch.removeAttr('checked');
             }
         }
     </script>
