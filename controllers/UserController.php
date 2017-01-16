@@ -22,6 +22,23 @@ class UserController extends GameController
         $this->view->end_cost = getSkillCost($this->user->end);
         $this->view->cha_cost = getSkillCost($this->user->cha);
 
+        $max_skill = max($this->user->str, $this->user->def, $this->user->dex, $this->user->end, $this->user->cha);
+
+        $this->view->str_red_long = 400 * ($this->user->str / $max_skill);
+        $this->view->def_red_long = 400 * ($this->user->def / $max_skill);
+        $this->view->dex_red_long = 400 * ($this->user->dex / $max_skill);
+        $this->view->end_red_long = 400 * ($this->user->end / $max_skill);
+        $this->view->cha_red_long = 400 * ($this->user->cha / $max_skill);
+
+        $userLevel = getLevel($this->user->exp);
+
+        $previousLevelExp = getPreviousExpNeeded($userLevel);
+        $nextLevelExp = getExpNeeded($userLevel);
+        $levelExpDiff = $nextLevelExp - $previousLevelExp;
+
+        $this->view->exp_red_long = ($this->user->exp - $previousLevelExp) / $levelExpDiff * 400;
+        $this->view->required_exp = $nextLevelExp;
+
         $this->view->pick('user/profile');
     }
 

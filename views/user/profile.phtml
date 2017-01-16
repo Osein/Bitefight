@@ -114,14 +114,14 @@
                             <tr>
                                 <td>Strength:</td>
                                 <td nowrap>
-                                    <div class="tooltip left"  title="<div><div class=&quot;tooltipHead&quot;>Strength: <?php echo prettyNumber($user->str); ?></div><div class=&quot;tooltipContent&quot;><table><tr><td>Basic value:</td><td align=&quot;right&quot;><?php echo prettyNumber($user->str); ?></td></tr></table></div></div>" style="text-align:left;">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="166.4979757085"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->str); ?>)</span>
+                                    <div class="tooltip left"  title="<div><div class='tooltipHead'>Strength: <?php echo prettyNumber($user->str); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($user->str); ?></td></tr></table></div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $str_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->str); ?>)</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: <?php echo prettyNumber($str_cost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></td></tr><?php if($user->gold < $str_cost): ?><tr><td>Unfortunately you don`t have enough gold coins!</td></tr><?php endif; ?></tbody></table></div>'>
                                         <?php if($user->gold >= $str_cost): ?>
-                                            <form id="upgradeStrength" action="<?php echo getUrl('profile/training'); ?>" method="post">
+                                            <form id="upgradeStrength" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
                                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                                 <input type="hidden" name="stat_type" value="str">
                                                 <img onclick='document.forms["upgradeStrength"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
@@ -131,61 +131,94 @@
                                         <?php endif; ?>
                                     </div>
                                 </td>
-                            </tr>        <tr>
+                            </tr>
+                            <tr>
                                 <td>Defence:</td>
                                 <td nowrap>
-                                    <div class="triggerTooltip" style="text-align:left;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt=""><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="166.4979757085"><img src="http://s202.en.bitefight.gameforge.com/img/b6.gif" alt="" height="12" width="64.777327935223"><img src="http://s202.en.bitefight.gameforge.com/img/b7.gif" alt="">            <span class="fontsmall">(457)</span>
+                                    <div class="tooltip left"  title="<div><div class='tooltipHead'>Defence: <?php echo prettyNumber($user->def); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($user->def); ?></td></tr></table></div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $def_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->def); ?>)</span>
                                     </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td style='font-size: 1.1em;'>Defence</td><td style='font-size: 1.1em;' align='right'>457</td></tr><tr><td colspan='2'><hr></td></tr><tr><td colspan='2'>* Bonus hit chance (on opponents)<br>* Maximum health</td></tr><tr><td colspan='2'><hr></td></tr><tr><td>Basic value:</td><td align='right'>329</td></tr><tr><td>Stone heart:</td><td align='right'>+10</td></tr><tr><td>Penumbraal:</td><td align='right'>+38</td></tr><tr><td>Jameter:</td><td align='right'>+80</td></tr></table></div>
                                 </td>
                                 <td>
-                                    <div class="triggerTooltip">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/symbols/iconplus_inactiv.png"/>        </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td nowrap>costs: 1.067.874<img src='/img/symbols/res2.gif' alt='Gold' align='absmiddle' border='0'></td></tr><tr><td>Unfortunately you don`t have enough gold coins!</td></tr></table></div>
+                                    <div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: <?php echo prettyNumber($def_cost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></td></tr><?php if($user->gold < $def_cost): ?><tr><td>Unfortunately you don`t have enough gold coins!</td></tr><?php endif; ?></tbody></table></div>'>
+                                        <?php if($user->gold >= $def_cost): ?>
+                                            <form id="upgradeDefence" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
+                                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                <input type="hidden" name="stat_type" value="def">
+                                                <img onclick='document.forms["upgradeDefence"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                            </form>
+                                        <?php else: ?>
+                                            <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
-                            </tr>        <tr>
+                            </tr>
+                            <tr>
                                 <td>Dexterity:</td>
                                 <td nowrap>
-                                    <div class="triggerTooltip" style="text-align:left;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt=""><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="154.85829959514"><img src="http://s202.en.bitefight.gameforge.com/img/b6.gif" alt="" height="12" width="95.141700404858"><img src="http://s202.en.bitefight.gameforge.com/img/b7.gif" alt="">            <span class="fontsmall">(494)</span>
+                                    <div class="tooltip left"  title="<div><div class='tooltipHead'>Dexterity: <?php echo prettyNumber($user->dex); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($user->dex); ?></td></tr></table></div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $dex_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->dex); ?>)</span>
                                     </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td style='font-size: 1.1em;'>Dexterity</td><td style='font-size: 1.1em;' align='right'>494</td></tr><tr><td colspan='2'><hr></td></tr><tr><td colspan='2'>* Bonus hit chance (self)</td></tr><tr><td colspan='2'><hr></td></tr><tr><td>Basic value:</td><td align='right'>306</td></tr><tr><td>Sytyr:</td><td align='right'>+85</td></tr><tr><td>Kwera:</td><td align='right'>+42</td></tr><tr><td>Penumbraal:</td><td align='right'>+57</td></tr><tr><td>Ear from GustiBrother:</td><td align='right'>+4</td></tr></table></div>
                                 </td>
                                 <td>
-                                    <div class="triggerTooltip">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/symbols/iconplus_inactiv.png"/>        </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td nowrap>costs: 895.399<img src='/img/symbols/res2.gif' alt='Gold' align='absmiddle' border='0'></td></tr><tr><td>Unfortunately you don`t have enough gold coins!</td></tr></table></div>
+                                    <div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: <?php echo prettyNumber($dex_cost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></td></tr><?php if($user->gold < $dex_cost): ?><tr><td>Unfortunately you don`t have enough gold coins!</td></tr><?php endif; ?></tbody></table></div>'>
+                                        <?php if($user->gold >= $dex_cost): ?>
+                                            <form id="upgradeDexterity" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
+                                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                <input type="hidden" name="stat_type" value="dex">
+                                                <img onclick='document.forms["upgradeDexterity"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                            </form>
+                                        <?php else: ?>
+                                            <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
-                            </tr>        <tr>
+                            </tr>
+                            <tr>
                                 <td>Endurance:</td>
                                 <td nowrap>
-                                    <div class="triggerTooltip" style="text-align:left;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt=""><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="197.87449392713"><img src="http://s202.en.bitefight.gameforge.com/img/b6.gif" alt="" height="12" width="51.619433198381"><img src="http://s202.en.bitefight.gameforge.com/img/b7.gif" alt="">            <span class="fontsmall">(493)</span>
+                                    <div class="tooltip left"  title="<div><div class='tooltipHead'>Endurance: <?php echo prettyNumber($user->end); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($user->end); ?></td></tr></table></div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $end_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->end); ?>)</span>
                                     </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td style='font-size: 1.1em;'>Endurance</td><td style='font-size: 1.1em;' align='right'>493</td></tr><tr><td colspan='2'><hr></td></tr><tr><td colspan='2'>* Bonus damage (on opponents)<br>* Regeneration</td></tr><tr><td colspan='2'><hr></td></tr><tr><td>Basic value:</td><td align='right'>391</td></tr><tr><td>Bergor:</td><td align='right'>+50</td></tr><tr><td>Urrosh:</td><td align='right'>+49</td></tr><tr><td>Ear from GustiBrother:</td><td align='right'>+3</td></tr></table></div>
                                 </td>
                                 <td>
-                                    <div class="triggerTooltip">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/symbols/iconplus_inactiv.png"/>        </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td nowrap>costs: 1.623.701<img src='/img/symbols/res2.gif' alt='Gold' align='absmiddle' border='0'></td></tr><tr><td>Unfortunately you don`t have enough gold coins!</td></tr></table></div>
+                                    <div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: <?php echo prettyNumber($end_cost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></td></tr><?php if($user->gold < $end_cost): ?><tr><td>Unfortunately you don`t have enough gold coins!</td></tr><?php endif; ?></tbody></table></div>'>
+                                        <?php if($user->gold >= $end_cost): ?>
+                                            <form id="upgradeEndurance" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
+                                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                <input type="hidden" name="stat_type" value="end">
+                                                <img onclick='document.forms["upgradeEndurance"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                            </form>
+                                        <?php else: ?>
+                                            <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
-                            </tr>        <tr>
+                            </tr>
+                            <tr>
                                 <td>Charisma:</td>
                                 <td nowrap>
-                                    <div class="triggerTooltip" style="text-align:left;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt=""><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="113.36032388664"><img src="http://s202.en.bitefight.gameforge.com/img/b3.gif" alt="">            <span class="fontsmall">(224)</span>
+                                    <div class="tooltip left"  title="<div><div class='tooltipHead'>Charisma: <?php echo prettyNumber($user->cha); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($user->cha); ?></td></tr></table></div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $cha_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->cha); ?>)</span>
                                     </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td style='font-size: 1.1em;'>Charisma</td><td style='font-size: 1.1em;' align='right'>224</td></tr><tr><td colspan='2'><hr></td></tr><tr><td colspan='2'>* Bonus talents (self)<br>*Bonus talents (on opponents)</td></tr><tr><td colspan='2'><hr></td></tr><tr><td>Basic value:</td><td align='right'>224</td></tr></table></div>
                                 </td>
                                 <td>
-                                    <div class="triggerTooltip">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/symbols/iconplus_inactiv.png"/>        </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td nowrap>costs: 418.614<img src='/img/symbols/res2.gif' alt='Gold' align='absmiddle' border='0'></td></tr><tr><td>Unfortunately you don`t have enough gold coins!</td></tr></table></div>
+                                    <div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: <?php echo prettyNumber($cha_cost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></td></tr><?php if($user->gold < $cha_cost): ?><tr><td>Unfortunately you don`t have enough gold coins!</td></tr><?php endif; ?></tbody></table></div>'>
+                                        <?php if($user->gold >= $cha_cost): ?>
+                                            <form id="upgradeCharisma" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
+                                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                <input type="hidden" name="stat_type" value="cha">
+                                                <img onclick='document.forms["upgradeCharisma"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                            </form>
+                                        <?php else: ?>
+                                            <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
+                                        <?php endif; ?>
+                                    </div>
                                 </td>
-                            </tr>        <tr>
+                            </tr>
+                            <tr>
                                 <td>Experience:</td>
-                                <td colspan="2"><img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt="" ><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="249.27493807701"><img src="http://s202.en.bitefight.gameforge.com/img/b4.gif" alt="" height="12" width="0.72506192299031"><img src="http://s202.en.bitefight.gameforge.com/img/b5.gif" alt="" ><span class="fontsmall"><br>(332.109 / 333.075)</span></td>
+                                <td colspan="2"><img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt="" ><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="<?php echo $exp_red_long; ?>"><img src="http://s202.en.bitefight.gameforge.com/img/b4.gif" alt="" height="12" width="<?php echo 400 - $exp_red_long; ?>"><img src="http://s202.en.bitefight.gameforge.com/img/b5.gif" alt="" ><span class="fontsmall"><br>(<?php echo prettyNumber($user->exp); ?> / <?php echo prettyNumber($required_exp); ?>)</span></td>
                             </tr>
                             <tr>
                                 <td>Health:</td>
