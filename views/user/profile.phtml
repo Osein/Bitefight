@@ -124,7 +124,7 @@
                                             <form id="upgradeStrength" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
                                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                                 <input type="hidden" name="stat_type" value="str">
-                                                <img onclick='document.forms["upgradeStrength"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                                <img style="cursor: hand" onclick='document.forms["upgradeStrength"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
                                             </form>
                                         <?php else: ?>
                                             <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
@@ -145,7 +145,7 @@
                                             <form id="upgradeDefence" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
                                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                                 <input type="hidden" name="stat_type" value="def">
-                                                <img onclick='document.forms["upgradeDefence"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                                <img style="cursor: hand" onclick='document.forms["upgradeDefence"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
                                             </form>
                                         <?php else: ?>
                                             <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
@@ -166,7 +166,7 @@
                                             <form id="upgradeDexterity" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
                                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                                 <input type="hidden" name="stat_type" value="dex">
-                                                <img onclick='document.forms["upgradeDexterity"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                                <img style="cursor: hand" onclick='document.forms["upgradeDexterity"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
                                             </form>
                                         <?php else: ?>
                                             <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
@@ -187,7 +187,7 @@
                                             <form id="upgradeEndurance" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
                                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                                 <input type="hidden" name="stat_type" value="end">
-                                                <img onclick='document.forms["upgradeEndurance"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                                <img style="cursor: hand" onclick='document.forms["upgradeEndurance"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
                                             </form>
                                         <?php else: ?>
                                             <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
@@ -208,7 +208,7 @@
                                             <form id="upgradeCharisma" action="<?php echo getUrl('user/profile/training'); ?>" method="post">
                                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                                 <input type="hidden" name="stat_type" value="cha">
-                                                <img onclick='document.forms["upgradeCharisma"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
+                                                <img style="cursor: hand" onclick='document.forms["upgradeCharisma"].submit();' src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>">
                                             </form>
                                         <?php else: ?>
                                             <img src="<?php echo getAssetLink('img/symbols/iconplus_inactiv.png'); ?>"/>
@@ -218,15 +218,14 @@
                             </tr>
                             <tr>
                                 <td>Experience:</td>
-                                <td colspan="2"><img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt="" ><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="<?php echo $exp_red_long; ?>"><img src="http://s202.en.bitefight.gameforge.com/img/b4.gif" alt="" height="12" width="<?php echo 400 - $exp_red_long; ?>"><img src="http://s202.en.bitefight.gameforge.com/img/b5.gif" alt="" ><span class="fontsmall"><br>(<?php echo prettyNumber($user->exp); ?> / <?php echo prettyNumber($required_exp); ?>)</span></td>
+                                <td colspan="2"><img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt="" ><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $exp_red_long; ?>"><img src="<?php echo getAssetLink('img/b4.gif'); ?>" alt="" height="12" width="<?php echo 400 - $exp_red_long; ?>"><img src="<?php echo getAssetLink('img/b5.gif'); ?>" alt="" ><span class="fontsmall"><br>(<?php echo prettyNumber($user->exp); ?> / <?php echo prettyNumber($required_exp); ?>)</span></td>
                             </tr>
                             <tr>
                                 <td>Health:</td>
                                 <td colspan="2">
-                                    <div class="triggerTooltip" style="text-align:left;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/b1.gif" alt="" ><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" alt="" height="12" width="250"><img src="http://s202.en.bitefight.gameforge.com/img/b4.gif" alt="" height="12" width="0"><img src="http://s202.en.bitefight.gameforge.com/img/b3.gif" alt="" ><span class="fontsmall"><br>(157.100 / 157.100)</span>
+                                    <div class="tooltip left" title="<div style='width: 150px;'><table class='noBackground'><tr><td>Basic value</td><td align='right'><?php echo prettyNumber($config->basicHp); ?></td></tr><tr><td>Defence</td><td align='right'>+<?php echo prettyNumber($config->defHpRatio * $user->def); ?></td></tr></table></div>">
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt="" ><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $hp_red_long; ?>"><img src="<?php echo getAssetLink('img/b4.gif'); ?>" alt="" height="12" width="<?php echo 400 - $hp_red_long; ?>"><?php if($user->hp_now < $user->hp_max): ?><img src="<?php echo getAssetLink('img/b5.gif'); ?>" alt="" ><?php else: ?><img src="<?php echo getAssetLink('img/b5.gif'); ?>" alt="" ><?php endif; ?><br><span class="fontsmall left">(<?php echo prettyNumber($user->hp_now); ?> / <?php echo prettyNumber($user->hp_max); ?>)</span>
                                     </div>
-                                    <div class="tooltip"><table class='noBackground'><tr><td>Basic value</td><td align='right'>20000</td></tr><tr><td>Defence</td><td align='right'>+137100</td></tr></table></div>
                                 </td>
                             </tr>
                         </table>
@@ -253,39 +252,39 @@
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
                             <tr>
                                 <td>Entire booty:</td>
-                                <td>437.770.196</td>
+                                <td><?php echo prettyNumber($user->s_booty); ?></td>
                             </tr>
                             <tr>
                                 <td>Fights:</td>
-                                <td>3.690</td>
+                                <td><?php echo prettyNumber($user->s_fight); ?></td>
                             </tr>
                             <tr>
                                 <td>Victories:</td>
-                                <td>381</td>
+                                <td><?php echo prettyNumber($user->s_victory); ?></td>
                             </tr>
                             <tr>
                                 <td>Defeats:</td>
-                                <td>3.309</td>
+                                <td><?php echo prettyNumber($user->s_defeat); ?></td>
                             </tr>
                             <tr>
                                 <td>Draws:</td>
-                                <td>0</td>
+                                <td><?php echo prettyNumber($user->s_draw); ?></td>
                             </tr>
                             <tr>
                                 <td>Gold captured:</td>
-                                <td>404.251 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif"  alt="Gold" align="absmiddle" border="0" /></td>
+                                <td><?php echo prettyNumber($user->s_gold_captured); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>"  alt="Gold" align="absmiddle" border="0" /></td>
                             </tr>
                             <tr>
                                 <td>Gold lost:</td>
-                                <td>3.009.205 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif"  alt="Gold" align="absmiddle" border="0" /></td>
+                                <td><?php echo prettyNumber($user->s_gold_lost); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>"  alt="Gold" align="absmiddle" border="0" /></td>
                             </tr>
                             <tr>
                                 <td>Damage caused:</td>
-                                <td>32.457.923</td>
+                                <td><?php echo prettyNumber($user->s_damage_caused); ?></td>
                             </tr>
                             <tr>
                                 <td>Hit points lost:</td>
-                                <td>65.770.999</td>
+                                <td><?php echo prettyNumber($user->s_hp_lost); ?></td>
                             </tr>
                         </table>
                     </div>

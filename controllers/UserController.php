@@ -39,6 +39,8 @@ class UserController extends GameController
         $this->view->exp_red_long = ($this->user->exp - $previousLevelExp) / $levelExpDiff * 400;
         $this->view->required_exp = $nextLevelExp;
 
+        $this->view->hp_red_long = $this->user->hp_now / $this->user->hp_max * 400;
+
         $this->view->pick('user/profile');
     }
 
