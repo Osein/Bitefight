@@ -10,6 +10,8 @@ class UserController extends GameController
 {
 
     public function getProfile() {
+        $this->view->menu_active = 'profile';
+
         $highscorePosition = ORM::for_table('user')
             ->where_gt('s_booty', $this->user->s_booty)
             ->count() + 1;

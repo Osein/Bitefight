@@ -39,4 +39,9 @@ $user->addPost('/profile/logo', ['action' => 'postProfileLogo']);
 $user->addGet('/news', ['action' => 'getNews']);
 $router->mount($user);
 
+$hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);
+$hunt->setPrefix('/hunt');
+$hunt->addGet('/index', ['action' => 'getHunt']);
+$router->mount($hunt);
+
 return $router;

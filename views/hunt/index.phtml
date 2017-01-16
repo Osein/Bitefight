@@ -1,0 +1,240 @@
+<h1>lust for hunting    Xyir</h1>
+<p>You are feeling a lust for hunting. Now choose your preferred hunting method for the attack. You can roam the area for werewolves and challenge them to a fight, or if you know their name you can search for a particular werewolf!</p>
+<br>
+<div>
+    <!--
+    <div id="wolfHunting">
+        <div class="wrap-top-left">
+            <div class="wrap-top-right">
+                <div class="wrap-top-middle"></div>
+            </div>
+        </div>
+        <div class="wrap-left">
+            <div class="wrap-content wrap-right">
+                <form action="http://s202.en.bitefight.gameforge.com/robbery/index?__token=8c4f8a208d2b45c201dd3f37501a4ed2" method="POST">
+                    <h2>
+                        <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
+                        Werewolf Hunt  ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>"  title="Action point" style="float: none; vertical-align: middle; margin: 0;" /> )
+                    </h2>
+                    <img src="<?php echo getAssetLink('img/hunt/pvp_header.jpg'); ?>"  title="Werewolf Hunt" width="340" height="125" />                        <p class="tdnp">
+                        Roam the streets for werewolves                        </p>
+                    <div class="tdi">
+                        search options: <br/>
+                        <select name="99b3bc17a46ef8acfd4d835fb4d775b7" size="1">
+                            <option value="1">normal</option>
+                            <option value="2">only search for stronger or equally strong rivals</option>
+                        </select><br/>
+                        <input id="totemsearch" type="checkbox" name="totemsearch" value="totemsearch" checked="checked" onchange="docheckbox('totemsearch')"> Search for lost souls too (include inactive users in the search).<br>
+                        <div class="btn-left center">
+                            <div class="btn-right">
+                                <input type="submit" class="btn" name="optionsearch" value="Go!">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <h2>
+                    <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
+                    Look for a particular werewolf                    </h2>
+                <form action="http://s202.en.bitefight.gameforge.com/robbery/index?__token=8c4f8a208d2b45c201dd3f37501a4ed2" method="POST">
+                    <div class="tdi">Name:<br/>
+                        <input class="input" type="text" name="4bfcf6135a77aff17188907d6efc274b" size="30" value="" MAXLENGTH="30">
+                        <input type="hidden" name="namesearch" value="Go!">
+                        <div class="btn-left center">
+                            <div class="btn-right">
+                                <input type="submit" class="btn" name="namesearch" value="Go!">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+    -->
+    <div id="humanHunting" style="margin-left: auto; margin-right: auto; float: initial;">
+        <div class="wrap-top-left">
+            <div class="wrap-top-right">
+                <div class="wrap-top-middle"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div id="humanhunt" class="wrap-content wrap-right">
+                <h2>
+                    <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
+                    Man Hunt                </h2>
+                <div onclick="doHunt(1)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <img src="<?php echo getAssetLink('img/hunt/city1.jpg'); ?>" alt="Farm"/>
+                    <div id="mjInfo_1" style="text-align:left;">
+                        <table class='noBackground' border="0" style="display:block;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Farm</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                        </table>
+                        <table class='noBackground' border="0" style="display:none;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Farm</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>Chance of success: 99%</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>1.511 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 1 Experience</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <button onclick="doHunt(1)" class="btn">Farm</button>
+                    </div>
+                </div>
+                <br/>                    <div onclick="doHunt(2)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <img src="<?php echo getAssetLink('img/hunt/city2.jpg'); ?>" alt="Village"/>
+                    <div id="mjInfo_2" style="text-align:left;">
+                        <table class='noBackground' border="0" style="display:block;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Village</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                        </table>
+                        <table class='noBackground' border="0" style="display:none;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Village</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>Chance of success: 78%</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>2.075 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 2 Experience</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <button onclick="doHunt(2)" class="btn">Village</button>
+                    </div>
+                </div>
+                <br/>                    <div onclick="doHunt(3)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <img src="<?php echo getAssetLink('img/hunt/city3.jpg'); ?>" alt="Small Town"/>
+                    <div id="mjInfo_3" style="text-align:left;">
+                        <table class='noBackground' border="0" style="display:block;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Small Town</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                        </table>
+                        <table class='noBackground' border="0" style="display:none;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Small Town</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>Chance of success: 56%</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>2.554 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 3 Experience</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <button onclick="doHunt(3)" class="btn">Small Town</button>
+                    </div>
+                </div>
+                <br/>                    <div onclick="doHunt(4)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <img src="<?php echo getAssetLink('img/hunt/city4.jpg'); ?>" alt="City"/>
+                    <div id="mjInfo_4" style="text-align:left;">
+                        <table class='noBackground' border="0" style="display:block;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>City</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                        </table>
+                        <table class='noBackground' border="0" style="display:none;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>City</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>Chance of success: 61%</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>4.039 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 4 Experience</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <button onclick="doHunt(4)" class="btn">City</button>
+                    </div>
+                </div>
+                <br/>                    <div onclick="doHunt(5)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
+                    <img src="<?php echo getAssetLink('img/hunt/city5.jpg'); ?>" alt="Metropolis"/>
+                    <div id="mjInfo_5" style="text-align:left;">
+                        <table class='noBackground' border="0" style="display:block;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Metropolis</b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                        </table>
+                        <table class='noBackground' border="0" style="display:none;">
+                            <tr>
+                                <td nowrap style='font-size: 1.1em;'><b>Metropolis</b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>Chance of success: 53%</td>
+                            </tr>
+                            <tr>
+                                <td nowrap>6.854 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + 5 Experience</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <button onclick="doHunt(5)" class="btn">Metropolis</button>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $('.mjs').hover(
+                        function() {
+                            $(this).children('div').animate({height: '90'});
+                            $(this).children('div').children('table:first-child').hide();
+                            $(this).children('div').children('table:last-child').show();
+                        },
+                        function() {
+                            $(this).children('div').animate({height: '35'});
+                            $(this).children('div').children('table:first-child').show();
+                            $(this).children('div').children('table:last-child').hide();
+                        }
+                    );
+                </script>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function doHunt(type)
+        {
+            var url = "http://s202.en.bitefight.gameforge.com/robbery/humanhunt/"+type;
+            window.location.replace(url);
+        }
+
+        function docheckbox(id)
+        {
+            if ($('#totemsearch').is(':checked') && id == 'totemsearch')
+            {
+                $('#onlytotemsearch').removeAttr('checked');
+            }
+            if ($('#onlytotemsearch').is(':checked') && id == 'onlytotemsearch')
+            {
+                $('#totemsearch').removeAttr('checked');
+            }
+        }
+    </script>
+</div>
