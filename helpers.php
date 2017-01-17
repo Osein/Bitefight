@@ -180,8 +180,12 @@ function profilePrintUserItem($i)
                 Cooldown time <span id="item_cooldown2_<?php echo $i->id; ?>" ></span><br/>
                 <script type="text/javascript">
                     $(function () {
-                        $("#item_cooldown2_<?php echo $i->id; ?>").countdown({until: +<?php echo $i->expire - time(); ?>, compact: true, compactLabels: ['y', 'm', 'w', 'd'],
-                            description: '',onExpiry: redirectUser});
+                        $("#item_cooldown2_<?php echo $i->id; ?>").countdown({
+                            until: +<?php echo $i->expire - time(); ?>,
+                            compact: true,
+                            compactLabels: ['y', 'm', 'w', 'd'],
+                            description: '',onExpiry: redirectUser
+                        });
                     });
                     function redirectUser() {
                         setTimeout('window.location = "<?php echo url('profile/index') ?>"',3000);
