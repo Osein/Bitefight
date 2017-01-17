@@ -70,8 +70,6 @@ class HuntController extends GameController
             $success = true;
         }
 
-        $this->user->save();
-
         $this->view->success = $success;
         $this->view->huntId = $id;
         $this->view->rewardExp = $rewardExp;

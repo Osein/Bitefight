@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: osein
@@ -19,6 +20,14 @@ class GameController extends BaseController
 
         $this->user = ORM::for_table('user')->find_one($this->session->get('user_id'));
         $this->view->user = $this->user;
+    }
+
+    public function afterExecuteRoute()
+    {
+        // Idiorm will look for dirty fields.
+        // If there is none, it will not send query.
+        // So I think this is a good practice for me.
+        $this->user->save();
     }
 
 }

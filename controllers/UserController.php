@@ -62,7 +62,6 @@ class UserController extends GameController
 
         $this->user->gold -= $cost;
         $this->user->{$stat_type}++;
-        $this->user->save();
 
         return $this->response->redirect(getUrl('user/profile#tabs-2'));
     }
@@ -77,7 +76,6 @@ class UserController extends GameController
 
         $this->user->gender = $gender;
         $this->user->image_type = $type;
-        $this->user->save();
 
         return $this->response->redirect(getUrl('user/profile'));
     }
