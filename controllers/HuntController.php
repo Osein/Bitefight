@@ -75,7 +75,7 @@ class HuntController extends GameController
         $this->view->rewardExp = $rewardExp;
         $this->view->rewardGold = $rewardGold;
         $this->view->menu_active = 'hunt';
-        $this->view->pick('hunt/result');
+        $this->view->pick('hunt/humanresult');
     }
 
     public function getHuntReward($huntNo)
