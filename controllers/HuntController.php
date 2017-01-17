@@ -59,6 +59,7 @@ class HuntController extends GameController
         if($rand <= $huntChance) {
             $this->user->exp += $rewardExp;
             $this->user->gold += $rewardGold;
+            $this->user->s_booty += $rewardGold;
 
             // With %3 chance user can get fragments
             if($rand < 4) {
