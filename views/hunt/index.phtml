@@ -13,7 +13,7 @@
             <div class="wrap-content wrap-right">
                 <form action="http://s202.en.bitefight.gameforge.com/robbery/index?__token=8c4f8a208d2b45c201dd3f37501a4ed2" method="POST">
                     <h2>
-                        <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
+                        <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>
                         Werewolf Hunt  ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>"  title="Action point" style="float: none; vertical-align: middle; margin: 0;" /> )
                     </h2>
                     <img src="<?php echo getAssetLink('img/hunt/pvp_header.jpg'); ?>"  title="Werewolf Hunt" width="340" height="125" />                        <p class="tdnp">
@@ -33,7 +33,7 @@
                     </div>
                 </form>
                 <h2>
-                    <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
+                    <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>
                     Look for a particular werewolf                    </h2>
                 <form action="http://s202.en.bitefight.gameforge.com/robbery/index?__token=8c4f8a208d2b45c201dd3f37501a4ed2" method="POST">
                     <div class="tdi">Name:<br/>
@@ -64,7 +64,7 @@
         <div class="wrap-left clearfix">
             <div id="humanhunt" class="wrap-content wrap-right">
                 <h2>
-                    <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
+                    <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>
                     Man Hunt                </h2>
                 <div <?php if($user->ap_now > 1): ?>onclick="doHunt(1)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
                     <img src="<?php echo getAssetLink('img/hunt/city1.jpg'); ?>" alt="Farm"/>
