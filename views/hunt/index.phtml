@@ -1,4 +1,4 @@
-<h1>lust for hunting    Xyir</h1>
+<h1>lust for hunting <?php echo $user->name; ?></h1>
 <p>You are feeling a lust for hunting. Now choose your preferred hunting method for the attack. You can roam the area for werewolves and challenge them to a fight, or if you know their name you can search for a particular werewolf!</p>
 <br>
 <div>
@@ -66,11 +66,7 @@
                 <h2>
                     <img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt=""/>
                     Man Hunt                </h2>
-                <div onclick="doHunt(1)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <form id="doHunt1" action="<?php echo getUrl('hunt/human'); ?>" method="post">
-                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
-                        <input type="hidden" name="huntNo" value="1">
-                    </form>
+                <div <?php if($user->ap_now > 1): ?>onclick="doHunt(1)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
                     <img src="<?php echo getAssetLink('img/hunt/city1.jpg'); ?>" alt="Farm"/>
                     <div id="mjInfo_1" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -93,15 +89,11 @@
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button onclick="doHunt(1)" class="btn">Farm</button>
+                        <button <?php if($user->ap_now > 1): ?>onclick="doHunt(1)"<?php endif; ?> class="btn">Farm</button>
                     </div>
                 </div>
                 <br/>
-                <div onclick="doHunt(2)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <form id="doHunt2" action="<?php echo getUrl('hunt/human'); ?>" method="post">
-                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
-                        <input type="hidden" name="huntNo" value="2">
-                    </form>
+                <div <?php if($user->ap_now > 1): ?>onclick="doHunt(2)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
                     <img src="<?php echo getAssetLink('img/hunt/city2.jpg'); ?>" alt="Village"/>
                     <div id="mjInfo_2" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -124,15 +116,11 @@
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button onclick="doHunt(2)" class="btn">Village</button>
+                        <button <?php if($user->ap_now > 1): ?>onclick="doHunt(2)"<?php endif; ?> class="btn">Village</button>
                     </div>
                 </div>
                 <br/>
-                <div onclick="doHunt(3)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <form id="doHunt3" action="<?php echo getUrl('hunt/human'); ?>" method="post">
-                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
-                        <input type="hidden" name="huntNo" value="3">
-                    </form>
+                <div <?php if($user->ap_now > 2): ?>onclick="doHunt(3)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
                     <img src="<?php echo getAssetLink('img/hunt/city3.jpg'); ?>" alt="Small Town"/>
                     <div id="mjInfo_3" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -155,15 +143,11 @@
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button onclick="doHunt(3)" class="btn">Small Town</button>
+                        <button <?php if($user->ap_now > 2): ?>onclick="doHunt(3)"<?php endif; ?> class="btn">Small Town</button>
                     </div>
                 </div>
                 <br/>
-                <div onclick="doHunt(4)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <form id="doHunt4" action="<?php echo getUrl('hunt/human'); ?>" method="post">
-                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
-                        <input type="hidden" name="huntNo" value="4">
-                    </form>
+                <div <?php if($user->ap_now > 2): ?>onclick="doHunt(4)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
                     <img src="<?php echo getAssetLink('img/hunt/city4.jpg'); ?>" alt="City"/>
                     <div id="mjInfo_4" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -186,15 +170,11 @@
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button onclick="doHunt(4)" class="btn">City</button>
+                        <button <?php if($user->ap_now > 2): ?>onclick="doHunt(4)"<?php endif; ?> class="btn">City</button>
                     </div>
                 </div>
                 <br/>
-                <div onclick="doHunt(5)" class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <form id="doHunt5" action="<?php echo getUrl('hunt/human'); ?>" method="post">
-                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
-                        <input type="hidden" name="huntNo" value="5">
-                    </form>
+                <div <?php if($user->ap_now > 3): ?>onclick="doHunt(5)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
                     <img src="<?php echo getAssetLink('img/hunt/city5.jpg'); ?>" alt="Metropolis"/>
                     <div id="mjInfo_5" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
@@ -217,7 +197,7 @@
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button onclick="doHunt(5)" class="btn">Metropolis</button>
+                        <button <?php if($user->ap_now > 3): ?>onclick="doHunt(5)"<?php endif; ?> class="btn">Metropolis</button>
                     </div>
                 </div>
                 <script type="text/javascript">
@@ -245,7 +225,8 @@
     <script type="text/javascript">
         function doHunt(type)
         {
-            document.forms["doHunt"+type].submit();
+            var url = "<?php echo getUrl('hunt/human'); ?>/"+type+"?_tkey=<?php echo $this->security->getTokenKey() ?>&_token=<?php echo $this->security->getToken() ?>";
+            window.location.replace(url);
         }
 
         function docheckbox(id)

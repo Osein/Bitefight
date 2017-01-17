@@ -31,8 +31,52 @@ class HuntController extends GameController
         $this->view->pick('hunt/index');
     }
 
-    public function postHuntHuman() {
-        $huntNo = $this->request->getPost('huntTo');
+    public function getHumanHunt($id) {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if(!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
+        if($id < 0 || $id > 5) {
+            return $this->notFound();
+        }
+
+        $requiredAp = ceil($id / 2);
+
+        if($this->user->ap_now < $requiredAp) {
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
+        $this->user->ap_now -= $requiredAp;
+        $rewardExp = $this->getHuntExp($id);
+        $rewardGold = $this->getHuntReward($id);
+        $huntChance = $this->getHuntChance($id);
+        $rand = rand(1, 100);
+        $success = false;
+
+        if($rand <= $huntChance) {
+            $this->user->exp += $rewardExp;
+            $this->user->gold += $rewardGold;
+
+            // With %3 chance user can get fragments
+            if($rand < 4) {
+                $this->user->fragment += 1;
+                $this->view->rewardFragment = 1;
+            }
+
+            $success = true;
+        }
+
+        $this->user->save();
+
+        $this->view->success = $success;
+        $this->view->huntId = $id;
+        $this->view->rewardExp = $rewardExp;
+        $this->view->rewardGold = $rewardGold;
+        $this->view->menu_active = 'hunt';
+        $this->view->pick('hunt/result');
     }
 
     public function getHuntReward($huntNo)

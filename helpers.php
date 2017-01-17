@@ -32,6 +32,20 @@ function getUrl($link) {
     return $config->get('baseUrl') . $link;
 }
 
+function getHuntNameFromId($huntId) {
+    if($huntId == 1) {
+        return 'Farm';
+    } elseif($huntId == 2) {
+        return 'Village';
+    } elseif($huntId == 2) {
+        return 'Small Town';
+    } elseif($huntId == 2) {
+        return 'City';
+    } else {
+        return 'Metropolis';
+    }
+}
+
 function getSkillCost($skillLevel) {
     return floor(pow($skillLevel - 4, 2.4));
 }

@@ -1,0 +1,43 @@
+<script type="text/javascript">
+    $('#header h1').text('Man Hunt');
+</script>
+<div class="btn-left left">
+    <div class="btn-right"><a href="<?php echo getUrl('hunt/index'); ?>"  class="btn" >back</a></div>
+</div>
+<br class="clearfloat"/>
+<div id="humanhuntresult">
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt="">Man Hunt</h2>
+
+            <div class="buildingDesc">
+                <img src="<?php echo getAssetLink('img/hunt/city'.$huntId.'.jpg'); ?>" title="Man Hunt" width="340" height="125" class="npc-logo left">
+                <?php if($success): ?>
+                <p>
+                    Your hunt leads you to a <?php echo getHuntNameFromId($huntId); ?>.<br><br>
+                    You have captured <?php echo prettyNumber($rewardGold); ?> Blood and <?php echo prettyNumber($rewardGold); ?> gold. You also receive <?php echo $rewardExp; ?> experience points!<br><br>
+                    <?php if(isset($rewardFragment)): ?>+<?php echo $rewardFragment; ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="Fragments" align="absmiddle" border="0"><br><br><?php endif; ?>
+                </p>
+                <?php else: ?>
+                <p>It is a cold and dark night. Moths busily fly around the lanterns. And while you watch the buzz of activity surrounding these night creatures, you don`t notice the time passing by. When you finally take your eyes off them, you realise that quite a few minutes have passed.</p>
+                <?php endif; ?>
+
+                <div class="btn-left left">
+                    <div class="btn-right">
+                        <button type="submit" class="btn" onclick="window.location.replace('<?php echo getUrl('hunt/human'); ?>/<?php echo $huntId; ?>?_tkey=<?php echo $this->security->getTokenKey() ?>&_token=<?php echo $this->security->getToken() ?>');">Again <span class="cost">-1<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+</div>
