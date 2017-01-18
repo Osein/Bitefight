@@ -45,4 +45,9 @@ $hunt->addGet('/index', ['action' => 'getHunt']);
 $hunt->addGet('/human/{id:[1-5]}', ['action' => 'getHumanHunt']);
 $router->mount($hunt);
 
+$router->addGet('/logout', [
+    'controller' => 'User',
+    'action' => 'getLogout'
+]);
+
 return $router;

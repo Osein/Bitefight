@@ -89,4 +89,9 @@ class UserController extends GameController
         $this->view->pick('home/news');
     }
 
+    public function getLogout() {
+        $this->session->remove('user_id');
+        return $this->response->redirect(getUrl(''));
+    }
+
 }
