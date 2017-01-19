@@ -229,6 +229,15 @@ class UserController extends GameController
         return $this->response->redirect(getUrl('notepad'));
     }
 
+    public function getSettings() {
+        $this->view->menu_active = 'settings';
+        $this->view->pick('user/settings');
+    }
+
+    public function postSettings() {
+
+    }
+
     public function getLogout() {
         $this->session->remove('user_id');
         return $this->response->redirect(getUrl(''));

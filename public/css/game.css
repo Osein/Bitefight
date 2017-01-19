@@ -2440,3 +2440,143 @@ div#easterEgg.green
 {
     background: url('../img/gameEvent/EggHunt/green.png') no-repeat;
 }
+
+/**
+BBCODE
+**/
+
+.bbcode_toolbar
+{
+    margin: 7px 35px 7px 45px;
+    height: 24px;
+}
+
+.bbcode_button
+{
+    height: 24px;
+    width: 24px;
+    float: left;
+    border: 0;
+    margin-right: 3px;
+    cursor: pointer;
+}
+
+.bbcode_dropdown
+{
+    float: left;
+    height: 24px;
+    max-width: 140px;
+    *width: 140px;
+    margin-left: 5px;
+}
+
+.colorPicker
+{
+    height: 81px;
+    width: 113px;
+    float: left;
+    background-color: #000000;
+}
+
+.colorPicker ul
+{
+    margin: 0;
+    padding: 0;
+    list-style: none outside none;
+    float: none;
+    display: block;
+    font-weight: normal;
+    font-size: 0;
+}
+
+.colorPicker ul li
+{
+    margin: 0;
+    padding: 1px 0 0 1px;
+    display: block;
+    float: left;
+    border: 0 none;
+    position: relative;
+}
+
+.colorPicker ul li a
+{
+    height: 15px;
+    width: 15px;
+}
+
+.colorPicker ul li a, .colorPicker ul li a:hover
+{
+    background-image: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+.colorPicker ul li a:hover
+{
+    background: no-repeat -1px -1px;
+    height: 13px;
+    width: 13px;
+    border: 1px solid #FFFFFF;
+}
+
+
+.colorPickerTogglePanel
+{
+    height: 81px;
+    width: 113px;
+    position: absolute;
+    margin-top: 24px;
+    *margin-left: -27px;
+}
+
+.linkPicker
+{
+    height: auto;
+    width: auto;
+    min-width: 113px;
+    float: left;
+    background-color: #2f0108;
+    border: 1px solid #8F0A0B;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.linkPickerTitle
+{
+    padding: 3px;
+    margin: 0;
+    font-size: 11pt;
+    color: #B09795;
+    font-weight: bold;
+}
+
+.linkPicker a
+{
+    font-weight: normal;
+    font-size: 10pt;
+    color: #B09795;
+    float: none;
+    margin: 0;
+    display: block;
+    border: 0 none;
+    position: relative;
+    text-decoration: none;
+    padding: 3px;
+}
+
+.linkPicker a:hover
+{
+    background-color: #DBCBA5;
+}
+
+.linkPickerTogglePanel
+{
+    height: auto;
+    position: absolute;
+    margin-top: 24px;
+    *margin-left: -27px;
+}

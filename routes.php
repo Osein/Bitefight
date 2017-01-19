@@ -37,6 +37,8 @@ $user->addPost('/profile/training', ['action' => 'postTrainingUp']);
 $user->addGet('/profile/logo', ['action' => 'getProfileLogo']);
 $user->addPost('/profile/logo', ['action' => 'postProfileLogo']);
 $user->addGet('/news', ['action' => 'getNews']);
+$user->addGet('/settings', ['action' => 'getSettings']);
+$user->addPost('/settings', ['action' => 'postSettings']);
 $router->mount($user);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);
