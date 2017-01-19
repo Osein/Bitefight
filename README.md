@@ -18,14 +18,8 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 ## Ingame
 
-**Profile** 40%
+**Profile** 40% ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
 
-( Done: Stats, Logo )
+**Hideout** %50 ( Done: Basic four, Needs: Premium four )
 
-( Needs: Items, Talents, Aspects and Orbs )
-
-**Hunt** %25
-
-( Done: Human Hunt )
-
-( Needs: PvP )
+**Hunt** %25 ( Done: Human Hunt, Needs: PvP )
