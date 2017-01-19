@@ -108,45 +108,103 @@ class UserController extends GameController
         switch ($upgradeId) {
             case 1:
                 $upgradeCost = getHideoutCost('domi', $this->user->h_domi);
-
                 if($this->user->gold >= $upgradeCost && $this->user->h_domicile < 14) {
                     $this->user->gold -= $upgradeCost;
                     $this->user->h_domicile++;
                 }
-
                 break;
-
             case 2:
                 $upgradeCost = getHideoutCost('wall', $this->user->h_wall);
-
                 if($this->user->gold >= $upgradeCost && $this->user->h_wall < 6) {
                     $this->user->gold -= $upgradeCost;
                     $this->user->h_wall++;
                 }
-
                 break;
-
             case 3:
                 $upgradeCost = getHideoutCost('path', $this->user->h_path);
-
                 if($this->user->gold >= $upgradeCost && $this->user->h_path < 6) {
                     $this->user->gold -= $upgradeCost;
                     $this->user->h_path++;
                     $this->user->ap_max++;
                 }
-
                 break;
-
             case 4:
                 $upgradeCost = getHideoutCost('land', $this->user->h_land);
-
                 if($this->user->gold >= $upgradeCost && $this->user->h_land < 6) {
                     $this->user->gold -= $upgradeCost;
                     $this->user->h_land++;
                 }
-
                 break;
-
+            case 5:
+                if($this->user->hellstone >= 20) {
+                    $this->user->hellstone -= 20;
+                    if($this->user->h_treasure >= time()) {
+                        $this->user->h_treasure += 2419200;
+                    } else {
+                        $this->user->h_treasure = time() + 2419200;
+                    }
+                }
+                break;
+            case 6:
+                if($this->user->hellstone >= 55) {
+                    $this->user->hellstone -= 55;
+                    if($this->user->h_treasure >= time()) {
+                        $this->user->h_treasure += 7257600;
+                    } else {
+                        $this->user->h_treasure = time() + 7257600;
+                    }
+                }
+                break;
+            case 7:
+                if($this->user->hellstone >= 20) {
+                    $this->user->hellstone -= 20;
+                    if($this->user->h_gargoyle >= time()) {
+                        $this->user->h_gargoyle += 2419200;
+                    } else {
+                        $this->user->h_gargoyle = time() + 2419200;
+                    }
+                }
+                break;
+            case 8:
+                if($this->user->hellstone >= 55) {
+                    $this->user->hellstone -= 55;
+                    if($this->user->h_gargoyle >= time()) {
+                        $this->user->h_gargoyle += 7257600;
+                    } else {
+                        $this->user->h_gargoyle = time() + 7257600;
+                    }
+                }
+                break;
+            case 9:
+                if($this->user->hellstone >= 20) {
+                    $this->user->hellstone -= 20;
+                    if($this->user->h_book >= time()) {
+                        $this->user->h_book += 2419200;
+                    } else {
+                        $this->user->h_book = time() + 2419200;
+                    }
+                }
+                break;
+            case 10:
+                if($this->user->hellstone >= 55) {
+                    $this->user->hellstone -= 55;
+                    if($this->user->h_book >= time()) {
+                        $this->user->h_book += 7257600;
+                    } else {
+                        $this->user->h_book = time() + 7257600;
+                    }
+                }
+                break;
+            case 11:
+                if($this->user->hellstone >= 69) {
+                    $this->user->hellstone -= 69;
+                    if($this->user->h_royal >= time()) {
+                        $this->user->h_royal += 3628800;
+                    } else {
+                        $this->user->h_royal = time() + 3628800;
+                    }
+                }
+                break;
         }
 
         return $this->response->redirect(getUrl('hideout'));

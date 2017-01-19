@@ -57,14 +57,15 @@
                                                     }
                                                 });
                                             });
-                                            function redirectUser() {
-                                                setTimeout('window.location = "/bf/user/hideout"',3000);
-                                            }
                                         </script>
                                     <?php endif; ?>
                                 </td>
                                 <td class="center-text">
-                                    <a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">4 weeks cost you 20 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></a><br><a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">12 weeks cost you 55 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></a>
+                                    <a href="<?php if($user->hellstone >= 20): ?><?php echo getUrl('hideout/upgrade?id=5&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">4 weeks cost you 20 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
+
+                                    <br>
+
+                                    <a href="<?php if($user->hellstone >= 55): ?><?php echo getUrl('hideout/upgrade?id=6&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">12 weeks cost you 55 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
                                 </td>
                             </tr>
                             <tr>
@@ -95,7 +96,8 @@
                                     <?php endif; ?>
                                 </td>
                                 <td class="center-text">
-                                    <a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">6 weeks cost you: 69 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></a>    </td>
+                                    <a href="<?php if($user->hellstone >= 69): ?><?php echo getUrl('hideout/upgrade?id=11&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">6 weeks cost you 69 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
+                                </td>
                             </tr>
 
                             <tr>
@@ -125,15 +127,11 @@
                                     <?php endif; ?>
                                 </td>
                                 <td class="center-text">
-                                    <a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">
-                                        4 weeks cost you 20 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0">
-                                    </a>
+                                    <a href="<?php if($user->hellstone >= 20): ?><?php echo getUrl('hideout/upgrade?id=7&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">4 weeks cost you 20 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
 
                                     <br>
 
-                                    <a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">
-                                        12 weeks cost you 55 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0">
-                                    </a>
+                                    <a href="<?php if($user->hellstone >= 55): ?><?php echo getUrl('hideout/upgrade?id=8&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">12 weeks cost you 55 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
                                 </td>
                             </tr>
 
@@ -164,15 +162,11 @@
                                     <?php endif; ?>
                                 </td>
                                 <td class="center-text">
-                                    <a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">
-                                        4 weeks cost you 20 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0">
-                                    </a>
+                                    <a href="<?php if($user->hellstone >= 20): ?><?php echo getUrl('hideout/upgrade?id=9&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">4 weeks cost you 20 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
 
                                     <br>
 
-                                    <a href="/city/voodoo/" target="_top" style="display:block; width:260px; text-align:center;">
-                                        12 weeks cost you 55 <img src="/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0">
-                                    </a>
+                                    <a href="<?php if($user->hellstone >= 55): ?><?php echo getUrl('hideout/upgrade?id=10&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?><?php else: ?><?php echo getUrl('hideout') ?><?php endif; ?>" target="_top" style="display:block; width:260px; text-align:center;">12 weeks cost you 55 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></a>
                                 </td>
                             </tr>
                             <tr>
@@ -206,9 +200,9 @@
                                         -
                                     <?php else: ?>
                                         <?php if(getHideoutCost('wall', $user->h_wall) <= $user->gold): ?>
-                                            <a href="<?php echo getUrl('hideout/upgrade?id=2&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?>" target="_top">The next level costs <?php echo prettyNumber(getHideoutCost('domi', $user->h_wall)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></a>
+                                            <a href="<?php echo getUrl('hideout/upgrade?id=2&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?>" target="_top">The next level costs <?php echo prettyNumber(getHideoutCost('wall', $user->h_wall)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></a>
                                         <?php else: ?>
-                                            The next level costs <?php echo prettyNumber(getHideoutCost('domi', $user->h_wall)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
+                                            The next level costs <?php echo prettyNumber(getHideoutCost('wall', $user->h_wall)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </td>

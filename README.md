@@ -20,6 +20,6 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 **Profile** 40% ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
 
-**Hideout** %50 ( Done: Basic four, Needs: Premium four )
+**Hideout** %100
 
 **Hunt** %25 ( Done: Human Hunt, Needs: PvP )
