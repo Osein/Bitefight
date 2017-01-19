@@ -45,6 +45,11 @@ $hunt->addGet('/index', ['action' => 'getHunt']);
 $hunt->addGet('/human/{id:[1-5]}', ['action' => 'getHumanHunt']);
 $router->mount($hunt);
 
+$hideout = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
+$hideout->setPrefix('/hideout');
+$hideout->addGet('', ['action' => 'getHideout']);
+$router->mount($hideout);
+
 $router->addGet('/logout', [
     'controller' => 'User',
     'action' => 'getLogout'

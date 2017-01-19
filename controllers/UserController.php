@@ -9,6 +9,15 @@
 class UserController extends GameController
 {
 
+    public function getNews() {
+        $this->view->menu_active = 'news';
+        $news = ORM::for_table('news')
+            ->find_many();
+
+        $this->view->news = $news;
+        $this->view->pick('home/news');
+    }
+
     public function getProfile() {
         $this->view->menu_active = 'profile';
 
@@ -80,13 +89,10 @@ class UserController extends GameController
         return $this->response->redirect(getUrl('user/profile'));
     }
 
-    public function getNews() {
-        $this->view->menu_active = 'news';
-        $news = ORM::for_table('news')
-            ->find_many();
+    public function getHideout() {
+        $this->view->menu_active = 'hideout';
 
-        $this->view->news = $news;
-        $this->view->pick('home/news');
+        $this->view->pick('user/hideout');
     }
 
     public function getLogout() {
