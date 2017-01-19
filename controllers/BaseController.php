@@ -29,6 +29,7 @@ class BaseController extends \Phalcon\Mvc\Controller
     }
 
     /**
+     * Here to replace the ugly code
      * @return mixed
      */
     public function notFound() {
