@@ -52,4 +52,13 @@ class GameController extends BaseController
         $this->user->save();
     }
 
+    public function getSearch() {
+        $this->view->menu_active = 'search';
+        $this->view->pick('user/search');
+    }
+
+    public function postSearch() {
+
+    }
+
 }

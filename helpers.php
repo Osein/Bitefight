@@ -54,94 +54,53 @@ function dd() {
     array_map(function($x) { var_dump($x); }, func_get_args()); die;
 }
 
-function getHideoutCost($type, $level)
-{
-    if($type=='domi')
-    {return pow(4, $level);}
-    if($type=='wall')
-    {return pow(10, $level);}
-    if($type=='path')
-    {return pow(9, $level);}
-    if($type=='land')
-    {return pow(8, $level);}
+function getHideoutCost($type, $level) {
+    if($type=='domi') {return pow(4, $level);}
+    elseif($type=='wall') {return pow(10, $level);}
+    elseif($type=='path') {return pow(9, $level);}
+    else {return pow(8, $level);}
 }
 
-function getWallEffect($level)
-{
-    switch($level)
-    {
-        case 0:
-            return -1;
-        case 1:
-            return -3;
-        case 2:
-            return -6;
-        case 3:
-            return -9;
-        case 4:
-            return -12;
-        case 5:
-            return -15;
-        case 6:
-            return -15;
-    }
+function getWallEffect($level) {
+    if(!$level) return 0;
+    if($level == 1) return -1;
+    return ($level - 1) * -3;
 }
 
-function getLandEffect($level)
-{
-    switch($level)
-    {
-        case 0:
-            return 1;
-        case 1:
-            return 2;
-        case 2:
-            return 4;
-        case 3:
-            return 6;
-        case 4:
-            return 8;
-        case 5:
-            return 12;
-        case 6:
-            return 12;
-    }
+function getLandEffect($level) {
+    if(!$level) return 0;
+    if($level == 1 || $level == 2) return $level * 2;
+    if($level < 6) return ($level - 1) * 2;
+    return 12;
 }
 
-function e($str)
-{
+function e($str) {
     return htmlspecialchars($str, ENT_QUOTES, "UTF-8");
 }
 
-function prettyNumber($number)
-{
+function prettyNumber($number) {
     return number_format($number, 0, ',', '.');
 }
 
-function getLevel($exp)
-{
+function getLevel($exp) {
     return floor( sqrt( $exp / 5 ) ) + 1;
 }
 
-function getExpNeeded($level)
-{
+function getExpNeeded($level) {
     return ((pow( $level, 2 ) * 5) + (5 * floor($level / 5)));
 }
 
-function getPreviousExpNeeded($level)
-{
+function getPreviousExpNeeded($level) {
     return getExpNeeded($level - 1);
 }
 
-function getItemModelFromModelNo($modelNo)
-{
+function getItemModelFromModelNo($modelNo) {
     $modelArray = array('weapons', 'potions', 'helmets', 'armour', 'jewellery', 'gloves', 'boots', 'shields');
 
     return $modelArray[$modelNo-1];
 }
 
-function profilePrintUserItem($i)
-{
+function profilePrintUserItem($i) {
     ?>
     <tr>
         <td class='<?php if($i->equipped) echo 'active'; else echo 'inactive'; ?> itemslot' style="text-align:center;">
