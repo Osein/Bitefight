@@ -210,6 +210,25 @@ class UserController extends GameController
         return $this->response->redirect(getUrl('hideout'));
     }
 
+    public function getNotepad() {
+        $this->view->menu_active = 'notepad';
+        $note = ORM::for_table('user_note')->where('user_id', $this->user->id)->find_one();
+        $this->view->user_note = $note?$note->note:'';
+        $this->view->pick('user/notepad');
+    }
+
+    public function postNotepad() {
+        $note = $this->request->getPost('note');
+        $dbNote = ORM::for_table('user_note')->where('user_id', $this->user->id)->find_one();
+        if(!$dbNote) {
+            $dbNote = ORM::for_table('user_note')->create();
+            $dbNote->user_id = $this->user->id;
+        }
+        $dbNote->note = $note;
+        $dbNote->save();
+        return $this->response->redirect(getUrl('notepad'));
+    }
+
     public function getLogout() {
         $this->session->remove('user_id');
         return $this->response->redirect(getUrl(''));

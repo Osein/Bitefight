@@ -51,6 +51,16 @@ $hideout->addGet('', ['action' => 'getHideout']);
 $hideout->addGet('/upgrade', ['action' => 'getHideoutUpgrade']);
 $router->mount($hideout);
 
+$router->addGet('/notepad', [
+    'controller' => 'User',
+    'action' => 'getNotepad'
+]);
+
+$router->addPost('/notepad', [
+    'controller' => 'User',
+    'action' => 'postNotepad'
+]);
+
 $router->addGet('/logout', [
     'controller' => 'User',
     'action' => 'getLogout'
