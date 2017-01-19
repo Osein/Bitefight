@@ -95,6 +95,63 @@ class UserController extends GameController
         $this->view->pick('user/hideout');
     }
 
+    public function getHideoutUpgrade() {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if(!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('hideout'));
+        }
+
+        $upgradeId = $this->request->get('id');
+
+        switch ($upgradeId) {
+            case 1:
+                $upgradeCost = getHideoutCost('domi', $this->user->h_domi);
+
+                if($this->user->gold >= $upgradeCost && $this->user->h_domicile < 14) {
+                    $this->user->gold -= $upgradeCost;
+                    $this->user->h_domicile++;
+                }
+
+                break;
+
+            case 2:
+                $upgradeCost = getHideoutCost('wall', $this->user->h_wall);
+
+                if($this->user->gold >= $upgradeCost && $this->user->h_wall < 6) {
+                    $this->user->gold -= $upgradeCost;
+                    $this->user->h_wall++;
+                }
+
+                break;
+
+            case 3:
+                $upgradeCost = getHideoutCost('path', $this->user->h_path);
+
+                if($this->user->gold >= $upgradeCost && $this->user->h_path < 6) {
+                    $this->user->gold -= $upgradeCost;
+                    $this->user->h_path++;
+                    $this->user->ap_max++;
+                }
+
+                break;
+
+            case 4:
+                $upgradeCost = getHideoutCost('land', $this->user->h_land);
+
+                if($this->user->gold >= $upgradeCost && $this->user->h_land < 6) {
+                    $this->user->gold -= $upgradeCost;
+                    $this->user->h_land++;
+                }
+
+                break;
+
+        }
+
+        return $this->response->redirect(getUrl('hideout'));
+    }
+
     public function getLogout() {
         $this->session->remove('user_id');
         return $this->response->redirect(getUrl(''));

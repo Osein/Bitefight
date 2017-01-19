@@ -48,6 +48,7 @@ $router->mount($hunt);
 $hideout = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
 $hideout->setPrefix('/hideout');
 $hideout->addGet('', ['action' => 'getHideout']);
+$hideout->addGet('/upgrade', ['action' => 'getHideoutUpgrade']);
 $router->mount($hideout);
 
 $router->addGet('/logout', [

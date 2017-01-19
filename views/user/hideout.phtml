@@ -180,36 +180,76 @@
                                 <td class="tdn" width="150"><a href="#hint">Domicile</a>
                                 </td>
                                 <td class="tdn" width="100">
-                                    Level <?php echo $user->h_domicile; ?> / 14            </td>
+                                    Level <?php echo $user->h_domicile; ?> / 14
+                                </td>
                                 <td class="center-text">
-                                    The next level costs 16.777.216 <img src="/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0">    </td>
+                                    <?php if($user->h_domicile == 14): ?>
+                                    -
+                                    <?php else: ?>
+                                        <?php if(getHideoutCost('domi', $user->h_domicile) <= $user->gold): ?>
+                                            <a href="<?php echo getUrl('hideout/upgrade?id=1&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?>" target="_top">The next level costs <?php echo prettyNumber(getHideoutCost('domi', $user->h_domicile)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></a>
+                                        <?php else: ?>
+                                            The next level costs <?php echo prettyNumber(getHideoutCost('domi', $user->h_domicile)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="tdn" width="100"><img src="<?php echo getAssetLink('img/hideout/1/palace2.jpg'); ?>" alt="Wall"></td>
                                 <td class="tdn" width="150"><a href="#hint">Wall</a>
                                 </td>
                                 <td class="tdn" width="100">
-                                    Level <?php echo $user->h_wall; ?> / 6            </td>
+                                    Level <?php echo $user->h_wall; ?> / 6
+                                </td>
                                 <td class="center-text">
-                                    -    </td>
+                                    <?php if($user->h_wall == 6): ?>
+                                        -
+                                    <?php else: ?>
+                                        <?php if(getHideoutCost('wall', $user->h_wall) <= $user->gold): ?>
+                                            <a href="<?php echo getUrl('hideout/upgrade?id=2&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?>" target="_top">The next level costs <?php echo prettyNumber(getHideoutCost('domi', $user->h_wall)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></a>
+                                        <?php else: ?>
+                                            The next level costs <?php echo prettyNumber(getHideoutCost('domi', $user->h_wall)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="tdn" width="100"><img src="<?php echo getAssetLink('img/hideout/1/palace3.jpg'); ?>" alt="Path"></td>
                                 <td class="tdn" width="150"><a href="#hint">Path</a>
                                 </td>
                                 <td class="tdn" width="100">
-                                    Level <?php echo $user->h_path; ?> / 6            </td>
+                                    Level <?php echo $user->h_path; ?> / 6
+                                </td>
                                 <td class="center-text">
-                                    -    </td>
+                                    <?php if($user->h_path == 6): ?>
+                                        -
+                                    <?php else: ?>
+                                        <?php if(getHideoutCost('wall', $user->h_path) <= $user->gold): ?>
+                                            <a href="<?php echo getUrl('hideout/upgrade?id=3&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?>" target="_top">The next level costs <?php echo prettyNumber(getHideoutCost('path', $user->h_path)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></a>
+                                        <?php else: ?>
+                                            The next level costs <?php echo prettyNumber(getHideoutCost('path', $user->h_path)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="tdn" width="100"><img src="<?php echo getAssetLink('img/hideout/1/palace4.jpg'); ?>" alt="Landscape"></td>
                                 <td class="tdn" width="150"><a href="#hint">Landscape</a>
                                 </td>
                                 <td class="tdn" width="100">
-                                    Level <?php echo $user->h_land; ?> / 6            </td>
+                                    Level <?php echo $user->h_land; ?> / 6
+                                </td>
                                 <td class="center-text">
-                                    -    </td>
+                                    <?php if($user->h_land == 6): ?>
+                                        -
+                                    <?php else: ?>
+                                        <?php if(getHideoutCost('wall', $user->h_land) <= $user->gold): ?>
+                                            <a href="<?php echo getUrl('hideout/upgrade?id=4&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()) ?>" target="_top">The next level costs <?php echo prettyNumber(getHideoutCost('land', $user->h_land)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></a>
+                                        <?php else: ?>
+                                            The next level costs <?php echo prettyNumber(getHideoutCost('land', $user->h_land)); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </td>
                             </tr>
                             </tbody>
                             </table>
@@ -229,9 +269,9 @@
                                 <b>Book of the Damned</b>:&nbsp;The Elders have written much valuable information over the course of the centuries in the Book of the Damned, all of which can help you in the fight against your foes. Using the Book, your strength increases by 30%. <br>Strength +30%<br>
                             You will only receive the increase when you are the attacker.<br><br>
                                 <b>Domicile</b>:&nbsp;With every upgrade of your main building you will get two more items in your inventory.<br><br>
-                                <b>Wall</b>:&nbsp;A wall protects you when you are attacked. It helps you to receive less damage.<br>With your wall (level 6), your opponent will receive -15 bonus damage when they attack you.<br><br>
+                                <b>Wall</b>:&nbsp;A wall protects you when you are attacked. It helps you to receive less damage.<?php if($user->h_wall > 0): ?><br>With your wall (level <?php echo $user->h_wall; ?>), your opponent will receive <?php echo getWallEffect($user->h_wall); ?> bonus damage when they attack you.<?php endif; ?><br><br>
                                 <b>Path</b>:&nbsp;Having a good path gets you to your targets faster. As a result you can carry out more actions.<br> +1 on the maximum AP per path level.<br><br>
-                                <b>Landscape</b>:&nbsp;The landscape is a symbol of your dark aura. The more lavish it is, the stronger effect your particular skills will have on your enemies when you are attacked.<br>Your landscape (level 6) provides you with +12% bonus talent of activating your talents when you are attacked.<br><br>
+                                <b>Landscape</b>:&nbsp;The landscape is a symbol of your dark aura. The more lavish it is, the stronger effect your particular skills will have on your enemies when you are attacked.<?php if($user->h_land > 0): ?><br>Your landscape (level <?php echo $user->h_land; ?>) provides you with +<?php echo getLandEffect($user->h_land); ?>% bonus talent of activating your talents when you are attacked.<?php endif; ?><br><br>
                             </span>
                         </td>
                     </tr>

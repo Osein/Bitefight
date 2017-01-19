@@ -50,6 +50,64 @@ function getSkillCost($skillLevel) {
     return floor(pow($skillLevel - 4, 2.4));
 }
 
+function dd() {
+    array_map(function($x) { var_dump($x); }, func_get_args()); die;
+}
+
+function getHideoutCost($type, $level)
+{
+    if($type=='domi')
+    {return pow(4, $level);}
+    if($type=='wall')
+    {return pow(10, $level);}
+    if($type=='path')
+    {return pow(9, $level);}
+    if($type=='land')
+    {return pow(8, $level);}
+}
+
+function getWallEffect($level)
+{
+    switch($level)
+    {
+        case 0:
+            return -1;
+        case 1:
+            return -3;
+        case 2:
+            return -6;
+        case 3:
+            return -9;
+        case 4:
+            return -12;
+        case 5:
+            return -15;
+        case 6:
+            return -15;
+    }
+}
+
+function getLandEffect($level)
+{
+    switch($level)
+    {
+        case 0:
+            return 1;
+        case 1:
+            return 2;
+        case 2:
+            return 4;
+        case 3:
+            return 6;
+        case 4:
+            return 8;
+        case 5:
+            return 12;
+        case 6:
+            return 12;
+    }
+}
+
 function e($str)
 {
     return htmlspecialchars($str, ENT_QUOTES, "UTF-8");
