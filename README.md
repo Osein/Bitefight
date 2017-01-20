@@ -25,3 +25,7 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 **Notepad** 100%
 
 **Hunt** 25% ( Done: Human Hunt, Needs: PvP )
+
+**Settings** ( Done: Description(*Needs Clan Links*) )
+
+**Preview** ( Needs: Clan )
