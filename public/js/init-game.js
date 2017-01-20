@@ -31,14 +31,15 @@ function insertBBCode(elementId, startTag, closeTag)
 		var textLen = text.length;
 		var start = textArea[0].selectionStart;
 		var end = textArea[0].selectionEnd;
-
-
 		var sel = text.substring(start, end);
-
-
 		var rep = startTag + sel + closeTag;
 
 		textArea.val(text.substring(0,start) + rep + text.substring(end,textLen));
+
+		if(sel.length == 0) {
+			textArea[0].selectionStart = start + startTag.length;
+			textArea[0].selectionEnd = start + startTag.length;
+		}
 	}
 
 	textArea.scrollTop = scrollposBefore;
