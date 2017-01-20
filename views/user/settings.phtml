@@ -1,4 +1,5 @@
-<form action="http://s202.en.bitefight.gameforge.com/user/settings?__token=88aadc5a5c3b2206dd40ac6a80e55b95" method="POST">
+<form action="<?php echo getUrl('user/settings'); ?>" method="POST">
+    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
     <div id="settings">
         <h1>profile settings for <?php echo e($user->name); ?></h1>
         <!--
@@ -49,7 +50,7 @@
             </div>
             <div class="wrap-left clearfix">
                 <div class="wrap-content wrap-right clearfix">
-                    <h2><img src="/img/symbols/race1small.gif" alt="">RPG-description of your character</h2>
+                    <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">RPG-description of your character</h2>
                     <script language="JavaScript">
                         function init() {
                             var rpgfield = document.getElementsByName('rpg')[0];
@@ -79,12 +80,12 @@
                     <p></p>
                     <div class="bbcode_toolbar">
                         <div style="float:left;">
-                            <img title="bold" class="bbcode_button" src="/img/symbols/bbcode/bbcode_bold.gif" onclick="insertBBCode('rpg', '[b]', '[/b]')">
-                            <img title="italics" class="bbcode_button" src="/img/symbols/bbcode/bbcode_italic.gif" onclick="insertBBCode('rpg', '[i]', '[/i]')">
+                            <img title="bold" class="bbcode_button" src="<?php echo getAssetLink('img/symbols/bbcode/bbcode_bold.gif'); ?>" onclick="insertBBCode('rpg', '[b]', '[/b]')">
+                            <img title="italics" class="bbcode_button" src="<?php echo getAssetLink('img/symbols/bbcode/bbcode_italic.gif'); ?>" onclick="insertBBCode('rpg', '[i]', '[/i]')">
 
                             <div id="toggleContainerLink" style="float:left;">
                                 <a id="toggleLinkLink" href="#" class="toggleHidden">
-                                    <img title="internal link" class="bbcode_button" src="/img/symbols/bbcode/bbcode_link.gif">
+                                    <img title="internal link" class="bbcode_button" src="<?php echo getAssetLink('img/symbols/bbcode/bbcode_link.gif'); ?>">
                                 </a>
 
                                 <div id="togglePanelLink" class="linkPickerTogglePanel" style="display: none;">
@@ -103,7 +104,7 @@
 
                             <div id="toggleContainerColor" style="float:left;">
                                 <a id="toggleLinkColor" href="#" class="toggleHidden">
-                                    <img title="Font colour" class="bbcode_button" src="/img/symbols/bbcode/bbcode_color.gif">
+                                    <img title="Font colour" class="bbcode_button" src="<?php echo getAssetLink('img/symbols/bbcode/bbcode_color.gif'); ?>">
                                 </a>
 
                                 <div id="togglePanelColor" class="colorPickerTogglePanel" style="display: none;">
@@ -255,7 +256,7 @@
                         panelOverseer.registerPanelContainer('Color', 1500);
                         panelOverseer.registerPanelContainer('Link', 1500);
                     </script>
-                    <textarea name="rpg" id="rpg" rows="15" cols="75" style="text-align:center"></textarea>
+                    <textarea name="rpg" id="rpg" rows="15" cols="75" style="text-align:center"><?php if(isset($userDescription)) echo $userDescription ;?></textarea>
                     <p></p>
                 </div>
             </div>

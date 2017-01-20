@@ -135,7 +135,7 @@ function parseBBCodes($text) {
         '<a href="'.getUrl('profile/player/$2').'">$1</a>'
     );
 
-    return preg_replace($find,$replace,$text);
+    return preg_replace($find,$replace,e($text));
 }
 
 function profilePrintUserItem($i) {

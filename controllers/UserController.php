@@ -231,11 +231,25 @@ class UserController extends GameController
 
     public function getSettings() {
         $this->view->menu_active = 'settings';
+        $userDescription = ORM::for_table('user_description')->where('user_id', $this->user->id)->find_one();
+        if($userDescription) {
+            $this->view->userDescription = $userDescription->description;
+        }
         $this->view->pick('user/settings');
     }
 
     public function postSettings() {
+        $parsedBb = parseBBCodes($this->request->get('rpg'));
 
+        $dbDesc = ORM::for_table('user_description')->where('user_id', $this->user->id)->find_one();
+        if(!$dbDesc) {
+            $dbDesc = ORM::for_table('user_description')->create();
+            $dbDesc->user_id = $this->user->id;
+        }
+        $dbDesc->description = $this->request->get('rpg');
+        $dbDesc->descriptionHtml = $parsedBb;
+        $dbDesc->save();
+        return $this->response->redirect(getUrl('user/settings'));
     }
 
     public function getLogout() {
@@ -244,6 +258,29 @@ class UserController extends GameController
     }
 
     public function getPreview($id) {
+        $user = ORM::for_table('user')
+            ->select('user.*')
+            ->select('user_description.descriptionHtml')
+            ->left_outer_join('user_description', ['user.id', '=', 'user_description.user_id'])
+            ->find_one($id);
+
+        if(!$user) {
+            return $this->notFound();
+        }
+
+        $stat_max = max($user->str, $user->dex, $user->dex, $user->end, $user->cha);
+        $userLevel = getLevel($user->exp);
+        $previousLevelExp = getPreviousExpNeeded($userLevel);
+        $nextLevelExp = getExpNeeded($userLevel);
+        $levelExpDiff = $nextLevelExp - $previousLevelExp;
+
+        $this->view->puser = $user;
+        $this->view->exp_red_long = ($user->exp - $previousLevelExp) / $levelExpDiff * 400;
+        $this->view->str_red_long = $user->str / $stat_max * 400;
+        $this->view->def_red_long = $user->def / $stat_max * 400;
+        $this->view->dex_red_long = $user->dex / $stat_max * 400;
+        $this->view->end_red_long = $user->end / $stat_max * 400;
+        $this->view->cha_red_long = $user->cha / $stat_max * 400;
         $this->view->menu_active = 'profile';
         $this->view->pick('user/preview');
     }

@@ -57,7 +57,7 @@
                         <table cellpadding="2" cellspacing="2" border="0" width="520px" style="float: right;">
                             <tr>
                                 <td nowrap>County:</td>
-                                <td nowrap width="90%"><?php echo $config->serverName; ?></td>
+                                <td nowrap width="90%"><?php echo e($config->serverName); ?></td>
                             </tr>
                             <tr>
                                 <td nowrap>Race:</td>
@@ -69,7 +69,7 @@
                             </tr>
                             <tr>
                                 <td nowrap>Player name:</td>
-                                <td nowrap><?php echo $user->name; ?><!--<a href="/profile/player/77625">Xyir</a>--></td>
+                                <td nowrap><a href="<?php echo getUrl('profile/player/'.$user->id); ?>"><?php echo e($user->name); ?></a></td>
                             </tr>
                             <tr>
                                 <td nowrap>Level:</td>
