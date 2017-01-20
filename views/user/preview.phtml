@@ -1,0 +1,458 @@
+<div class="table-wrap">
+    <div id="playerUserPic">
+        <div class="wrap-top-left">
+            <div class="wrap-top-right">
+                <div class="wrap-top-middle"></div>
+            </div>
+        </div>
+        <div class="wrap-left">
+            <div class="wrap-content wrap-right">
+                <img src="/img/logo/1/tmp/f-2-1-5-15-2-5-28.png" border="0" width="168" alt="playerlogo">									 <a href="http://s202.en.bitefight.gameforge.com/clan/?id=8609"><img src="/img/logo/0/tmp/1-1.png" border="0"></a>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+    <div id="player">
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <h2><img src="/img/symbols/race1small.gif" alt="">Vampire <span>Xyir</span></h2>
+                <div class="table-wrap">
+                    <table width="100%">
+                        <tbody><tr>
+                            <td class="no-bg">
+                                <h3>Entire Booty:</h3>
+                                <p>446.408.919 Blood</p>
+                                <h3>Clan:</h3>
+                                <p><a href="http://s202.en.bitefight.gameforge.com/clan/viewExtern/8609">ZzZzZzZzZ [ZzZzZ]</a></p>
+                                <h3>Rank:</h3>
+                                <p>Master (War minister)						</p>
+                            </td>
+                            <td class="no-bg">
+                                <br class="clearfloat">
+                                <div class="center">
+                                    <div class="btn-left center">
+                                        <div class="btn-right">
+                                            <a class="btn" href="/buddy/buddyrequest/77625">Buddy request</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br class="clearfloat">
+                                <div class="center">
+                                    <div class="btn-left center">
+                                        <div class="btn-right">
+                                            <button type="submit" class="btndisable">Attack</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br class="clearfloat">
+                                <div class="center">
+                                    <script type="text/javascript">
+                                        var showNewMessage = false;
+                                        var writeDivId = '#newMessageScreen';
+                                        var newMessageContent = '#newMessageContent';
+                                        var blackDiv = '#blackDiv';
+                                        var timer;
+                                        var proposalReceiver = new Array();
+
+                                        function writeMessageSplash()
+                                        {
+                                            if (showNewMessage)
+                                            {
+                                                hideNewMessageSplash();
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+                                                {
+                                                }
+                                                else
+                                                {
+                                                    showBlackDiv();
+                                                }
+                                                showNewMessage = true;
+                                            }
+                                            if (navigator.userAgent.indexOf('MSIE') >= 0)
+                                            {
+                                                var doc_width  = document.documentElement.clientWidth;
+                                            }
+                                            else
+                                            {
+                                                var doc_width  = window.innerWidth;
+                                            }
+                                            $(writeDivId).css("display", "block");
+
+                                            var off = $(writeDivId).offsetWidth;
+                                            var left = Math.floor((doc_width / 2) - (off / 2));
+                                            var top = 100;
+                                            var width = 600;
+                                            $(writeDivId).css("left", left+"px");
+                                            $(writeDivId).css("top", top+"px");
+                                            $(writeDivId).css("width", width+"px");
+                                            $(writeDivId).css("zIndex", "501");
+
+                                            var content = '';
+                                            content += '<div id="write_error" style="display:none;"></div>';
+                                            content += '<table id="write_form" width="100%" border="0" cellpadding="0" cellspacing="0">';
+                                            content += '<tr>';
+                                            content += '<td><b>Sender</b>:</td>';
+                                            content += '<td>Xyir</td>';
+                                            content += '</tr>';
+                                            content += '<tr>';
+                                            content += '<td><b>Recipient</b>:</td>';
+                                            content += '<td style="padding:1px 5px;">';
+                                            content += '<input id="receivername" style="margin:0px;" type="text" name="receiver" size="30" maxlength="30" class="input" value="Xyir" autocomplete="off">';
+                                            content += '</td>';
+                                            content += '</tr>';
+                                            content += '<tr>';
+                                            content += '<td style="padding:1px 5px;"><b>Subject</b>:</td>';
+                                            content += '<td style="padding:1px 5px;"><input id="subject" style="margin:0px;" type="text" name="subject" size="30" maxlength="30" class="input" value=""></td>';
+                                            content += '</tr>';
+                                            content += '<tr>';
+                                            content += '<td><b>message</b><br>(<span id="charcount1" style="display:inline-block; margin-bottom:0px;">2000</span> Characters)</td>';
+                                            content += '<td><textarea id="message" class="no-bg fakeMsgBorder" style="margin:0px;" name="text" rows="9" cols="55" onkeydown="CheckLen2(this)" onkeyup="CheckLen2(this)" onfocus="CheckLen2(this)" onchange="CheckLen2(this)"></textarea></td>';
+                                            content += '</tr>';
+                                            content += '</table>';
+                                            content += '<table id="write_form2" width="100%" border="0" cellpadding="0" cellspacing="0">';
+                                            content += '<tr>';
+                                            content += '<td width="100%" nowrap><center><a href="#" onClick="sendMessage()">( send )</a></center></td>';
+                                            content += '<td nowrap><a href="#" onClick="hideNewMessageSplash()">( Close )</a></td>';
+                                            content += '</tr>';
+                                            content += '</table>';
+                                            content += '<center>';
+                                            content += '<table id="write_form3" width="100%" border="0" cellpadding="0" cellspacing="0" style="display:none;">';
+                                            content += '<tr>';
+                                            content += '<td><center><a href="#" onClick="hideNewMessageSplash()">( Close )</a></center></td>';
+                                            content += '</tr>';
+                                            content += '</table>';
+                                            content += '</center>';
+                                            content += '<div id="senderid" style="display:none;">77625</div>';
+                                            content += '<div id="receiverid" style="display:none;"></div>';
+                                            content += '<div id="sendkey" style="display:none;">7d1eb08c|77625</div>';
+                                            $(newMessageContent).html(content);
+                                            $("#receivername").keyup(function ()
+                                            {
+                                                ajaxCheckReceiver();
+                                            });
+                                            function ajaxCheckReceiver()
+                                            {
+                                                $.getJSON('/ajax/user/ajaxcheckreceiver',
+                                                    'key=a16ec7|77625'+
+                                                    '&name='+encodeURIComponent($("#receivername").val()),
+                                                    function(data){
+                                                        if (data.list.length > 0)
+                                                        {
+                                                            proposalReceiver = new Array();
+                                                            $.each(data.list, function(i, proposal){
+                                                                proposalReceiver[i] = proposal;
+                                                            })
+                                                            $( "#receivername" ).autocomplete({
+                                                                source: proposalReceiver
+                                                            });
+                                                        }
+                                                        else
+                                                        {
+                                                            proposalReceiver = new Array();
+                                                        }
+                                                    })
+                                            }
+                                        }
+
+                                        function sendMessage()
+                                        {
+                                            $.getJSON('/ajax/msg/ajaxwritemail',
+                                                'sendkey='+$('#sendkey').html()+
+                                                '&senderid='+$('#senderid').html()+
+                                                '&receivername='+encodeURIComponent($('#receivername').val())+
+                                                '&subject='+encodeURIComponent($('#subject').val())+
+                                                '&message='+encodeURIComponent($('#message').val()),
+                                                function(data)
+                                                {
+                                                    if (data.errorstatus == 0)
+                                                    {
+                                                        msgSendSuccess(data.error);
+                                                    }
+                                                    else
+                                                    {
+                                                        msgSendFail(data.error);
+                                                    }
+                                                })
+                                        }
+
+                                        function msgSendSuccess(message)
+                                        {
+                                            $('#write_error').css('display', 'block');
+                                            $('#write_error').html('<p class="info">'+message+'</p>');
+                                            $('#write_form').css('display', 'none');
+                                            $('#write_form2').css('display', 'none');
+                                            $('#write_form3').css('display', 'block');
+                                        }
+
+                                        function msgSendFail(error)
+                                        {
+                                            $('#write_error').css('display', 'block');
+                                            $('#write_error').html('<p class="info">'+error+'</p>');
+                                        }
+
+                                        function CheckLen2(Target)
+                                        {
+                                            var maxlength = "2000";
+                                            StrLen=Target.value.replace(/\r\n?/g, "\n").length;
+                                            if (StrLen==1&&Target.value.substring(0,1)==" ")
+                                            {
+                                                Target.value="";
+                                                StrLen=0;
+                                            }
+                                            if (StrLen>maxlength )
+                                            {
+                                                Target.value=Target.value.substring(0,maxlength);
+                                                CharsLeft=0;
+                                            }
+                                            else
+                                            {
+                                                CharsLeft=maxlength-StrLen;
+                                            }
+                                            document.getElementById('charcount1').innerHTML=CharsLeft;
+                                        }
+
+                                        function showBlackDiv()
+                                        {
+                                            var div=document.createElement('div');
+                                            div.id = 'blackDiv';
+                                            div.className = 'break_div';
+                                            //div.onmousedown = function() {hideNewMessageSplash();};
+                                            div.style.zIndex = 500;
+                                            div.style.overflow = 'hidden';
+                                            if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+                                            {
+                                                document.body.style.width='100%';
+                                                document.body.style.height='100%';
+                                                div.style.width=document.body.offsetWidth+'px';
+                                                div.style.height=document.body.offsetHeight+'px';
+                                            }
+                                            else
+                                            {
+                                                div.style.position='fixed';
+                                                div.style.width='100%';
+                                                div.style.height='100%';
+                                            }
+                                            document.body.appendChild(div);
+                                        }
+
+                                        function hideNewMessageSplash()
+                                        {
+                                            if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+                                            {
+                                            }
+                                            else
+                                            {
+                                                hideBlackDiv();
+                                            }
+                                            $(writeDivId).css('display', 'none');
+                                            $(writeDivId).css('zIndex', '-1');
+                                            $(newMessageContent).html('');
+                                            showNewMessage = false;
+                                            content = '';
+                                        }
+
+                                        function hideBlackDiv()
+                                        {
+                                            if ($(blackDiv))
+                                            {
+                                                $(blackDiv).remove();
+                                            }
+                                        }
+
+                                    </script>
+                                    <div class="btn-left left">
+                                        <div class="btn-right">
+                                            <a href="#" class="btn" onclick="writeMessageSplash()">Write message</a>
+                                        </div>
+                                    </div>
+                                    <div id="newMessageScreen" class="message_screen">
+                                        <div id="messageWriter">
+                                            <div class="wrap-top-left clearfix">
+                                                <div class="wrap-top-right clearfix">
+                                                    <div class="wrap-top-middle clearfix"></div>
+                                                </div>
+                                            </div>
+                                            <div class="wrap-left clearfix">
+                                                <div class="wrap-content wrap-right clearfix">
+                                                    <div id="newMessageContent" class="message_content"></div>
+                                                </div>
+                                            </div>
+                                            <div class="wrap-bottom-left">
+                                                <div class="wrap-bottom-right">
+                                                    <div class="wrap-bottom-middle"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="no-bg" colspan="2">
+                                <h3>Character description: &nbsp;<a href="http://s202.en.bitefight.gameforge.com/msg/complain/pprofile?id=77625&amp;cc=c3fdd5d" class="copyright">(report)</a></h3>
+
+                                <p class="char-desc">
+                                    <a href="/profile/player/77625">Xyir</a>                      </p>
+                            </td>
+                        </tr>
+                        </tbody></table>
+                </div>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+    <br class="clearfloat">
+    <div id="otherPlayerStats">
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <h2><img src="/img/symbols/race1small.gif" alt="">The characteristics of Xyir</h2>
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr>
+                        <td class="tdn">Level:</td>
+                        <td class="tdn">260</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Battle value:</td>
+                        <td class="tdn">2.939</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Strength:</td>
+                        <td class="tdn" colspan="2">
+                            <img src="/img/b1.gif" alt=""><img src="/img/b2.gif" alt="" height="12" width="160.28225806452"><img src="/img/b3.gif" alt="">
+                            <span class="fontsmall">(318)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Defence:</td>
+                        <td class="tdn" colspan="2">
+                            <img src="/img/b1.gif" alt=""><img src="/img/b2.gif" alt="" height="12" width="167.33870967742"><img src="/img/b3.gif" alt="">
+                            <span class="fontsmall">(332)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Dexterity:</td>
+                        <td class="tdn" colspan="2">
+                            <img src="/img/b1.gif" alt=""><img src="/img/b2.gif" alt="" height="12" width="155.24193548387"><img src="/img/b3.gif" alt="">
+                            <span class="fontsmall">(308)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Endurance:</td>
+                        <td class="tdn" colspan="2">
+                            <img src="/img/b1.gif" alt=""><img src="/img/b2.gif" alt="" height="12" width="197.58064516129"><img src="/img/b3.gif" alt="">
+                            <span class="fontsmall">(392)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Charisma:</td>
+                        <td class="tdn" colspan="2">
+                            <img src="/img/b1.gif" alt=""><img src="/img/b2.gif" alt="" height="12" width="113.40725806452"><img src="/img/b3.gif" alt="">
+                            <span class="fontsmall">(225)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdn">Experience:</td>
+                        <td class="tdn">
+                            <img src="http://s202.en.bitefight.gameforge.com/img/b1.gif"><img src="http://s202.en.bitefight.gameforge.com/img/b2.gif" height="12" width="199.61449772364"><img src="http://s202.en.bitefight.gameforge.com/img/b4.gif" height="12" width="0.38550227635545"><img src="http://s202.en.bitefight.gameforge.com/img/b5.gif"><span class="fontsmall"> (337.608 / 338.260)</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="tdh" align="center">Totems</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><img src="http://s202.en.bitefight.gameforge.com/img/totems/9.jpg" alt="Ear from GustiBrother"></td>
+                        <td class="tdn">
+                            <strong>Ear from GustiBrother</strong><br>
+                            <br>
+                            Dexterity: +4<br>Endurance: +3<br>                                    </td>
+                    </tr>
+                    </tbody></table>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+    <br class="clearfloat">
+    <div id="playerStatistic">
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <h2><img src="/img/symbols/race1small.gif" alt="">Statistics</h2>
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr>
+                        <td class="tdn"><strong>Entire booty:</strong></td>
+                        <td class="tdn">446.408.919 Blood</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Fights:</strong></td>
+                        <td class="tdn">3.708</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Victories:</strong></td>
+                        <td class="tdn">386</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Defeats:</strong></td>
+                        <td class="tdn">3.322</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Draws:</strong></td>
+                        <td class="tdn">0</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Gold captured:</strong></td>
+                        <td class="tdn">404.251 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Gold lost:</strong></td>
+                        <td class="tdn">3.014.427 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Damage caused:</strong></td>
+                        <td class="tdn">32.654.713</td>
+                    </tr>
+                    <tr>
+                        <td class="tdn"><strong>Hit points lost:</strong></td>
+                        <td class="tdn">66.007.244</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+    <br class="clearfloat">
+</div>

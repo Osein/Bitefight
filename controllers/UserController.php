@@ -243,4 +243,9 @@ class UserController extends GameController
         return $this->response->redirect(getUrl(''));
     }
 
+    public function getPreview($id) {
+        $this->view->menu_active = 'profile';
+        $this->view->pick('user/preview');
+    }
+
 }
