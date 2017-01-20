@@ -6,45 +6,41 @@ $(document).ready(function() {
 
 function insertBBCode(elementId, startTag, closeTag)
 {
-	var textArea = document.id(elementId);
-	var scrollposBefore = textArea.scrollTop
-	var pos = textArea.getSelectedRange();
-	var text = textArea.get('value');
-	var selectedText = textArea.getSelectedText();
-	if (pos.start == pos.end)
-	{
-		// Bad Browsers go here (IE)
-		if (typeof document.selection != 'undefined')
+	var textArea = $('#'+elementId);
+	var scrollposBefore = textArea.scrollTop;
+
+	textArea.focus();
+
+	if(document.selection) {
+		var range = document.selection.createRange();
+		var selText = range.text;
+		range.text = startTag + selText + closeTag;
+
+		range = document.selection.createRange();
+		if (selText.length == 0)
 		{
-			// Insert Code
-			textArea.focus();
-			var range = document.selection.createRange();
-			var insText = range.text;
-			range.text = startTag + insText + closeTag;
-			// change cursorposi
-			range = document.selection.createRange();
-			if (insText.length == 0)
-			{
-				range.move('character', -closeTag.length);
-			}
-			else
-			{
-				range.moveStart('character', startTag.length + insText.length + closeTag.length);
-			}
-			range.select();
+			range.move('character', -closeTag.length);
 		}
-		// Good Browsers go here
 		else
 		{
-			textArea.set('value', text.substring(0, pos.start) + startTag + closeTag + text.substring(pos.end, text.length));
-			textArea.setCaretPosition(pos.start + startTag.length);
+			range.moveStart('character', startTag.length + selText.length + closeTag.length);
 		}
+		range.select();
+	} else {
+		var text = textArea.val();
+		var textLen = text.length;
+		var start = textArea[0].selectionStart;
+		var end = textArea[0].selectionEnd;
+
+
+		var sel = text.substring(start, end);
+
+
+		var rep = startTag + sel + closeTag;
+
+		textArea.val(text.substring(0,start) + rep + text.substring(end,textLen));
 	}
-	else
-	{
-		textArea.set('value', text.substring(0, pos.start) + startTag + selectedText + closeTag + text.substring(pos.end, text.length));
-		textArea.setCaretPosition(pos.start + startTag.length + selectedText.length +  closeTag.length);
-	}
+
 	textArea.scrollTop = scrollposBefore;
 }
 
@@ -78,7 +74,7 @@ PanelOverseer.prototype.outerClick = function()
 		for (i = 0; i < self.panelContainers.length; i++)
 		{
 			if (!(self.panelContainers[i].isChildOf((e.target || e.srcElement), self.panelContainers[i].container))
-				&& self.panelContainers[i].panel.style.display != "none"
+				&& self.panelContainers[i].panel.is(":visible")
 			) {
 				self.panelContainers[i].hidePanel();
 			}
@@ -187,21 +183,21 @@ PanelToggle.isChildOf = function(child, parent)
 
 PanelToggle.hidePanel = function()
 {
-	this.panel.css('display', 'none');
+	this.panel.hide();
 	this.link.className = "toggleHidden";
 };
 
 PanelToggle.toggle = function()
 {
-	this.panel.style.display = this.panel.style.display == "none" ? "" : "none";
+	this.panel.toggle();
 	this.link.className = this.link.className == "toggleHidden" ? "" : "toggleHidden";
 	this.overseer.closeOtherPanels(this.id);
 };
 
 PanelToggle.setFocus = function()
 {
-	var formElement = document.id('toggleForm' + this.id);
-	if (formElement && formElement.elements[0] != null)
+	var formElement = $('#toggleForm' + this.id);
+	if (formElement.length)
 	{
 		for (var i = 0; i < formElement.length; i++)
 		{
