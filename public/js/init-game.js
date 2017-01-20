@@ -1,6 +1,4 @@
-// After DOM ready JQueries
 $(document).ready(function() {
-	// Create Tipped Tooltips
 	Tipped.create('.tooltip', { skin: 'tiny' });
 });
 
@@ -38,6 +36,9 @@ function insertBBCode(elementId, startTag, closeTag) {
 		if(sel.length == 0) {
 			textArea[0].selectionStart = start + startTag.length;
 			textArea[0].selectionEnd = start + startTag.length;
+		} else {
+			textArea[0].selectionStart = start + startTag.length + sel.length;
+			textArea[0].selectionEnd = start + startTag.length + sel.length;
 		}
 	}
 
@@ -65,15 +66,9 @@ PanelOverseer.prototype.outerClick = function() {
 
 	$('body').on('click', function(e)
 	{
-		if (!e)
+		for (var i = 0; i < self.panelContainers.length; i++)
 		{
-			e = window.event;
-		}
-		for (i = 0; i < self.panelContainers.length; i++)
-		{
-			if (!(self.panelContainers[i].isChildOf((e.target || e.srcElement), self.panelContainers[i].container))
-				&& self.panelContainers[i].panel.is(":visible")
-			) {
+			if (!(self.panelContainers[i].isChildOf((e.target || e.srcElement), self.panelContainers[i].container)) && self.panelContainers[i].panel.is(":visible")) {
 				self.panelContainers[i].hidePanel();
 			}
 		}
@@ -112,32 +107,23 @@ var PanelToggle = function(overseerRef, containerId, closeDelay) {
 	this.link = $('#toggleLink' + this.id);
 	this.panel = $('#togglePanel' + this.id);
 
-	// hide panel initially
 	this.hidePanel();
 
 	this.link.on('click', function()
 	{
 		self.toggle();
-		self.setFocus();
 		return false;
 	});
 
-	// delayed panel self-closing
 	if (closeDelay)
 		this.delay = closeDelay;
 
 	this.container.on('mouseout', function(e)
 	{
-		if (!e)
-		{
-			e = window.event;
-		}
-		// custom mouseleave event
 		var reltg = (e.relatedTarget) ? e.relatedTarget : e.toElement;
 		if (reltg == self.container || self.isChildOf(reltg, self.container))
 			return;
 
-		// hide after timeout
 		if (self.delay >= 0)
 		{
 			self.timeoutId = setTimeout(function()
@@ -180,21 +166,4 @@ PanelToggle.prototype.toggle = function() {
 	this.panel.toggle();
 	this.link.className = this.link.className == "toggleHidden" ? "" : "toggleHidden";
 	this.overseer.closeOtherPanels(this.id);
-};
-
-PanelToggle.prototype.setFocus = function() {
-	var formElement = $('#toggleForm' + this.id);
-	if (formElement.length)
-	{
-		for (var i = 0; i < formElement.length; i++)
-		{
-			if (formElement.elements[i].type != 'hidden'
-				&& !formElement.elements[i].readOnly
-				&& !formElement.elements[i].disabled
-			) {
-				formElement.elements[i].focus();
-				break;
-			}
-		}
-	}
 };
