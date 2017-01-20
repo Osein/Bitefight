@@ -13,34 +13,19 @@
             <h2><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt="">Highscore</h2>
             <div class="table-wrap">
                 <script language="JavaScript">
-                    <!--
-                    var counter = 5;
-                    window.addEvent('domready', function() {
-                        $$('.JScheckbox').addEvent('click', function(event) {
-                            if(!event.target.hasClass('JScheckbox'))
-                                return;
-                            var currentCounter = 0;
-                            $$('.JScheckbox').each(function(element, index, array) {
-                                if (element.checked == true)
-                                    currentCounter++;
-                            });
-                            if (currentCounter > counter) {
-                                event.target.removeProperty('checked');
-                            }
-                            if (currentCounter >= counter) {
-                                $$('.JScheckbox').each(function(element, index, array) {
-                                    if (element.checked == false)
-                                        element.setProperty('disabled', 'disabled');
-                                });
+                    $(document).ready(function() {
+                        $('.JScheckbox').on('click', function() {
+                            if($('.JScheckbox:checked').length >= 5) {
+                                $('.JScheckbox:not(:checked)').attr('disabled', true);
                             } else {
-                                $$('.JScheckbox').each(function(element, index, array) {
-                                    if (element.disabled == true)
-                                        element.removeProperty('disabled');
-                                });
+                                $('.JScheckbox:not(:checked)').attr('disabled', false);
                             }
                         });
-                    }, document.id('navigationTable'));
-                    //-->
+
+                        if($('.JScheckbox:checked').length == 5) {
+                            $('.JScheckbox:not(:checked)').attr('disabled', true);
+                        }
+                    });
                 </script><form action="/user/highscore/player/0/1" method="POST">
                     <p>
                     </p><table cellpadding="2" cellspacing="2" border="0" width="100%" id="navigationTable">
