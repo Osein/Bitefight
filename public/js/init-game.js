@@ -4,8 +4,7 @@ $(document).ready(function() {
 	Tipped.create('.tooltip', { skin: 'tiny' });
 });
 
-function insertBBCode(elementId, startTag, closeTag)
-{
+function insertBBCode(elementId, startTag, closeTag) {
 	var textArea = $('#'+elementId);
 	var scrollposBefore = textArea.scrollTop;
 
@@ -45,8 +44,7 @@ function insertBBCode(elementId, startTag, closeTag)
 	textArea.scrollTop = scrollposBefore;
 }
 
-function bbDropdown(elementId, dropdown, startTag, closeTag)
-{
+function bbDropdown(elementId, dropdown, startTag, closeTag) {
 	if (dropdown.selectedIndex == 0)
 	{
 		return;
@@ -62,8 +60,7 @@ var PanelOverseer = function() {
 	this.outerClick();
 };
 
-PanelOverseer.prototype.outerClick = function()
-{
+PanelOverseer.prototype.outerClick = function() {
 	var self = this;
 
 	$('body').on('click', function(e)
@@ -83,8 +80,7 @@ PanelOverseer.prototype.outerClick = function()
 	});
 };
 
-PanelOverseer.prototype.closeOtherPanels = function(toggleId)
-{
+PanelOverseer.prototype.closeOtherPanels = function(toggleId) {
 	for (var i = 0; i < this.panelContainers.length; i++)
 	{
 		if (this.panelContainers[i].id != toggleId)
@@ -94,25 +90,19 @@ PanelOverseer.prototype.closeOtherPanels = function(toggleId)
 	}
 };
 
-PanelOverseer.prototype.registerPanelContainer = function(containerId, closeDelay)
-{
-	var newPanelToggle = PanelToggle;
-	newPanelToggle.initialize(this, containerId, closeDelay);
-	this.panelContainers.push(newPanelToggle);
+PanelOverseer.prototype.registerPanelContainer = function(containerId, closeDelay) {
+	this.panelContainers.push(new PanelToggle(this, containerId, closeDelay));
 };
 
-var PanelToggle = {
-	overseer : null,
-	id : 0,
-	container : null,
-	link : null,
-	panel : null,
-	delay : 0,
-	timeoutId : null
-};
+var PanelToggle = function(overseerRef, containerId, closeDelay) {
+	this.overseer = null;
+	this.id = 0;
+	this.container = null;
+	this.link = null;
+	this.panel = null;
+	this.delay = 0;
+	this.timeoutId = null;
 
-PanelToggle.initialize = function(overseerRef, containerId, closeDelay)
-{
 	var self = this;
 	this.overseer = overseerRef;
 	this.id = containerId;
@@ -173,8 +163,7 @@ PanelToggle.initialize = function(overseerRef, containerId, closeDelay)
 	});
 };
 
-PanelToggle.isChildOf = function(child, parent)
-{
+PanelToggle.prototype.isChildOf = function(child, parent) {
 	while (child && child != parent)
 	{
 		child = child.parentNode;
@@ -182,21 +171,18 @@ PanelToggle.isChildOf = function(child, parent)
 	return child == parent;
 };
 
-PanelToggle.hidePanel = function()
-{
+PanelToggle.prototype.hidePanel = function() {
 	this.panel.hide();
 	this.link.className = "toggleHidden";
 };
 
-PanelToggle.toggle = function()
-{
+PanelToggle.prototype.toggle = function() {
 	this.panel.toggle();
 	this.link.className = this.link.className == "toggleHidden" ? "" : "toggleHidden";
 	this.overseer.closeOtherPanels(this.id);
 };
 
-PanelToggle.setFocus = function()
-{
+PanelToggle.prototype.setFocus = function() {
 	var formElement = $('#toggleForm' + this.id);
 	if (formElement.length)
 	{

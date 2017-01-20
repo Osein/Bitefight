@@ -100,6 +100,27 @@ function getItemModelFromModelNo($modelNo) {
     return $modelArray[$modelNo-1];
 }
 
+function parseBBCodes($text) {
+
+    $find = array(
+        '~\[b\](.*?)\[/b\]~s',
+        '~\[i\](.*?)\[/i\]~s',
+        '~\[f s=(.*?)\](.*?)\[/f\]~s',
+        '~\[f c=(.*?)\](.*?)\[/f\]~s',
+        '~\[f f="(.*?)"\](.*?)\[/f\]~s',
+    );
+
+    $replace = array(
+        '<b>$1</b>',
+        '<i>$1</i>',
+        '<span style="font-size:$1px;">$2</span>',
+        '<span style="color:$1;">$2</span>',
+        '<font face="$1">$2</font>',
+    );
+
+    return preg_replace($find,$replace,$text);
+}
+
 function profilePrintUserItem($i) {
     ?>
     <tr>
