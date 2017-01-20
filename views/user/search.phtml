@@ -7,10 +7,11 @@
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
             <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">What are you looking for?</h2>
-            <form action="http://s202.en.bitefight.gameforge.com/user/search?__token=105c6246529a8f6d5d9c7e9e1c5fd655" method="POST" class="clearfix">
+            <form action="<?php echo getUrl('search'); ?>" method="POST" class="clearfix">
+                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <div id="searchOptions">
                     <div>
-                        <input type="radio" name="searchtyp" value="name" checked="">
+                        <input type="radio" name="searchtyp" value="name" checked>
                         <label>Player</label>
                     </div>
                     <!--
@@ -31,64 +32,29 @@
                         </div>
                     </div>
                     <label>Text:</label>
-                    <input type="text" name="text" size="30" maxlength="30" value="asd">
-                    <input id="exact" type="checkbox" class="check" name="exakt">
+                    <input type="text" name="text" size="30" maxlength="30" value="<?php if(isset($searchString)) echo e($searchString); ?>">
+                    <input id="exact" type="checkbox" class="check" name="exakt" <?php if(isset($exact) && $exact) echo 'checked'; ?>>
                     <label class="checklabel" for="exact">only show exact results</label>
                 </div>
             </form>
+            <?php if(isset($results)): ?>
             <h2 style="margin-bottom: 1rem;"><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">Results</h2>
             <table width="80%">
-                <tbody><tr>
-                    <td>Race</td><td>Player</td><td>Entire booty</td>					</tr>
+                <tbody>
+                <?php if($search_type == 'player'): ?>
+                    <tr><td>Race</td><td>Player</td><td>Entire booty</td></tr>
+                <?php endif; ?>
+                <?php foreach($results as $res): ?>
+                    <?php if($search_type == 'player'): ?>
+                        <tr><td><img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?'Vampire':'Werewolf'; ?>" border="0"></td><td><a href="<?php echo getUrl('profile/player/'.$res->id); ?>"><?php echo $res->name; ?></a></td><td><?php echo prettyNumber($res->s_booty); ?></td></tr>
+                    <?php endif; ?>
+                <?php endforeach; ?>
                 <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/60742">32rdfasdf</a></td><td>200</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/61144">32rdfasdfe</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/60187">adaasdadas</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/80797">asd</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/81337">asd5</a></td><td>922.218</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/20009">ASDAgasdfsdsdfa</a></td><td>1.224</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/80853">asdasd</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/81459">asdasd11</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/20027">asdasda</a></td><td>1.228</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/81135">asdasdfasdf</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/20029">asdasdfsf</a></td><td>2.212</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/60541">asddasa</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/19985">asdfafsdg</a></td><td>524</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/60643">asdfasdfas</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/60839">asdfasdfasdf</a></td><td>2.014</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/32993">asdfg</a></td><td>127.168</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/81464">asdfghj</a></td><td>6.185</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/19983">asdfsdfgsg</a></td><td>676</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/81113">asdsadsad</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/60245">asdz</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race2small.gif'); ?>" title="Werewolves" border="0"></td><td><a href="/profile/player/60530">dsaasddas</a></td><td>0</td>					</tr>
-                <tr>
-                    <td><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" title="Vampires" border="0"></td><td><a href="/profile/player/60066">dsadsaasddsa</a></td><td>0</td>					</tr>
-                <tr>
-                    <td class="no-bg" colspan="2">22 Results (25 max.)</td>
+                    <td class="no-bg" colspan="2"><?php if(count($results) > 0): echo count($results); ?> Results (25 max.)<?php else: ?>no results<?php endif; ?></td>
                 </tr>
                 </tbody>
             </table>
+            <?php endif; ?>
         </div>
     </div>
     <div class="wrap-bottom-left">
