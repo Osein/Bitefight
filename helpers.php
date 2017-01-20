@@ -102,12 +102,28 @@ function getItemModelFromModelNo($modelNo) {
 
 function parseBBCodes($text) {
 
+    preg_match_all('~!S:"(.*?)"!~s', $text, $users, PREG_SET_ORDER);
+
+    foreach($users as $user) {
+        $userDb = ORM::for_table('user')
+            ->selectExpr('id')
+            ->where('name', $user[1])
+            ->find_one();
+
+        if($userDb) {
+            $text = str_replace('S:"'.$user[1].'"', 'S:'.$user[1].':'.$userDb->id, $text);
+        } else {
+            $text = str_replace('!S:"'.$user[1].'"!', $user[1], $text);
+        }
+    }
+
     $find = array(
         '~\[b\](.*?)\[/b\]~s',
         '~\[i\](.*?)\[/i\]~s',
         '~\[f s=(.*?)\](.*?)\[/f\]~s',
         '~\[f c=(.*?)\](.*?)\[/f\]~s',
         '~\[f f="(.*?)"\](.*?)\[/f\]~s',
+        '~!S:(.*?):(.*?)!~s',
     );
 
     $replace = array(
@@ -116,6 +132,7 @@ function parseBBCodes($text) {
         '<span style="font-size:$1px;">$2</span>',
         '<span style="color:$1;">$2</span>',
         '<font face="$1">$2</font>',
+        '<a href="'.getUrl('profile/player/$2').'">$1</a>'
     );
 
     return preg_replace($find,$replace,$text);
