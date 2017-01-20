@@ -12,10 +12,7 @@ $router->removeExtraSlashes(true);
 $router->setDefaultController('Home');
 $router->setDefaultAction('getIndex');
 
-$news = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
-$news->setPrefix('/news');
-$news->addGet('', ['action' => 'getNews']);
-$router->mount($news);
+$router->addGet('/news', ['controller' => 'Home', 'action' => 'getNews']);
 
 $register = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
 $register->setPrefix('/register');
@@ -24,11 +21,10 @@ $register->addPost('/{id:[0-9]}', ['action' => 'postRegister']);
 $register->addGet('/ajaxcheck', ['action' => 'postAjaxCheck']);
 $router->mount($register);
 
-$login = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
-$login->setPrefix('/login');
-$login->addGet('', ['action' => 'getLogin']);
-$login->addPost('', ['action' => 'postLogin']);
-$router->mount($login);
+$router->addGet('/login', ['controller' => 'Home', 'action' => 'getLogin']);
+$router->addPost('/login', ['controller' => 'Home', 'action' => 'postLogin']);
+$router->addGet('/user/lostpw', ['controller' => 'Home', 'action' => 'getLostPassword']);
+$router->addPost('/user/lostpw', ['controller' => 'Home', 'action' => 'postLostPassword']);
 
 $user = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
 $user->setPrefix('/user');
@@ -53,34 +49,11 @@ $hideout->addGet('', ['action' => 'getHideout']);
 $hideout->addGet('/upgrade', ['action' => 'getHideoutUpgrade']);
 $router->mount($hideout);
 
-$router->addGet('/profile/player/{id:[0-9]+}', [
-    'controller' => 'User',
-    'action' => 'getPreview'
-]);
-
-$router->addGet('/search', [
-    'controller' => 'Game',
-    'action' => 'getSearch'
-]);
-
-$router->addPost('/search', [
-    'controller' => 'Game',
-    'action' => 'postSearch'
-]);
-
-$router->addGet('/notepad', [
-    'controller' => 'User',
-    'action' => 'getNotepad'
-]);
-
-$router->addPost('/notepad', [
-    'controller' => 'User',
-    'action' => 'postNotepad'
-]);
-
-$router->addGet('/logout', [
-    'controller' => 'User',
-    'action' => 'getLogout'
-]);
+$router->addGet('/profile/player/{id:[0-9]+}', ['controller' => 'User', 'action' => 'getPreview']);
+$router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);
+$router->addPost('/search', ['controller' => 'Game', 'action' => 'postSearch']);
+$router->addGet('/notepad', ['controller' => 'User', 'action' => 'getNotepad']);
+$router->addPost('/notepad', ['controller' => 'User', 'action' => 'postNotepad']);
+$router->addGet('/logout', ['controller' => 'User', 'action' => 'getLogout']);
 
 return $router;

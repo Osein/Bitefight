@@ -215,4 +215,28 @@ class HomeController extends BaseController
         }
     }
 
+    public function getLostPassword() {
+        $this->view->menu_active = 'login';
+        return $this->view->pick('home/lostpw');
+    }
+
+    public function postLostPassword() {
+        $name = $this->request->get('name');
+        $email = $this->request->get('email');
+
+        $user = ORM::for_table('user')
+            ->where('name', $name)
+            ->where('mail', $email)
+            ->find_one();
+
+        if($user) {
+            $this->sendEmail($email, 'Recover Password', 'lostpw', ['password' => $user->pass]);
+            $this->flashSession->error('An e-mail with password has been sent to you.');
+        } else {
+            $this->flashSession->error('There is no user with given name and email');
+        }
+
+        return $this->response->redirect(getUrl('user/lostpw'));
+    }
+
 }
