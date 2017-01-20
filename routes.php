@@ -13,6 +13,7 @@ $router->setDefaultController('Home');
 $router->setDefaultAction('getIndex');
 
 $router->addGet('/news', ['controller' => 'Home', 'action' => 'getNews']);
+$router->addGet('/highscore', ['controller' => 'Home', 'action' => 'getHighscore']);
 
 $register = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
 $register->setPrefix('/register');
@@ -35,6 +36,7 @@ $user->addPost('/profile/logo', ['action' => 'postProfileLogo']);
 $user->addGet('/news', ['action' => 'getNews']);
 $user->addGet('/settings', ['action' => 'getSettings']);
 $user->addPost('/settings', ['action' => 'postSettings']);
+$user->addGet('/highscore', ['action' => 'getHighscore']);
 $router->mount($user);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);

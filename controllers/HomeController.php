@@ -239,4 +239,10 @@ class HomeController extends BaseController
         return $this->response->redirect(getUrl('user/lostpw'));
     }
 
+    public function getHighscore() {
+        $this->view->menu_active = 'highscore';
+
+        $this->view->pick('user/highscore');
+    }
+
 }

@@ -1,0 +1,225 @@
+<div id="highscore">
+    <!-- box HEADER START -->
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <!-- box HEADER END -->
+    <!-- box CONTENT START -->
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <!-- CONTENT START -->
+            <h2><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt="">Highscore</h2>
+            <div class="table-wrap">
+                <script language="JavaScript">
+                    <!--
+                    var counter = 5;
+                    window.addEvent('domready', function() {
+                        $$('.JScheckbox').addEvent('click', function(event) {
+                            if(!event.target.hasClass('JScheckbox'))
+                                return;
+                            var currentCounter = 0;
+                            $$('.JScheckbox').each(function(element, index, array) {
+                                if (element.checked == true)
+                                    currentCounter++;
+                            });
+                            if (currentCounter > counter) {
+                                event.target.removeProperty('checked');
+                            }
+                            if (currentCounter >= counter) {
+                                $$('.JScheckbox').each(function(element, index, array) {
+                                    if (element.checked == false)
+                                        element.setProperty('disabled', 'disabled');
+                                });
+                            } else {
+                                $$('.JScheckbox').each(function(element, index, array) {
+                                    if (element.disabled == true)
+                                        element.removeProperty('disabled');
+                                });
+                            }
+                        });
+                    }, document.id('navigationTable'));
+                    //-->
+                </script><form action="/user/highscore/player/0/1" method="POST">
+                    <p>
+                    </p><table cellpadding="2" cellspacing="2" border="0" width="100%" id="navigationTable">
+                        <tbody><tr>
+                            <td class="no-bg" colspan="2">
+                                <select name="type" size="1">
+                                    <option value="player" selected="selected">Player - Highscore</option>
+                                    <option value="clan">Clan - Highscore</option>
+                                </select>
+                                <select name="race" size="1">
+                                    <option value="0" selected="selected">All races</option>
+                                    <option value="1">Vampires</option>
+                                    <option value="2">Werewolves</option>
+                                </select>
+                            </td>
+                            <td class="no-bg" colspan="2" style="line-height:45px;">
+                                <div class="btn-left left">
+                                    <div class="btn-right">
+                                        <input class="btn" type="submit" value="show">
+                                    </div>
+                                </div>
+                                &nbsp;
+                                (Maximum of 5 options possible)
+                            </td>
+                        </tr>
+                        <tr>                <td><input type="checkbox" class="JScheckbox" name="show[]" value="level" checked="">Level</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="raid" checked="">Booty</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fightvalue" checked="">Battle value</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights">Fights</td>
+                        </tr><tr>                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1">Victories</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2">Defeats</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0">Draw</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="lanter">Lanterns</td>
+                        </tr><tr>                <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldwin">looted Gold</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldlost">lost Gold</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits1">Damage caused</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits2">Hit points lost</td>
+                        </tr><tr>                <td><input type="checkbox" class="JScheckbox" name="show[]" value="trophypoints">Trophy points</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="henchmanlevels">Henchmen power</td>
+                        </tr>    </tbody></table>
+                    <p></p>
+                </form>    <center><b>1</b>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">2</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/3?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">3</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/single_arrow_right.gif" border="0" title="+1"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/11?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/double_arrow_right.gif" border="0" title="+10"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/41?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/arrow_right_end.gif" border="0" title="to the end"></a></center>    <p>
+                </p><table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr>
+                        <td align="center"> # </td>
+                        <td align="center">Race</td>
+                        <td align="center">Name</td>
+                        <td align="center"><a href="/user/highscore/player/0/1?order=level&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">Level</a></td><td align="center"><a href="/user/highscore/player/0/1?order=raid&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">Booty</a></td><td align="center"><a href="/user/highscore/player/0/1?order=fightvalue&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">Battle value</a></td>    </tr>
+                    <tr>
+                        <td align="right">1</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/42308" title="XiXi">XiXi</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">3.551</td><td align="right">72.254.169.708</td><td align="right">24.110</td>        </tr>
+                    <tr>
+                        <td align="right">2</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/19038" title="alaz3r">alaz3r</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">3.053</td><td align="right">67.351.874.073</td><td align="right">20.224</td>        </tr>
+                    <tr>
+                        <td align="right">3</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/45342" title="metalcamp">metalcamp</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">2.985</td><td align="right">66.514.096.409</td><td align="right">20.218</td>        </tr>
+                    <tr>
+                        <td align="right">4</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/72746" title="Sasuke">Sasuke</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">2.797</td><td align="right">58.903.593.506</td><td align="right">19.559</td>        </tr>
+                    <tr>
+                        <td align="right">5</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/73789" title="REVANGEL">REVANGEL</a> [<a href="/clan/viewExtern/9206">*D*V*R*M*</a>]</td><td align="right">2.207</td><td align="right">46.805.876.707</td><td align="right">17.229</td>        </tr>
+                    <tr>
+                        <td align="right">6</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/64954" title="Extroier">Extroier</a> [<a href="/clan/viewExtern/9157">T.N.V</a>]</td><td align="right">2.177</td><td align="right">41.141.171.354</td><td align="right">16.356</td>        </tr>
+                    <tr>
+                        <td align="right">7</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/17893" title="Walace">Walace</a></td><td align="right">1.932</td><td align="right">40.123.653.488</td><td align="right">15.820</td>        </tr>
+                    <tr>
+                        <td align="right">8</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/18654" title="Razer">Razer</a></td><td align="right">2.157</td><td align="right">34.027.993.732</td><td align="right">15.400</td>        </tr>
+                    <tr>
+                        <td align="right">9</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/60634" title="hate">hate</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">2.345</td><td align="right">30.881.880.988</td><td align="right">15.612</td>        </tr>
+                    <tr>
+                        <td align="right">10</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/18924" title="ner">ner</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.744</td><td align="right">27.497.622.579</td><td align="right">13.891</td>        </tr>
+                    <tr>
+                        <td align="right">11</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/40577" title="licantropus">licantr...</a></td><td align="right">1.635</td><td align="right">25.637.512.125</td><td align="right">12.350</td>        </tr>
+                    <tr>
+                        <td align="right">12</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/52703" title="ilicdragan">ilicdragan</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.692</td><td align="right">25.568.971.165</td><td align="right">12.985</td>        </tr>
+                    <tr>
+                        <td align="right">13</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/39642" title="Z-DRAGON">Z-DRAGON</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.664</td><td align="right">22.644.992.165</td><td align="right">13.808</td>        </tr>
+                    <tr>
+                        <td align="right">14</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/63225" title="ASTARoTH">ASTARoTH</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.711</td><td align="right">21.881.940.983</td><td align="right">13.601</td>        </tr>
+                    <tr>
+                        <td align="right">15</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/18597" title="fireup">fireup</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.818</td><td align="right">20.900.816.358</td><td align="right">13.465</td>        </tr>
+                    <tr>
+                        <td align="right">16</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/75243" title="hellraiser">hellraiser</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.540</td><td align="right">19.883.439.364</td><td align="right">12.386</td>        </tr>
+                    <tr>
+                        <td align="right">17</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/45587" title="soldier01">soldier01</a> [<a href="/clan/viewExtern/8602">ELITE</a>]</td><td align="right">1.454</td><td align="right">19.640.321.322</td><td align="right">12.833</td>        </tr>
+                    <tr>
+                        <td align="right">18</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/30220" title="LordTagada">LordTagada</a></td><td align="right">1.310</td><td align="right">19.146.152.568</td><td align="right">10.820</td>        </tr>
+                    <tr>
+                        <td align="right">19</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/30697" title="SnowFlake">SnowFlake</a></td><td align="right">1.592</td><td align="right">19.038.750.119</td><td align="right">11.644</td>        </tr>
+                    <tr>
+                        <td align="right">20</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/48123" title="Vlad-Tepes-III">Vlad-Te...</a> [<a href="/clan/viewExtern/9145">sgsdg</a>]</td><td align="right">1.361</td><td align="right">16.837.374.287</td><td align="right">10.682</td>        </tr>
+                    <tr>
+                        <td align="right">21</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/77285" title="NEO666">NEO666</a> [<a href="/clan/viewExtern/9251">M.A.T.R.</a>]</td><td align="right">1.530</td><td align="right">16.804.090.462</td><td align="right">11.777</td>        </tr>
+                    <tr>
+                        <td align="right">22</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/16164" title="Poison">Poison</a> [<a href="/clan/viewExtern/4692">TBW</a>]</td><td align="right">1.452</td><td align="right">16.211.622.723</td><td align="right">11.093</td>        </tr>
+                    <tr>
+                        <td align="right">23</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/46898" title="bourdas777">bourdas777</a> [<a href="/clan/viewExtern/8602">ELITE</a>]</td><td align="right">1.298</td><td align="right">15.032.308.570</td><td align="right">10.094</td>        </tr>
+                    <tr>
+                        <td align="right">24</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/46238" title=".PIRATA.">.PIRATA.</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.390</td><td align="right">14.757.761.018</td><td align="right">10.592</td>        </tr>
+                    <tr>
+                        <td align="right">25</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/50793" title="Makkatya">Makkatya</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.181</td><td align="right">14.630.124.545</td><td align="right">9.101</td>        </tr>
+                    <tr>
+                        <td align="right">26</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/51651" title="huso">huso</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.342</td><td align="right">14.447.322.710</td><td align="right">11.455</td>        </tr>
+                    <tr>
+                        <td align="right">27</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/60052" title="..DeeJay..">..DeeJay..</a> [<a href="/clan/viewExtern/6233">REX3</a>]</td><td align="right">1.405</td><td align="right">14.399.945.678</td><td align="right">12.112</td>        </tr>
+                    <tr>
+                        <td align="right">28</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/21975" title="Aokiji">Aokiji</a></td><td align="right">1.371</td><td align="right">14.387.432.708</td><td align="right">10.897</td>        </tr>
+                    <tr>
+                        <td align="right">29</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/15989" title="Garagos">Garagos</a> [<a href="/clan/viewExtern/9157">T.N.V</a>]</td><td align="right">1.205</td><td align="right">13.229.878.524</td><td align="right">9.699</td>        </tr>
+                    <tr>
+                        <td align="right">30</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/41045" title="Horus">Horus</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.303</td><td align="right">13.034.264.964</td><td align="right">10.360</td>        </tr>
+                    <tr>
+                        <td align="right">31</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/33829" title="Badwolf">Badwolf</a> [<a href="/clan/viewExtern/4514">T.N.P.</a>]</td><td align="right">1.325</td><td align="right">12.790.282.771</td><td align="right">11.328</td>        </tr>
+                    <tr>
+                        <td align="right">32</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/76798" title="BeNjO">BeNjO</a></td><td align="right">2.055</td><td align="right">12.688.623.295</td><td align="right">11.327</td>        </tr>
+                    <tr>
+                        <td align="right">33</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/16278" title="Deceptica">Deceptica</a></td><td align="right">1.216</td><td align="right">12.488.670.233</td><td align="right">9.257</td>        </tr>
+                    <tr>
+                        <td align="right">34</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/41039" title=".KAIN">.KAIN</a> [<a href="/clan/viewExtern/9018">Selfie</a>]</td><td align="right">1.144</td><td align="right">12.277.147.819</td><td align="right">9.064</td>        </tr>
+                    <tr>
+                        <td align="right">35</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/17938" title="Soldier">Soldier</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.296</td><td align="right">12.201.045.735</td><td align="right">11.719</td>        </tr>
+                    <tr>
+                        <td align="right">36</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/78379" title="DanzaKuduro">DanzaKu...</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.272</td><td align="right">12.078.534.842</td><td align="right">9.948</td>        </tr>
+                    <tr>
+                        <td align="right">37</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/77507" title="GodFather">GodFather</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.235</td><td align="right">11.187.448.279</td><td align="right">9.621</td>        </tr>
+                    <tr>
+                        <td align="right">38</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/59422" title="kaiser">kaiser</a> [<a href="/clan/viewExtern/8490">D3</a>]</td><td align="right">1.046</td><td align="right">11.164.110.048</td><td align="right">8.541</td>        </tr>
+                    <tr>
+                        <td align="right">39</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/40425" title="boromir">boromir</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.308</td><td align="right">11.163.346.638</td><td align="right">11.179</td>        </tr>
+                    <tr>
+                        <td align="right">40</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/45632" title="shvrca1">shvrca1</a></td><td align="right">1.025</td><td align="right">10.198.153.952</td><td align="right">9.772</td>        </tr>
+                    <tr>
+                        <td align="right">41</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/37599" title="Oscuro">Oscuro</a> [<a href="/clan/viewExtern/8937">fool</a>]</td><td align="right">1.468</td><td align="right">9.957.751.898</td><td align="right">10.064</td>        </tr>
+                    <tr>
+                        <td align="right">42</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/44792" title=".DaRKNeSS.">.DaRKNeSS.</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.153</td><td align="right">9.935.418.370</td><td align="right">9.546</td>        </tr>
+                    <tr>
+                        <td align="right">43</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/68370" title="Overdosesss">Overdos...</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.075</td><td align="right">9.755.475.321</td><td align="right">9.205</td>        </tr>
+                    <tr>
+                        <td align="right">44</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/53767" title="Flying-Monkey">Flying-...</a></td><td align="right">1.054</td><td align="right">9.696.919.022</td><td align="right">8.524</td>        </tr>
+                    <tr>
+                        <td align="right">45</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/41337" title="Jackl">Jackl</a></td><td align="right">1.440</td><td align="right">9.333.678.171</td><td align="right">10.434</td>        </tr>
+                    <tr>
+                        <td align="right">46</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/60980" title="Rile72">Rile72</a> [<a href="/clan/viewExtern/5274">666</a>]</td><td align="right">1.052</td><td align="right">9.207.094.799</td><td align="right">8.885</td>        </tr>
+                    <tr>
+                        <td align="right">47</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/70143" title="FisherMan">FisherMan</a> [<a href="/clan/viewExtern/8158">H2O</a>]</td><td align="right">1.094</td><td align="right">8.766.258.680</td><td align="right">9.926</td>        </tr>
+                    <tr>
+                        <td align="right">48</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/31535" title="pifcmp">pifcmp</a></td><td align="right">940</td><td align="right">8.291.841.198</td><td align="right">8.932</td>        </tr>
+                    <tr>
+                        <td align="right">49</td><td><img src="/img/symbols/race1small.gif" alt="Vampires"></td><td><a href="/profile/player/16334" title="Destructor">Destructor</a> [<a href="/clan/viewExtern/8484">AoD</a>]</td><td align="right">1.120</td><td align="right">7.921.056.561</td><td align="right">8.296</td>        </tr>
+                    <tr>
+                        <td align="right">50</td><td><img src="/img/symbols/race2small.gif" alt="Werewolves"></td><td><a href="/profile/player/77669" title="faramir">faramir</a> [<a href="/clan/viewExtern/4692">TBW</a>]</td><td align="right">1.087</td><td align="right">7.657.346.720</td><td align="right">9.324</td>        </tr>
+                    </tbody></table>    <p></p>
+                <center><b>1</b>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">2</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/3?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">3</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/single_arrow_right.gif" border="0" title="+1"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/11?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/double_arrow_right.gif" border="0" title="+10"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/41?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/arrow_right_end.gif" border="0" title="to the end"></a></center>    <br>
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr>
+                        <td class="no-bg" align="center" width="50%">
+                            <img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampires">
+                            <br><br>
+                            1.063 Vampires<br>
+                            Booty: 575.307.006.466 Blood<br>
+                            Victims: 1.350<br>
+                            Battles: 5.160.706<br>
+                            Gold: 44.835.056.778 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>            </td>
+                        <td class="no-bg" align="center" width="50%">
+                            <img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="Werewolves">
+                            <br><br>
+                            961 Werewolves<br>
+                            Booty: 910.458.846.668 Meat<br>
+                            Victims: 1.962<br>
+                            Battles: 5.449.849<br>
+                            Gold: 40.809.141.410 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>            </td>
+                    </tr>
+                    </tbody></table></div>
+            <!-- CONTENT END -->
+        </div>
+    </div>
+    <!-- box CONTENT END -->
+    <!-- box FOOTER START -->
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+    <!-- box CONTENT END -->
+</div>
