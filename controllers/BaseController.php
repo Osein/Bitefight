@@ -105,18 +105,47 @@ class BaseController extends \Phalcon\Mvc\Controller
 
     public function getHighscore() {
         $this->view->menu_active = 'highscore';
-        $result = ORM::for_table('user');
+        $result = ORM::for_table('user')
+            ->select_many('name', 'id', 'race');
 
         $race = $this->request->get('race', \Phalcon\Filter::FILTER_INT, 0);
-        $page = $this->request->get('page', \Phalcon\Filter::FILTER_INT, 1);
 
         if($race > 0 && $race < 3) {
             $result = $result->where('race', $race);
         }
 
-        $this->view->results = $result->limit(50)->offset(($page - 1) * 50)->find_many();
+        $this->view->page = $this->request->get('page', \Phalcon\Filter::FILTER_INT, 1);
+        $this->view->show = array_slice($this->request->get('show', null, array('level', 'raid', 'fightvalue')), 0, 5);
+
+        foreach($this->view->show as $show) {
+            if($show == 'level') {
+                $result = $result->selectExpr('FLOOR(SQRT(exp / 5)) + 1', 'level');
+            } elseif($show == 'raid') {
+                $result = $result->select('s_booty', 'raid');
+            } elseif($show == 'fightvalue') {
+                $result = $result->select('battle_value', 'fightvalue');
+            } elseif($show == 'fights') {
+                $result = $result->select('s_fight', 'fights');
+            } elseif($show == 'fight1') {
+                $result = $result->select('s_victory', 'fight1');
+            } elseif($show == 'fight2') {
+                $result = $result->select('s_defeat', 'fight2');
+            } elseif($show == 'fight0') {
+                $result = $result->select('s_draw', 'fight0');
+            } elseif($show == 'goldwin') {
+                $result = $result->select('s_gold_captured', 'goldwin');
+            } elseif($show == 'goldlost') {
+                $result = $result->select('s_gold_lost', 'goldlost');
+            } elseif($show == 'hits1') {
+                $result = $result->select('s_damage_caused', 'hits1');
+            } elseif($show == 'hits2') {
+                $result = $result->select('s_hp_lost', 'hits2');
+            }
+        }
+
+        $this->view->results = $result->limit(50)->offset(($this->view->page - 1) * 50)->find_many();
         $this->view->resultCount = $result->count();
-        $this->view->startRank = ($page - 1) * 50 + 1;
+        $this->view->startRank = ($this->view->page - 1) * 50 + 1;
         $this->view->pick('user/highscore');
     }
 

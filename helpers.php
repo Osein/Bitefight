@@ -32,6 +32,38 @@ function getUrl($link) {
     return $config->get('baseUrl') . $link;
 }
 
+function highscoreShowToName($val) {
+    if($val == 'level') {
+        return 'Level';
+    } elseif($val == 'raid') {
+        return 'Booty';
+    } elseif($val == 'fightvalue') {
+        return 'Battle value';
+    } elseif($val == 'fights') {
+        return 'Fights';
+    } elseif($val == 'fight1') {
+        return 'Victories';
+    } elseif($val == 'fight2') {
+        return 'Defeats';
+    } elseif($val == 'fight0') {
+        return 'Draw';
+    } elseif($val == 'lanter') {
+        return 'Lanterns';
+    } elseif($val == 'goldwin') {
+        return 'looted Gold';
+    } elseif($val == 'goldlost') {
+        return 'lost Gold';
+    } elseif($val == 'hits1') {
+        return 'Damage caused';
+    } elseif($val == 'hits2') {
+        return 'Hit points lost';
+    } elseif($val == 'trophypoints') {
+        return 'Trophy points';
+    } else {
+        return 'Henchmen power';
+    }
+}
+
 function getHuntNameFromId($huntId) {
     if($huntId == 1) {
         return 'Farm';

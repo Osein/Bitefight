@@ -23,7 +23,7 @@
                         }
                     });
                 </script>
-                <form action="/user/highscore/player/0/1" method="GET">
+                <form action="<?php echo getUrl('highscore'); ?>" method="GET">
                     <p></p>
                     <table cellpadding="2" cellspacing="2" border="0" width="100%" id="navigationTable">
                         <tbody>
@@ -50,22 +50,22 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="level" checked="">Level</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="raid" checked="">Booty</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fightvalue" checked="">Battle value</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights">Fights</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="level" <?php if(in_array('level', $show)) echo 'checked'; ?>>Level</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="raid" <?php if(in_array('raid', $show)) echo 'checked'; ?>>Booty</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fightvalue" <?php if(in_array('fightvalue', $show)) echo 'checked'; ?>>Battle value</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights" <?php if(in_array('fights', $show)) echo 'checked'; ?>>Fights</td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1">Victories</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2">Defeats</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0">Draw</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1" <?php if(in_array('fight1', $show)) echo 'checked'; ?>>Victories</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2" <?php if(in_array('fight2', $show)) echo 'checked'; ?>>Defeats</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0" <?php if(in_array('fight0', $show)) echo 'checked'; ?>>Draw</td>
                             <!--<td><input type="checkbox" class="JScheckbox" name="show[]" value="lanter">Lanterns</td>-->
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldwin">looted Gold</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldwin" <?php if(in_array('goldwin', $show)) echo 'checked'; ?>>looted Gold</td>
                         </tr>
                         <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldlost">lost Gold</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits1">Damage caused</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits2">Hit points lost</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldlost" <?php if(in_array('goldlost', $show)) echo 'checked'; ?>>lost Gold</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits1" <?php if(in_array('hits1', $show)) echo 'checked'; ?>>Damage caused</td>
+                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits2" <?php if(in_array('hits2', $show)) echo 'checked'; ?>>Hit points lost</td>
                         </tr>
                         <!--
                         <tr>
@@ -85,18 +85,20 @@
                         <td align="center"> # </td>
                         <td align="center">Race</td>
                         <td align="center">Name</td>
-                        <td align="center"><a href="/user/highscore/player/0/1?order=level&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">Level</a></td>
-                        <td align="center"><a href="/user/highscore/player/0/1?order=raid&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">Booty</a></td>
-                        <td align="center"><a href="/user/highscore/player/0/1?order=fightvalue&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">Battle value</a></td>
+                        <?php foreach($show as $s): ?>
+                            <td align="center">
+                                <a href="<?php echo getUrl('highscore'); ?>?order=<?php echo $s; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo highscoreShowToName($s); ?></a>
+                            </td>
+                        <?php endforeach; ?>
                     </tr>
                     <?php foreach($results as $result): ?>
                         <tr>
                             <td align="right"><?php echo $startRank; ?></td>
                             <td><img src="<?php echo getAssetLink('img/symbols/race'.$result->race.'small.gif'); ?>" alt="<?php echo $result->race==1?'Vampires':'Werewolves'; ?>"></td>
                             <td><a href="<?php echo getUrl('profile/player/'.$result->id); ?>" title="<?php echo e($result->name); ?>"><?php echo e($result->name); ?></a><!-- [<a href="/clan/viewExtern/5274">666</a>]--></td>
-                            <td align="right">3.551</td>
-                            <td align="right">72.254.169.708</td>
-                            <td align="right">24.110</td>
+                            <?php foreach ($show as $s): ?>
+                                <td align="right"><?php echo $result->{$s}; ?></td>
+                            <?php endforeach; ?>
                         </tr>
                         <?php $startRank++; ?>
                     <?php endforeach; ?>
@@ -113,7 +115,6 @@
                             <br><br>
                             1.063 Vampires<br>
                             Booty: 575.307.006.466 Blood<br>
-                            Victims: 1.350<br>
                             Battles: 5.160.706<br>
                             Gold: 44.835.056.778 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>                        </td>
                         <td class="no-bg" align="center" width="50%">
@@ -121,7 +122,6 @@
                             <br><br>
                             961 Werewolves<br> <?php echo $resultCount; ?>
                             Booty: 910.458.846.668 Meat<br>
-                            Victims: 1.962<br>
                             Battles: 5.449.849<br>
                             Gold: 40.809.141.410 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>                        </td>
                     </tr>
