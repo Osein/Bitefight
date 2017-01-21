@@ -8,13 +8,13 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 ## Guest Area
 
+
+
 **Home Page** - 100%
-
 **Register** - 100%
-
-**Login** - 80% ( Needs forget password page )
-
+**Login** - 100%
 **News** - 100%
+**Highscore** - 100%
 
 ## Ingame
 
@@ -27,5 +27,7 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 **Hunt** 25% ( Done: Human Hunt, Needs: PvP )
 
 **Settings** ( Done: Description(*Needs Clan Links*) )
+
+**Search** ( Done: Player Needs: Clan )
 
 **Preview** ( Needs: Clan )
