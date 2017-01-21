@@ -2701,6 +2701,18 @@ CREATE TABLE `user_activity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+# Dump of table user_description
+# ------------------------------------------------------------
+
+CREATE TABLE `user_description` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `description` text,
+  `descriptionHtml` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 # Dump of table user_item
 # ------------------------------------------------------------
 
@@ -2718,6 +2730,17 @@ CREATE TABLE `user_item` (
   KEY `item_id` (`item_id`),
   CONSTRAINT `user_item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+# Dump of table user_note
+# ------------------------------------------------------------
+
+CREATE TABLE `user_note` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `note` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 # Dump of table user_talent
