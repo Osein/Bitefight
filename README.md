@@ -8,21 +8,13 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 ## Guest Area
 
-
-
-**Home Page** - 100%
-**Register** - 100%
-**Login** - 100%
-**News** - 100%
-**Highscore** - 100%
+Home, News, Login, Register, Forget password, Highscore 100%
 
 ## Ingame
 
+Hideout, Notepad 100%
+
 **Profile** 40% ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
-
-**Hideout** 100%
-
-**Notepad** 100%
 
 **Hunt** 25% ( Done: Human Hunt, Needs: PvP )
 
