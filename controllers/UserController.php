@@ -9,15 +9,6 @@
 class UserController extends GameController
 {
 
-    public function getNews() {
-        $this->view->menu_active = 'news';
-        $news = ORM::for_table('news')
-            ->find_many();
-
-        $this->view->news = $news;
-        $this->view->pick('home/news');
-    }
-
     public function getProfile() {
         $this->view->menu_active = 'profile';
 
@@ -255,34 +246,6 @@ class UserController extends GameController
     public function getLogout() {
         $this->session->remove('user_id');
         return $this->response->redirect(getUrl(''));
-    }
-
-    public function getPreview($id) {
-        $user = ORM::for_table('user')
-            ->select('user.*')
-            ->select('user_description.descriptionHtml')
-            ->left_outer_join('user_description', ['user.id', '=', 'user_description.user_id'])
-            ->find_one($id);
-
-        if(!$user) {
-            return $this->notFound();
-        }
-
-        $stat_max = max($user->str, $user->dex, $user->dex, $user->end, $user->cha);
-        $userLevel = getLevel($user->exp);
-        $previousLevelExp = getPreviousExpNeeded($userLevel);
-        $nextLevelExp = getExpNeeded($userLevel);
-        $levelExpDiff = $nextLevelExp - $previousLevelExp;
-
-        $this->view->puser = $user;
-        $this->view->exp_red_long = ($user->exp - $previousLevelExp) / $levelExpDiff * 400;
-        $this->view->str_red_long = $user->str / $stat_max * 400;
-        $this->view->def_red_long = $user->def / $stat_max * 400;
-        $this->view->dex_red_long = $user->dex / $stat_max * 400;
-        $this->view->end_red_long = $user->end / $stat_max * 400;
-        $this->view->cha_red_long = $user->cha / $stat_max * 400;
-        $this->view->menu_active = 'profile';
-        $this->view->pick('user/preview');
     }
 
 }

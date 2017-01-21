@@ -51,7 +51,7 @@ $hideout->addGet('', ['action' => 'getHideout']);
 $hideout->addGet('/upgrade', ['action' => 'getHideoutUpgrade']);
 $router->mount($hideout);
 
-$router->addGet('/profile/player/{id:[0-9]+}', ['controller' => 'User', 'action' => 'getPreview']);
+$router->addGet('/profile/player/{id:[0-9]+}', ['controller' => 'Base', 'action' => 'getPreview']);
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);
 $router->addPost('/search', ['controller' => 'Game', 'action' => 'postSearch']);
 $router->addGet('/notepad', ['controller' => 'User', 'action' => 'getNotepad']);

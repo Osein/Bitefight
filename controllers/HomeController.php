@@ -14,20 +14,13 @@ class HomeController extends BaseController
         if($this->session->get('user_id')) {
             return $this->response->redirect(getUrl('user/profile'));
         }
+
+        parent::initialize();
     }
 
     public function getIndex() {
         $this->view->menu_active = 'home';
         $this->view->pick('home/index');
-    }
-
-    public function getNews() {
-        $this->view->menu_active = 'news';
-        $news = ORM::for_table('news')
-            ->find_many();
-
-        $this->view->news = $news;
-        $this->view->pick('home/news');
     }
 
     public function getRegister($id = 0) {
@@ -237,12 +230,6 @@ class HomeController extends BaseController
         }
 
         return $this->response->redirect(getUrl('user/lostpw'));
-    }
-
-    public function getHighscore() {
-        $this->view->menu_active = 'highscore';
-
-        $this->view->pick('user/highscore');
     }
 
 }

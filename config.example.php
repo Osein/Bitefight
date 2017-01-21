@@ -10,7 +10,7 @@
 $config = new \Phalcon\Config(array(
     'cdn' => 'http://bfd.osein.tk/',
     'baseUrl' => 'http:///bfd.osein.tk/',
-    'version' => '0.1a1',
+    'version' => '0.2a1',
     'database' => array(
         'adapter' => 'mysql',
         'host' => 'host',
