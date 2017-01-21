@@ -44,9 +44,7 @@
                                     <div class="btn-right">
                                         <input class="btn" type="submit" value="show">
                                     </div>
-                                </div>
-                                &nbsp;
-                                (Maximum of 5 options possible)
+                                </div>&nbsp;(Maximum of 5 options possible)
                             </td>
                         </tr>
                         <tr>
@@ -77,7 +75,51 @@
                     </table>
                     <p></p>
                 </form>
-                <center><b>1</b>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">2</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/3?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">3</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/single_arrow_right.gif" border="0" title="+1"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/11?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/double_arrow_right.gif" border="0" title="+10"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/41?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/arrow_right_end.gif" border="0" title="to the end"></a></center>
+                <center>
+                    <?php if($page > 1): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <img src="<?php echo getAssetLink('img/symbols/arrow_left_end.gif'); ?>" border="0" title="to the start">
+                    </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 10): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <img src="<?php echo getAssetLink('img/symbols/double_arrow_left.gif'); ?>" border="0" title="-10">
+                    </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 1): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <img src="<?php echo getAssetLink('img/symbols/single_arrow_left.gif'); ?>" border="0" title="-1">
+                    </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 2): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 2; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 1): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 1; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <b><?php echo $page; ?></b>&nbsp;&nbsp;
+                    <?php if($page < $maxPage): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page + 1; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage - 1): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo  $page + 2; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <img src="<?php echo getAssetLink('img/symbols/single_arrow_right.gif'); ?>" border="0" title="+1">
+                    </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage - 10): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <img src="<?php echo getAssetLink('img/symbols/double_arrow_right.gif'); ?>" border="0" title="+10">
+                    </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage): ?>
+                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <img src="<?php echo getAssetLink('img/symbols/arrow_right_end.gif'); ?>" border="0" title="to the end">
+                    </a>
+                    <?php endif; ?>
+                </center>
                 <p></p>
                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                     <tbody>
@@ -87,7 +129,7 @@
                         <td align="center">Name</td>
                         <?php foreach($show as $s): ?>
                             <td align="center">
-                                <a href="<?php echo getUrl('highscore'); ?>?order=<?php echo $s; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo highscoreShowToName($s); ?></a>
+                                <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $s; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo highscoreShowToName($s); ?></a>
                             </td>
                         <?php endforeach; ?>
                     </tr>
@@ -105,7 +147,51 @@
                     </tbody>
                 </table>
                 <p></p>
-                <center><b>1</b>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">2</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/3?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue">3</a>&nbsp;&nbsp;<a href="/user/highscore/player/0/2?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/single_arrow_right.gif" border="0" title="+1"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/11?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/double_arrow_right.gif" border="0" title="+10"></a>&nbsp;&nbsp;<a href="/user/highscore/player/0/41?order=&amp;show[]=level&amp;show[]=raid&amp;show[]=fightvalue"><img src="/img/symbols/arrow_right_end.gif" border="0" title="to the end"></a></center>
+                <center>
+                    <?php if($page > 1): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                            <img src="<?php echo getAssetLink('img/symbols/arrow_left_end.gif'); ?>" border="0" title="to the start">
+                        </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 10): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                            <img src="<?php echo getAssetLink('img/symbols/double_arrow_left.gif'); ?>" border="0" title="-10">
+                        </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 1): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                            <img src="<?php echo getAssetLink('img/symbols/single_arrow_left.gif'); ?>" border="0" title="-1">
+                        </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 2): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 2; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page > 1): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 1; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <b><?php echo $page; ?></b>&nbsp;&nbsp;
+                    <?php if($page < $maxPage): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page + 1; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage - 1): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo  $page + 2; ?></a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                            <img src="<?php echo getAssetLink('img/symbols/single_arrow_right.gif'); ?>" border="0" title="+1">
+                        </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage - 10): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                            <img src="<?php echo getAssetLink('img/symbols/double_arrow_right.gif'); ?>" border="0" title="+10">
+                        </a>&nbsp;&nbsp;
+                    <?php endif; ?>
+                    <?php if($page < $maxPage): ?>
+                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                            <img src="<?php echo getAssetLink('img/symbols/arrow_right_end.gif'); ?>" border="0" title="to the end">
+                        </a>
+                    <?php endif; ?>
+                </center>
                 <br>
                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                     <tbody>
@@ -113,17 +199,17 @@
                         <td class="no-bg" align="center" width="50%">
                             <img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampires">
                             <br><br>
-                            1.063 Vampires<br>
-                            Booty: 575.307.006.466 Blood<br>
-                            Battles: 5.160.706<br>
-                            Gold: 44.835.056.778 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>                        </td>
+                            <?php echo prettyNumber($vampireCount); ?> Vampires<br>
+                            Booty: <?php echo prettyNumber($vampireBlood); ?> Blood<br>
+                            Battles: <?php echo prettyNumber($vampireBattle); ?><br>
+                            Gold: <?php echo prettyNumber($vampireGold); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>                        </td>
                         <td class="no-bg" align="center" width="50%">
                             <img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="Werewolves">
                             <br><br>
-                            961 Werewolves<br> <?php echo $resultCount; ?>
-                            Booty: 910.458.846.668 Meat<br>
-                            Battles: 5.449.849<br>
-                            Gold: 40.809.141.410 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>                        </td>
+                            <?php echo prettyNumber($werewolfCount); ?> Werewolves<br>
+                            Booty: <?php echo prettyNumber($werewolfBlood); ?> Meat<br>
+                            Battles: <?php echo prettyNumber($werewolfBattle); ?><br>
+                            Gold: <?php echo prettyNumber($werewolfGold); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>                        </td>
                     </tr>
                     </tbody>
                 </table>

@@ -116,6 +116,35 @@ class BaseController extends \Phalcon\Mvc\Controller
 
         $this->view->page = $this->request->get('page', \Phalcon\Filter::FILTER_INT, 1);
         $this->view->show = array_slice($this->request->get('show', null, array('level', 'raid', 'fightvalue')), 0, 5);
+        $this->view->order = $this->request->get('order', \Phalcon\Filter::FILTER_STRING, 'raid');
+
+        if(!in_array($this->view->order, $this->view->show)) {
+            $this->view->order = $this->view->show[0];
+        }
+
+        if($this->view->order == 'level') {
+            $result = $result->orderByDesc('exp');
+        } elseif($this->view->order == 'raid') {
+            $result = $result->orderByDesc('s_booty');
+        } elseif($this->view->order == 'fightvalue') {
+            $result = $result->orderByDesc('battle_value');
+        } elseif($this->view->order == 'fights') {
+            $result = $result->orderByDesc('s_fight');
+        } elseif($this->view->order == 'fight1') {
+            $result = $result->orderByDesc('s_victory');
+        } elseif($this->view->order == 'fight2') {
+            $result = $result->orderByDesc('s_defeat');
+        } elseif($this->view->order == 'fight0') {
+            $result = $result->orderByDesc('s_draw');
+        } elseif($this->view->order == 'goldwin') {
+            $result = $result->orderByDesc('s_gold_captured');
+        } elseif($this->view->order == 'goldlost') {
+            $result = $result->orderByDesc('s_gold_lost');
+        } elseif($this->view->order == 'hits1') {
+            $result = $result->orderByDesc('s_damage_caused');
+        } elseif($this->view->order == 'hits2') {
+            $result = $result->orderByDesc('s_hp_lost');
+        }
 
         foreach($this->view->show as $show) {
             if($show == 'level') {
@@ -143,9 +172,21 @@ class BaseController extends \Phalcon\Mvc\Controller
             }
         }
 
+        $resultCount = $result->count();
+
         $this->view->results = $result->limit(50)->offset(($this->view->page - 1) * 50)->find_many();
-        $this->view->resultCount = $result->count();
+        $this->view->maxPage = ceil($resultCount / 50);
         $this->view->startRank = ($this->view->page - 1) * 50 + 1;
+
+        $this->view->vampireCount = ORM::for_table('user')->where('race', 1)->count();
+        $this->view->werewolfCount = ORM::for_table('user')->where('race', 2)->count();
+        $this->view->vampireBlood = ORM::for_table('user')->where('race', 1)->selectExpr('SUM(s_booty)', 'booty')->find_one()->booty;
+        $this->view->werewolfBlood = ORM::for_table('user')->where('race', 2)->selectExpr('SUM(s_booty)', 'booty')->find_one()->booty;
+        $this->view->vampireBattle = ORM::for_table('user')->where('race', 1)->selectExpr('SUM(s_fight)', 'booty')->find_one()->booty;
+        $this->view->werewolfBattle = ORM::for_table('user')->where('race', 2)->selectExpr('SUM(s_fight)', 'booty')->find_one()->booty;
+        $this->view->vampireGold = ORM::for_table('user')->where('race', 1)->selectExpr('SUM(gold)', 'booty')->find_one()->booty;
+        $this->view->werewolfGold = ORM::for_table('user')->where('race', 2)->selectExpr('SUM(gold)', 'booty')->find_one()->booty;
+
         $this->view->pick('user/highscore');
     }
 
