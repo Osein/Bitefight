@@ -1,48 +1,31 @@
-<div class="btn-left left"><div class="btn-right">
-        <a href="http://s202.en.bitefight.gameforge.com/clan/index" class="btn">back</a></div></div>
+<div class="btn-left left"><div class="btn-right"><a href="<?php echo getUrl('clan/index'); ?>" class="btn">back</a></div></div>
 <br class="clearfloat">
-
 <div id="create">
-    <!-- box HEADER START -->
-    <div class="wrap-top-left clearfix">
-        <div class="wrap-top-right clearfix">
-            <div class="wrap-top-middle clearfix"></div>
-        </div>
-    </div>
-    <!-- box HEADER END -->
-    <!-- box CONTENT START -->
+    <div class="wrap-top-left clearfix"><div class="wrap-top-right clearfix"><div class="wrap-top-middle clearfix"></div></div></div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <!-- CONTENT START -->
-            <h2><img src="/img/symbols/race1small.gif" alt="">Found a clan</h2>
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Found a clan</h2>
             <br class="clearfloat">
-            <form action="http://s202.en.bitefight.gameforge.com/clan/create?__token=c8e6c840956331a5290d6f20ed6c7139" class="clearfix" method="POST">
+            <form action="<?php echo getUrl('clan/create'); ?>" class="clearfix" method="POST">
+                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <div class="table-wrap">
                     <table width="100%" border="0">
-                        <tbody><tr>
+                        <tbody>
+                        <tr>
                             <td>Clan-Clan tag (2..8 Characters)</td>
                             <td><input type="text" name="tag" maxlength="8" size="8" value=""></td>
-                        </tr>
-                        <tr>
+                        </tr><tr>
                             <td>Clan-Name (2..35 Characters)
                             </td><td><input type="text" name="name" maxlength="35" size="20" value=""></td>
                         </tr>
-                        </tbody></table>
-                    <div class="btn-left center"><div class="btn-right">
-                            <input type="submit" class="btn" name="create" value="found">
-                        </div></div>
+                        </tbody>
+                    </table>
+                    <div class="btn-left center"><div class="btn-right"><input type="submit" class="btn" name="create" value="found"></div></div>
                 </div>
             </form>
             <br class="clearfloat">
-            <!-- CONTENT END -->
+            <?php echo $this->flashSession->output(); ?>
         </div>
     </div>
-    <!-- box CONTENT END -->
-    <!-- box FOOTER START -->
-    <div class="wrap-bottom-left">
-        <div class="wrap-bottom-right">
-            <div class="wrap-bottom-middle"></div>
-        </div>
-    </div>
-    <!-- box CONTENT END -->
+    <div class="wrap-bottom-left"><div class="wrap-bottom-right"><div class="wrap-bottom-middle"></div></div></div>
 </div>
