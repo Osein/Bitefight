@@ -47,6 +47,12 @@ $hunt->addGet('/index', ['action' => 'getHunt']);
 $hunt->addGet('/human/{id:[1-5]}', ['action' => 'getHumanHunt']);
 $router->mount($hunt);
 
+$clan = new \Phalcon\Mvc\Router\Group(['controller' => 'Clan']);
+$clan->setPrefix('/clan');
+$clan->addGet('/index', ['action' => 'getIndex']);
+$clan->addGet('/create', ['action' => 'getCreate']);
+$router->mount($clan);
+
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);
 $router->addPost('/search', ['controller' => 'Game', 'action' => 'postSearch']);
 $router->addGet('/notepad', ['controller' => 'User', 'action' => 'getNotepad']);

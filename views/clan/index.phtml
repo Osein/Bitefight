@@ -1,0 +1,320 @@
+<?php if(!$user->clan_id): ?>
+<div id="createClan">
+    <div class="wrap-top-left clearfix"><div class="wrap-top-right clearfix"><div class="wrap-top-middle clearfix"></div></div></div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Clan</h2>
+            <div class="clearfix">
+                <div class="btn-left left"><div class="btn-right"><a href="<?php echo getUrl('clan/create'); ?>" class="btn">Found a clan</a></div></div>
+                <div class="btn-left left"><div class="btn-right"><a href="<?php echo getUrl('search'); ?>" class="btn">Search clans</a></div></div>
+                <br class="clearfloat">
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bottom-left"><div class="wrap-bottom-right"><div class="wrap-bottom-middle"></div></div></div>
+</div>
+<?php else: ?>
+<div id="clanOverview">
+    <!-- box HEADER START -->
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <!-- box HEADER END -->
+    <!-- box CONTENT START -->
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <!-- CONTENT START -->
+            <h2><img src="/img/symbols/race1small.gif" alt="">Clan [WTH] (since 21.01.2017 23:25)</h2>
+            <div class="table-wrap">
+                <table width="100%">
+                    <tbody><tr>
+                        <td class="no-bg" style="text-align:center;" rowspan="10" align="center">                <a href="http://s202.en.bitefight.gameforge.com/clan/logo">
+                                <img src="/img/logo/0/tmp/1-1.png" border="0">                </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>WelcomeToHell</td>
+                    </tr>
+                    <tr>
+                        <td>Homepage</td>
+                        <td>no clan page available</td>
+                    </tr>
+                    <tr>
+                        <td>Total booty</td>
+                        <td>446.410.432        Blood            </td>
+                    </tr>
+                    <tr>
+                        <td>Members</td>
+                        <td><a href="http://s202.en.bitefight.gameforge.com/clan/memberlist/9267">
+                                1            /
+                                1        Member        </a></td>
+                    </tr>
+                    <tr>
+                        <td>Capital</td>
+                        <td>0        <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></td>
+                    </tr>
+                    <tr>
+                        <td>Your rank</td>
+                        <td>Master</td>
+                    </tr>
+                    </tbody></table>
+
+
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Clan settings    </h2>
+                <p>
+                </p><table width="100%">
+                    <tbody><tr>
+                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/description">add description</a></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/logo">edit clan symbol</a></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/homepage">set as homepage</a></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <a href="http://s202.en.bitefight.gameforge.com/clan/change/clanname">rename clan</a>                </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/msg/clanmail">send a message to your clan</a></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/memberrights">manage members</a></th>
+                    </tr>
+                    <tr>
+                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/donationlist">view the donations made to your clan</a></th>
+                    </tr>
+                    </tbody></table>
+                <p></p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">Clan chat</h2>
+
+                <script>
+                    function ajaxLoadContent(targetSelector, targetAction, requestData, reloadCheck)
+                    {
+                        if ($(targetSelector).html() != '' && reloadCheck)
+                        {
+                            return;
+                        }
+                        $(targetSelector).html(
+                            '<img src="/img/ajax/ajax_loader_large.gif" alt="loading.." />'
+                        );
+
+                        var successFunc = function(htmlContent)
+                        {
+                            $(targetSelector).html(htmlContent);
+
+                            activateTooltipsForSelector(targetSelector);
+                        }
+
+                        ajaxSendRequestHtml(targetAction, requestData, successFunc);
+                    }
+
+                    function ajaxReplaceContent(targetSelector, targetAction, requestData)
+                    {
+                        var successFunc = function(htmlContent)
+                        {
+                            $(targetSelector).html(htmlContent);
+
+                            activateTooltipsForSelector(targetSelector);
+                        }
+
+                        ajaxSendRequestHtml(targetAction, requestData, successFunc);
+                    }
+
+                    function ajaxSendRequestHtml(targetAction, requestData, successFunc)
+                    {
+                        $.get('/ajax/' + targetAction,
+                            requestData,
+                            successFunc,
+                            'html');
+                    }
+
+                    function activateTooltipsForSelector(selector)
+                    {
+                        $(selector + ' .triggerTooltip').tooltip({
+                            effect: 'toggle',
+                            delay: 0,
+                            position: 'center right',
+                            relative: true
+                        }).dynamic({ bottom: { direction: 'down', bounce: true } });
+                    }
+                </script>    <div class="btn-left center">
+                    <div class="btn-right">
+                        <input type="button" id="clanChat" class="btn" href="#" value="Start Clan chat">
+                    </div>
+                </div>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Clan fights            </h2>
+                <p>
+                </p><table id="clanwarsOverview" width="100%">
+                    <tbody><tr>
+                        <th colspan="2"> The clan can only take part in clan fights when it has reached level 1 and has at least 3 members.                </th>
+                    </tr>
+                    </tbody></table>
+                <p></p>
+                <br>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Clan rituals</h2>
+                <table width="100%" id="ritusOverview">
+                    <tbody><tr>
+                        <th>
+                            <div class="btn-left center">
+                                <div class="btn-right">
+                                    <a class="btn" href="/clan/ritus/">
+                                        Vocalise a clan ritual                            </a>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                    </tbody></table>
+                There are currently no active rituals<table width="100%>
+                <tr>
+                <th align=" center"="">
+
+                </table>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Clan applications    </h2>
+                <p>
+                </p><table width="100%">
+                    <tbody><tr>
+                        <th colspan="2"> No Applications            </th>
+                    </tr>
+                    </tbody></table>
+                <p></p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    View of the clan hideout</h2>
+
+                <div style="background-image:url('http://s202.en.bitefight.gameforge.com/img/clan/bg1.jpg'); background-repeat:no-repeat; background-position:center;">
+                    <div style="position: relative; height: 584px;">
+                        <div style="position: absolute; top: 0px; left: 0px; width:100%; text-align: center;"><img src="http://s202.en.bitefight.gameforge.com/img/clan/stufe0.gif"></div>
+                        <div style="width:100%; position:relative; top:497px;">
+                        </div>
+                    </div>
+                </div>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Clan hideout    </h2>
+                <p class="gold">Capital        : 0    <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></p>
+                <p>
+                </p><table width="100%">
+
+                    <tbody><tr>
+                        <th align="right">Level                    :
+                            1</th>
+                        <th align="right">Members                    :
+                            3</th>
+                        <th align="center"> The next level costs<br>3 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0">                </th>
+                    </tr>
+                    </tbody></table>
+                <p></p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Donate into the clan account</h2>
+
+                <p class="gold">Your gold    : 1.094 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></p>
+
+                <p>
+                </p><table width="50%" align="center">
+                    <form action="http://s202.en.bitefight.gameforge.com/clan/donate?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" method="POST"></form>
+                    <tbody><tr>
+
+                    </tr>
+                    <tr>
+                        <th>How much would you like to donate?</th>
+                        <th align="right"><input type="text" name="donation" size="10" maxlength="10">
+                            <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0">            </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <div class="btn-left center">
+                                <div class="btn-right">
+                                    <input class="btn" type="submit" name="donate" value="donate">
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+
+                    </tbody></table>
+                <p></p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Clan description</h2>
+
+                <p style="text-align:center">
+                    no description</p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    messages    </h2>
+                <p>
+                </p><table width="100%">
+                    <tbody><tr>
+                        <th colspan="3">no messages</th>
+                    </tr>
+                    </tbody></table>
+                <p></p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    new message        (<span id="charcount" style="display:inline-block; margin-bottom:0px;">
+		2000		</span>
+                    Characters        )</h2>
+                <p>
+                    <script language="JavaScript">
+                        function CheckLen(Target)
+                        {
+                            var maxlength = "2000";
+                            StrLen = Target.value.length;
+                            if (StrLen == 1 && Target.value.substring(0, 1) == " ")
+                            {
+                                Target.value = "";
+                                StrLen = 0;
+                            }
+                            if (StrLen > maxlength)
+                            {
+                                Target.value = Target.value.substring(0, maxlength);
+                                CharsLeft = 0;
+                            }
+                            else
+                            {
+                                CharsLeft = maxlength - StrLen;
+                            }
+                            document.getElementById('charcount').innerHTML = CharsLeft;
+                        }
+                    </script>
+                </p><table width="100%">
+                    <tbody><tr>
+                        <th colspan="2">
+                            <form action="http://s202.en.bitefight.gameforge.com/clan/clanmessage/add?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" method="POST">
+                                <textarea name="message" rows="6" cols="60" onkeydown="CheckLen(this)" onkeyup="CheckLen(this)" onfocus="CheckLen(this)" onchange="CheckLen(this)"></textarea>
+                                <br class="clearfloat">
+
+                                <div class="btn-left center">
+                                    <div class="btn-right">
+                                        <input class="btn" type="submit" value="insert">
+                                    </div>
+                                </div>
+                            </form>
+                        </th>
+                    </tr>
+                    </tbody></table>
+                <p></p>
+                <h2><img alt="" src="/img/symbols/race1small.gif">
+                    Disband clan    </h2>
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <a href="http://s202.en.bitefight.gameforge.com/clan/clanleave?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" class="btn">Disband clan</a>        </div>
+                </div>
+                <br class="clearfloat">
+            </div>
+            <!-- CONTENT END -->
+        </div>
+    </div>
+    <!-- box CONTENT END -->
+    <!-- box FOOTER START -->
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+    <!-- box CONTENT END -->
+</div>
+<?php endif; ?>
