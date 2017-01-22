@@ -47,6 +47,30 @@ class GameController extends BaseController
             $this->view->results = $result
                 ->limit(25)
                 ->find_many();
+        } else {
+            $this->view->search_type = 'clan';
+            $result = ORM::for_table('clan')
+                ->select_many('id', 'name', 'tag')
+                ->selectExpr('(SELECT SUM(s_booty) FROM user WHERE clan_id = id)', 'booty')
+                ->selectExpr('(SELECT COUNT(1) FROM user WHERE clan_id = id)', 'members');
+
+            if($searchType == 'clan') {
+                if($exact) {
+                    $result = $result->where('name', $search);
+                } else {
+                    $result = $result->where_like('name', '%'.$search.'%');
+                }
+            } else {
+                if($exact) {
+                    $result = $result->where('tag', $search);
+                } else {
+                    $result = $result->where_like('tag', '%'.$search.'%');
+                }
+            }
+
+            $this->view->results = $result
+                ->limit(25)
+                ->find_many();
         }
 
         $this->view->menu_active = 'search';

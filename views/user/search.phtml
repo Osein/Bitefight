@@ -14,7 +14,6 @@
                         <input type="radio" name="searchtyp" value="name" checked>
                         <label>Player</label>
                     </div>
-                    <!--
                     <div>
                         <input type="radio" name="searchtyp" value="clan">
                         <label>Clan (Name)</label>
@@ -23,7 +22,6 @@
                         <input type="radio" name="searchtyp" value="tag">
                         <label>Clan (Clan tag)</label>
                     </div>
-                    -->
                 </div>
                 <div id="searchField">
                     <div class="btn-left right">
@@ -41,12 +39,27 @@
             <h2 style="margin-bottom: 1rem;"><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">Results</h2>
             <table width="80%">
                 <tbody>
+                <tr><td>Race</td>
                 <?php if($search_type == 'player'): ?>
-                    <tr><td>Race</td><td>Player</td><td>Entire booty</td></tr>
+                    <td>Player</td>
+                <?php else: ?>
+                    <td>Clan</td><td>Members</td>
                 <?php endif; ?>
+                <td>Entire booty</td></tr>
                 <?php foreach($results as $res): ?>
                     <?php if($search_type == 'player'): ?>
-                        <tr><td><img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?'Vampire':'Werewolf'; ?>" border="0"></td><td><a href="<?php echo getUrl('profile/player/'.$res->id); ?>"><?php echo $res->name; ?></a></td><td><?php echo prettyNumber($res->s_booty); ?></td></tr>
+                        <tr>
+                            <td>
+                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?'Vampire':'Werewolf'; ?>" border="0">
+                            </td>
+                            <td>
+                                <a href="<?php echo getUrl('profile/player/'.$res->id); ?>"><?php echo $res->name; ?></a>
+                            </td>
+                            <td><?php echo prettyNumber($res->s_booty); ?></td>
+                        </tr>
+                    <?php else: ?>
+                        <!-- todo clan links -->
+                        <asfasfas></asfasfas>
                     <?php endif; ?>
                 <?php endforeach; ?>
                 <tr>
