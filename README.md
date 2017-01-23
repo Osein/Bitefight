@@ -12,14 +12,12 @@ Home, News, Login, Register, Forget password, Highscore 100%
 
 ## Ingame
 
-Hideout, Notepad 100%
+Hideout, Notepad, Search 100%
 
 **Profile** 40% ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
 
 **Hunt** 25% ( Done: Human Hunt, Needs: PvP )
 
 **Settings** ( Done: Description(*Needs Clan Links*) )
-
-**Search** ( Done: Player Needs: Clan )
 
 **Preview** ( Needs: Clan )

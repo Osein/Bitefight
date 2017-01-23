@@ -11,15 +11,15 @@
                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <div id="searchOptions">
                     <div>
-                        <input type="radio" name="searchtyp" value="name" checked>
+                        <input type="radio" name="searchtyp" value="name" <?php if($search_type == 'name') echo 'checked'; ?>>
                         <label>Player</label>
                     </div>
                     <div>
-                        <input type="radio" name="searchtyp" value="clan">
+                        <input type="radio" name="searchtyp" value="clan" <?php if($search_type == 'clan') echo 'checked'; ?>>
                         <label>Clan (Name)</label>
                     </div>
                     <div>
-                        <input type="radio" name="searchtyp" value="tag">
+                        <input type="radio" name="searchtyp" value="tag" <?php if($search_type == 'tag') echo 'checked'; ?>>
                         <label>Clan (Clan tag)</label>
                     </div>
                 </div>
@@ -58,12 +58,19 @@
                             <td><?php echo prettyNumber($res->s_booty); ?></td>
                         </tr>
                     <?php else: ?>
-                        <!-- todo clan links -->
-                        <asfasfas></asfasfas>
+                        <tr>
+                            <td>
+                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?'Vampire':'Werewolf'; ?>" border="0">
+                            </td>
+                            <td>
+                                <a href="<?php echo getUrl('clan/view/'.$res->id); ?>"><?php echo e($res->name); ?> [<?php echo e($res->tag); ?>]</a>
+                            </td><td><?php echo $res->members; ?> / <?php if($res->stufe == 0) echo 1; else echo $res->stufe * 3; ?></td>
+                            <td><?php echo prettyNumber($res->booty); ?></td>
+                        </tr>
                     <?php endif; ?>
                 <?php endforeach; ?>
                 <tr>
-                    <td class="no-bg" colspan="2"><?php if(count($results) > 0): echo count($results); ?> Results (25 max.)<?php else: ?>no results<?php endif; ?></td>
+                    <td class="no-bg" colspan="2"><?php if(count($results) > 0):echo count($results); ?> Results (25 max.)<?php else: ?>no results<?php endif; ?></td>
                 </tr>
                 </tbody>
             </table>
