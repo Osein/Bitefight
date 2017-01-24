@@ -10,8 +10,12 @@ class CityController extends GameController
 {
 
     public function initialize() {
-        $this->view->menu_active = 'clan';
+        $this->view->menu_active = 'city';
         return parent::initialize();
+    }
+
+    public function getIndex() {
+        $this->view->pick('city/index');
     }
 
 }
