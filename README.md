@@ -6,24 +6,46 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 # Progress
 
+**Highscore** - Needs clan
+
+**User Preview** ( Needs: Clan, Buddy request, Message, Attack, Guest Mode )
+
+**Clan Preview** ( Needs: Everything lol )
+
 ## Guest Area
 
-Home, News, Login, Register, Forget password, Highscore 100%
+Home, News, Login, Register, Forget password
 
 ## Ingame
 
 Hideout, Notepad, Search 100%
 
-**Profile** ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
+**Profile** ( Done: Stats, Logo )
 
-**Hunt** ( Done: Human Hunt, Needs: PvP )
+*Items*: -
 
-**Settings** ( Done: Description(*Needs Clan Links*) )
+*Talents*: -
 
-**Preview** ( Needs: Clan, Buddy request, Message, Attack )
+*Aspects*: -
+
+*Orbs*: -
+
+**Hunt** ( Done: Human Hunt )
+
+*Race Hunt*: -
+
+**Settings**
+
+*Description*: Needs clan links
 
 **City** ( Done: Index )
 
-Library: 50%
+*Library*: Only View
 
 **Clan** ( Done: Create )
+
+*Leave, Disband*: View only
+
+*Application*: View only
+
+*Member ranks*: View only
