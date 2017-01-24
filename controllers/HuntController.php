@@ -9,9 +9,13 @@
 class HuntController extends GameController
 {
 
-    public function getHunt() {
+    public function initialize()
+    {
         $this->view->menu_active = 'hunt';
+        return parent::initialize();
+    }
 
+    public function getHunt() {
         $this->view->hunt1Chance = $this->getHuntChance(1);
         $this->view->hunt2Chance = $this->getHuntChance(2);
         $this->view->hunt3Chance = $this->getHuntChance(3);

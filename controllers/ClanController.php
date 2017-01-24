@@ -10,13 +10,17 @@
 class ClanController extends GameController
 {
 
-    public function getIndex() {
+    public function initialize()
+    {
         $this->view->menu_active = 'clan';
+        return parent::initialize();
+    }
+
+    public function getIndex() {
         $this->view->pick('clan/index');
     }
 
     public function getCreate() {
-        $this->view->menu_active = 'clan';
         $this->view->pick('clan/create');
     }
 
