@@ -14,10 +14,16 @@ Home, News, Login, Register, Forget password, Highscore 100%
 
 Hideout, Notepad, Search 100%
 
-**Profile** 40% ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
+**Profile** ( Done: Stats, Logo, Needs: Items, Talents, Aspects and Orbs )
 
-**Hunt** 25% ( Done: Human Hunt, Needs: PvP )
+**Hunt** ( Done: Human Hunt, Needs: PvP )
 
 **Settings** ( Done: Description(*Needs Clan Links*) )
 
-**Preview** ( Needs: Clan )
+**Preview** ( Needs: Clan, Buddy request, Message, Attack )
+
+**City** ( Done: Index )
+
+Library: 50%
+
+**Clan** ( Done: Create )
