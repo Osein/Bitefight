@@ -1043,6 +1043,11 @@ a:hover.headlines {
     padding:15px 15px 15px 60px;
 }
 
+#content .warning {
+    text-align:justify;
+    color: #ed9100;
+}
+
 * html #content .info {background:#3C0008 url(../img/symbols/info.png) no-repeat 5px 5px;}
 
 #content .error {

@@ -32,36 +32,30 @@ function getUrl($link) {
     return $config->get('baseUrl') . $link;
 }
 
+function getNameChangeCost($count, $exp) {
+    return pow(2, $count) * getLevel($exp) * 4800;
+}
+
+function getClanHideoutCost($stufe) {
+    if($stufe == 0) {return 3;} elseif($stufe == 1) {return 296;}
+    elseif($stufe == 2) {return 4130;} elseif($stufe == 3) {return 26796;}
+    elseif($stufe == 4) {return 114283;} elseif($stufe == 5) {return 375818;}
+    elseif($stufe == 6) {return 1018158;} elseif($stufe == 7) {return 2425286;}
+    elseif($stufe == 8) {return 5215001;} elseif($stufe == 9) {return 10343751;}
+    elseif($stufe == 10) {return 19218989;} elseif($stufe == 11) {return 33834222;}
+    elseif($stufe == 12) {return 56925897;} elseif($stufe == 13) {return 92153181;}
+    elseif($stufe == 14) {return 144301645;} elseif($stufe == 15) {return 219511858;}
+    elseif($stufe == 16) {return 325533800;} else {return 472008025;}
+}
+
 function highscoreShowToName($val) {
-    if($val == 'level') {
-        return 'Level';
-    } elseif($val == 'raid') {
-        return 'Booty';
-    } elseif($val == 'fightvalue') {
-        return 'Battle value';
-    } elseif($val == 'fights') {
-        return 'Fights';
-    } elseif($val == 'fight1') {
-        return 'Victories';
-    } elseif($val == 'fight2') {
-        return 'Defeats';
-    } elseif($val == 'fight0') {
-        return 'Draw';
-    } elseif($val == 'lanter') {
-        return 'Lanterns';
-    } elseif($val == 'goldwin') {
-        return 'looted Gold';
-    } elseif($val == 'goldlost') {
-        return 'lost Gold';
-    } elseif($val == 'hits1') {
-        return 'Damage caused';
-    } elseif($val == 'hits2') {
-        return 'Hit points lost';
-    } elseif($val == 'trophypoints') {
-        return 'Trophy points';
-    } else {
-        return 'Henchmen power';
-    }
+    if($val == 'level') {return 'Level';} elseif($val == 'raid') {return 'Booty';}
+    elseif($val == 'fightvalue') {return 'Battle value';} elseif($val == 'fights') {return 'Fights';}
+    elseif($val == 'fight1') {return 'Victories';} elseif($val == 'fight2') {return 'Defeats';}
+    elseif($val == 'fight0') {return 'Draw';} elseif($val == 'lanter') {return 'Lanterns';}
+    elseif($val == 'goldwin') {return 'looted Gold';} elseif($val == 'goldlost') {return 'lost Gold';}
+    elseif($val == 'hits1') {return 'Damage caused';} elseif($val == 'hits2') {return 'Hit points lost';}
+    elseif($val == 'trophypoints') {return 'Trophy points';} else {return 'Henchmen power';}
 }
 
 function getHuntNameFromId($huntId) {

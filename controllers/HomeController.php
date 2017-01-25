@@ -203,7 +203,7 @@ class HomeController extends BaseController
             $this->session->set('user_id', $user->id);
             return $this->response->redirect(getUrl('user/profile'));
         } else {
-            $this->session->set('login_error', true);
+            $this->flashSession->error('Invalid credentials.');
             return $this->response->redirect(getUrl('login'));
         }
     }

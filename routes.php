@@ -44,6 +44,8 @@ $router->addGet('/hideout/upgrade', ['controller' => 'User', 'action' => 'getHid
 $city = new \Phalcon\Mvc\Router\Group(['controller' => 'City']);
 $city->setPrefix('/city');
 $city->addGet('/index', ['action' => 'getIndex']);
+$city->addGet('/library', ['action' => 'getLibrary']);
+$city->addPost('/library', ['action' => 'postLibrary']);
 $router->mount($city);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);

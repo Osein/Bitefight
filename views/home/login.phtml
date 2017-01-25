@@ -35,7 +35,7 @@
                         <td><img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="Werewolf" ></td>
                     </tr>
                 </table>
-                <?php if($error) echo '<div class="error">The entered username or password is wrong.</div>'; ?>
+                <?php echo $this->flashSession->output(); ?>
                 <br class="clearfloat" />
             </div>
         </div>
