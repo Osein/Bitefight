@@ -38,9 +38,7 @@ Hideout, Notepad, Search 100%
 
 *Description*: Needs clan links
 
-**City** ( Done: Index, Library )
-
-*Church*: -
+**City** ( Done: Index, Library, Church )
 
 *Graveyard*: -
 
