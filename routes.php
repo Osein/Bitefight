@@ -48,6 +48,9 @@ $city->addGet('/library', ['action' => 'getLibrary']);
 $city->addPost('/library', ['action' => 'postLibrary']);
 $city->addGet('/church', ['action' => 'getChurch']);
 $city->addPost('/church', ['action' => 'postChurch']);
+$city->addGet('/graveyard', ['action' => 'getGraveyard']);
+$city->addPost('/graveyard', ['action' => 'postGraveyard']);
+$city->addPost('/graveyard/cancel', ['action' => 'postGraveyardCancel']);
 $router->mount($city);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);

@@ -7,6 +7,7 @@
  */
 
 const ACTIVITY_TYPE_CHURCH = 3;
+const ACTIVITY_TYPE_GRAVEYARD = 4;
 
 function getAssetLink($assetLink) {
     /**
