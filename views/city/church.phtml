@@ -18,7 +18,8 @@
             <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">What would you like?</h2>
             <div class="table-wrap">
                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                    <tbody><tr>
+                    <tbody>
+                    <tr>
                         <td align="left">
                             <p><b>Blessing and healing of wounds</b><br>
                                 Heals 100% of maximum health for <?php echo $requiredAp; ?> AP                </p>
@@ -26,6 +27,7 @@
                         <td align="center" valign="middle">
                             <?php if($user->ap_now >= $requiredAp && $user->hp_now < $user->hp_max): ?>
                             <form action="<?php echo getUrl('city/church'); ?>" method="POST">
+                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                 <div class="btn-left left">
                                     <div class="btn-right">
                                         <input type="submit" name="heal" class="btn" value="Heal">
@@ -45,33 +47,36 @@
                     <?php if($delta > 0): ?>
                     <tr>
                         <td colspan="2">
-                            Cooldown time until the healing cost has been reduced back to the initial cost:&nbsp;<span id="church_healing_countdown"></div>
-            <span id="church_healing_countdown" >
-</span>
-            <script type="text/javascript">
-                $(function () {
-                    $("#church_healing_countdown").countdown({until: +<?php echo $delta; ?>, compact: true, compactLabels: ['y', 'm', 'w', 'd'],
-                        description: '',onExpiry: redirectUser,onTick: titleCountdown});
-                });
-                function redirectUser() {
-                    setTimeout('window.location = "/city/church"',3000);
-                }
-                function twoDigits(value) {
-                    return (value < 10 ? '0' : '') + value;
-                }
-                function titleCountdown(periods) {
-                    var days = '';
-                    if (periods[3] > 0) {
-                        days = periods[3]+'d ';
-                    }
-                    document.title =  days+periods[4] + ':' + twoDigits(periods[5]) + ':' + twoDigits(periods[6])+' BiteFight';
-                }
-            </script>
+                            Cooldown time until the healing cost has been reduced back to the initial cost:&nbsp;
+                            <span id="church_healing_countdown"></span>
+                            <script type="text/javascript">
+                                function twoDigits(value) {
+                                    return (value < 10 ? '0' : '') + value;
+                                }
+
+                                $(function () {
+                                    $("#church_healing_countdown").countdown({
+                                        until: +<?php echo $delta; ?>,
+                                        compact: true,
+                                        compactLabels: ['y', 'm', 'w', 'd'],
+                                        description: '',
+                                        onExpiry: function() {
+                                            setTimeout('window.location = "/city/church"',3000);
+                                        },
+                                        onTick: function(periods) {
+                                            var days = '';
+                                            if (periods[3] > 0) {
+                                                days = periods[3]+'d ';
+                                            }
+                                            document.title =  days+periods[4] + ':' + twoDigits(periods[5]) + ':' + twoDigits(periods[6])+' BiteFight';
+                                        }});
+                                });
+                            </script>
+                        </td>
                     </tr>
-            <?php endif; ?>
+                    <?php endif; ?>
                     <tr>
-                        <td colspan="2">
-                            When you have prayed, you have to wait 01:00:00 before you can pray again. If you would like to pray for healing again during this time, it will cost you double the actions points and it will increase the cooldown time by another 01:00:00. During this increased cooldown time, the AP cost will be doubled again. The cost will only return to normal once the entire cooldown time has expired.            </td>
+                        <td colspan="2">When you have prayed, you have to wait 01:00:00 before you can pray again. If you would like to pray for healing again during this time, it will cost you double the actions points and it will increase the cooldown time by another 01:00:00. During this increased cooldown time, the AP cost will be doubled again. The cost will only return to normal once the entire cooldown time has expired.</td>
                     </tr>
                     </tbody>
             </table>
