@@ -6,6 +6,8 @@
  * Time: 15:14
  */
 
+const ACTIVITY_TYPE_CHURCH = 3;
+
 function getAssetLink($assetLink) {
     /**
      * @var \Phalcon\Config $config

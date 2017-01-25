@@ -67,4 +67,56 @@ class CityController extends GameController
         }
     }
 
+    public function getChurch() {
+        $activity = ORM::for_table('user_activity')
+            ->where('activity_type', ACTIVITY_TYPE_CHURCH)
+            ->where('user_id', $this->user->id)
+            ->find_one();
+
+        $this->view->delta = max($activity?$activity->end_time - time():0, 0);
+        $this->view->usedTimes = ceil($this->view->delta / 3600);
+        $this->view->requiredAp = 5 * pow(2, $this->view->usedTimes);
+        $this->view->pick('city/church');
+    }
+
+    public function postChurch() {
+        if($this->user->hp_now >= $this->user->hp_max) {
+            return $this->response->redirect(getUrl('city/church'));
+        }
+
+        $activity = ORM::for_table('user_activity')
+            ->where('activity_type', ACTIVITY_TYPE_CHURCH)
+            ->where('user_id', $this->user->id)
+            ->find_one();
+
+        $delta = max($activity?$activity->end_time - time():0, 0);
+        $usedTimes = ceil($delta / 3600);
+        $requiredAp = 5 * pow(2, $usedTimes);
+
+        if($this->user->ap_now < $requiredAp) {
+            return $this->response->redirect(getUrl('city/church'));
+        }
+
+        if(!$activity) {
+            $activity = ORM::for_table('user_activity')->create();
+            $activity->user_id = $this->user->id;
+            $activity->activity_type = ACTIVITY_TYPE_CHURCH;
+            $activity->end_time = time() + 3600;
+        } else {
+            if($activity->end_time < time()) {
+                $activity->end_time = time() + 3600;
+            } else {
+                $activity->end_time = $activity->end_time + 3600;
+            }
+        }
+
+        $activity->save();
+
+        $this->user->hp_now = $this->user->hp_max;
+        $this->user->ap_now -= $requiredAp;
+
+        $this->flashSession->warning('The reverend tends to your wounds and you immediately feel better.');
+        return $this->response->redirect(getUrl('city/church'));
+    }
+
 }

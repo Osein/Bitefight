@@ -46,6 +46,8 @@ $city->setPrefix('/city');
 $city->addGet('/index', ['action' => 'getIndex']);
 $city->addGet('/library', ['action' => 'getLibrary']);
 $city->addPost('/library', ['action' => 'postLibrary']);
+$city->addGet('/church', ['action' => 'getChurch']);
+$city->addPost('/church', ['action' => 'postChurch']);
 $router->mount($city);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);
