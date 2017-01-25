@@ -49,6 +49,7 @@ class CityController extends GameController
                 $this->user->name = $name;
                 $this->user->gold -= $gcost;
                 $this->user->s_booty = $this->user->s_booty * 9 / 10;
+                $this->user->name_change++;
                 $this->flashSession->warning('Name change success.');
             }
 
