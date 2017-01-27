@@ -146,6 +146,36 @@ function parseBBCodes($text) {
         }
     }
 
+    preg_match_all('~!N:"(.*?)"!~s', $text, $clannames, PREG_SET_ORDER);
+
+    foreach($clannames as $clanname) {
+        $clanDb = ORM::for_table('clan')
+            ->selectExpr('id')
+            ->where('name', $clanname[1])
+            ->find_one();
+
+        if($clanDb) {
+            $text = str_replace('N:"'.$clanname[1].'"', 'N:'.$clanname[1].':'.$clanDb->id, $text);
+        } else {
+            $text = str_replace('!N:"'.$clanname[1].'"!', $clanname[1], $text);
+        }
+    }
+
+    preg_match_all('~!A:"(.*?)"!~s', $text, $clantags, PREG_SET_ORDER);
+
+    foreach($clantags as $clantag) {
+        $clanDb = ORM::for_table('clan')
+            ->selectExpr('id')
+            ->where('tag', $clantag[1])
+            ->find_one();
+
+        if($clanDb) {
+            $text = str_replace('A:"'.$clantag[1].'"', 'A:'.$clantag[1].':'.$clanDb->id, $text);
+        } else {
+            $text = str_replace('!A:"'.$clantag[1].'"!', $clantag[1], $text);
+        }
+    }
+
     $find = array(
         '~\[b\](.*?)\[/b\]~s',
         '~\[i\](.*?)\[/i\]~s',
@@ -153,6 +183,8 @@ function parseBBCodes($text) {
         '~\[f c=(.*?)\](.*?)\[/f\]~s',
         '~\[f f="(.*?)"\](.*?)\[/f\]~s',
         '~!S:(.*?):(.*?)!~s',
+        '~!N:(.*?):(.*?)!~s',
+        '~!A:(.*?):(.*?)!~s',
     );
 
     $replace = array(
@@ -161,7 +193,9 @@ function parseBBCodes($text) {
         '<span style="font-size:$1px;">$2</span>',
         '<span style="color:$1;">$2</span>',
         '<font face="$1">$2</font>',
-        '<a href="'.getUrl('profile/player/$2').'">$1</a>'
+        '<a href="'.getUrl('profile/player/$2').'">$1</a>',
+        '<a href="'.getUrl('clan/view/$2').'">$1</a>',
+        '<a href="'.getUrl('clan/view/$2').'">$1</a>'
     );
 
     return preg_replace($find,$replace,e($text));
