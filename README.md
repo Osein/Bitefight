@@ -42,8 +42,20 @@ Hideout, Notepad, Search 100%
 
 *Shop*: -
 
-**Clan** ( Done: Create, Leave )
+**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade )
 
 *Application*: View only
 
-*Member ranks*: View only
+*Manage members page*: View only
+
+*Donation page*: -
+
+*Clan mail*: Needs user messages
+
+*Rename clan*: -
+
+*Change homepage*: -
+
+*Edit clan symbol*: -
+
+*Add description*: -
