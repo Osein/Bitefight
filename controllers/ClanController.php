@@ -16,7 +16,19 @@ class ClanController extends GameController
         return parent::initialize();
     }
 
+    public function getUserRankOptions() {
+        $rank = ORM::for_table('clan_rank')
+            ->where('id', $this->user->clan_rank);
+
+        if($this->user->clan_rank > 3) {
+            $rank = $rank->where('clan_id', $this->user->clan_id);
+        }
+
+        return $rank->find_one();
+    }
+
     public function getIndex() {
+        $this->view->rank = $this->getUserRankOptions();
         $this->view->pick('clan/index');
     }
 

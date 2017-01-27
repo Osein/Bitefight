@@ -247,7 +247,8 @@
 
                 <p style="text-align:center">
                     no description</p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
+                <?php if($rank->read_message): ?>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     messages    </h2>
                 <p>
                 </p><table width="100%">
@@ -256,10 +257,9 @@
                     </tr>
                     </tbody></table>
                 <p></p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    new message        (<span id="charcount" style="display:inline-block; margin-bottom:0px;">
-		2000		</span>
-                    Characters        )</h2>
+                <?php endif; ?>
+                <?php if($rank->write_message): ?>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> new message (<span id="charcount" style="display:inline-block; margin-bottom:0px;">2000</span> Characters)</h2>
                 <p>
                     <script language="JavaScript">
                         function CheckLen(Target)
@@ -283,7 +283,8 @@
                             document.getElementById('charcount').innerHTML = CharsLeft;
                         }
                     </script>
-                </p><table width="100%">
+                </p>
+                    <table width="100%">
                     <tbody><tr>
                         <th colspan="2">
                             <form action="http://s202.en.bitefight.gameforge.com/clan/clanmessage/add?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" method="POST">
@@ -300,6 +301,7 @@
                     </tr>
                     </tbody></table>
                 <p></p>
+                <?php endif; ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> <?php if($user->clan_rank == 1) echo 'Disband'; else echo 'Leave'; ?> clan</h2>
                 <div class="btn-left center">
                     <div class="btn-right">
