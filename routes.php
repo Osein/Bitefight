@@ -70,6 +70,10 @@ $clan->addGet('/hideout/upgrade', ['action' => 'postHideoutUpgrade']);
 $clan->addPost('/donate', ['action' => 'postDonate']);
 $clan->addPost('/newmessage', ['action' => 'postNewMessage']);
 $clan->addGet('/deletemessage', ['action' => 'postDeleteMessage']);
+$clan->addGet('/logo/background', ['action' => 'getLogoBackground']);
+$clan->addGet('/logo/symbol', ['action' => 'getLogoSymbol']);
+$clan->addPost('/logo/background', ['action' => 'postLogoBackground']);
+$clan->addPost('/logo/symbol', ['action' => 'postLogoSymbol']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

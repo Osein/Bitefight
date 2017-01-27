@@ -194,4 +194,27 @@ class ClanController extends GameController
         return $this->response->redirect(getUrl('clan/index'));
     }
 
+    public function getLogoBackground() {
+        $this->getLogoPage('background');
+    }
+
+    public function getLogoSymbol() {
+        $this->getLogoPage('symbol');
+    }
+
+    public function getLogoPage($type) {
+        $this->view->type = $type;
+        $this->view->clan = ORM::for_table('clan')
+            ->find_one($this->user->clan_id);
+        $this->view->pick('clan/logo');
+    }
+
+    public function postLogoBackground() {
+        $bg = $this->request->getPost('bg', \Phalcon\Filter::FILTER_INT, 1);
+    }
+
+    public function postLogoSymbol() {
+        $symbol = $this->request->getPost('symbol', \Phalcon\Filter::FILTER_INT, 1);
+    }
+
 }
