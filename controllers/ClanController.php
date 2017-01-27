@@ -54,4 +54,28 @@ class ClanController extends GameController
         return $this->response->redirect(getUrl('clan/index'));
     }
 
+    public function getLeave() {
+        $this->view->pick('clan/leave');
+    }
+
+    public function postLeave() {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if(!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        if($this->user->clan_rank == 1) {
+            ORM::for_table('clan')
+                ->where('id', $this->user->clan_id)
+                ->delete();
+        }
+
+        $this->user->clan_id = 0;
+        $this->user->clan_rank = 0;
+
+        return $this->response->redirect(getUrl('clan/index'));
+    }
+
 }

@@ -300,11 +300,10 @@
                     </tr>
                     </tbody></table>
                 <p></p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    Disband clan    </h2>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> <?php if($user->clan_rank == 1) echo 'Disband'; else echo 'Leave'; ?> clan</h2>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <a href="http://s202.en.bitefight.gameforge.com/clan/clanleave?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" class="btn">Disband clan</a>        </div>
+                        <a href="<?php echo getUrl('clan/leave'); ?>" class="btn"><?php if($user->clan_rank == 1) echo 'Disband'; else echo 'Leave'; ?> clan</a></div>
                 </div>
                 <br class="clearfloat">
             </div>

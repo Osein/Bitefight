@@ -42,9 +42,7 @@ Hideout, Notepad, Search 100%
 
 *Shop*: -
 
-**Clan** ( Done: Create )
-
-*Leave, Disband*: View only
+**Clan** ( Done: Create, Leave )
 
 *Application*: View only
 

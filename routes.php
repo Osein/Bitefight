@@ -64,6 +64,8 @@ $clan->setPrefix('/clan');
 $clan->addGet('/index', ['action' => 'getIndex']);
 $clan->addGet('/create', ['action' => 'getCreate']);
 $clan->addPost('/create', ['action' => 'postCreate']);
+$clan->addGet('/leave', ['action' => 'getLeave']);
+$clan->addGet('/clanleave', ['action' => 'postLeave']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);
