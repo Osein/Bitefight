@@ -15,23 +15,20 @@
 </div>
 <?php else: ?>
 <div id="clanOverview">
-    <!-- box HEADER START -->
     <div class="wrap-top-left clearfix">
         <div class="wrap-top-right clearfix">
             <div class="wrap-top-middle clearfix"></div>
         </div>
     </div>
-    <!-- box HEADER END -->
-    <!-- box CONTENT START -->
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <!-- CONTENT START -->
-            <h2><img src="/img/symbols/race1small.gif" alt="">Clan [WTH] (since 21.01.2017 23:25)</h2>
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""> Clan [WTH] (since 21.01.2017 23:25)</h2>
             <div class="table-wrap">
                 <table width="100%">
-                    <tbody><tr>
-                        <td class="no-bg" style="text-align:center;" rowspan="10" align="center">                <a href="http://s202.en.bitefight.gameforge.com/clan/logo">
-                                <img src="/img/logo/0/tmp/1-1.png" border="0">                </a>
+                    <tbody>
+                    <tr>
+                        <td class="no-bg" style="text-align:center;" rowspan="10" align="center">
+                            <a href="http://s202.en.bitefight.gameforge.com/clan/logo"><img src="/img/logo/0/tmp/1-1.png" border="0"></a>
                         </td>
                     </tr>
                     <tr>
@@ -44,55 +41,40 @@
                     </tr>
                     <tr>
                         <td>Total booty</td>
-                        <td>446.410.432        Blood            </td>
+                        <td>446.410.432 Blood</td>
                     </tr>
                     <tr>
                         <td>Members</td>
-                        <td><a href="http://s202.en.bitefight.gameforge.com/clan/memberlist/9267">
-                                1            /
-                                1        Member        </a></td>
+                        <td><a href="http://s202.en.bitefight.gameforge.com/clan/memberlist/9267">1 / 1 Member</a></td>
                     </tr>
                     <tr>
                         <td>Capital</td>
-                        <td>0        <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></td>
+                        <td>0<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></td>
                     </tr>
                     <tr>
                         <td>Your rank</td>
                         <td>Master</td>
                     </tr>
-                    </tbody></table>
+                    </tbody>
+                </table>
 
 
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    Clan settings    </h2>
-                <p>
-                </p><table width="100%">
-                    <tbody><tr>
-                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/description">add description</a></th>
-                    </tr>
-                    <tr>
-                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/logo">edit clan symbol</a></th>
-                    </tr>
-                    <tr>
-                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/homepage">set as homepage</a></th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            <a href="http://s202.en.bitefight.gameforge.com/clan/change/clanname">rename clan</a>                </th>
-                    </tr>
-                    <tr>
-                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/msg/clanmail">send a message to your clan</a></th>
-                    </tr>
-                    <tr>
-                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/memberrights">manage members</a></th>
-                    </tr>
-                    <tr>
-                        <th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/donationlist">view the donations made to your clan</a></th>
-                    </tr>
-                    </tbody></table>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan settings</h2>
                 <p></p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">Clan chat</h2>
+                <table width="100%">
+                    <tbody>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/description">add description</a></th></tr>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/logo">edit clan symbol</a></th></tr>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/homepage">set as homepage</a></th></tr>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/clanname">rename clan</a></th></tr>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/msg/clanmail">send a message to your clan</a></th></tr>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/memberrights">manage members</a></th></tr>
+                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/donationlist">view the donations made to your clan</a></th></tr>
+                    </tbody>
+                </table>
+                <p></p>
 
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan chat</h2>
                 <script>
                     function ajaxLoadContent(targetSelector, targetAction, requestData, reloadCheck)
                     {
@@ -109,7 +91,7 @@
                             $(targetSelector).html(htmlContent);
 
                             activateTooltipsForSelector(targetSelector);
-                        }
+                        };
 
                         ajaxSendRequestHtml(targetAction, requestData, successFunc);
                     }
@@ -121,7 +103,7 @@
                             $(targetSelector).html(htmlContent);
 
                             activateTooltipsForSelector(targetSelector);
-                        }
+                        };
 
                         ajaxSendRequestHtml(targetAction, requestData, successFunc);
                     }
@@ -143,25 +125,28 @@
                             relative: true
                         }).dynamic({ bottom: { direction: 'down', bounce: true } });
                     }
-                </script>    <div class="btn-left center">
+                </script>
+                <div class="btn-left center">
                     <div class="btn-right">
                         <input type="button" id="clanChat" class="btn" href="#" value="Start Clan chat">
                     </div>
                 </div>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    Clan fights            </h2>
-                <p>
-                </p><table id="clanwarsOverview" width="100%">
+                
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan fights</h2>
+                <p></p>
+                <table id="clanwarsOverview" width="100%">
                     <tbody><tr>
-                        <th colspan="2"> The clan can only take part in clan fights when it has reached level 1 and has at least 3 members.                </th>
+                        <th colspan="2">The clan can only take part in clan fights when it has reached level 1 and has at least 3 members.</th>
                     </tr>
-                    </tbody></table>
+                    </tbody>
+                </table>
                 <p></p>
                 <br>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    Clan rituals</h2>
+                
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan rituals</h2>
                 <table width="100%" id="ritusOverview">
-                    <tbody><tr>
+                    <tbody>
+                    <tr>
                         <th>
                             <div class="btn-left center">
                                 <div class="btn-right">
@@ -171,50 +156,58 @@
                             </div>
                         </th>
                     </tr>
-                    </tbody></table>
-                There are currently no active rituals<table width="100%>
-                <tr>
-                <th align=" center"="">
-
+                    </tbody>
                 </table>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    Clan applications    </h2>
-                <p>
-                </p><table width="100%">
-                    <tbody><tr>
-                        <th colspan="2">No Applications</th>
-                        <th colspan="2"><a href="/clan/applications/">
-                                Application                            (
-                                1                            )</a></th>
-                    </tr>
-                    </tbody></table>
+                There are currently no active rituals
+                
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan applications</h2>
                 <p></p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    View of the clan hideout</h2>
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <th colspan="2">No Applications</th>
+                        <th colspan="2"><a href="/clan/applications/">Application(1)</a></th>
+                    </tr>
+                    </tbody>
+                </table>
+                <p></p>
 
-                <div style="background-image:url('http://s202.en.bitefight.gameforge.com/img/clan/bg1.jpg'); background-repeat:no-repeat; background-position:center;">
+
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> View of the clan hideout</h2>
+                <div style="background: url('<?php echo getAssetLink('img/clan/hideout/bg1.jpg'); ?>') no-repeat center;">
                     <div style="position: relative; height: 584px;">
-                        <div style="position: absolute; top: 0px; left: 0px; width:100%; text-align: center;"><img src="http://s202.en.bitefight.gameforge.com/img/clan/stufe0.gif"></div>
-                        <div style="width:100%; position:relative; top:497px;">
+                        <div style="position: absolute; width:100%; text-align: center;">
+                            <img src="<?php echo getAssetLink('img/clan/hideout/1_'.$clan->stufe.'.jpg'); ?>">
                         </div>
                     </div>
                 </div>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
-                    Clan hideout    </h2>
-                <p class="gold">Capital        : 0    <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></p>
-                <p>
-                </p><table width="100%">
 
-                    <tbody><tr>
-                        <th align="right">Level                    :
-                            1</th>
-                        <th align="right">Members                    :
-                            3</th>
-                        <th align="center"> The next level costs<br>3 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0">                </th>
-                    </tr>
-                    </tbody></table>
+                <?php if($rank->spend_gold): ?>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan hideout</h2>
+                <p class="gold">Capital: <?php echo prettyNumber($clan->capital); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" title="Gold" align="absmiddle" border="0"></p>
                 <p></p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
+                <table width="100%">
+                    <tbody>
+                    <?php for($i = 1; $i <= $clan->stufe; $i++): ?>
+                    <tr>
+                        <th align="right">Level: <?php echo $i; ?></th>
+                        <th align="right">Members: <?php echo $i * 3; ?></th>
+                        <th align="center">OK</th>
+                    </tr>
+                    <?php endfor; ?>
+                    <?php if($clan->stufe < 18): ?>
+                    <tr>
+                        <th align="right">Level: <?php echo $clan->stufe + 1; ?></th>
+                        <th align="right">Members: <?php echo ($clan->stufe + 1) * 3; ?></th>
+                        <th align="center"><?php if($clan->capital>= getClanHideoutCost($clan->stufe + 1)): ?><a href="<?php echo getUrl('clan/hideout/upgrade?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>"><?php endif; ?>The next level costs<br><?php echo prettyNumber(getClanHideoutCost($clan->stufe + 1)); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" title="Gold" align="absmiddle" border="0"><?php if($clan->capital >= getClanHideoutCost($clan->stufe + 1)): ?></a><?php endif; ?></th>
+                    </tr>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
+                <p></p>
+                <?php endif; ?>
+
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     Donate into the clan account</h2>
 
                 <p class="gold">Your gold    : 1.094 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></p>
@@ -242,7 +235,7 @@
 
                     </tbody></table>
                 <p></p>
-                <h2><img alt="" src="/img/symbols/race1small.gif">
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     Clan description</h2>
 
                 <p style="text-align:center">
@@ -250,9 +243,10 @@
                 <?php if($rank->read_message): ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     messages    </h2>
-                <p>
-                </p><table width="100%">
-                    <tbody><tr>
+                <p></p>
+                    <table width="100%">
+                    <tbody>
+                    <tr>
                         <th colspan="3">no messages</th>
                     </tr>
                     </tbody></table>
@@ -302,23 +296,21 @@
                     </tbody></table>
                 <p></p>
                 <?php endif; ?>
+
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> <?php if($user->clan_rank == 1) echo 'Disband'; else echo 'Leave'; ?> clan</h2>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <a href="<?php echo getUrl('clan/leave'); ?>" class="btn"><?php if($user->clan_rank == 1) echo 'Disband'; else echo 'Leave'; ?> clan</a></div>
+                        <a href="<?php echo getUrl('clan/leave'); ?>" class="btn"><?php if($user->clan_rank == 1) echo 'Disband'; else echo 'Leave'; ?> clan</a>
+                    </div>
                 </div>
                 <br class="clearfloat">
             </div>
-            <!-- CONTENT END -->
         </div>
     </div>
-    <!-- box CONTENT END -->
-    <!-- box FOOTER START -->
     <div class="wrap-bottom-left">
         <div class="wrap-bottom-right">
             <div class="wrap-bottom-middle"></div>
         </div>
     </div>
-    <!-- box CONTENT END -->
 </div>
 <?php endif; ?>

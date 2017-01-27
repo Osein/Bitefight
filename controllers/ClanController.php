@@ -29,7 +29,46 @@ class ClanController extends GameController
 
     public function getIndex() {
         $this->view->rank = $this->getUserRankOptions();
+
+        $this->view->clan_messages = ORM::for_table('clan_message')
+            ->where('clan_id', $this->user->clan_id)
+            ->find_many();
+
+        if($this->user->clan_id > 0) {
+            $this->view->clan = ORM::for_table('clan')
+                ->find_one($this->user->clan_id);
+        }
+
         $this->view->pick('clan/index');
+    }
+
+    public function postHideoutUpgrade() {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if(!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        $clan = ORM::for_table('clan')
+            ->find_one($this->user->clan_id);
+
+        $rank = $this->getUserRankOptions();
+
+        if(!$rank->spend_gold) {
+            return $this->notFound();
+        }
+
+        $hideoutCost = getClanHideoutCost($clan->stufe + 1);
+        if($clan->capital < $hideoutCost) {
+            return $this->notFound();
+        }
+
+        $clan->capital -= $hideoutCost;
+        $clan->stufe++;
+        $clan->save();
+
+        return $this->response->redirect(getUrl('clan/index'));
     }
 
     public function getCreate() {
