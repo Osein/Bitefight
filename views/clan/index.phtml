@@ -207,34 +207,35 @@
                 <p></p>
                 <?php endif; ?>
 
-                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
-                    Donate into the clan account</h2>
-
-                <p class="gold">Your gold    : 1.094 <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></p>
-
-                <p>
-                </p><table width="50%" align="center">
-                    <form action="http://s202.en.bitefight.gameforge.com/clan/donate?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" method="POST"></form>
-                    <tbody><tr>
-
-                    </tr>
-                    <tr>
-                        <th>How much would you like to donate?</th>
-                        <th align="right"><input type="text" name="donation" size="10" maxlength="10">
-                            <img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0">            </th>
-                    </tr>
-                    <tr>
-                        <th colspan="2">
-                            <div class="btn-left center">
-                                <div class="btn-right">
-                                    <input class="btn" type="submit" name="donate" value="donate">
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-
-                    </tbody></table>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Donate into the clan account</h2>
+                <p class="gold">Your gold: <?php echo prettyNumber($user->gold); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" title="Gold" align="absmiddle" border="0"></p>
                 <p></p>
+                <form action="<?php echo getUrl('clan/donate'); ?>" method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
+                           value="<?php echo $this->security->getToken() ?>"/>
+                    <table width="50%" align="center">
+                        <tbody>
+                            <tr>
+                                <th>How much would you like to donate?</th>
+                                <th align="right">
+                                    <input type="text" name="donation" size="10" maxlength="10">
+                                    <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" title="Gold" align="absmiddle" border="0">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <div class="btn-left center">
+                                        <div class="btn-right">
+                                            <input class="btn" type="submit" name="donate" value="donate">
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <p></p>
+
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     Clan description</h2>
 
