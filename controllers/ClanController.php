@@ -71,6 +71,32 @@ class ClanController extends GameController
         return $this->response->redirect(getUrl('clan/index'));
     }
 
+    public function postDonate() {
+        $donate = $this->request->get('donation', \Phalcon\Filter::FILTER_INT, 0);
+        var_dump(2); die;
+
+        if($donate == 0 || $this->user->gold < donate) {
+            var_dump(1); die;
+            return $this->notFound();
+        }
+
+        $clan = ORM::for_table('clan')
+            ->find_one($this->user->clan_id);
+
+        $clan->capital += $donate;
+        $this->user->gold -= $donate;
+
+        $donate = ORM::for_table('clan_donate')->create();
+        $donate->clan_id = $clan->id;
+        $donate->user_id = $this->user->id;
+        $donate->donate = $donate;
+        $donate->donate_date = time();
+        $donate->save();
+        $clan->save();
+
+        return $this->response->redirect(getUrl('clan/index'));
+    }
+
     public function getCreate() {
         $this->view->pick('clan/create');
     }

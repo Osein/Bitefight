@@ -2,4 +2,3 @@
 /config/development/
 /.idea/
 config.php
-/views/clan/index.phtml
