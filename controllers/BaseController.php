@@ -202,9 +202,13 @@ class BaseController extends \Phalcon\Mvc\Controller
 
     public function getPreview($id) {
         $user = ORM::for_table('user')
-            ->select('user.*')
-            ->select('user_description.descriptionHtml')
+            ->select_many('user.*', 'user_description.descriptionHtml', 'clan_rank.rank_name', 'clan_rank.war_minister', 'clan.logo_sym', 'clan.logo_bg')
+            ->select('clan.id', 'clan_id')
+            ->select('clan.name', 'clan_name')
+            ->select('clan.tag', 'clan_tag')
             ->left_outer_join('user_description', ['user.id', '=', 'user_description.user_id'])
+            ->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])
+            ->left_outer_join('clan_rank', ['user.clan_rank', '=', 'clan_rank.id'])
             ->find_one($id);
 
         if(!$user) {

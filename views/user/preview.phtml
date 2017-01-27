@@ -8,7 +8,9 @@
         <div class="wrap-left">
             <div class="wrap-content wrap-right">
                 <img src="<?php echo getAssetLink('img/logo/'.$puser->race.'/'.$puser->gender.'/'.$puser->image_type.'.jpg') ?>" border="0" width="168" alt="playerlogo">
-                <!--<a href="/clan/?id=8609"><img src="/img/logo/0/tmp/1-1.png" border="0"></a>-->
+                <?php if($puser->clan_id > 0): ?>
+                <a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><img src="<?php echo getAssetLink('img/clan/'.$puser->logo_bg.'-'.$puser->logo_sym.'.png'); ?>" border="0"></a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="wrap-bottom-left">
@@ -33,11 +35,13 @@
                             <td class="no-bg">
                                 <h3>Entire Booty:</h3>
                                 <p><?php echo prettyNumber($puser->s_booty); ?> Blood</p>
-                                <!--<h3>Clan:</h3>
-                                <p><a href="/clan/viewExtern/8609">ZzZzZzZzZ [ZzZzZ]</a></p>
+                                <?php if($puser->clan_id > 0): ?>
+                                <h3>Clan:</h3>
+                                <p><a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><?php echo e($puser->clan_name); ?> [<?php echo e($puser->clan_tag); ?>]</a></p>
                                 <h3>Rank:</h3>
-                                <p>Master (War minister)
-                                </p>-->
+                                <p><?php echo e($puser->rank_name); ?><?php if($puser->war_minister) { echo ' (War minister)'; } ?>
+                                </p>
+                                <?php endif; ?>
                             </td>
                             <td class="no-bg">
                                 <!--<br class="clearfloat">
