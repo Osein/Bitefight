@@ -76,24 +76,22 @@ class ClanController extends GameController
     }
 
     public function postDonate() {
-        $donate = $this->request->getPost('donation', \Phalcon\Filter::FILTER_INT, 0);
-        var_dump(2); die;
+        $donate_amount = $this->request->getPost('donation', \Phalcon\Filter::FILTER_INT, 0);
 
-        if($donate == 0 || $this->user->gold < donate) {
-            var_dump(1); die;
+        if($donate_amount == 0 || $this->user->gold < $donate_amount) {
             return $this->notFound();
         }
 
         $clan = ORM::for_table('clan')
             ->find_one($this->user->clan_id);
 
-        $clan->capital += $donate;
-        $this->user->gold -= $donate;
+        $clan->capital += $donate_amount;
+        $this->user->gold -= $donate_amount;
 
         $donate = ORM::for_table('clan_donate')->create();
         $donate->clan_id = $clan->id;
         $donate->user_id = $this->user->id;
-        $donate->donate = $donate;
+        $donate->donate = $donate_amount;
         $donate->donate_date = time();
         $donate->save();
         $clan->save();
@@ -102,7 +100,22 @@ class ClanController extends GameController
     }
 
     public function postNewMessage() {
-        var_dump(1); die;
+        $messageText = $this->request->getPost('message');
+
+        $userRankOptions = $this->getUserRankOptions();
+
+        if(!$userRankOptions->write_message || strlen($messageText) > 2000) {
+            return $this->notFound();
+        }
+
+        $message = ORM::for_table('clan_message')->create();
+        $message->clan_id = $this->user->clan_id;
+        $message->user_id = $this->user->id;
+        $message->clan_message = $messageText;
+        $message->clan_message_date = time();
+        $message->save();
+
+        return $this->response->redirect(getUrl('clan/index'));
     }
 
     public function getCreate() {

@@ -238,9 +238,8 @@
 
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     Clan description</h2>
+                <p style="text-align:center">no description</p>
 
-                <p style="text-align:center">
-                    no description</p>
                 <?php if($rank->read_message): ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     messages    </h2>
@@ -253,14 +252,16 @@
                     </tbody></table>
                 <p></p>
                 <?php endif; ?>
+
                 <?php if($rank->write_message): ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> new message (<span id="charcount" style="display:inline-block; margin-bottom:0px;">2000</span> Characters)</h2>
                 <p>
                     <script language="JavaScript">
                         function CheckLen(Target)
                         {
-                            var maxlength = "2000";
-                            StrLen = Target.value.length;
+                            var maxlength = 2000;
+                            var StrLen = Target.value.length;
+                            var CharsLeft;
                             if (StrLen == 1 && Target.value.substring(0, 1) == " ")
                             {
                                 Target.value = "";
@@ -282,7 +283,9 @@
                     <table width="100%">
                     <tbody><tr>
                         <th colspan="2">
-                            <form action="http://s202.en.bitefight.gameforge.com/clan/clanmessage/add?__token=0e7f2e1fc5b670d6d6f1bb170e94101a" method="POST">
+                            <form action="<?php echo getUrl('clan/newmessage'); ?>" method="POST">
+                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>"
+                                       value="<?php echo $this->security->getToken() ?>"/>
                                 <textarea name="message" rows="6" cols="60" onkeydown="CheckLen(this)" onkeyup="CheckLen(this)" onfocus="CheckLen(this)" onchange="CheckLen(this)"></textarea>
                                 <br class="clearfloat">
 
