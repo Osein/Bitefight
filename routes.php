@@ -67,7 +67,8 @@ $clan->addPost('/create', ['action' => 'postCreate']);
 $clan->addGet('/leave', ['action' => 'getLeave']);
 $clan->addGet('/clanleave', ['action' => 'postLeave']);
 $clan->addGet('/hideout/upgrade', ['action' => 'postHideoutUpgrade']);
-$clan->addPost('/donated', ['action' => 'postDonate']);
+$clan->addPost('/donate', ['action' => 'postDonate']);
+$clan->addPost('/newmessage', ['action' => 'postNewMessage']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

@@ -50,9 +50,7 @@ class BaseController extends \Phalcon\Mvc\Controller
      */
     public function beforeExecuteRoute(\Phalcon\Mvc\Dispatcher $dispatcher)
     {
-        //var_dump($this->security->getToken(), $this->security->getToken()); die;
         if ($this->request->isPost() && !$this->security->checkToken() && $dispatcher->getControllerName() != 'Error') {
-            var_dump(1); die;
             $dispatcher->forward(array(
                 'controller' => 'Error',
                 'action'     => 'show404',

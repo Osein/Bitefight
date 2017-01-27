@@ -28,20 +28,20 @@
                     <tbody>
                     <tr>
                         <td class="no-bg" style="text-align:center;" rowspan="10" align="center">
-                            <a href="http://s202.en.bitefight.gameforge.com/clan/logo"><img src="/img/logo/0/tmp/1-1.png" border="0"></a>
+                            <a href="http://s202.en.bitefight.gameforge.com/clan/logo"><img src="<?php echo getAssetLink('img/clan/1-9.png'); ?>" border="0"></a>
                         </td>
                     </tr>
                     <tr>
                         <td>Name</td>
-                        <td>WelcomeToHell</td>
+                        <td><?php echo e($clan->name); ?></td>
                     </tr>
                     <tr>
                         <td>Homepage</td>
-                        <td>no clan page available</td>
+                        <td><?php if(strlen($clan->website) > 0): ?><a href="<?php echo e($clan->website); ?>"><?php echo e($clan->website); ?></a><?php else: ?>no clan page available<?php endif; ?></td>
                     </tr>
                     <tr>
                         <td>Total booty</td>
-                        <td>446.410.432 Blood</td>
+                        <td><?php echo prettyNumber($totalBlood); ?> Blood</td>
                     </tr>
                     <tr>
                         <td>Members</td>

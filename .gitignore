@@ -2,3 +2,4 @@
 /config/development/
 /.idea/
 config.php
+/*.log

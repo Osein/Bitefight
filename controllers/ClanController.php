@@ -34,6 +34,10 @@ class ClanController extends GameController
             ->where('clan_id', $this->user->clan_id)
             ->find_many();
 
+        $this->view->totalBlood = ORM::for_table('user')
+            ->where('clan_id', $this->user->clan_id)
+            ->sum('s_booty');
+
         if($this->user->clan_id > 0) {
             $this->view->clan = ORM::for_table('clan')
                 ->find_one($this->user->clan_id);
@@ -72,7 +76,7 @@ class ClanController extends GameController
     }
 
     public function postDonate() {
-        $donate = $this->request->get('donation', \Phalcon\Filter::FILTER_INT, 0);
+        $donate = $this->request->getPost('donation', \Phalcon\Filter::FILTER_INT, 0);
         var_dump(2); die;
 
         if($donate == 0 || $this->user->gold < donate) {
@@ -95,6 +99,10 @@ class ClanController extends GameController
         $clan->save();
 
         return $this->response->redirect(getUrl('clan/index'));
+    }
+
+    public function postNewMessage() {
+        var_dump(1); die;
     }
 
     public function getCreate() {
