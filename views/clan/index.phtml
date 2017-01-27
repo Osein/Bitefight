@@ -241,15 +241,40 @@
                 <p style="text-align:center">no description</p>
 
                 <?php if($rank->read_message): ?>
-                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
-                    messages    </h2>
+                <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> messages</h2>
                 <p></p>
-                    <table width="100%">
+                <table width="100%">
                     <tbody>
-                    <tr>
-                        <th colspan="3">no messages</th>
-                    </tr>
-                    </tbody></table>
+                    <?php if(count($clan_messages) > 0): ?>
+                        <tr>
+                            <th align="left">Sender</th>
+                            <th align="left">Content</th>
+                            <?php if($rank->delete_message): ?>
+                            <th></th>
+                            <?php endif; ?>
+                        </tr>
+                        <?php foreach($clan_messages as $message): ?>
+                            <tr>
+                                <td width="30%" align="left"><a href="<?php echo getUrl('profile/player/'.$message->user_id); ?>"><?php echo e($message->name); ?></a> (<?php echo e($message->rank_name); ?>)<br><?php echo date('D, d.m.Y - H:i:s', $message->clan_message_date); ?></td>
+                                <td width="40%" align="left"><div style="width:300px;overflow-x:auto;"><?php echo e($message->clan_message); ?></div></td>
+                                <?php if($rank->delete_message): ?>
+                                <td>
+                                    <div class="btn-left left">
+                                        <div class="btn-right">
+                                            <a class="btn" href="<?php echo getUrl('clan/deletemessage?message_id='.$message->id.'&_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>">delete message</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <?php endif; ?>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <th colspan="3">no messages</th>
+                        </tr>
+                    <?php endif; ?>
+                    </tbody>
+                </table>
                 <p></p>
                 <?php endif; ?>
 

@@ -28,19 +28,24 @@ class ClanController extends GameController
     }
 
     public function getIndex() {
-        $this->view->rank = $this->getUserRankOptions();
-
-        $this->view->clan_messages = ORM::for_table('clan_message')
-            ->where('clan_id', $this->user->clan_id)
-            ->find_many();
-
-        $this->view->totalBlood = ORM::for_table('user')
-            ->where('clan_id', $this->user->clan_id)
-            ->sum('s_booty');
-
         if($this->user->clan_id > 0) {
             $this->view->clan = ORM::for_table('clan')
                 ->find_one($this->user->clan_id);
+
+            $this->view->rank = $this->getUserRankOptions();
+
+            $this->view->totalBlood = ORM::for_table('user')
+                ->where('clan_id', $this->user->clan_id)
+                ->sum('s_booty');
+
+            if($this->view->rank->read_message) {
+                $this->view->clan_messages = ORM::for_table('clan_message')
+                    ->select_many('user.name', 'clan_message.*', 'clan_rank.rank_name')
+                    ->where('clan_message.clan_id', $this->user->clan_id)
+                    ->left_outer_join('user', ['user.id', '=', 'clan_message.user_id'])
+                    ->left_outer_join('clan_rank', ['user.clan_rank', '=', 'clan_rank.id'])
+                    ->find_many();
+            }
         }
 
         $this->view->pick('clan/index');
@@ -118,6 +123,21 @@ class ClanController extends GameController
         return $this->response->redirect(getUrl('clan/index'));
     }
 
+    public function postDeleteMessage() {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+        $rank = $this->getUserRankOptions();
+        $message_id = $this->request->get('message_id', \Phalcon\Filter::FILTER_INT, 0);
+
+        if(!$this->security->checkToken($tokenKey, $token) || !$rank->delete_message) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        ORM::raw_execute('DELETE FROM clan_message WHERE clan_id = ? AND id = ?', [$this->user->clan_id, $message_id]);
+
+        return $this->response->redirect(getUrl('clan/index'));
+    }
+
     public function getCreate() {
         $this->view->pick('clan/create');
     }
@@ -165,9 +185,7 @@ class ClanController extends GameController
         }
 
         if($this->user->clan_rank == 1) {
-            ORM::for_table('clan')
-                ->where('id', $this->user->clan_id)
-                ->delete();
+            ORM::raw_execute('DELETE FROM clan WHERE id = ?', [$this->user->clan_id]);
         }
 
         $this->user->clan_id = 0;
