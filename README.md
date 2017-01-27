@@ -34,9 +34,7 @@ Hideout, Notepad, Search 100%
 
 *Race Hunt*: -
 
-**Settings**
-
-*Description*: Needs clan links
+**Settings** ( Done: Description )
 
 **City** ( Done: Index, Library, Church, Graveyard )
 
