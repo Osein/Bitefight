@@ -8,7 +8,7 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 **Highscore** - Needs clan
 
-**User Preview** ( Needs: Clan, Buddy request, Message, Attack, Guest Mode )
+**User Preview** ( Needs: Buddy request, Message, Attack )
 
 **Clan Preview** ( Needs: Everything lol )
 
