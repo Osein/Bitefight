@@ -28,7 +28,7 @@
                     <tbody>
                     <tr>
                         <td class="no-bg" style="text-align:center;" rowspan="10" align="center">
-                            <a href="http://s202.en.bitefight.gameforge.com/clan/logo"><img src="<?php echo getAssetLink('img/clan/1-9.png'); ?>" border="0"></a>
+                            <a href="http://s202.en.bitefight.gameforge.com/clan/logo"><img src="<?php echo getAssetLink('img/clan/'.$clan->logo_bg.'-'.$clan->logo_sym.'.png'); ?>" border="0"></a>
                         </td>
                     </tr>
                     <tr>
@@ -45,15 +45,15 @@
                     </tr>
                     <tr>
                         <td>Members</td>
-                        <td><a href="http://s202.en.bitefight.gameforge.com/clan/memberlist/9267">1 / 1 Member</a></td>
+                        <td><a href="http://s202.en.bitefight.gameforge.com/clan/memberlist/9267"><?php echo $member_count; ?> / <?php if($clan->stufe == 0) echo 1; else echo $clan->stufe * 3; ?> Member</a></td>
                     </tr>
                     <tr>
                         <td>Capital</td>
-                        <td>0<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></td>
+                        <td><?php echo prettyNumber($clan->capital); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" title="Gold" align="absmiddle" border="0"></td>
                     </tr>
                     <tr>
                         <td>Your rank</td>
-                        <td>Master</td>
+                        <td><?php echo e($rank->rank_name); ?></td>
                     </tr>
                     </tbody>
                 </table>

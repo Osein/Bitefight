@@ -38,6 +38,10 @@ class ClanController extends GameController
                 ->where('clan_id', $this->user->clan_id)
                 ->sum('s_booty');
 
+            $this->view->member_count = ORM::for_table('user')
+                ->where('clan_id', $this->user->clan_id)
+                ->count();
+
             if($this->view->rank->read_message) {
                 $this->view->clan_messages = ORM::for_table('clan_message')
                     ->select_many('user.name', 'clan_message.*', 'clan_rank.rank_name')
@@ -211,10 +215,14 @@ class ClanController extends GameController
 
     public function postLogoBackground() {
         $bg = $this->request->getPost('bg', \Phalcon\Filter::FILTER_INT, 1);
+        ORM::raw_execute("UPDATE clan SET logo_bg = ? WHERE id = ?", [$bg, $this->user->clan_id]);
+        return $this->response->redirect(getUrl('clan/logo/background'));
     }
 
     public function postLogoSymbol() {
         $symbol = $this->request->getPost('symbol', \Phalcon\Filter::FILTER_INT, 1);
+        ORM::raw_execute("UPDATE clan SET logo_sym = ? WHERE id = ?", [$symbol, $this->user->clan_id]);
+        return $this->response->redirect(getUrl('clan/logo/symbol'));
     }
 
 }
