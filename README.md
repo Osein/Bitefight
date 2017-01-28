@@ -55,3 +55,9 @@ Hideout, Notepad, Search 100%
 *Change homepage*: -
 
 *Add description*: -
+
+*Rituals*: -
+
+*Clan fights*: -
+
+*Clan chat*: -
