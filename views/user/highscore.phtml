@@ -84,17 +84,19 @@
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="members" <?php if(in_array('members', $show)) echo 'checked'; ?>>Members</td>
                             </tr>
                             <tr>
-                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="ppm" <?php if(in_array('ppm', $show)) echo 'checked'; ?>>average Booty</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights" <?php if(in_array('fights', $show)) echo 'checked'; ?>>Fights</td>
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0" <?php if(in_array('fight0', $show)) echo 'checked'; ?>>Draw</td>
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1" <?php if(in_array('fight1', $show)) echo 'checked'; ?>>Victories</td>
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2" <?php if(in_array('fight2', $show)) echo 'checked'; ?>>Defeats</td>
                             </tr>
+                            <!--
                             <tr>
-                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights" <?php if(in_array('fights', $show)) echo 'checked'; ?>>Fights</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="ppm" <?php if(in_array('ppm', $show)) echo 'checked'; ?>>average Booty</td>
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="seals" <?php if(in_array('seals', $show)) echo 'checked'; ?>>Seals</td>
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="gatesopen" <?php if(in_array('gatesopen', $show)) echo 'checked'; ?>>Gate openings</td>
                                 <td><input type="checkbox" class="JScheckbox" name="show[]" value="lastgateopen" <?php if(in_array('lastgateopen', $show)) echo 'checked'; ?>>last gate opening</td>
                             </tr>
+                            -->
                         <?php endif; ?>
                         </tbody>
                     </table>
@@ -154,7 +156,7 @@
                         <td align="center">Name</td>
                         <?php foreach($show as $s): ?>
                             <td align="center">
-                                <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $s; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo highscoreShowToName($s); ?></a>
+                                <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $s; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo highscoreShowToName($s); ?></a>
                             </td>
                         <?php endforeach; ?>
                     </tr>

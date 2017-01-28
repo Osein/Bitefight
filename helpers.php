@@ -58,7 +58,15 @@ function highscoreShowToName($val) {
     elseif($val == 'fight0') {return 'Draw';} elseif($val == 'lanter') {return 'Lanterns';}
     elseif($val == 'goldwin') {return 'looted Gold';} elseif($val == 'goldlost') {return 'lost Gold';}
     elseif($val == 'hits1') {return 'Damage caused';} elseif($val == 'hits2') {return 'Hit points lost';}
-    elseif($val == 'trophypoints') {return 'Trophy points';} else {return 'Henchmen power';}
+    elseif($val == 'trophypoints') {return 'Trophy points';}
+    elseif($val == 'castle') {return 'Level';}
+    elseif($val == 'warraid') {return 'War Booty';}
+    elseif($val == 'members') {return 'Members';}
+    elseif($val == 'ppm') {return 'average Booty';}
+    elseif($val == 'seals') {return 'Seals';}
+    elseif($val == 'gatesopen') {return 'Gate openings';}
+    elseif($val == 'lastgateopen') {return 'last gate opening';}
+    else {return 'Henchmen power';}
 }
 
 function getHuntNameFromId($huntId) {
