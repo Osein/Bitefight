@@ -11,6 +11,7 @@
             <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>Here you can describe your clan and its goals</h2>
             <div class="clearfix">
                 <form action="<?php echo getUrl('clan/description'); ?>" name="allydesc" method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                     <h3>Description (<span id="charcount">4000</span> Characters)</h3>
                     <div style="width:600px; margin:0 auto;">
                         <div class="bbcode_toolbar">
@@ -189,9 +190,10 @@
                             var panelOverseer = new PanelOverseer();
                             panelOverseer.registerPanelContainer('Color', 1500);
                             panelOverseer.registerPanelContainer('Link', 1500);
-                        </script>			<textarea id="ally_description" name="description" cols="70" rows="20" onkeydown="CheckLen(this)" onkeyup="CheckLen(this)" onfocus="CheckLen(this)" onchange="CheckLen(this)"></textarea>
+                        </script>
+                        <textarea id="ally_description" name="description" cols="70" rows="20" onkeyup="CheckLen(this)"><?php if($description) echo $description->description; ?></textarea>
                         <div class="btn-left left"><div class="btn-right">
-                                <input type="submit" class="btn" value="Save">
+                                <input type="submit" class="btn" name="save" value="save">
                             </div></div>
                         <div class="btn-left left"><div class="btn-right">
                                 <input type="submit" class="btn" name="delete" value="delete">
@@ -202,7 +204,7 @@
                 <script language="JavaScript">
                     function CheckLen(Target)
                     {
-                        var maxlength = "4000"; //die maximale Zeichenl�nge
+                        var maxlength = 4000; //die maximale Zeichenl�nge
                         var StrLen=Target.value.replace(/\r\n?/g, "\n").length;
                         var CharsLeft;
                         if (StrLen==1&&Target.value.substring(0,1)==" ")
@@ -221,7 +223,7 @@
                         document.getElementById('charcount').innerHTML=CharsLeft;
                     }
 
-                    var description = document.getElementsByName('description')[1];
+                    var description = document.getElementById('ally_description');
                     CheckLen(description);
                 </script>
             </div>

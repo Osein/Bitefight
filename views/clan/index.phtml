@@ -249,7 +249,7 @@
 
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">
                     Clan description</h2>
-                <p style="text-align:center">no description</p>
+                <p style="text-align:center"><?php if(strlen($clan->description) > 0) echo $clan->descriptionHtml; else echo 'no description'; ?></p>
 
                 <?php if($rank->read_message): ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> messages</h2>

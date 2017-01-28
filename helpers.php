@@ -198,7 +198,7 @@ function parseBBCodes($text) {
         '<a href="'.getUrl('clan/view/$2').'">$1</a>'
     );
 
-    return preg_replace($find,$replace,e($text));
+    return str_replace(PHP_EOL, '<br>', preg_replace($find,$replace,e($text)));
 }
 
 function profilePrintUserItem($i) {

@@ -30,6 +30,7 @@ class ClanController extends GameController
     public function getIndex() {
         if($this->user->clan_id > 0) {
             $this->view->clan = ORM::for_table('clan')
+                ->left_outer_join('clan_description', ['clan.id', '=', 'clan_description.clan_id'])
                 ->find_one($this->user->clan_id);
 
             $this->view->rank = $this->getUserRankOptions();
@@ -226,7 +227,30 @@ class ClanController extends GameController
     }
 
     public function getDescription() {
+        $this->view->description = ORM::for_table('clan_description')->where('clan_id', $this->user->clan_id)->find_one();
         $this->view->pick('clan/description');
+    }
+
+    public function postDescription() {
+        $save = $this->request->getPost('save');
+
+        if($save) {
+            $description = ORM::for_table('clan_description')->where('clan_id', $this->user->clan_id)->find_one();
+            $descText = $this->request->getPost('description');
+
+            if(!$description) {
+                $description = ORM::for_table('clan_description')->create();
+                $description->clan_id = $this->user->clan_id;
+            }
+
+            $description->description = $descText;
+            $description->descriptionHtml = parseBBCodes($descText);
+            $description->save();
+        } else {
+            ORM::raw_execute('DELETE FROM clan_description WHERE clan_id = ?', [$this->user->clan_id]);
+        }
+
+        $this->response->redirect(getUrl('clan/description'));
     }
 
 }
