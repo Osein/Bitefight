@@ -74,6 +74,7 @@ $clan->addGet('/logo/background', ['action' => 'getLogoBackground']);
 $clan->addGet('/logo/symbol', ['action' => 'getLogoSymbol']);
 $clan->addPost('/logo/background', ['action' => 'postLogoBackground']);
 $clan->addPost('/logo/symbol', ['action' => 'postLogoSymbol']);
+$clan->addGet('/description', ['action' => 'getDescription']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

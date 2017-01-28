@@ -225,4 +225,8 @@ class ClanController extends GameController
         return $this->response->redirect(getUrl('clan/logo/symbol'));
     }
 
+    public function getDescription() {
+        $this->view->pick('clan/description');
+    }
+
 }
