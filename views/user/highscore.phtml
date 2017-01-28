@@ -21,6 +21,10 @@
                         if($('.JScheckbox:checked').length == 5) {
                             $('.JScheckbox:not(:checked)').attr('disabled', true);
                         }
+
+                        $('#selectClan').on('change', function() {
+                            window.location.href = '<?php echo getUrl('highscore?type='); ?>'+$(this).val();
+                        });
                     });
                 </script>
                 <form action="<?php echo getUrl('highscore'); ?>" method="GET">
@@ -29,14 +33,14 @@
                         <tbody>
                         <tr>
                             <td class="no-bg" colspan="2">
-                                <!--<select name="type" size="1">
-                                    <option value="player" selected="selected">Player - Highscore</option>
-                                    <option value="clan">Clan - Highscore</option>
-                                </select>-->
+                                <select name="type" id="selectClan" size="1">
+                                    <option value="player" <?php if($type == 'player') echo 'selected="selected"'; ?>>Player - Highscore</option>
+                                    <option value="clan" <?php if($type == 'clan') echo 'selected="selected"'; ?>>Clan - Highscore</option>
+                                </select>
                                 <select name="race" size="1">
-                                    <option value="0" selected="selected">All races</option>
-                                    <option value="1">Vampires</option>
-                                    <option value="2">Werewolves</option>
+                                    <option value="0" <?php if($race == 0) echo 'selected="selected"'; ?>>All races</option>
+                                    <option value="1" <?php if($race == 1) echo 'selected="selected"'; ?>>Vampires</option>
+                                    <option value="2" <?php if($race == 2) echo 'selected="selected"'; ?>>Werewolves</option>
                                 </select>
                             </td>
                             <td class="no-bg" colspan="2" style="line-height:45px;">
@@ -47,75 +51,96 @@
                                 </div>&nbsp;(Maximum of 5 options possible)
                             </td>
                         </tr>
-                        <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="level" <?php if(in_array('level', $show)) echo 'checked'; ?>>Level</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="raid" <?php if(in_array('raid', $show)) echo 'checked'; ?>>Booty</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fightvalue" <?php if(in_array('fightvalue', $show)) echo 'checked'; ?>>Battle value</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights" <?php if(in_array('fights', $show)) echo 'checked'; ?>>Fights</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1" <?php if(in_array('fight1', $show)) echo 'checked'; ?>>Victories</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2" <?php if(in_array('fight2', $show)) echo 'checked'; ?>>Defeats</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0" <?php if(in_array('fight0', $show)) echo 'checked'; ?>>Draw</td>
-                            <!--<td><input type="checkbox" class="JScheckbox" name="show[]" value="lanter">Lanterns</td>-->
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldwin" <?php if(in_array('goldwin', $show)) echo 'checked'; ?>>looted Gold</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldlost" <?php if(in_array('goldlost', $show)) echo 'checked'; ?>>lost Gold</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits1" <?php if(in_array('hits1', $show)) echo 'checked'; ?>>Damage caused</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits2" <?php if(in_array('hits2', $show)) echo 'checked'; ?>>Hit points lost</td>
-                        </tr>
-                        <!--
-                        <tr>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="trophypoints">Trophy points</td>
-                            <td><input type="checkbox" class="JScheckbox" name="show[]" value="henchmanlevels">Henchmen power</td>
-                        </tr>
-                        -->
+                        <?php if($type == 'player'): ?>
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="level" <?php if(in_array('level', $show)) echo 'checked'; ?>>Level</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="raid" <?php if(in_array('raid', $show)) echo 'checked'; ?>>Booty</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fightvalue" <?php if(in_array('fightvalue', $show)) echo 'checked'; ?>>Battle value</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights" <?php if(in_array('fights', $show)) echo 'checked'; ?>>Fights</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1" <?php if(in_array('fight1', $show)) echo 'checked'; ?>>Victories</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2" <?php if(in_array('fight2', $show)) echo 'checked'; ?>>Defeats</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0" <?php if(in_array('fight0', $show)) echo 'checked'; ?>>Draw</td>
+                                <!--<td><input type="checkbox" class="JScheckbox" name="show[]" value="lanter">Lanterns</td>-->
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldwin" <?php if(in_array('goldwin', $show)) echo 'checked'; ?>>looted Gold</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="goldlost" <?php if(in_array('goldlost', $show)) echo 'checked'; ?>>lost Gold</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits1" <?php if(in_array('hits1', $show)) echo 'checked'; ?>>Damage caused</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="hits2" <?php if(in_array('hits2', $show)) echo 'checked'; ?>>Hit points lost</td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="trophypoints">Trophy points</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="henchmanlevels">Henchmen power</td>
+                            </tr>
+                            -->
+                        <?php else: ?>
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="castle" <?php if(in_array('castle', $show)) echo 'checked'; ?>>Level</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="raid" <?php if(in_array('raid', $show)) echo 'checked'; ?>>Booty</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="warraid" <?php if(in_array('warraid', $show)) echo 'checked'; ?>>War Booty</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="members" <?php if(in_array('members', $show)) echo 'checked'; ?>>Members</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="ppm" <?php if(in_array('ppm', $show)) echo 'checked'; ?>>average Booty</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight0" <?php if(in_array('fight0', $show)) echo 'checked'; ?>>Draw</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight1" <?php if(in_array('fight1', $show)) echo 'checked'; ?>>Victories</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fight2" <?php if(in_array('fight2', $show)) echo 'checked'; ?>>Defeats</td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="fights" <?php if(in_array('fights', $show)) echo 'checked'; ?>>Fights</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="seals" <?php if(in_array('seals', $show)) echo 'checked'; ?>>Seals</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="gatesopen" <?php if(in_array('gatesopen', $show)) echo 'checked'; ?>>Gate openings</td>
+                                <td><input type="checkbox" class="JScheckbox" name="show[]" value="lastgateopen" <?php if(in_array('lastgateopen', $show)) echo 'checked'; ?>>last gate opening</td>
+                            </tr>
+                        <?php endif; ?>
                         </tbody>
                     </table>
                     <p></p>
                 </form>
                 <center>
                     <?php if($page > 1): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                         <img src="<?php echo getAssetLink('img/symbols/arrow_left_end.gif'); ?>" border="0" title="to the start">
                     </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 10): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                         <img src="<?php echo getAssetLink('img/symbols/double_arrow_left.gif'); ?>" border="0" title="-10">
                     </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 1): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                         <img src="<?php echo getAssetLink('img/symbols/single_arrow_left.gif'); ?>" border="0" title="-1">
                     </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 2): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 2; ?></a>&nbsp;&nbsp;
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 2; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 1): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 1; ?></a>&nbsp;&nbsp;
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 1; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <b><?php echo $page; ?></b>&nbsp;&nbsp;
                     <?php if($page < $maxPage): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page + 1; ?></a>&nbsp;&nbsp;
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page + 1; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage - 1): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo  $page + 2; ?></a>&nbsp;&nbsp;
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo  $page + 2; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                         <img src="<?php echo getAssetLink('img/symbols/single_arrow_right.gif'); ?>" border="0" title="+1">
                     </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage - 10): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                         <img src="<?php echo getAssetLink('img/symbols/double_arrow_right.gif'); ?>" border="0" title="+10">
                     </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage): ?>
-                    <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                    <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                         <img src="<?php echo getAssetLink('img/symbols/arrow_right_end.gif'); ?>" border="0" title="to the end">
                     </a>
                     <?php endif; ?>
@@ -149,45 +174,45 @@
                 <p></p>
                 <center>
                     <?php if($page > 1): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                             <img src="<?php echo getAssetLink('img/symbols/arrow_left_end.gif'); ?>" border="0" title="to the start">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 10): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                             <img src="<?php echo getAssetLink('img/symbols/double_arrow_left.gif'); ?>" border="0" title="-10">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 1): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                             <img src="<?php echo getAssetLink('img/symbols/single_arrow_left.gif'); ?>" border="0" title="-1">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 2): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 2; ?></a>&nbsp;&nbsp;
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 2; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page > 1): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 1; ?></a>&nbsp;&nbsp;
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page - 1; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <b><?php echo $page; ?></b>&nbsp;&nbsp;
                     <?php if($page < $maxPage): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page + 1; ?></a>&nbsp;&nbsp;
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo $page + 1; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage - 1): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo  $page + 2; ?></a>&nbsp;&nbsp;
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>"><?php echo  $page + 2; ?></a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                             <img src="<?php echo getAssetLink('img/symbols/single_arrow_right.gif'); ?>" border="0" title="+1">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage - 10): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                             <img src="<?php echo getAssetLink('img/symbols/double_arrow_right.gif'); ?>" border="0" title="+10">
                         </a>&nbsp;&nbsp;
                     <?php endif; ?>
                     <?php if($page < $maxPage): ?>
-                        <a href="<?php echo getUrl('highscore'); ?>?page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
+                        <a href="<?php echo getUrl('highscore'); ?>?type=<?php echo $type; ?>&page=<?php echo $page; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>">
                             <img src="<?php echo getAssetLink('img/symbols/arrow_right_end.gif'); ?>" border="0" title="to the end">
                         </a>
                     <?php endif; ?>
