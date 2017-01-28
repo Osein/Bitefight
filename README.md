@@ -40,7 +40,7 @@ Hideout, Notepad, Search 100%
 
 *Shop*: -
 
-**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo )
+**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo, Description )
 
 *Application*: View only
 
@@ -53,8 +53,6 @@ Hideout, Notepad, Search 100%
 *Rename clan*: -
 
 *Change homepage*: -
-
-*Add description*: -
 
 *Rituals*: -
 
