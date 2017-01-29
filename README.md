@@ -6,7 +6,7 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 # Progress
 
-**Highscore** - Needs clan
+**Highscore** - Needs my position button
 
 **User Preview** ( Needs: Buddy request, Message, Attack )
 
