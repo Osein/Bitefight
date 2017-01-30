@@ -8,6 +8,16 @@
         <div class="wrap-content wrap-right clearfix">
             <h2><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt="">Highscore</h2>
             <div class="table-wrap">
+                <?php if(isset($user)): ?>
+                    <form action="<?php echo getUrl('highscore/mypos'); ?>?type=<?php echo $type; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>" method="POST">
+                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                        <div class="btn-left left">
+                            <div class="btn-right">
+                                <input class="btn" type="submit" name="mypos" value="My position">
+                            </div>
+                        </div>
+                    </form>
+                <?php endif; ?>
                 <script language="JavaScript">
                     $(document).ready(function() {
                         $('.JScheckbox').on('click', function() {

@@ -128,10 +128,8 @@ class BaseController extends \Phalcon\Mvc\Controller
 
             foreach($this->view->show as $show) {
                 if($show == 'level') {
-                    var_dump(1);
                     $result = $result->selectExpr('FLOOR(SQRT(exp / 5)) + 1', 'level');
                 } elseif($show == 'raid') {
-                    var_dump(2);
                     $result = $result->select('s_booty', 'raid');
                 } elseif($show == 'fightvalue') {
                     $result = $result->select('battle_value', 'fightvalue');
