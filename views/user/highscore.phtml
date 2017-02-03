@@ -174,7 +174,7 @@
                         <tr>
                             <td align="right"><?php echo $startRank; ?></td>
                             <td><img src="<?php echo getAssetLink('img/symbols/race'.$result->race.'small.gif'); ?>" alt="<?php echo $result->race==1?'Vampires':'Werewolves'; ?>"></td>
-                            <td><a href="<?php echo getUrl('profile/player/'.$result->id); ?>" title="<?php echo e($result->name); ?>"><?php echo e($result->name); ?></a><!-- [<a href="/clan/viewExtern/5274">666</a>]--></td>
+                            <td><a href="<?php echo getUrl('clan/'.$result->id); ?>" title="<?php echo e($result->name); ?>"><?php echo e($result->name); ?></a></td>
                             <?php foreach ($show as $s): ?>
                                 <td align="right"><?php echo $result->{$s}; ?></td>
                             <?php endforeach; ?>

@@ -166,11 +166,10 @@ class BaseController extends \Phalcon\Mvc\Controller
             }
 
             $result = ORM::for_table('clan')
-                ->select_many('id', 'name', 'tag')
-                ->selectExpr('(SELECT race FROM user WHERE clan_id = id LIMIT 1)', 'race');
+                ->select_many('id', 'name', 'tag', 'race');
 
             if($this->view->race > 0 && $this->view->race < 3) {
-                $result = $result->having('race', $this->view->race);
+                $result = $result->where('race', $this->view->race);
             }
 
             foreach($this->view->show as $show) {

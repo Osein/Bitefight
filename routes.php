@@ -61,6 +61,7 @@ $router->mount($hunt);
 
 $clan = new \Phalcon\Mvc\Router\Group(['controller' => 'Clan']);
 $clan->setPrefix('/clan');
+$clan->addGet('/{id:[0-9]+}', ['action' => 'getClanPreview']);
 $clan->addGet('/index', ['action' => 'getIndex']);
 $clan->addGet('/create', ['action' => 'getCreate']);
 $clan->addPost('/create', ['action' => 'postCreate']);
