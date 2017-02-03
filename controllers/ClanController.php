@@ -169,6 +169,7 @@ class ClanController extends GameController
         $clan->name = $name;
         $clan->tag = $tag;
         $clan->found_date = time();
+        $clan->race = $this->user->race;
         $clan->save();
 
         $this->user->clan_id = $clan->id();

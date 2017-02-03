@@ -11,6 +11,9 @@ use Phalcon\Mvc\View;
 class BaseController extends \Phalcon\Mvc\Controller
 {
 
+    /**
+     * @var \Models\User $user
+     */
     protected $user;
 
     public function initialize() {
@@ -166,23 +169,27 @@ class BaseController extends \Phalcon\Mvc\Controller
                 ->select_many('id', 'name', 'tag')
                 ->selectExpr('(SELECT race FROM user WHERE clan_id = id LIMIT 1)', 'race');
 
+            if($this->view->race > 0 && $this->view->race < 3) {
+                $result = $result->having('race', $this->view->race);
+            }
+
             foreach($this->view->show as $show) {
                 if($show == 'castle') {
                     $result = $result->select('stufe', 'castle');
                 } elseif($show == 'raid') {
-                    $result = $result->selectExpr('(SELECT SUM(s_booty) FROM user WHERE clan_id = id)', 'raid');
+                    $result = $result->selectExpr('(SELECT SUM(s_booty) FROM user WHERE clan_id = clan.id)', 'raid');
                 } elseif($show == 'warraid') {
-                    $result = $result->selectExpr('(SELECT SUM(battle_value) FROM user WHERE clan_id = id)', 'warraid');
+                    $result = $result->selectExpr('(SELECT SUM(battle_value) FROM user WHERE clan_id = clan.id)', 'warraid');
                 } elseif($show == 'fights') {
-                    $result = $result->selectExpr('(SELECT SUM(s_fight) FROM user WHERE clan_id = id)', 'fights');
+                    $result = $result->selectExpr('(SELECT SUM(s_fight) FROM user WHERE clan_id = clan.id)', 'fights');
                 } elseif($show == 'fight1') {
-                    $result = $result->selectExpr('(SELECT SUM(s_victory) FROM user WHERE clan_id = id)', 'fight1');
+                    $result = $result->selectExpr('(SELECT SUM(s_victory) FROM user WHERE clan_id = clan.id)', 'fight1');
                 } elseif($show == 'fight2') {
-                    $result = $result->selectExpr('(SELECT SUM(s_defeat) FROM user WHERE clan_id = id)', 'fight2');
+                    $result = $result->selectExpr('(SELECT SUM(s_defeat) FROM user WHERE clan_id = clan.id)', 'fight2');
                 } elseif($show == 'fight0') {
-                    $result = $result->selectExpr('(SELECT SUM(s_draw) FROM user WHERE clan_id = id)', 'fight0');
+                    $result = $result->selectExpr('(SELECT SUM(s_draw) FROM user WHERE clan_id = clan.id)', 'fight0');
                 } elseif($show == 'members') {
-                    $result = $result->selectExpr('(SELECT COUNT(1) FROM user WHERE clan_id = id)', 'members');
+                    $result = $result->selectExpr('(SELECT COUNT(1) FROM user WHERE clan_id = clan.id)', 'members');
                 } elseif($show == 'ppm') {
                     //$result = $result->select('s_gold_lost', 'goldlost');
                 } elseif($show == 'seals') {
