@@ -220,6 +220,10 @@ class BaseController extends \Phalcon\Mvc\Controller
         $this->view->pick('user/highscore');
     }
 
+    public function postHighscoreMyPosition() {
+
+    }
+
     public function getNews() {
         $this->view->menu_active = 'news';
         $news = ORM::for_table('news')

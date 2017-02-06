@@ -14,6 +14,7 @@ $router->setDefaultAction('getIndex');
 
 $router->addGet('/news', ['controller' => 'Base', 'action' => 'getNews']);
 $router->addGet('/highscore', ['controller' => 'Base', 'action' => 'getHighscore']);
+$router->addPost('/highscore/mypos', ['controller' => 'Base', 'action' => 'postHighscoreMyPosition']);
 $router->addGet('/profile/player/{id:[0-9]+}', ['controller' => 'Base', 'action' => 'getPreview']);
 
 $register = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
