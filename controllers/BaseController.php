@@ -156,8 +156,6 @@ class BaseController extends \Phalcon\Mvc\Controller
             }
 
             $resultCount = $result->count();
-
-            $result = $result->orderByDesc($this->view->order);
         } else {
             $this->view->show = array_slice($this->request->get('show', null, array('castle', 'raid', 'warraid')), 0, 5);
 
@@ -201,9 +199,10 @@ class BaseController extends \Phalcon\Mvc\Controller
             }
 
             $resultCount = $result->count();
-
-            $result->orderByDesc($this->view->order);
         }
+
+        $result = $result->orderByDesc($this->view->order);
+        $result->orderByAsc('id');
 
         $this->view->results = $result->limit(50)->offset(($this->view->page - 1) * 50)->find_many();
         $this->view->maxPage = ceil($resultCount / 50);

@@ -12,11 +12,14 @@ class UserController extends GameController
     public function getProfile() {
         $this->view->menu_active = 'profile';
 
-        $highscorePosition = ORM::for_table('user')
-            ->where_gt('s_booty', $this->user->s_booty)
-            ->count() + 1;
+        $hsRow = ORM::for_table('')
+            ->raw_query('SELECT
+            (SELECT COUNT(1) FROM user WHERE s_booty > ?) AS greater,
+            (SELECT COUNT(1) FROM user WHERE id < ? AND s_booty = ?) AS equal',
+                array($this->user->s_booty, $this->user->id, $this->user->s_booty)
+            )->find_one();
 
-        $this->view->highscorePosition = $highscorePosition;
+        $this->view->highscorePosition = $hsRow->greater + $hsRow->equal + 1;
 
         $this->view->str_cost = getSkillCost($this->user->str);
         $this->view->def_cost = getSkillCost($this->user->def);
