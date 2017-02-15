@@ -101,7 +101,7 @@ class UserController extends GameController
 
         switch ($upgradeId) {
             case 1:
-                $upgradeCost = getHideoutCost('domi', $this->user->h_domi);
+                $upgradeCost = getHideoutCost('domi', $this->user->h_domicile);
                 if($this->user->gold >= $upgradeCost && $this->user->h_domicile < 14) {
                     $this->user->gold -= $upgradeCost;
                     $this->user->h_domicile++;
