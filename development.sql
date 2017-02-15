@@ -7,7 +7,7 @@
 #
 # Host: 163.172.177.68 (MySQL 5.5.5-10.1.20-MariaDB-1~xenial)
 # Database: bitefight
-# Generation Time: 2017-01-19 17:11:25 +0000
+# Generation Time: 2017-02-15 14:34:21 +0000
 # ************************************************************
 
 
@@ -20,6 +20,96 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
+# Dump of table clan
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `clan`;
+
+CREATE TABLE `clan` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `race` tinyint(2) NOT NULL DEFAULT '1',
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `tag` varchar(32) NOT NULL DEFAULT '',
+  `logo_bg` int(11) NOT NULL DEFAULT '1',
+  `logo_sym` int(11) NOT NULL DEFAULT '1',
+  `website` varchar(255) NOT NULL DEFAULT '',
+  `capital` int(11) NOT NULL DEFAULT '0',
+  `stufe` int(11) NOT NULL DEFAULT '0',
+  `found_date` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table clan_description
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `clan_description`;
+
+CREATE TABLE `clan_description` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `clan_id` int(11) DEFAULT NULL,
+  `description` text,
+  `descriptionHtml` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table clan_donate
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `clan_donate`;
+
+CREATE TABLE `clan_donate` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `clan_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `donate` int(11) DEFAULT NULL,
+  `donate_date` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table clan_message
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `clan_message`;
+
+CREATE TABLE `clan_message` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `clan_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `clan_message` varchar(2000) DEFAULT NULL,
+  `clan_message_date` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table clan_rank
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `clan_rank`;
+
+CREATE TABLE `clan_rank` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `rank_name` varchar(32) DEFAULT NULL,
+  `read_message` tinyint(1) NOT NULL DEFAULT '0',
+  `write_message` tinyint(1) NOT NULL DEFAULT '0',
+  `read_clan_message` tinyint(1) NOT NULL DEFAULT '0',
+  `add_members` tinyint(1) NOT NULL DEFAULT '0',
+  `delete_message` tinyint(1) NOT NULL DEFAULT '0',
+  `send_clan_message` tinyint(1) NOT NULL DEFAULT '0',
+  `spend_gold` tinyint(1) NOT NULL DEFAULT '0',
+  `war_minister` tinyint(1) NOT NULL DEFAULT '0',
+  `vocalise_ritual` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table item
 # ------------------------------------------------------------
 
@@ -29,7 +119,7 @@ CREATE TABLE `item` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `stern` smallint(6) NOT NULL DEFAULT '0',
   `model` smallint(6) NOT NULL,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) NOT NULL DEFAULT '',
   `level` mediumint(9) NOT NULL,
   `gcost` int(11) NOT NULL,
   `slcost` int(11) NOT NULL,
@@ -57,7 +147,7 @@ CREATE TABLE `item` (
   `cooldown` mediumint(9) NOT NULL,
   `duration` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `item` WRITE;
 /*!40000 ALTER TABLE `item` DISABLE KEYS */;
@@ -2495,6 +2585,7 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+
 # Dump of table talent
 # ------------------------------------------------------------
 
@@ -2502,8 +2593,8 @@ DROP TABLE IF EXISTS `talent`;
 
 CREATE TABLE `talent` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `description` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `description` varchar(200) NOT NULL DEFAULT '',
   `active` tinyint(1) NOT NULL,
   `level` mediumint(9) NOT NULL,
   `pair` int(11) NOT NULL DEFAULT '0',
@@ -2535,7 +2626,7 @@ CREATE TABLE `talent` (
   `ebnsdmg` smallint(6) NOT NULL DEFAULT '0',
   `ebnstlnt` smallint(6) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `talent` WRITE;
 /*!40000 ALTER TABLE `talent` DISABLE KEYS */;
@@ -2642,12 +2733,14 @@ DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  `pass` varchar(64) NOT NULL,
-  `mail` varchar(255) NOT NULL,
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `pass` varchar(64) NOT NULL DEFAULT '',
+  `mail` varchar(255) NOT NULL DEFAULT '',
   `race` tinyint(4) NOT NULL DEFAULT '1',
   `gender` tinyint(4) NOT NULL DEFAULT '1',
   `image_type` smallint(6) NOT NULL DEFAULT '1',
+  `clan_id` int(11) NOT NULL DEFAULT '0',
+  `clan_rank` int(11) NOT NULL DEFAULT '0',
   `exp` int(11) NOT NULL DEFAULT '0',
   `battle_value` int(11) NOT NULL DEFAULT '41',
   `gold` int(11) NOT NULL DEFAULT '0',
@@ -2682,9 +2775,11 @@ CREATE TABLE `user` (
   `h_path` int(11) NOT NULL DEFAULT '0',
   `h_land` int(11) NOT NULL DEFAULT '0',
   `last_activity` int(11) NOT NULL DEFAULT '0',
-  `last_update` int(11) NOT NULL,
+  `last_update` int(11) NOT NULL DEFAULT '0',
+  `name_change` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # Dump of table user_activity
@@ -2696,13 +2791,17 @@ CREATE TABLE `user_activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `activity_type` int(11) NOT NULL,
+  `start_time` int(11) DEFAULT NULL,
   `end_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # Dump of table user_description
 # ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_description`;
 
 CREATE TABLE `user_description` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -2711,6 +2810,7 @@ CREATE TABLE `user_description` (
   `descriptionHtml` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # Dump of table user_item
@@ -2729,11 +2829,14 @@ CREATE TABLE `user_item` (
   KEY `user_id` (`user_id`),
   KEY `item_id` (`item_id`),
   CONSTRAINT `user_item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # Dump of table user_note
 # ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_note`;
 
 CREATE TABLE `user_note` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -2741,6 +2844,7 @@ CREATE TABLE `user_note` (
   `note` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # Dump of table user_talent
@@ -2754,6 +2858,8 @@ CREATE TABLE `user_talent` (
   `talent_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
