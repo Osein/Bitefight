@@ -254,8 +254,4 @@ class ClanController extends GameController
         $this->response->redirect(getUrl('clan/description'));
     }
 
-    public function getClanPreview($id) {
-        var_dump($id);
-    }
-
 }

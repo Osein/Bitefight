@@ -265,4 +265,9 @@ class BaseController extends \Phalcon\Mvc\Controller
         $this->view->pick('user/preview');
     }
 
+    public function getClanPreview($id) {
+        $this->view->menu_active = 'clan_preview';
+        var_dump($id);
+    }
+
 }
