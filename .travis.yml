@@ -8,8 +8,9 @@ sudo: required
 dist: trusty
 
 install:
+  - sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
   - curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
-  - sudo apt-get install php7.0-common php7.0-cli php7.0-fpm php7.0-curl php7.0-json php7.0-tidy php7.0-mysql php7.0-phalcon
+  - sudo apt-get install php7.0-common php7.0-fpm php7.0-curl php7.0-json php7.0-tidy php7.0-mysql php7.0-phalcon
 
 before_script:
   - composer install
