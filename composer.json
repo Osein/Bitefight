@@ -8,8 +8,13 @@
             "email": "huseyin.gucuyener@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "j4mie/idiorm": "^1.5"
+    },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "classmap": ["./controllers/", "./models/"]
     }
 }

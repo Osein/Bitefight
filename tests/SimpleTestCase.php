@@ -4,6 +4,9 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleTestCase extends TestCase
 {
+    /**
+     * @coversNothing
+     */
     public function testPushAndPop()
     {
         $stack = [];
