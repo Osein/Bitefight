@@ -10,7 +10,7 @@ addons:
       - php7.0-phalcon
 
 before_install:
-  - https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh
+  - curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
 
 before_script:
   - composer install
