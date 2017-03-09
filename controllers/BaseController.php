@@ -221,7 +221,95 @@ class BaseController extends \Phalcon\Mvc\Controller
     }
 
     public function postHighscoreMyPosition() {
+        $this->view->race = $this->request->get('race', \Phalcon\Filter::FILTER_INT, 0);
+        $this->view->type = $this->request->get('type', \Phalcon\Filter::FILTER_STRING, 'player');
+        $this->view->page = $this->request->get('page', \Phalcon\Filter::FILTER_INT, 1);
+        $this->view->order = $this->request->get('order', \Phalcon\Filter::FILTER_STRING, 'raid');
 
+        if($this->view->type == 'player') {
+            $this->view->show = array_slice($this->request->get('show', null, array('level', 'raid', 'fightvalue')), 0, 5);
+
+            if(!in_array($this->view->order, $this->view->show)) {
+                $this->view->order = $this->view->show[1];
+            }
+
+            $result = ORM::for_table('user');
+
+            if($this->view->race > 0 && $this->view->race < 3) {
+                $result = $result->where('race', $this->view->race);
+            }
+
+            foreach($this->view->show as $show) {
+                if($show == 'level') {
+                    $result = $result->selectExpr('FLOOR(SQRT(exp / 5)) + 1', 'level');
+                } elseif($show == 'raid') {
+                    $result = $result->select('s_booty', 'raid');
+                } elseif($show == 'fightvalue') {
+                    $result = $result->select('battle_value', 'fightvalue');
+                } elseif($show == 'fights') {
+                    $result = $result->select('s_fight', 'fights');
+                } elseif($show == 'fight1') {
+                    $result = $result->select('s_victory', 'fight1');
+                } elseif($show == 'fight2') {
+                    $result = $result->select('s_defeat', 'fight2');
+                } elseif($show == 'fight0') {
+                    $result = $result->select('s_draw', 'fight0');
+                } elseif($show == 'goldwin') {
+                    $result = $result->select('s_gold_captured', 'goldwin');
+                } elseif($show == 'goldlost') {
+                    $result = $result->select('s_gold_lost', 'goldlost');
+                } elseif($show == 'hits1') {
+                    $result = $result->select('s_damage_caused', 'hits1');
+                } elseif($show == 'hits2') {
+                    $result = $result->select('s_hp_lost', 'hits2');
+                }
+            }
+
+            $resultCount = $result->count();
+        } else {
+            $this->view->show = array_slice($this->request->get('show', null, array('castle', 'raid', 'warraid')), 0, 5);
+
+            if(!in_array($this->view->order, $this->view->show)) {
+                $this->view->order = $this->view->show[1];
+            }
+
+            $result = ORM::for_table('clan')
+                ->select_many('id', 'name', 'tag', 'race');
+
+            if($this->view->race > 0 && $this->view->race < 3) {
+                $result = $result->where('race', $this->view->race);
+            }
+
+            foreach($this->view->show as $show) {
+                if($show == 'castle') {
+                    $result = $result->select('stufe', 'castle');
+                } elseif($show == 'raid') {
+                    $result = $result->selectExpr('(SELECT SUM(s_booty) FROM user WHERE clan_id = clan.id)', 'raid');
+                } elseif($show == 'warraid') {
+                    $result = $result->selectExpr('(SELECT SUM(battle_value) FROM user WHERE clan_id = clan.id)', 'warraid');
+                } elseif($show == 'fights') {
+                    $result = $result->selectExpr('(SELECT SUM(s_fight) FROM user WHERE clan_id = clan.id)', 'fights');
+                } elseif($show == 'fight1') {
+                    $result = $result->selectExpr('(SELECT SUM(s_victory) FROM user WHERE clan_id = clan.id)', 'fight1');
+                } elseif($show == 'fight2') {
+                    $result = $result->selectExpr('(SELECT SUM(s_defeat) FROM user WHERE clan_id = clan.id)', 'fight2');
+                } elseif($show == 'fight0') {
+                    $result = $result->selectExpr('(SELECT SUM(s_draw) FROM user WHERE clan_id = clan.id)', 'fight0');
+                } elseif($show == 'members') {
+                    $result = $result->selectExpr('(SELECT COUNT(1) FROM user WHERE clan_id = clan.id)', 'members');
+                } elseif($show == 'ppm') {
+                    //$result = $result->select('s_gold_lost', 'goldlost');
+                } elseif($show == 'seals') {
+                    //$result = $result->select('s_damage_caused', 'hits1');
+                } elseif($show == 'gatesopen') {
+                    //$result = $result->select('s_hp_lost', 'hits2');
+                } elseif($show == 'lastgateopen') {
+                    //$result = $result->select('s_hp_lost', 'hits2');
+                }
+            }
+
+            $resultCount = $result->count();
+        }
     }
 
     public function getNews() {

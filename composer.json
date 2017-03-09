@@ -1,0 +1,15 @@
+{
+    "name": "osein/bitefight",
+    "description": "Clone version of popular game Bitefight",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Osein",
+            "email": "huseyin.gucuyener@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    }
+}
