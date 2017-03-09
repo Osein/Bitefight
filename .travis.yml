@@ -7,6 +7,7 @@ php:
 sudo: required
 
 install:
+  - sudo apt-get install php7.0-dev
   - cd /tmp
   - git clone https://github.com/phalcon/cphalcon.git
   - cd cphalcon/build
