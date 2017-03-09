@@ -8,13 +8,10 @@ sudo: required
 dist: trusty
 
 install:
+  - sudo LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/php
   - sudo apt-get install php7.0-dev
-  - cd /tmp
-  - git clone https://github.com/phalcon/cphalcon.git
-  - cd cphalcon/build
-  - sudo ./install
-  - echo "extension=phalcon.so" > /etc/php/7.0/cli/conf.d/25-phalcon.ini
-  - sudo service apache2 restart
+  - curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
+  - sudo apt-get install php7.0-phalcon
 
 before_script:
   - composer install
