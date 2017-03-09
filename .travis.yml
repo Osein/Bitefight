@@ -1,5 +1,10 @@
 
 language: php
+
 php:
   - 7.0
-script: phpunit tests/SimpleTestCase.php
+
+script: phpunit --coverage-clover=coverage.xml
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
