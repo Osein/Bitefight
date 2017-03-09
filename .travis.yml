@@ -13,6 +13,10 @@ install:
   - sudo apt-get install php7.0-phalcon
   - sudo tail /usr/share/php7.0-phalcon/phalcon/phalcon.ini
   - ls /usr/lib/php
+  - ls /usr/lib/php/20151012
+  - ls /usr/lib/php/7.0
+  - ls /usr/lib/php/php-helper
+  - php -i
 
 before_script:
   - composer install
