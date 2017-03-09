@@ -4,13 +4,13 @@ language: php
 php:
   - 7.0
 
-addons:
-  apt:
-    packages:
-      - php7.0-phalcon
+sudo: required
 
 before_install:
   - curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
+
+after_install:
+  - sudo apt-get install php7.0-phalcon
 
 before_script:
   - composer install
