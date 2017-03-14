@@ -12,7 +12,8 @@
         "j4mie/idiorm": "^1.5"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.0"
+        "phpunit/phpunit": "^6.0",
+        "techpivot/phalcon-ci-installer": "~1.0"
     },
     "autoload": {
         "classmap": ["./controllers/", "./models/"]

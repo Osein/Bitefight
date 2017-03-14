@@ -7,19 +7,9 @@ php:
 sudo: required
 dist: trusty
 
-install:
-  - sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
-  - sudo apt-get install -y php-config
-  - git clone --depth=1 git://github.com/phalcon/cphalcon.git
-  - cd cphalcon/build
-  - sudo ./install
-  - ls /usr/lib/php
-  - ls /usr/lib/php/20151012
-  - ls /usr/lib/php/7.0
-  - ls /usr/lib/php/php-helper
-
-before_script:
-  - composer install
+before_install:
+  - composer install --prefer-source --no-interaction
+  - vendor/bin/install-phalcon.sh 3.0.x
 
 script:
   - phpunit --coverage-clover=coverage.xml
