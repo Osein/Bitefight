@@ -1,6 +1,7 @@
 /cache/
 /config/development/
 /.idea/
-config.php
+/config.php
 /*.log
 /vendor/
+/composer.lock
