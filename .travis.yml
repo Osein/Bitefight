@@ -9,11 +9,9 @@ dist: trusty
 
 install:
   - sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
-  - curl -s "https://packagecloud.io/install/repositories/phalcon/stable/script.deb.sh" | sudo bash
-  - sudo apt-get install php7.0-phalcon
-  - sudo echo "extension=phalcon.so" > /home/travis/.phpenv/versions/7.0.7/etc/conf.d/phalcon.ini
-  - sudo cp /usr/lib/php/20151012/phalcon.so /home/travis/.phpenv/versions/7.0.7/lib/php/extensions/no-debug-zts-20151012/phalcon.so
-  - sudo tail /usr/share/php7.0-phalcon/phalcon/phalcon.ini
+  - git clone --depth=1 git://github.com/phalcon/cphalcon.git
+  - cd cphalcon/build
+  - sudo ./install
   - ls /usr/lib/php
   - ls /usr/lib/php/20151012
   - ls /usr/lib/php/7.0
