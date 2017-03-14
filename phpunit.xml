@@ -12,7 +12,7 @@
     </testsuite>
 
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
+        <whitelist>
             <directory suffix=".php">./controllers</directory>
             <directory suffix=".php">./models</directory>
         </whitelist>
