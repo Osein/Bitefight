@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "825c5ee37100b6c3b87a231369c7bed5",
+    "content-hash": "f57041b230b1f93e04b23a73c7e7bfd4",
     "packages": [
         {
             "name": "j4mie/idiorm",
@@ -164,6 +164,72 @@
                 "object graph"
             ],
             "time": "2017-01-26T22:05:40+00:00"
+        },
+        {
+            "name": "phalcon/zephir",
+            "version": "0.9.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phalcon/zephir.git",
+                "reference": "72dbb2063e835ffa860dcf235dcbf6ec0f821fa5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phalcon/zephir/zipball/72dbb2063e835ffa860dcf235dcbf6ec0f821fa5",
+                "reference": "72dbb2063e835ffa860dcf235dcbf6ec0f821fa5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-ctype": "*",
+                "ext-hash": "*",
+                "ext-json": "*",
+                "ext-xml": "*",
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "ext-gmp": "*",
+                "ext-pdo": "*",
+                "ext-pdo_sqlite": "*",
+                "phpunit/phpunit": "3.7.*",
+                "squizlabs/php_codesniffer": "~2.6"
+            },
+            "bin": [
+                "bin/zephir"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zephir\\": "Library"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/phalcon/zephir/graphs/contributors"
+                },
+                {
+                    "name": "Zephir Team",
+                    "email": "team@phalconphp.com",
+                    "homepage": "https://zephir-lang.com/"
+                }
+            ],
+            "description": "Zephir is a compiled high level language aimed to the creation of C-extensions for PHP",
+            "homepage": "https://zephir-lang.com/",
+            "keywords": [
+                "extension",
+                "phalcon",
+                "zephir"
+            ],
+            "time": "2017-01-03T15:53:35+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1095,20 +1161,21 @@
         },
         {
             "name": "sebastian/object-enumerator",
-            "version": "3.0.0",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/object-enumerator.git",
-                "reference": "de6e32f7192dfea2e4bedc892434f4830b5c5794"
+                "reference": "31dd3379d16446c5d86dec32ab1ad1f378581ad8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/de6e32f7192dfea2e4bedc892434f4830b5c5794",
-                "reference": "de6e32f7192dfea2e4bedc892434f4830b5c5794",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-enumerator/zipball/31dd3379d16446c5d86dec32ab1ad1f378581ad8",
+                "reference": "31dd3379d16446c5d86dec32ab1ad1f378581ad8",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.0",
+                "sebastian/object-reflector": "^1.0",
                 "sebastian/recursion-context": "^3.0"
             },
             "require-dev": {
@@ -1137,7 +1204,52 @@
             ],
             "description": "Traverses array structures and object graphs to enumerate all referenced objects",
             "homepage": "https://github.com/sebastianbergmann/object-enumerator/",
-            "time": "2017-03-03T06:21:01+00:00"
+            "time": "2017-03-12T15:17:29+00:00"
+        },
+        {
+            "name": "sebastian/object-reflector",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/object-reflector.git",
+                "reference": "2201553542d60d25db9c5b2c54330df776648008"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/object-reflector/zipball/2201553542d60d25db9c5b2c54330df776648008",
+                "reference": "2201553542d60d25db9c5b2c54330df776648008",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de"
+                }
+            ],
+            "description": "Allows reflection of object attributes, including inherited and non-public ones",
+            "homepage": "https://github.com/sebastianbergmann/object-reflector/",
+            "time": "2017-03-12T15:10:22+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -1276,6 +1388,49 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
+        },
+        {
+            "name": "techpivot/phalcon-ci-installer",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/techpivot/phalcon-ci-installer.git",
+                "reference": "9c83fd1049503ba7e2d97a1ed801a256ebb56d4f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/techpivot/phalcon-ci-installer/zipball/9c83fd1049503ba7e2d97a1ed801a256ebb56d4f",
+                "reference": "9c83fd1049503ba7e2d97a1ed801a256ebb56d4f",
+                "shasum": ""
+            },
+            "require": {
+                "phalcon/zephir": "^0.9.6",
+                "php": "^5.4|^5.5|^5.6|^7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7"
+            },
+            "bin": [
+                "bin/install-phalcon.sh"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer integration for PHP applications to install the Phalcon framework as an extension in the PHP runtime for various hosted CI services including TravisCI, CircleCI, Scrutinizer, Shippable and Codeship.",
+            "keywords": [
+                "CircleCI",
+                "Codeship",
+                "ScrutinizerCI",
+                "TechPivot",
+                "continuous integration",
+                "phalcon",
+                "php",
+                "shippable",
+                "travisci"
+            ],
+            "time": "2017-01-04T14:55:04+00:00"
         },
         {
             "name": "webmozart/assert",
