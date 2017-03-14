@@ -9,6 +9,8 @@ dist: trusty
 
 before_install:
   - composer install --prefer-source --no-interaction
+  - ls vendor
+  - ls vendor/bin
   - vendor/bin/install-phalcon.sh 3.0.x
 
 script:
