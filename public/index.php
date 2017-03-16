@@ -26,8 +26,8 @@ ORM::configure('password', $config->database->password);
  */
 $loader = new \Phalcon\Loader();
 
-$loader->registerDirs([
-    APP_PATH . DIRECTORY_SEPARATOR . 'controllers'
+$loader->registerNamespaces([
+    'Bitefight\\Controllers' => APP_PATH . DIRECTORY_SEPARATOR . 'controllers'
 ]);
 
 $loader->register();

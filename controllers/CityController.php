@@ -6,27 +6,34 @@
  * Time: 21:12
  */
 
+namespace Bitefight\Controllers;
+
+use ORM;
+
 class CityController extends GameController
 {
-
-    public function initialize() {
+    public function initialize()
+    {
         $this->view->menu_active = 'city';
         return parent::initialize();
     }
 
-    public function getIndex() {
+    public function getIndex()
+    {
         $this->view->pick('city/index');
     }
 
-    public function getLibrary() {
+    public function getLibrary()
+    {
         $this->view->pick('city/library');
     }
 
-    public function postLibrary() {
+    public function postLibrary()
+    {
         $method = $this->request->get('method');
         $name = $this->request->get('name');
 
-        if(strlen($name) < 3) {
+        if (strlen($name) < 3) {
             $this->flashSession->warning('Username must contain at least 3 letters.');
             return $this->response->redirect(getUrl('city/library'));
         }
@@ -35,15 +42,15 @@ class CityController extends GameController
             ->where('name', $name)
             ->find_one();
 
-        if($userCheck) {
+        if ($userCheck) {
             $this->flashSession->warning('Username is already in use.');
             return $this->response->redirect(getUrl('city/library'));
         }
 
-        if($method == 1) {
+        if ($method == 1) {
             $gcost = getNameChangeCost($this->user->name_change, $this->user->exp);
 
-            if($this->user->gold < $gcost) {
+            if ($this->user->gold < $gcost) {
                 $this->flashSession->warning('Username is already in use.');
             } else {
                 $this->user->name = $name;
@@ -55,7 +62,7 @@ class CityController extends GameController
 
             return $this->response->redirect(getUrl('city/library'));
         } else {
-            if($this->user->hellstone < 10) {
+            if ($this->user->hellstone < 10) {
                 $this->flashSession->warning('Not enough hellstone.');
             } else {
                 $this->user->name = $name;
@@ -67,7 +74,8 @@ class CityController extends GameController
         }
     }
 
-    public function getChurch() {
+    public function getChurch()
+    {
         $activity = ORM::for_table('user_activity')
             ->where('activity_type', ACTIVITY_TYPE_CHURCH)
             ->where('user_id', $this->user->id)
@@ -79,8 +87,9 @@ class CityController extends GameController
         $this->view->pick('city/church');
     }
 
-    public function postChurch() {
-        if($this->user->hp_now >= $this->user->hp_max) {
+    public function postChurch()
+    {
+        if ($this->user->hp_now >= $this->user->hp_max) {
             return $this->response->redirect(getUrl('city/church'));
         }
 
@@ -93,17 +102,17 @@ class CityController extends GameController
         $usedTimes = ceil($delta / 3600);
         $requiredAp = 5 * pow(2, $usedTimes);
 
-        if($this->user->ap_now < $requiredAp) {
+        if ($this->user->ap_now < $requiredAp) {
             return $this->response->redirect(getUrl('city/church'));
         }
 
-        if(!$activity) {
+        if (!$activity) {
             $activity = ORM::for_table('user_activity')->create();
             $activity->user_id = $this->user->id;
             $activity->activity_type = ACTIVITY_TYPE_CHURCH;
             $activity->end_time = time() + 3600;
         } else {
-            if($activity->end_time < time()) {
+            if ($activity->end_time < time()) {
                 $activity->end_time = time() + 3600;
             } else {
                 $activity->end_time = $activity->end_time + 3600;
@@ -119,7 +128,8 @@ class CityController extends GameController
         return $this->response->redirect(getUrl('city/church'));
     }
 
-    public function getGraveyard() {
+    public function getGraveyard()
+    {
         $this->view->pick('city/graveyard');
         $activity = ORM::for_table('user_activity')
             ->where('user_id', $this->user->id)
@@ -127,11 +137,11 @@ class CityController extends GameController
             ->find_one();
         $time = time();
 
-        if($activity && $activity->end_time >= $time) {
+        if ($activity && $activity->end_time >= $time) {
             $this->view->delta = $activity->end_time - $time;
             return;
-        } elseif($activity) {
-            if($activity->end_time > $activity->start_time) {
+        } elseif ($activity) {
+            if ($activity->end_time > $activity->start_time) {
                 $rewardMultiplier = ($activity->end_time - $activity->start_time) / 900;
                 $goldReward = $rewardMultiplier * (getLevel($this->user->exp) * 50 + $this->getBonusGraveyardGold());
                 $activity->end_time = $activity->start_time;
@@ -142,37 +152,39 @@ class CityController extends GameController
 
         $level = getLevel($this->user->exp);
 
-        if($level < 10)
+        if ($level < 10) {
             $this->view->work_rank = 'Gravedigger';
-        elseif($level < 25)
+        } elseif ($level < 25) {
             $this->view->work_rank = 'Graveyard Gardener';
-        elseif($level < 55)
+        } elseif ($level < 55) {
             $this->view->work_rank = 'Corpse Predator';
-        elseif($level < 105)
+        } elseif ($level < 105) {
             $this->view->work_rank = 'Graveyard Guard';
-        elseif($level < 195)
+        } elseif ($level < 195) {
             $this->view->work_rank = 'Employee Manager';
-        elseif($level < 335)
+        } elseif ($level < 335) {
             $this->view->work_rank = 'Tombstone Designer';
-        elseif($level < 511)
+        } elseif ($level < 511) {
             $this->view->work_rank = 'Crypt Designer';
-        elseif($level < 1024)
+        } elseif ($level < 1024) {
             $this->view->work_rank = 'Graveyard Manager';
-        else
+        } else {
             $this->view->work_rank = 'Graveyard Master';
+        }
 
         $this->view->bonus_gold = $this->getBonusGraveyardGold();
     }
 
-    public function getBonusGraveyardGold() {
+    public function getBonusGraveyardGold()
+    {
         $bonusWithStr = $this->user->str * 0.5;
         $level = getLevel($this->user->exp);
 
-        if($level > 19) {
+        if ($level > 19) {
             $bonusWithStr = $this->user->str * 2;
-        } elseif($level > 14) {
+        } elseif ($level > 14) {
             $bonusWithStr = $this->user->str * 1.5;
-        } elseif($level > 4) {
+        } elseif ($level > 4) {
             $bonusWithStr = $this->user->str * 1;
         }
 
@@ -181,10 +193,11 @@ class CityController extends GameController
         return ceil($bonusWithLevel + $bonusWithStr);
     }
 
-    public function postGraveyard() {
+    public function postGraveyard()
+    {
         $duration = $this->request->get('workDuration');
 
-        if($duration < 1 || $duration > 8) {
+        if ($duration < 1 || $duration > 8) {
             return $this->notFound();
         }
 
@@ -193,7 +206,7 @@ class CityController extends GameController
             ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
             ->find_one();
 
-        if(!$activity) {
+        if (!$activity) {
             $activity = ORM::for_table('user_activity')->create();
             $activity->user_id = $this->user->id;
             $activity->activity_type = ACTIVITY_TYPE_GRAVEYARD;
@@ -206,13 +219,14 @@ class CityController extends GameController
         return $this->response->redirect(getUrl('city/graveyard'));
     }
 
-    public function postGraveyardCancel() {
+    public function postGraveyardCancel()
+    {
         $activity = ORM::for_table('user_activity')
             ->where('user_id', $this->user->id)
             ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
             ->find_one();
 
-        if(!$activity) {
+        if (!$activity) {
             return $this->notFound();
         }
 
@@ -220,5 +234,4 @@ class CityController extends GameController
         $activity->save();
         return $this->response->redirect(getUrl('city/graveyard'));
     }
-
 }

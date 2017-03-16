@@ -19,6 +19,7 @@ $router->setUriSource(\Phalcon\Mvc\Router::URI_SOURCE_SERVER_REQUEST_URI);
 $router->removeExtraSlashes(true);
 $router->setDefaultController('Home');
 $router->setDefaultAction('getIndex');
+$router->setDefaultNamespace('Bitefight\\Controllers');
 
 $router->addGet('/news', ['controller' => 'Base', 'action' => 'getNews']);
 $router->addGet('/highscore', ['controller' => 'Base', 'action' => 'getHighscore']);

@@ -6,24 +6,30 @@
  * Time: 17:22
  */
 
+namespace Bitefight\Controllers;
+
+use ORM;
+use Phalcon\Http\Response;
+
 class HomeController extends BaseController
 {
-
     public function initialize()
     {
-        if($this->session->get('user_id')) {
+        if ($this->session->get('user_id')) {
             return $this->response->redirect(getUrl('user/profile'));
         }
 
-        parent::initialize();
+        return parent::initialize();
     }
 
-    public function getIndex() {
+    public function getIndex()
+    {
         $this->view->menu_active = 'home';
         $this->view->pick('home/index');
     }
 
-    public function getRegister($id = 0) {
+    public function getRegister($id = 0)
+    {
         $this->view->id = $id;
         $this->view->menu_active = 'register';
 
@@ -40,21 +46,22 @@ class HomeController extends BaseController
         $this->view->pick('home/register');
     }
 
-    public function postRegister($id = 0) {
+    public function postRegister($id = 0)
+    {
         $name = $this->request->get('name');
         $email = $this->request->get('email');
         $pass = $this->request->get('pass');
         $agb = $this->request->get('agb');
         $error = false;
 
-        if($id == 0) {
+        if ($id == 0) {
             return $this->dispatcher->forward(array(
                 'controller' => 'error',
                 'action'     => 'show404',
             ));
         }
 
-        if(strlen($name) < 3) {
+        if (strlen($name) < 3) {
             $this->flashSession->error('Please enter at least 3 characters for your name.');
             $error = true;
         } else {
@@ -62,13 +69,13 @@ class HomeController extends BaseController
                 ->where('name', $name)
                 ->count();
 
-            if($user) {
+            if ($user) {
                 $this->flashSession->error('Chosen username is already in use.');
                 $error = true;
             }
         }
 
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->flashSession->error('Please enter an invalid email.');
             $error = true;
         } else {
@@ -76,23 +83,23 @@ class HomeController extends BaseController
                 ->where('mail', $email)
                 ->count();
 
-            if($user) {
+            if ($user) {
                 $this->flashSession->error('Chosen email is already in use.');
                 $error = true;
             }
         }
 
-        if(!$agb) {
+        if (!$agb) {
             $this->flashSession->error('Please accept the terms and conditions.');
             $error = true;
         }
 
-        if(strlen($pass) < 4) {
+        if (strlen($pass) < 4) {
             $this->flashSession->error('Please enter a valid password.');
             $error = true;
         }
 
-        if(!$error) {
+        if (!$error) {
             $user = ORM::for_table('user')->create();
             $user->name = $name;
             $user->mail = $email;
@@ -100,11 +107,10 @@ class HomeController extends BaseController
             $user->pass = $pass;
             $success = $user->save();
 
-            if($success) {
+            if ($success) {
                 return $this->response->redirect(getUrl('user/profile'));
             } else {
                 $this->flashSession->error('System error, please try again later.');
-
                 return $this->response->redirect(getUrl('register/'.$id));
             }
         } else {
@@ -117,8 +123,9 @@ class HomeController extends BaseController
         }
     }
 
-    public function postAjaxCheck() {
-        if(!$this->request->isAjax()) {
+    public function postAjaxCheck()
+    {
+        if (!$this->request->isAjax()) {
             return $this->dispatcher->forward(array(
                 'controller' => 'error',
                 'action'     => 'show404',
@@ -128,10 +135,10 @@ class HomeController extends BaseController
         $name = $this->request->get('name');
         $email = $this->request->get('email');
         $this->view->disable();
-        $response = new \Phalcon\Http\Response();
+        $response = new Response();
 
-        if(strlen($name) > 0) {
-            if(strlen($name) < 3) {
+        if (strlen($name) > 0) {
+            if (strlen($name) < 3) {
                 $response->setJsonContent(array(
                     'status' => false,
                     'messages' => array('name too short')
@@ -141,7 +148,7 @@ class HomeController extends BaseController
                     ->where('name', $name)
                     ->count();
 
-                if($user) {
+                if ($user) {
                     $response->setJsonContent(array(
                         'status' => false,
                         'messages' => array('name in use')
@@ -153,9 +160,8 @@ class HomeController extends BaseController
                     ));
                 }
             }
-
-        } elseif(strlen($email) > 0) {
-            if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        } elseif (strlen($email) > 0) {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $response->setJsonContent(array(
                     'status' => false,
                     'messages' => array('invalid mail')
@@ -165,7 +171,7 @@ class HomeController extends BaseController
                     ->where('mail', $email)
                     ->count();
 
-                if($user) {
+                if ($user) {
                     $response->setJsonContent(array(
                         'status' => false,
                         'messages' => array('mail in use')
@@ -182,15 +188,16 @@ class HomeController extends BaseController
         return $response;
     }
 
-    public function getLogin() {
+    public function getLogin()
+    {
         $this->view->error = $this->session->get('login_error');
         $this->session->remove('login_error');
-
         $this->view->menu_active = 'login';
         $this->view->pick('home/login');
     }
 
-    public function postLogin() {
+    public function postLogin()
+    {
         $name = $this->request->get('user');
         $pass = $this->request->get('pass');
 
@@ -199,7 +206,7 @@ class HomeController extends BaseController
             ->where('pass', $pass)
             ->find_one();
 
-        if($user) {
+        if ($user) {
             $this->session->set('user_id', $user->id);
             return $this->response->redirect(getUrl('user/profile'));
         } else {
@@ -208,12 +215,14 @@ class HomeController extends BaseController
         }
     }
 
-    public function getLostPassword() {
+    public function getLostPassword()
+    {
         $this->view->menu_active = 'login';
         return $this->view->pick('home/lostpw');
     }
 
-    public function postLostPassword() {
+    public function postLostPassword()
+    {
         $name = $this->request->get('name');
         $email = $this->request->get('email');
 
@@ -222,7 +231,7 @@ class HomeController extends BaseController
             ->where('mail', $email)
             ->find_one();
 
-        if($user) {
+        if ($user) {
             $this->sendEmail($email, 'Recover Password', 'lostpw', ['password' => $user->pass]);
             $this->flashSession->error('An e-mail with password has been sent to you.');
         } else {
@@ -231,5 +240,4 @@ class HomeController extends BaseController
 
         return $this->response->redirect(getUrl('user/lostpw'));
     }
-
 }

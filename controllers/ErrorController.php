@@ -6,13 +6,16 @@
  * Time: 22:22
  */
 
+namespace Bitefight\Controllers;
+
+use Phalcon\Mvc\View;
+
 class ErrorController extends BaseController
 {
-
-    public function show404() {
+    public function show404()
+    {
         $this->response->setStatusCode(404, 'Not Found');
-        $this->view->setRenderLevel(\Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
+        $this->view->setRenderLevel(View::LEVEL_ACTION_VIEW);
         $this->view->pick('404');
     }
-
 }
