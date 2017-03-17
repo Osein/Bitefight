@@ -18,7 +18,7 @@ coverage:
 modules:
     config:
         Db:
-            dsn: 'mysql:host=localhost;dbname=bitefight'
+            dsn: 'mysql:host=127.0.0.1;dbname=bitefight'
             user: 'root'
             password: ''
             dump: tests/_data/dump.sql
