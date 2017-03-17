@@ -6,30 +6,31 @@
  * Time: 15:18
  */
 
+namespace Bitefight;
 
-$config = new \Phalcon\Config(array(
-    'cdn' => 'http://bfd.osein.tk/',
-    'baseUrl' => 'http:///bfd.osein.tk/',
-    'version' => '0.2a1',
-    'database' => array(
-        'adapter' => 'mysql',
-        'host' => 'host',
-        'username' => 'user',
-        'password' => 'pass',
-        'dbname' => 'dbname'
-    ),
-    'basicHp' => 20000,
-    'defHpRatio' => 300,
-    'basicRegen' => 8000,
-    'endRegenRatio' => 125,
-    'basicAttack' => 5,
-    'basicDamage' => 50,
-    'bonusDamage' => 150,
-    'hitChance' => 50,
-    'bonusHitChance' => 60,
-    'basicTalent' => 20,
-    'bonusTalent' => 80,
-    'churchHealTime' => 3600,
-    'apPerHour' => 8,
-    'serverName' => 'Bitefight Private Server'
-));
+/** @noinspection PhpUndefinedClassInspection */
+class Config
+{
+    const CDN_URL = 'http://localhost:8000/';
+    const BASE_URL = 'http://localhost:8000/';
+    const VERSION = '0.2a1';
+    const DB_ADAPTER = 'mysql';
+    const DB_HOST = '127.0.0.1';
+    const DB_USERNAME = 'root';
+    const DB_PASSWORD = '';
+    const DB_NAME = 'bitefight';
+    const SERVER_NAME = 'Bitefight Private Server';
+    const BASIC_HP = 20000;
+    const DEF_HP_RATIO = 300;
+    const BASIC_REGEN = 8000;
+    const END_REGEN_RATIO = 125;
+    const BASIC_ATTACK = 5;
+    const BASIC_DAMAGE = 50;
+    const BONUS_DAMAGE = 150;
+    const HIT_CHANCE = 50;
+    const BONUS_HIT_CHANCE = 60;
+    const BASIC_TALENT = 20;
+    const BONUS_TALENT = 80;
+    const CHURCH_HEAL_TIME = 3600;
+    const AP_PER_HOUR = 8;
+}

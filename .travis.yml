@@ -25,6 +25,7 @@ before_install:
 before_script:
   - echo 'CREATE DATABASE bitefight CHARSET=utf8 COLLATE=utf8_unicode_ci' | mysql -u root
   - cat development.sql | mysql -u root bitefight
+  - cp config.example.php config.php
 
 script:
   - composer run-script run-tests
