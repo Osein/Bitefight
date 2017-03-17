@@ -10,12 +10,7 @@ const ACTIVITY_TYPE_CHURCH = 3;
 const ACTIVITY_TYPE_GRAVEYARD = 4;
 
 function getAssetLink($assetLink) {
-    /**
-     * @var \Phalcon\Config $config
-     */
-    global $config;
-
-    return $config->get('cdn') . $assetLink;
+    return \Bitefight\Config::CDN_URL . $assetLink;
 }
 
 function headLink($file) {
@@ -27,12 +22,7 @@ function headJs($file) {
 }
 
 function getUrl($link) {
-    /**
-     * @var \Phalcon\Config $config
-     */
-    global $config;
-
-    return $config->get('baseUrl') . $link;
+    return \Bitefight\Config::BASE_URL . $link;
 }
 
 function getNameChangeCost($count, $exp) {

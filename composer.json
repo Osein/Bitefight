@@ -21,7 +21,9 @@
     },
     "scripts": {
         "run-tests": [
-            "phpcs"
+            "phpcs",
+            "codecept build",
+            "codecept run --coverage --coverage-xml -vvv"
         ]
     }
 }

@@ -7,6 +7,9 @@ php:
 sudo: required
 dist: trusty
 
+services:
+  - mysql
+
 cache:
   directories:
     - vendor
@@ -19,8 +22,22 @@ before_install:
   - ls vendor/bin
   - vendor/bin/install-phalcon.sh 3.0.x
 
+before_script:
+  - echo 'CREATE DATABASE bitefight CHARSET=utf8 COLLATE=utf8_unicode_ci' | mysql -u root
+  - cat development.sql | mysql -u root bitefight
+
 script:
-  - phpunit --coverage-clover=coverage.xml
+  - composer run-script run-tests
+
+after_script:
+  - mysql -e 'DROP DATABASE bitefight;'
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+
+addons:
+  apt:
+    packages:
+      - mysql-server-5.6
+      - mysql-client-core-5.6
+      - mysql-client-5.6
