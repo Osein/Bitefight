@@ -14,17 +14,21 @@
     "require-dev": {
         "techpivot/phalcon-ci-installer": "~1.0",
         "squizlabs/php_codesniffer": "^2.8",
-        "codeception/codeception": "^2.2",
-        "codeception/phpbuiltinserver": "^1.3"
+        "phpunit/phpunit": "*",
+        "facebook/webdriver": "dev-master",
+        "scriptfusion/phpunit-immediate-exception-printer": "^1"
     },
     "autoload": {
-        "classmap": ["./controllers/", "./models/"]
+        "classmap": ["./controllers/", "./models/"],
+        "psr-4": {
+            "Bitefight\\Tests\\": "tests/"
+        }
     },
     "scripts": {
         "run-tests": [
             "phpcs",
-            "codecept build",
-            "codecept run --coverage --coverage-xml -vvv"
+            "nohup php -S localhost:8000 -t public/ > phpd.log 2>&1 &",
+            "vendor/bin/phpunit -c phpunit.xml tests --coverage-html coverage"
         ]
     }
 }
