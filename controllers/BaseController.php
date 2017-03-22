@@ -132,7 +132,11 @@ class BaseController extends Controller
             );
 
             if (!in_array($this->view->order, $this->view->show)) {
-                $this->view->order = $this->view->show[1];
+                if (in_array('raid', $this->view->show)) {
+                    $this->view->order = 'raid';
+                } else {
+                    $this->view->order = $this->view->show[0];
+                }
             }
 
             $result = ORM::for_table('user')
@@ -177,7 +181,11 @@ class BaseController extends Controller
             );
 
             if (!in_array($this->view->order, $this->view->show)) {
-                $this->view->order = $this->view->show[1];
+                if (in_array('raid', $this->view->show)) {
+                    $this->view->order = 'raid';
+                } else {
+                    $this->view->order = $this->view->show[0];
+                }
             }
 
             $result = ORM::for_table('clan')
@@ -281,7 +289,11 @@ class BaseController extends Controller
             );
 
             if (!in_array($this->view->order, $this->view->show)) {
-                $this->view->order = $this->view->show[1];
+                if (in_array('raid', $this->view->show)) {
+                    $this->view->order = 'raid';
+                } else {
+                    $this->view->order = $this->view->show[0];
+                }
             }
 
             $result = ORM::for_table('user');
@@ -325,7 +337,11 @@ class BaseController extends Controller
             );
 
             if (!in_array($this->view->order, $this->view->show)) {
-                $this->view->order = $this->view->show[1];
+                if (in_array('raid', $this->view->show)) {
+                    $this->view->order = 'raid';
+                } else {
+                    $this->view->order = $this->view->show[0];
+                }
             }
 
             $result = ORM::for_table('clan')

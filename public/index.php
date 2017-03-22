@@ -21,8 +21,6 @@ if (function_exists('mb_substitute_character')) {
 }
 
 include_once APP_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-include_once APP_PATH . DIRECTORY_SEPARATOR . 'config.php';
-include_once APP_PATH . DIRECTORY_SEPARATOR . 'helpers.php';
 
 /** @noinspection PhpUndefinedFieldInspection */
 ORM::configure(\Bitefight\Config::DB_ADAPTER.':host='.\Bitefight\Config::DB_HOST.';dbname='.\Bitefight\Config::DB_NAME);
@@ -36,14 +34,6 @@ ORM::configure('password', \Bitefight\Config::DB_PASSWORD);
  * classes, go download phalcon developer tools
  * and add phalcon stubs to your include path
  */
-$loader = new \Phalcon\Loader();
-
-$loader->registerNamespaces([
-    'Bitefight\\Controllers' => APP_PATH . DIRECTORY_SEPARATOR . 'controllers'
-]);
-
-$loader->register();
-
 $di = new \Phalcon\Di\FactoryDefault();
 
 $di->set('router', function () {

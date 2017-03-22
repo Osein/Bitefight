@@ -12,23 +12,13 @@
         "j4mie/idiorm": "^1.5"
     },
     "require-dev": {
-        "techpivot/phalcon-ci-installer": "~1.0",
-        "squizlabs/php_codesniffer": "^2.8",
-        "phpunit/phpunit": "*",
-        "facebook/webdriver": "dev-master",
-        "scriptfusion/phpunit-immediate-exception-printer": "^1"
+        "squizlabs/php_codesniffer": "^2.8"
     },
     "autoload": {
-        "classmap": ["./controllers/", "./models/"],
         "psr-4": {
-            "Bitefight\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "run-tests": [
-            "phpcs",
-            "nohup php -S localhost:8000 -t public/ > phpd.log 2>&1 &",
-            "vendor/bin/phpunit -c phpunit.xml tests --coverage-html coverage"
-        ]
+            "Bitefight\\Controllers\\": "./controllers",
+            "Bitefight\\Models\\": "./models"
+        },
+        "files": ["./config.php", "./helper.php"]
     }
 }

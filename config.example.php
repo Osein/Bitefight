@@ -9,7 +9,7 @@
 namespace Bitefight;
 
 /** @noinspection PhpUndefinedClassInspection */
-class Config
+class Config_Example
 {
     const CDN_URL = 'http://localhost:8000/';
     const BASE_URL = 'http://localhost:8000/';
