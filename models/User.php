@@ -6,7 +6,7 @@
  * Time: 19:48
  */
 
-namespace Models;
+namespace Bitefight\Models;
 
 /**
  * Class User
