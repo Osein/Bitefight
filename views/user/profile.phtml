@@ -57,7 +57,7 @@
                         <table cellpadding="2" cellspacing="2" border="0" width="520px" style="float: right;">
                             <tr>
                                 <td nowrap>County:</td>
-                                <td nowrap width="90%"><?php echo e($config->serverName); ?></td>
+                                <td nowrap width="90%"><?php echo e(\Bitefight\Config::SERVER_NAME); ?></td>
                             </tr>
                             <tr>
                                 <td nowrap>Race:</td>
@@ -223,7 +223,7 @@
                             <tr>
                                 <td>Health:</td>
                                 <td colspan="2">
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Total Health: <?php echo prettyNumber($user->hp_max); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->basicHp); ?></td></tr><tr><td>Defence:</td><td align='right'><?php echo prettyNumber($config->defHpRatio * $user->def); ?></td></tr></table></div></div>">
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Total Health: <?php echo prettyNumber($user->hp_max); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BASIC_HP); ?></td></tr><tr><td>Defence:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::DEF_HP_RATIO * $user->def); ?></td></tr></table></div></div>">
                                         <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt="" ><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $hp_red_long; ?>"><img src="<?php echo getAssetLink('img/b4.gif'); ?>" alt="" height="12" width="<?php echo 400 - $hp_red_long; ?>"><?php if($user->hp_now < $user->hp_max): ?><img src="<?php echo getAssetLink('img/b5.gif'); ?>" alt="" ><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt="" ><?php endif; ?><br><span class="fontsmall left">(<?php echo prettyNumber($user->hp_now); ?> / <?php echo prettyNumber($user->hp_max); ?>)</span>
                                     </div>
                                 </td>
@@ -311,49 +311,49 @@
                             <tr>
                                 <td>Attack:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Attack: <?php echo prettyNumber($config->basicAttack); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->basicAttack); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->basicAttack); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Attack: <?php echo prettyNumber(\Bitefight\Config::BASIC_ATTACK); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BASIC_ATTACK); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BASIC_ATTACK); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Basic damage:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Basic Damage: <?php echo prettyNumber($config->basicDamage); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->basicDamage); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->basicDamage); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Basic Damage: <?php echo prettyNumber(\Bitefight\Config::BASIC_DAMAGE); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BASIC_DAMAGE); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BASIC_DAMAGE); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bonus damage:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Bonus damage: <?php echo prettyNumber($config->bonusDamage); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->bonusDamage); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->bonusDamage); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Bonus damage: <?php echo prettyNumber(\Bitefight\Config::BONUS_DAMAGE); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BONUS_DAMAGE); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BONUS_DAMAGE); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Hit Chance:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Hit Chance: <?php echo prettyNumber($config->hitChance); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->hitChance); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->hitChance); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Hit Chance: <?php echo prettyNumber(\Bitefight\Config::HIT_CHANCE); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::HIT_CHANCE); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::HIT_CHANCE); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bonus hit chance:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Bonus hit chance: <?php echo prettyNumber($config->bonusHitChance); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->bonusHitChance); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->bonusHitChance); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Bonus hit chance: <?php echo prettyNumber(\Bitefight\Config::BONUS_HIT_CHANCE); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BONUS_HIT_CHANCE); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BONUS_HIT_CHANCE); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Basic talent:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Basic talent: <?php echo prettyNumber($config->basicTalent); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->basicTalent); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->basicTalent); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Basic talent: <?php echo prettyNumber(\Bitefight\Config::BASIC_TALENT); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BASIC_TALENT); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BASIC_TALENT); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bonus Talent:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Bonus Talent: <?php echo prettyNumber($config->bonusTalent); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->bonusTalent); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->bonusTalent); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Bonus Talent: <?php echo prettyNumber(\Bitefight\Config::BONUS_TALENT); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BONUS_TALENT); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BONUS_TALENT); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Regeneration:</td>
                                 <td>
-                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Regeneration: <?php echo prettyNumber($config->basicRegen + $user->end * $config->endRegenRatio); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber($config->basicRegen); ?></td></tr><tr><td>Endurance:</td><td align='right'><?php echo prettyNumber($config->endRegenRatio * $user->end); ?></td></tr></table></div></div>"><?php echo prettyNumber($config->basicRegen + $user->end * $config->endRegenRatio); ?></div>
+                                    <div class="tooltip left" title="<div><div class='tooltipHead'>Regeneration: <?php echo prettyNumber(\Bitefight\Config::BASIC_REGEN + $user->end * \Bitefight\Config::END_REGEN_RATIO); ?></div><div class='tooltipContent'><table><tr><td>Basic value:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::BASIC_REGEN); ?></td></tr><tr><td>Endurance:</td><td align='right'><?php echo prettyNumber(\Bitefight\Config::END_REGEN_RATIO * $user->end); ?></td></tr></table></div></div>"><?php echo prettyNumber(\Bitefight\Config::BASIC_REGEN + $user->end * \Bitefight\Config::END_REGEN_RATIO); ?></div>
                                 </td>
                             </tr>
                         </table>
