@@ -8,6 +8,7 @@
 
 namespace Bitefight\Controllers;
 
+use Bitefight\Config;
 use ORM;
 use Phalcon\Filter;
 use Phalcon\Mvc\Controller;
@@ -17,14 +18,15 @@ use Phalcon\Mvc\View;
 class BaseController extends Controller
 {
     /**
-     * @var \Models\User $user
+     * @var \Bitefight\Models\User $user
      */
     protected $user;
 
+    /**
+     * @return bool
+     */
     public function initialize()
     {
-        global $config;
-
         if ($this->session->get('user_id', false)) {
             $this->user = ORM::for_table('user')->find_one($this->session->get('user_id'));
             $this->view->user = $this->user;
@@ -35,13 +37,13 @@ class BaseController extends Controller
 
             if ($timeDiff > 0) {
                 if ($this->user->ap_now < $this->user->ap_max) {
-                    $apPerSecond = $config->apPerHour / 3600;
+                    $apPerSecond = Config::AP_PER_HOUR / 3600;
                     $apDelta = $apPerSecond * $timeDiff;
                     $this->user->ap_now = min($apDelta + $this->user->ap_now, $this->user->ap_max);
                 }
 
                 if ($this->user->hp_now < $this->user->hp_max) {
-                    $hpPerSecond = ($config->basicRegen + $config->endRegenRatio * $this->user->end) / 3600;
+                    $hpPerSecond = (Config::BASIC_REGEN + Config::END_REGEN_RATIO * $this->user->end) / 3600;
                     $hpDelta = $hpPerSecond * $timeDiff;
                     $this->user->hp_now = min($hpDelta + $this->user->hp_now, $this->user->hp_max);
                 }
@@ -49,6 +51,8 @@ class BaseController extends Controller
                 $this->user->last_update = $timeNow;
             }
         }
+
+        return true;
     }
 
     /**

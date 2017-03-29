@@ -22,6 +22,47 @@ if (function_exists('mb_substitute_character')) {
 
 include_once APP_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
+$run = new Whoops\Run;
+
+if(\Bitefight\Config::DEBUG) {
+    $debugHandler = new \Whoops\Handler\PrettyPageHandler();
+
+    //$handler->addDataTable('Killer App Details', array(
+    //    "Important Data" => $myApp->getImportantData(),
+    //    "Thingamajig-id" => $someId
+    //));
+
+    $debugHandler->setPageTitle("Whoops! There was a problem.");
+    $run->pushHandler($debugHandler);
+
+} else {
+    $prodHandler = new \Whoops\Handler\CallbackHandler(function() {
+        $request = new \Phalcon\Http\Request();
+        if($request->isAjax()) {
+            // Todo make ajax response interface
+        } else {
+            $response = new \Phalcon\Http\Response();
+            $response->setContent(
+                "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
+            <html>
+            <head>
+                <title>500 Internal Server Error</title>
+            </head>
+            <body style=\"background-color: #220202; color: #FFF;\">
+            <h1>Internal server error</h1>
+            <p>We have dispatched agile vampire and wolves to fix errors, don't be scared.</p>
+            <p>Come back again later.</p>
+            </body>
+            </html>"
+            );
+            $response->send();
+        }
+    });
+    $run->pushHandler($prodHandler);
+}
+
+$run->register();
+
 /** @noinspection PhpUndefinedFieldInspection */
 ORM::configure(\Bitefight\Config::DB_ADAPTER.':host='.\Bitefight\Config::DB_HOST.';dbname='.\Bitefight\Config::DB_NAME);
 /** @noinspection PhpUndefinedFieldInspection */
@@ -100,10 +141,5 @@ $di->set('view', function () {
     return $view;
 }, true);
 
-try {
-    /** @noinspection PhpUndefinedClassInspection */
-    $application = new \Phalcon\Mvc\Application($di);
-    echo $application->handle()->getContent();
-} catch (Exception $e) {
-    echo $e->getMessage();
-}
+$application = new \Phalcon\Mvc\Application($di);
+echo $application->handle()->getContent();
