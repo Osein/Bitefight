@@ -13,15 +13,6 @@ use ORM;
 
 class GameController extends BaseController
 {
-    public function initialize()
-    {
-        if (!$this->session->get('user_id')) {
-            return $this->response->redirect(getUrl(''));
-        }
-
-        return parent::initialize();
-    }
-
     public function getSearch()
     {
         $this->view->menu_active = 'search';

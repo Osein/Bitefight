@@ -91,6 +91,18 @@ class BaseController extends Controller
             return false;
         }
 
+        if($this->session->get('user_id', false)) {
+            if($dispatcher->getControllerName() == 'Home') {
+                $this->response->redirect(getUrl('user/profile'));
+                return false;
+            }
+        } else {
+            if($dispatcher->getControllerName() != 'Home') {
+                $this->response->redirect(getUrl(''));
+                return false;
+            }
+        }
+
         return true;
     }
 
