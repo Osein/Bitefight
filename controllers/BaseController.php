@@ -24,6 +24,16 @@ class BaseController extends Controller
     protected $user;
 
     /**
+     * @var array
+     */
+    protected $flashData = array();
+
+    /**
+     * @var array
+     */
+    protected $oldFlashData;
+
+    /**
      * @return bool
      */
     public function initialize()
@@ -71,6 +81,9 @@ class BaseController extends Controller
             ]
         );
 
+        $this->oldFlashData = $this->session->get('bf.flash', array());
+        $this->session->remove('bf.flash');
+
         return true;
     }
 
@@ -114,6 +127,8 @@ class BaseController extends Controller
         if ($this->user) {
             $this->user->save();
         }
+
+        $this->session->set('bf.flash', $this->flashData);
     }
 
     /**
@@ -126,6 +141,27 @@ class BaseController extends Controller
             'controller' => 'error',
             'action'     => 'show404',
         ));
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public function getFlashData($key, $default = false) {
+        if(in_array($key, $this->oldFlashData)) {
+            return $this->oldFlashData[$key];
+        } else {
+            return $default;
+        }
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $value
+     */
+    public function setFlashData($key, $value) {
+        $this->flashData[$key] = $value;
     }
 
     /**

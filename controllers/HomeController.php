@@ -13,15 +13,6 @@ use Phalcon\Http\Response;
 
 class HomeController extends BaseController
 {
-    public function initialize()
-    {
-        if ($this->session->get('user_id')) {
-            return $this->response->redirect(getUrl('user/profile'));
-        }
-
-        return parent::initialize();
-    }
-
     public function getIndex()
     {
         $this->view->menu_active = 'home';
@@ -33,15 +24,10 @@ class HomeController extends BaseController
         $this->view->id = $id;
         $this->view->menu_active = 'register';
 
-        $this->view->name = $this->session->get('register_name');
-        $this->view->email = $this->session->get('register_email');
-        $this->view->pass = $this->session->get('register_pass');
-        $this->view->agb = $this->session->get('register_agb');
-
-        $this->session->remove('register_name');
-        $this->session->remove('register_email');
-        $this->session->remove('register_pass');
-        $this->session->remove('register_agb');
+        $this->view->name = $this->getFlashData('register_name');
+        $this->view->email = $this->getFlashData('register_email');
+        $this->view->pass = $this->getFlashData('register_pass');
+        $this->view->agb = $this->getFlashData('register_agb');
 
         $this->view->pick('home/register');
     }
@@ -114,10 +100,11 @@ class HomeController extends BaseController
                 return $this->response->redirect(getUrl('register/'.$id));
             }
         } else {
-            $this->session->set('register_name', $name);
-            $this->session->set('register_email', $email);
-            $this->session->set('register_pass', $pass);
-            $this->session->set('register_agb', $agb);
+            $this->setFlashData('register_name', $name);
+            $this->setFlashData('register_name', $name);
+            $this->setFlashData('register_email', $email);
+            $this->setFlashData('register_pass', $pass);
+            $this->setFlashData('register_agb', $agb);
 
             return $this->response->redirect(getUrl('register/'.$id));
         }
