@@ -148,9 +148,24 @@ class BaseController extends Controller
      * @param mixed $default
      * @return mixed
      */
-    public function getFlashData($key, $default = false) {
-        if(in_array($key, $this->oldFlashData)) {
+    public function getFlashData($key, $default = false)
+    {
+        if(key_exists($key, $this->oldFlashData)) {
             return $this->oldFlashData[$key];
+        } else {
+            return $default;
+        }
+    }
+
+    /**
+     * @param string $key
+     * @param bool $default
+     * @return mixed
+     */
+    public function getNewFlashData($key, $default = false)
+    {
+        if(key_exists($key, $this->flashData)) {
+            return $this->flashData[$key];
         } else {
             return $default;
         }
@@ -160,7 +175,8 @@ class BaseController extends Controller
      * @param string $key
      * @param mixed $value
      */
-    public function setFlashData($key, $value) {
+    public function setFlashData($key, $value)
+    {
         $this->flashData[$key] = $value;
     }
 
