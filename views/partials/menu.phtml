@@ -1,11 +1,11 @@
 <?php if (!isset($user)): ?>
     <ul id="menuHead">
-        <li <?php if ($menu_active == 'news') echo 'class="active"'; ?>><a href="<?php echo getUrl('news'); ?>" target="_top" class="newmessage">News</a></li>
-        <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank">Support</a></li>-->
-        <li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('register/0'); ?>" target="_top">Register</a></li>
-        <li <?php if ($menu_active == 'login') echo 'class="active"'; ?>><a href="<?php echo getUrl('login'); ?>" target="_top">Login</a></li>
-        <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank">Forum</a></li>-->
-        <li <?php if ($menu_active == 'highscore') echo 'class="active"'; ?>><a href="<?php echo getUrl('highscore'); ?>" target="_top">Highscore</a></li>
+        <li <?php if ($menu_active == 'news') echo 'class="active"'; ?>><a href="<?php echo getUrl('news'); ?>" target="_top" class="newmessage"><?php echo \Bitefight\Library\Translate::_('menu_news'); ?></a></li>
+        <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank"><?php echo \Bitefight\Library\Translate::_('menu_support'); ?></a></li>-->
+        <li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('register/0'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_register'); ?></a></li>
+        <li <?php if ($menu_active == 'login') echo 'class="active"'; ?>><a href="<?php echo getUrl('login'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_login'); ?></a></li>
+        <!--<li><a href="<?php echo getUrl('news'); ?>" target="_blank"><?php echo \Bitefight\Library\Translate::_('menu_forum'); ?></a></li>-->
+        <li <?php if ($menu_active == 'highscore') echo 'class="active"'; ?>><a href="<?php echo getUrl('highscore'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_highscore'); ?></a></li>
         <li id="time">09.01.2017 12:07</li>
         <script type="text/javascript">
             var $menuHead = $('#menuHead'),
@@ -26,26 +26,26 @@
     </ul>
 <?php else: ?>
     <ul id="menuHead">
-        <li <?php if ($menu_active == 'news') echo 'class="active"'; ?>><a href="<?php echo getUrl('news'); ?>" target="_top" class="">News</a></li>
-        <li <?php if ($menu_active == 'profile') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top">Overview</a></li>
-        <!--<li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top" class="newmessage" id="msgmenu">Messages</a></li>-->
-        <li <?php if ($menu_active == 'hideout') echo 'class="active"'; ?>><a href="<?php echo getUrl('hideout'); ?>" target="_top">Hideout</a></li>
-        <li <?php if ($menu_active == 'city') echo 'class="active"'; ?>><a href="<?php echo getUrl('city/index'); ?>" target="_top">City</a></li>
-        <li class="free-space <?php if ($menu_active == 'hunt') echo 'active'; ?>"><a href="<?php echo getUrl('hunt/index'); ?>" target="_top">Hunt</a></li>
+        <li <?php if ($menu_active == 'news') echo 'class="active"'; ?>><a href="<?php echo getUrl('news'); ?>" target="_top" class=""><?php echo \Bitefight\Library\Translate::_('menu_news'); ?></a></li>
+        <li <?php if ($menu_active == 'profile') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_overview'); ?></a></li>
+        <!--<li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top" class="newmessage" id="msgmenu"><?php echo \Bitefight\Library\Translate::_('menu_message'); ?></a></li>-->
+        <li <?php if ($menu_active == 'hideout') echo 'class="active"'; ?>><a href="<?php echo getUrl('hideout'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_hideout'); ?></a></li>
+        <li <?php if ($menu_active == 'city') echo 'class="active"'; ?>><a href="<?php echo getUrl('city/index'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_city'); ?></a></li>
+        <li class="free-space <?php if ($menu_active == 'hunt') echo 'active'; ?>"><a href="<?php echo getUrl('hunt/index'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_hunt'); ?></a></li>
         <!--<li id="premium" <?php if ($menu_active == 'register') echo 'class="active"'; ?>>
             <img border="0" src="<?php echo getAssetLink('img/voodoo/res3_rotation.gif'); ?>">
-            <a href="<?php echo getUrl('profile'); ?>" target="_top">Voodoo Shop</a>
+            <a href="<?php echo getUrl('profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_voodoo_shop'); ?></a>
         </li>-->
-        <li <?php if ($menu_active == 'clan') echo 'class="active"'; ?>><a href="<?php echo getUrl('clan/index'); ?>" target="_top">Clan</a></li>
-        <!--<li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top">Buddy list</a></li>-->
-        <li <?php if ($menu_active == 'notepad') echo 'class="active"'; ?>><a href="<?php echo getUrl('notepad'); ?>" target="_top">Notepad</a></li>
+        <li <?php if ($menu_active == 'clan') echo 'class="active"'; ?>><a href="<?php echo getUrl('clan/index'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_clan'); ?></a></li>
+        <!--<li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_buddy_list'); ?></a></li>-->
+        <li <?php if ($menu_active == 'notepad') echo 'class="active"'; ?>><a href="<?php echo getUrl('notepad'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_notepad'); ?></a></li>
         <!--<li class="free-space "></li>-->
-        <li <?php if ($menu_active == 'settings') echo 'class="active"'; ?>><a href="<?php echo getUrl('user/settings'); ?>" target="_top">Settings</a></li>
-        <!--<li><a href="<?php echo getUrl('profile'); ?>" target="_blank">Forum</a></li>-->
-        <li <?php if ($menu_active == 'highscore') echo 'class="active"'; ?>><a href="<?php echo getUrl('highscore'); ?>" target="_top">Highscore</a></li>
-        <li <?php if ($menu_active == 'search') echo 'class="active"'; ?>><a href="<?php echo getUrl('search'); ?>" target="_top">Search</a></li>
-        <!--<li class="free-space "><a href="<?php echo getUrl('profile'); ?>" target="_blank">Support</a></li>-->
-        <li><a href="<?php echo getUrl('logout'); ?>" target="_top">Leave game</a></li>
+        <li <?php if ($menu_active == 'settings') echo 'class="active"'; ?>><a href="<?php echo getUrl('user/settings'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_settings'); ?></a></li>
+        <!--<li><a href="<?php echo getUrl('profile'); ?>" target="_blank"><?php echo \Bitefight\Library\Translate::_('menu_forum'); ?></a></li>-->
+        <li <?php if ($menu_active == 'highscore') echo 'class="active"'; ?>><a href="<?php echo getUrl('highscore'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_highscore'); ?></a></li>
+        <li <?php if ($menu_active == 'search') echo 'class="active"'; ?>><a href="<?php echo getUrl('search'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_search'); ?></a></li>
+        <!--<li class="free-space "><a href="<?php echo getUrl('profile'); ?>" target="_blank"><?php echo \Bitefight\Library\Translate::_('menu_support'); ?></a></li>-->
+        <li><a href="<?php echo getUrl('logout'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_logout'); ?></a></li>
         <li id="time">14.01.2017 00:25</li>
         <script type="text/javascript">
             var $menuHead = $('#menuHead'),

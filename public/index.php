@@ -43,17 +43,17 @@ if(\Bitefight\Config::DEBUG) {
         } else {
             $response = new \Phalcon\Http\Response();
             $response->setContent(
-                "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
+                '<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">
             <html>
             <head>
-                <title>500 Internal Server Error</title>
+                <title>'.\Bitefight\Library\Translate::_('500_error_page_title').'</title>
             </head>
-            <body style=\"background-color: #220202; color: #FFF;\">
-            <h1>Internal server error</h1>
-            <p>We have dispatched agile vampire and wolves to fix errors, don't be scared.</p>
-            <p>Come back again later.</p>
+            <body style=\'background-color: #220202; color: #FFF;\'>
+            <h1>'.\Bitefight\Library\Translate::_('500_error_page_header').'</h1>
+            <p>'.\Bitefight\Library\Translate::_('500_error_page_p1').'</p>
+            <p>'.\Bitefight\Library\Translate::_('500_error_page_p2').'</p>
             </body>
-            </html>"
+            </html>'
             );
             $response->send();
         }
