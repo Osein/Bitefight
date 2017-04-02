@@ -10,9 +10,16 @@ return [
     // System Based Strings
     'system_error' => 'System error, please try again later.',
 
+    // General Strings
+    'gold' => 'Gold',
+    'fragment' => 'Fragment',
+    'hellstone' => 'Hellstone',
+    'exp' => 'Exp',
+    'level' => 'Level',
+    'battle_value' => 'Battle value',
+
     // Menu Strings
     'menu_header_bitefight' => 'Bitefight',
-
     'menu_infobar_gold' => 'Gold',
     'menu_infobar_hellstone' => 'Hellstones',
     'menu_infobar_fragments' => 'Fragments',
@@ -20,7 +27,6 @@ return [
     'menu_infobar_health' => 'Health',
     'menu_infobar_level' => 'Level',
     'menu_infobar_battle_value' => 'Battle value',
-
     'menu_news' => 'News',
     'menu_support' => 'Support',
     'menu_register' => 'Register',
@@ -43,21 +49,21 @@ return [
     // Layout Strings
     'footer_string' => '%version% Bitefight Fun Private Server',
 
-    // Forgot Password
+    // Forgot Password Strings
     'fp_email_sent' => 'An e-mail with password has been sent to you.',
     'fp_no_user' => 'There is no user with given name and email',
     'fp_email_subject' => 'Recover Password',
     'fp_email_content' => 'Hello,<br>Here\'s your password: %password%<br>Happy hunting!',
 
-    // City -> Library
+    // City -> Library Strings
     'city_library_not_enough_gold' => 'Not enough gold.',
     'city_library_not_enough_hellstone' => 'Not enough hellstone.',
     'city_library_name_change_success' => 'Name change success.',
 
-    // City -> Church
+    // City -> Church Strings
     'city_church_healing_success' => 'The reverend tends to your wounds and you immediately feel better.',
 
-    // City -> Graveyard
+    // City -> Graveyard Strings
     'city_graveyard_gravedigger' => 'Gravedigger',
     'city_graveyard_graveyard_gardener' => 'Graveyard Gardener',
     'city_graveyard_corpse_predator' => 'Corpse Predator',
@@ -67,6 +73,13 @@ return [
     'city_graveyard_crypt_designer' => 'Crypt Designer',
     'city_graveyard_graveyard_manager' => 'Graveyard Manager',
     'city_graveyard_graveyard_master' => 'Graveyard Master',
+
+    // Hunt Strings
+    'human_hunt_success_header' => 'Man Hunt',
+    'human_hunt_success_info1' => 'Your hunt leads you to a %huntname%.',
+    'human_hunt_success_info2' => 'You have captured %blood% Blood and %gold% gold. You also receive %exp% experience points!',
+    'human_hunt_success_failed' => 'It is a cold and dark night. Moths busily fly around the lanterns. And while you watch the buzz of activity surrounding these night creatures, you don`t notice the time passing by. When you finally take your eyes off them, you realise that quite a few minutes have passed.',
+    'human_hunt_success_button_again' => 'Again',
 
     // Validation Strings
     'validation_username_character_error' => 'Please enter at least 3 characters for your name.',

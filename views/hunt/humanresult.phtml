@@ -13,23 +13,23 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Man Hunt</h2>
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('human_hunt_success_header'); ?></h2>
 
             <div class="buildingDesc">
                 <img src="<?php echo getAssetLink('img/hunt/city'.$huntId.'.jpg'); ?>" title="Man Hunt" width="340" height="125" class="npc-logo left">
                 <?php if($success): ?>
                 <p>
-                    Your hunt leads you to a <?php echo getHuntNameFromId($huntId); ?>.<br><br>
-                    You have captured <?php echo prettyNumber($rewardGold); ?> Blood and <?php echo prettyNumber($rewardGold); ?> gold. You also receive <?php echo $rewardExp; ?> experience points!<br><br>
-                    <?php if(isset($rewardFragment)): ?>+<?php echo $rewardFragment; ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="Fragments" align="absmiddle" border="0"><br><br><?php endif; ?>
+                    <?php echo \Bitefight\Library\Translate::_('human_hunt_success_info1', ['huntname' => getHuntNameFromId($huntId)]); ?><br><br>
+                    <?php echo \Bitefight\Library\Translate::_('human_hunt_success_info2', ['blood' => prettyNumber($rewardGold), 'gold' => prettyNumber($rewardGold), 'exp' => $rewardExp]); ?><br><br>
+                    <?php if(isset($rewardFragment)): ?>+<?php echo $rewardFragment; ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('fragment'); ?>" align="absmiddle" border="0"><br><br><?php endif; ?>
                 </p>
                 <?php else: ?>
-                <p>It is a cold and dark night. Moths busily fly around the lanterns. And while you watch the buzz of activity surrounding these night creatures, you don`t notice the time passing by. When you finally take your eyes off them, you realise that quite a few minutes have passed.</p>
+                <p><?php echo \Bitefight\Library\Translate::_('human_hunt_success_failed'); ?></p>
                 <?php endif; ?>
 
                 <div class="btn-left left">
                     <div class="btn-right">
-                        <button type="submit" class="btn" onclick="window.location.replace('<?php echo getUrl('hunt/human'); ?>/<?php echo $huntId; ?>?_tkey=<?php echo $this->security->getTokenKey() ?>&_token=<?php echo $this->security->getToken() ?>');">Again <span class="cost">-1<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>"></span></button>
+                        <button type="submit" class="btn" onclick="window.location.replace('<?php echo getUrl('hunt/human'); ?>/<?php echo $huntId; ?>?_tkey=<?php echo $this->security->getTokenKey() ?>&_token=<?php echo $this->security->getToken() ?>');"><?php echo \Bitefight\Library\Translate::_('human_hunt_success_button_again'); ?> <span class="cost">-1<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>"></span></button>
                     </div>
                 </div>
             </div>
