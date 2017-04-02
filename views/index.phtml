@@ -26,7 +26,7 @@
     <body>
 
         <div id="header">
-            <h1><?php echo $t->_('menu_header_bitefight'); ?></h1>
+            <h1><?php echo \Bitefight\Library\Translate::_('menu_header_bitefight'); ?></h1>
             <div id="decoLamp"></div>
         </div>
 
@@ -43,7 +43,7 @@
         <div id="footer">
             <div id="beast"></div>
             <div id="skull"></div>
-            <div id="copyright"><?php echo $t->_('footer_string', ['version' => \Bitefight\Config::VERSION]); ?></div>
+            <div id="copyright"><?php echo \Bitefight\Library\Translate::_('footer_string', ['version' => \Bitefight\Config::VERSION]); ?></div>
         </div>
 
     </body>

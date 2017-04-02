@@ -170,9 +170,9 @@ class ClanController extends GameController
 
         if ($prevClan) {
             if ($prevClan->name == $name) {
-                $this->flashSession->error($this->translate->_('validation_clan_name_used'));
+                $this->flashSession->error(Translate::_('validation_clan_name_used'));
             } else {
-                $this->flashSession->error($this->translate->_('validation_clan_tag_used'));
+                $this->flashSession->error(Translate::_('validation_clan_tag_used'));
             }
 
             return $this->response->redirect(getUrl('clan/create'));

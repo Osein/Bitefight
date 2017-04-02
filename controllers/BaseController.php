@@ -14,7 +14,6 @@ use Phalcon\Filter;
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
-use Phalcon\Translate\Adapter\NativeArray;
 
 class BaseController extends Controller
 {
@@ -32,11 +31,6 @@ class BaseController extends Controller
      * @var array
      */
     protected $oldFlashData;
-
-    /**
-     * @var NativeArray $translate
-     */
-    protected $translate;
 
     /**
      * @return bool
@@ -67,26 +61,6 @@ class BaseController extends Controller
                 $this->user->last_update = $timeNow;
             }
         }
-
-        $language = $this->request->getBestLanguage();
-        $translationFile = APP_PATH . DIRECTORY_SEPARATOR . 'lang/' . $language . '.php';
-
-        // Check if we have a translation file for that lang
-        if (file_exists($translationFile)) {
-            /** @noinspection PhpIncludeInspection */
-            require $translationFile;
-        } else {
-            // Fallback to some default
-            $messages = require APP_PATH . DIRECTORY_SEPARATOR . 'lang/en.php';
-        }
-
-        $this->translate = new NativeArray(
-            [
-                "content" => $messages,
-            ]
-        );
-
-        $this->view->t = $this->translate;
 
         $this->oldFlashData = $this->session->get('bf.flash', array());
         $this->session->remove('bf.flash');

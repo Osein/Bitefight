@@ -8,6 +8,7 @@
 
 namespace Bitefight\Controllers;
 
+use Bitefight\Library\Translate;
 use ORM;
 use Phalcon\Http\Response;
 
@@ -48,7 +49,7 @@ class HomeController extends BaseController
         }
 
         if (strlen($name) < 3) {
-            $this->flashSession->error($this->translate->_('validation_username_character_error'));
+            $this->flashSession->error(Translate::_('validation_username_character_error'));
             $error = true;
         } else {
             $user = ORM::for_table('user')
@@ -56,13 +57,13 @@ class HomeController extends BaseController
                 ->count();
 
             if ($user) {
-                $this->flashSession->error($this->translate->_('validation_username_used'));
+                $this->flashSession->error(Translate::_('validation_username_used'));
                 $error = true;
             }
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->flashSession->error($this->translate->_('validation_email_invalid'));
+            $this->flashSession->error(Translate::_('validation_email_invalid'));
             $error = true;
         } else {
             $user = ORM::for_table('user')
@@ -70,18 +71,18 @@ class HomeController extends BaseController
                 ->count();
 
             if ($user) {
-                $this->flashSession->error($this->translate->_('validation_email_used'));
+                $this->flashSession->error(Translate::_('validation_email_used'));
                 $error = true;
             }
         }
 
         if (!$agb) {
-            $this->flashSession->error($this->translate->_('validation_terms_required'));
+            $this->flashSession->error(Translate::_('validation_terms_required'));
             $error = true;
         }
 
         if (strlen($pass) < 4) {
-            $this->flashSession->error($this->translate->_('validation_password_character_error'));
+            $this->flashSession->error(Translate::_('validation_password_character_error'));
             $error = true;
         }
 
@@ -96,7 +97,7 @@ class HomeController extends BaseController
             if ($success) {
                 return $this->response->redirect(getUrl('user/profile'));
             } else {
-                $this->flashSession->error($this->translate->_('system_error'));
+                $this->flashSession->error(Translate::_('system_error'));
                 return $this->response->redirect(getUrl('register/'.$id));
             }
         } else {
@@ -128,7 +129,7 @@ class HomeController extends BaseController
             if (strlen($name) < 3) {
                 $response->setJsonContent(array(
                     'status' => false,
-                    'messages' => array($this->translate->_('validation_ajax_username_short'))
+                    'messages' => array(Translate::_('validation_ajax_username_short'))
                 ));
             } else {
                 $user = ORM::for_table('user')
@@ -138,7 +139,7 @@ class HomeController extends BaseController
                 if ($user) {
                     $response->setJsonContent(array(
                         'status' => false,
-                        'messages' => array($this->translate->_('validation_ajax_username_used'))
+                        'messages' => array(Translate::_('validation_ajax_username_used'))
                     ));
                 } else {
                     $response->setJsonContent(array(
@@ -151,7 +152,7 @@ class HomeController extends BaseController
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $response->setJsonContent(array(
                     'status' => false,
-                    'messages' => array($this->translate->_('validation_ajax_email_invalid'))
+                    'messages' => array(Translate::_('validation_ajax_email_invalid'))
                 ));
             } else {
                 $user = ORM::for_table('user')
@@ -161,7 +162,7 @@ class HomeController extends BaseController
                 if ($user) {
                     $response->setJsonContent(array(
                         'status' => false,
-                        'messages' => array($this->translate->_('validation_ajax_email_used'))
+                        'messages' => array(Translate::_('validation_ajax_email_used'))
                     ));
                 } else {
                     $response->setJsonContent(array(
@@ -177,8 +178,6 @@ class HomeController extends BaseController
 
     public function getLogin()
     {
-        $this->view->error = $this->session->get('login_error');
-        $this->session->remove('login_error');
         $this->view->menu_active = 'login';
         $this->view->pick('home/login');
     }
@@ -197,7 +196,7 @@ class HomeController extends BaseController
             $this->session->set('user_id', $user->id);
             return $this->response->redirect(getUrl('user/profile'));
         } else {
-            $this->flashSession->error($this->translate->_('validation_login_invalid_credentials'));
+            $this->flashSession->error(Translate::_('validation_login_invalid_credentials'));
             return $this->response->redirect(getUrl('login'));
         }
     }
@@ -219,10 +218,10 @@ class HomeController extends BaseController
             ->find_one();
 
         if ($user) {
-            $this->sendEmail($email, $this->translate->_('fp_email_subject'), 'lostpw', ['password' => $user->pass]);
-            $this->flashSession->error($this->translate->_('fp_email_sent'));
+            $this->sendEmail($email, Translate::_('fp_email_subject'), 'lostpw', ['password' => $user->pass]);
+            $this->flashSession->error(Translate::_('fp_email_sent'));
         } else {
-            $this->flashSession->error($this->translate->_('fp_no_user'));
+            $this->flashSession->error(Translate::_('fp_no_user'));
         }
 
         return $this->response->redirect(getUrl('user/lostpw'));

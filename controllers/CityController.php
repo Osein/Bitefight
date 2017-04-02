@@ -8,6 +8,7 @@
 
 namespace Bitefight\Controllers;
 
+use Bitefight\Library\Translate;
 use ORM;
 
 class CityController extends GameController
@@ -34,7 +35,7 @@ class CityController extends GameController
         $name = $this->request->get('name');
 
         if (strlen($name) < 3) {
-            $this->flashSession->warning('Username must contain at least 3 letters.');
+            $this->flashSession->warning(Translate::_('validation_username_character_error'));
             return $this->response->redirect(getUrl('city/library'));
         }
 
@@ -43,7 +44,7 @@ class CityController extends GameController
             ->find_one();
 
         if ($userCheck) {
-            $this->flashSession->warning('Username is already in use.');
+            $this->flashSession->warning(Translate::_('validation_username_used'));
             return $this->response->redirect(getUrl('city/library'));
         }
 
@@ -51,23 +52,23 @@ class CityController extends GameController
             $gcost = getNameChangeCost($this->user->name_change, $this->user->exp);
 
             if ($this->user->gold < $gcost) {
-                $this->flashSession->warning('Username is already in use.');
+                $this->flashSession->warning(Translate::_('city_library_not_enough_gold'));
             } else {
                 $this->user->name = $name;
                 $this->user->gold -= $gcost;
                 $this->user->s_booty = $this->user->s_booty * 9 / 10;
                 $this->user->name_change++;
-                $this->flashSession->warning('Name change success.');
+                $this->flashSession->warning(Translate::_('city_library_name_change_success'));
             }
 
             return $this->response->redirect(getUrl('city/library'));
         } else {
             if ($this->user->hellstone < 10) {
-                $this->flashSession->warning('Not enough hellstone.');
+                $this->flashSession->warning(Translate::_('city_library_not_enough_hellstone'));
             } else {
                 $this->user->name = $name;
                 $this->user->hellstone -= 10;
-                $this->flashSession->warning('Name change success.');
+                $this->flashSession->warning(Translate::_('city_library_name_change_success'));
             }
 
             return $this->response->redirect(getUrl('city/library'));
@@ -124,7 +125,7 @@ class CityController extends GameController
         $this->user->hp_now = $this->user->hp_max;
         $this->user->ap_now -= $requiredAp;
 
-        $this->flashSession->warning('The reverend tends to your wounds and you immediately feel better.');
+        $this->flashSession->warning(Translate::_('city_church_healing_success'));
         return $this->response->redirect(getUrl('city/church'));
     }
 
@@ -153,23 +154,23 @@ class CityController extends GameController
         $level = getLevel($this->user->exp);
 
         if ($level < 10) {
-            $this->view->work_rank = 'Gravedigger';
+            $this->view->work_rank = Translate::_('city_graveyard_gravedigger');
         } elseif ($level < 25) {
-            $this->view->work_rank = 'Graveyard Gardener';
+            $this->view->work_rank = Translate::_('city_graveyard_graveyard_gardener');
         } elseif ($level < 55) {
-            $this->view->work_rank = 'Corpse Predator';
+            $this->view->work_rank = Translate::_('city_graveyard_corpse_predator');
         } elseif ($level < 105) {
-            $this->view->work_rank = 'Graveyard Guard';
+            $this->view->work_rank = Translate::_('city_graveyard_graveyard_guard');
         } elseif ($level < 195) {
-            $this->view->work_rank = 'Employee Manager';
+            $this->view->work_rank = Translate::_('city_graveyard_employee_manager');
         } elseif ($level < 335) {
-            $this->view->work_rank = 'Tombstone Designer';
+            $this->view->work_rank = Translate::_('city_graveyard_tombstone_designer');
         } elseif ($level < 511) {
-            $this->view->work_rank = 'Crypt Designer';
+            $this->view->work_rank = Translate::_('city_graveyard_crypt_designer');
         } elseif ($level < 1024) {
-            $this->view->work_rank = 'Graveyard Manager';
+            $this->view->work_rank = Translate::_('city_graveyard_graveyard_manager');
         } else {
-            $this->view->work_rank = 'Graveyard Master';
+            $this->view->work_rank = Translate::_('city_graveyard_graveyard_master');
         }
 
         $this->view->bonus_gold = $this->getBonusGraveyardGold();
