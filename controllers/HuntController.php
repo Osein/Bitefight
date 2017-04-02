@@ -14,7 +14,7 @@ use Phalcon\Mvc\View;
 class HuntController extends GameController
 {
     /**
-     * @return Response
+     * @return bool
      */
     public function initialize()
     {

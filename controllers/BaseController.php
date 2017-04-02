@@ -34,6 +34,11 @@ class BaseController extends Controller
     protected $oldFlashData;
 
     /**
+     * @var NativeArray $translate
+     */
+    protected $translate;
+
+    /**
      * @return bool
      */
     public function initialize()
@@ -75,11 +80,13 @@ class BaseController extends Controller
             $messages = require APP_PATH . DIRECTORY_SEPARATOR . 'lang/en.php';
         }
 
-        $this->view->t = new NativeArray(
+        $this->translate = new NativeArray(
             [
                 "content" => $messages,
             ]
         );
+
+        $this->view->t = $this->translate;
 
         $this->oldFlashData = $this->session->get('bf.flash', array());
         $this->session->remove('bf.flash');
@@ -119,6 +126,9 @@ class BaseController extends Controller
         return true;
     }
 
+    /**
+     * Works after the route executed.
+     */
     public function afterExecuteRoute()
     {
         // Idiorm will look for dirty fields.
@@ -189,8 +199,8 @@ class BaseController extends Controller
      */
     public function sendEmail($to, $subject, $view, $data = array())
     {
-        $headers = "From: noreply@osein.net\r\n";
-        $headers .= "Reply-To: noreply@osein.net\r\n";
+        $headers = "From: " . Config::EMAIL_FROM . "\r\n";
+        $headers .= "Reply-To: " . Config::EMAIL_REPLY_TO . "\r\n";
         $headers .= "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
 

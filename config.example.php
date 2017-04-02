@@ -13,6 +13,8 @@ class Config_Example
     const DEBUG = true;
     const CDN_URL = 'http://localhost:8000/';
     const BASE_URL = 'http://localhost:8000/';
+    const EMAIL_FROM = 'noreply@osein.net';
+    const EMAIL_REPLY_TO = 'noreply@osein.net';
     const VERSION = '0.2a1';
     const DB_ADAPTER = 'mysql';
     const DB_HOST = '127.0.0.1';
