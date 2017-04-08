@@ -12,7 +12,7 @@ namespace Bitefight\Models;
  * Class User
  * @package Models
  */
-class User extends \ORM
+class User extends BaseModel
 {
     /**
      * @var int

@@ -240,6 +240,10 @@ class BaseController extends Controller
                     $result = $result->select('s_damage_caused', 'hits1');
                 } elseif ($show == 'hits2') {
                     $result = $result->select('s_hp_lost', 'hits2');
+                } elseif ($show == 'trophypoints') {
+                    // I dont know what is this lol
+                } elseif ($show == 'henchmanlevels') {
+                    // I dont know this too, but oh lol well find out later
                 }
             }
 
@@ -305,13 +309,13 @@ class BaseController extends Controller
                         'members'
                     );
                 } elseif ($show == 'ppm') {
-                    //$result = $result->select('s_gold_lost', 'goldlost');
+                    // Average booty
                 } elseif ($show == 'seals') {
                     //$result = $result->select('s_damage_caused', 'hits1');
                 } elseif ($show == 'gatesopen') {
                     //$result = $result->select('s_hp_lost', 'hits2');
                 } elseif ($show == 'lastgateopen') {
-                    //$result = $result->select('s_hp_lost', 'hits2');
+                    // Last gate opening
                 }
             }
 
