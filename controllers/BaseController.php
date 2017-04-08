@@ -377,33 +377,33 @@ class BaseController extends Controller
                 $result = $result->where('race', $this->view->race);
             }
 
-            foreach ($this->view->show as $show) {
-                if ($show == 'level') {
-                    $result = $result->selectExpr('FLOOR(SQRT(exp / 5)) + 1', 'level');
-                } elseif ($show == 'raid') {
-                    $result = $result->select('s_booty', 'raid');
-                } elseif ($show == 'fightvalue') {
-                    $result = $result->select('battle_value', 'fightvalue');
-                } elseif ($show == 'fights') {
-                    $result = $result->select('s_fight', 'fights');
-                } elseif ($show == 'fight1') {
-                    $result = $result->select('s_victory', 'fight1');
-                } elseif ($show == 'fight2') {
-                    $result = $result->select('s_defeat', 'fight2');
-                } elseif ($show == 'fight0') {
-                    $result = $result->select('s_draw', 'fight0');
-                } elseif ($show == 'goldwin') {
-                    $result = $result->select('s_gold_captured', 'goldwin');
-                } elseif ($show == 'goldlost') {
-                    $result = $result->select('s_gold_lost', 'goldlost');
-                } elseif ($show == 'hits1') {
-                    $result = $result->select('s_damage_caused', 'hits1');
-                } elseif ($show == 'hits2') {
-                    $result = $result->select('s_hp_lost', 'hits2');
-                }
+            if ($this->view->order == 'level') {
+                $result = $result->where_gte('exp', $this->user->exp)->orderByDesc('exp');
+            } elseif ($this->view->order == 'raid') {
+                $result = $result->where_gte('s_booty', $this->user->s_booty)->orderByDesc('s_booty');
+            } elseif ($this->view->order == 'fightvalue') {
+                $result = $result->where_gte('battle_value', $this->user->battle_value)->orderByDesc('battle_value');
+            } elseif ($this->view->order == 'fights') {
+                $result = $result->where_gte('s_fight', $this->user->s_fight)->orderByDesc('s_fight');
+            } elseif ($this->view->order == 'fight1') {
+                $result = $result->where_gte('s_victory', $this->user->s_victory)->orderByDesc('s_victory');
+            } elseif ($this->view->order == 'fight2') {
+                $result = $result->where_gte('s_defeat', $this->user->s_defeat)->orderByDesc('s_defeat');
+            } elseif ($this->view->order == 'fight0') {
+                $result = $result->where_gte('s_draw', $this->user->s_draw)->orderByDesc('s_draw');
+            } elseif ($this->view->order == 'goldwin') {
+                $result = $result->where_gte('s_gold_captured', $this->user->s_gold_captured)->orderByDesc('s_gold_captured');
+            } elseif ($this->view->order == 'goldlost') {
+                $result = $result->where_gte('s_gold_lost', $this->user->s_gold_lost)->orderByDesc('s_gold_lost');
+            } elseif ($this->view->order == 'hits1') {
+                $result = $result->where_gte('s_damage_caused', $this->user->s_damage_caused)->orderByDesc('s_damage_caused');
+            } elseif ($this->view->order == 'hits2') {
+                $result = $result->where_gte('s_hp_lost', $this->user->s_hp_lost)->orderByDesc('s_hp_lost');
+            } elseif ($this->view->order == 'trophypoints') {
+                // I dont know what is this lol
+            } elseif ($this->view->order == 'henchmanlevels') {
+                // I dont know this too, but oh lol well find out later
             }
-
-            $resultCount = $result->count();
         } else {
             $this->view->show = array_slice(
                 $this->request->get('show', null, array('castle', 'raid', 'warraid')),
@@ -474,9 +474,18 @@ class BaseController extends Controller
                     //$result = $result->select('s_hp_lost', 'hits2');
                 }
             }
-
-            $resultCount = $result->count();
         }
+
+        $result->orderByAsc('id');
+        $resultCount = $result->count();
+        $this->view->page = ceil($resultCount / 50);
+        $linkShowPart = '';
+
+        foreach ($this->view->show as $s2) {
+            $linkShowPart .= '&show[]='.$s2;
+        }
+
+        return $this->response->redirect(getUrl('highscore').'?type='.$this->view->type.'&race='.$this->view->race.'&page='.$this->view->page.'&order='.$this->view->order.$linkShowPart);
     }
 
     public function getNews()
