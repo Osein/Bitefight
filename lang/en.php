@@ -21,6 +21,17 @@ return [
     'exp' => 'Exp',
     'level' => 'Level',
     'battle_value' => 'Battle value',
+    'vampire' => 'Vampire',
+    'werewolf' => 'Werewolf',
+    'results_with_max' => '%result% Results (%max% max.)',
+    'no_result' => 'no results',
+    'header_results' => 'Results',
+
+    'race' => 'Race',
+    'player' => 'Player',
+    'clan' => 'Clan',
+    'members' => 'Members',
+    'entire_booty' => 'Entire booty',
 
     // Menu Strings
     'menu_header_bitefight' => 'Bitefight',
@@ -63,6 +74,14 @@ return [
     'settings_link_clan_name' => 'Clan - Name',
     'settings_link_clan_tag' => 'Clan - Clan tag',
     'settings_font_colour' => 'Font colour',
+
+    // Search Strings
+    'search_header_form' => 'What are you looking for?',
+    'search_type_player' => 'Player',
+    'search_type_clan_name' => 'Clan (Name)',
+    'search_type_clan_tag' => 'Clan (Clan tag)',
+    'search_button' => 'search',
+    'search_only_exact_results' => 'only show exact results',
 
     // Forgot Password Strings
     'fp_email_sent' => 'An e-mail with password has been sent to you.',

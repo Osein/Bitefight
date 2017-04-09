@@ -6,51 +6,52 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">What are you looking for?</h2>
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('search_header_form'); ?></h2>
             <form action="<?php echo getUrl('search'); ?>" method="POST" class="clearfix">
                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <div id="searchOptions">
                     <div>
                         <input type="radio" name="searchtyp" value="name" <?php if($search_type == 'name') echo 'checked'; ?>>
-                        <label>Player</label>
+                        <label><?php echo \Bitefight\Library\Translate::_('search_type_player'); ?></label>
                     </div>
                     <div>
                         <input type="radio" name="searchtyp" value="clan" <?php if($search_type == 'clan') echo 'checked'; ?>>
-                        <label>Clan (Name)</label>
+                        <label><?php echo \Bitefight\Library\Translate::_('search_type_clan_name'); ?></label>
                     </div>
                     <div>
                         <input type="radio" name="searchtyp" value="tag" <?php if($search_type == 'tag') echo 'checked'; ?>>
-                        <label>Clan (Clan tag)</label>
+                        <label><?php echo \Bitefight\Library\Translate::_('search_type_clan_tag'); ?></label>
                     </div>
                 </div>
                 <div id="searchField">
                     <div class="btn-left right">
                         <div class="btn-right">
-                            <input type="submit" name="search" value="search" class="btn">
+                            <input type="submit" name="search" value="<?php echo \Bitefight\Library\Translate::_('search_button'); ?>" class="btn">
                         </div>
                     </div>
                     <label>Text:</label>
                     <input type="text" name="text" size="30" maxlength="30" value="<?php if(isset($searchString)) echo e($searchString); ?>">
                     <input id="exact" type="checkbox" class="check" name="exakt" <?php if(isset($exact) && $exact) echo 'checked'; ?>>
-                    <label class="checklabel" for="exact">only show exact results</label>
+                    <label class="checklabel" for="exact"><?php echo \Bitefight\Library\Translate::_('search_only_exact_results'); ?></label>
                 </div>
             </form>
             <?php if(isset($results)): ?>
-            <h2 style="margin-bottom: 1rem;"><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">Results</h2>
+            <h2 style="margin-bottom: 1rem;"><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"><?php echo \Bitefight\Library\Translate::_('header_results'); ?></h2>
             <table width="80%">
                 <tbody>
-                <tr><td>Race</td>
+                <tr><td><?php echo \Bitefight\Library\Translate::_('race'); ?></td>
                 <?php if($search_type == 'player'): ?>
-                    <td>Player</td>
+                    <td><?php echo \Bitefight\Library\Translate::_('player'); ?></td>
                 <?php else: ?>
-                    <td>Clan</td><td>Members</td>
+                    <td><?php echo \Bitefight\Library\Translate::_('clan'); ?></td>
+                    <td><?php echo \Bitefight\Library\Translate::_('members'); ?></td>
                 <?php endif; ?>
-                <td>Entire booty</td></tr>
+                <td><?php echo \Bitefight\Library\Translate::_('entire_booty'); ?></td></tr>
                 <?php foreach($results as $res): ?>
                     <?php if($search_type == 'player'): ?>
                         <tr>
                             <td>
-                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?'Vampire':'Werewolf'; ?>" border="0">
+                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?\Bitefight\Library\Translate::_('vampire'):\Bitefight\Library\Translate::_('werewolf'); ?>" border="0">
                             </td>
                             <td>
                                 <a href="<?php echo getUrl('profile/player/'.$res->id); ?>"><?php echo $res->name; ?></a>
@@ -60,7 +61,7 @@
                     <?php else: ?>
                         <tr>
                             <td>
-                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?'Vampire':'Werewolf'; ?>" border="0">
+                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?\Bitefight\Library\Translate::_('vampire'):\Bitefight\Library\Translate::_('werewolf'); ?>" border="0">
                             </td>
                             <td>
                                 <a href="<?php echo getUrl('clan/view/'.$res->id); ?>"><?php echo e($res->name); ?> [<?php echo e($res->tag); ?>]</a>
@@ -70,7 +71,7 @@
                     <?php endif; ?>
                 <?php endforeach; ?>
                 <tr>
-                    <td class="no-bg" colspan="2"><?php if(count($results) > 0):echo count($results); ?> Results (25 max.)<?php else: ?>no results<?php endif; ?></td>
+                    <td class="no-bg" colspan="2"><?php if(count($results) > 0): echo \Bitefight\Library\Translate::_('results_with_max', ['result' => count($results), 'max' => 25]); else: echo \Bitefight\Library\Translate::_('no_result'); endif; ?></td>
                 </tr>
                 </tbody>
             </table>
