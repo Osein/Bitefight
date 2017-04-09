@@ -171,7 +171,7 @@
                         <?php endforeach; ?>
                     </tr>
                     <?php foreach($results as $result): ?>
-                        <tr <?php if($type == 'player' && $user->id == $result->id || $type == 'clan' && $result->id == $user->clan_id) echo 'class="own"'; ?>>
+                        <tr <?php if(isset($user) && $type == 'player' && $user->id == $result->id || $type == 'clan' && $result->id == $user->clan_id) echo 'class="own"'; ?>>
                             <td align="right"><?php echo $startRank; ?></td>
                             <td><img src="<?php echo getAssetLink('img/symbols/race'.$result->race.'small.gif'); ?>" alt="<?php echo $result->race==1?'Vampires':'Werewolves'; ?>"></td>
                             <td><a href="<?php if($type == 'clan') echo getUrl('clan/'.$result->id); else echo getUrl('profile/player/'.$result->id); ?>" title="<?php echo e($result->name); ?>"><?php echo e($result->name); ?></a></td>
