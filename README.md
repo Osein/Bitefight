@@ -4,8 +4,6 @@ Bitefight clone version for study purposes. I am going to build a private server
 
 Also if you are efficient on calculating formulas you can help me with grotte and tavern missions. T
 
-# Progress
-
 ## Completed
 
 Home, News, Login, Register, Forget password, Highscore
@@ -58,6 +56,6 @@ Hideout, Notepad, Search
 
 *Clan chat*: -
 
-Todo
+## Todo
 
 - Revise highscore.
