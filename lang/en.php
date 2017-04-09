@@ -9,6 +9,10 @@
 return [
     // System Based Strings
     'system_error' => 'System error, please try again later.',
+    'back' => 'Back',
+    'save' => 'Save',
+    'font' => 'Font',
+    'font_size' => 'Font size',
 
     // General Strings
     'gold' => 'Gold',
@@ -48,6 +52,17 @@ return [
 
     // Layout Strings
     'footer_string' => '%version% Bitefight Fun Private Server - Execution time: %time%',
+
+    // Settings Strings
+    'settings_profile_settings_for' => 'profile settings for %user%',
+    'settings_rpg_description' => 'RPG-description of your character',
+    'settings_font_bold' => 'bold',
+    'settings_font_italic' => 'italic',
+    'settings_internal_link' => 'internal link',
+    'settings_link_player' => 'Player - Name',
+    'settings_link_clan_name' => 'Clan - Name',
+    'settings_link_clan_tag' => 'Clan - Clan tag',
+    'settings_font_colour' => 'Font colour',
 
     // Forgot Password Strings
     'fp_email_sent' => 'An e-mail with password has been sent to you.',

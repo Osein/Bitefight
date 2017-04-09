@@ -9,7 +9,6 @@
 namespace Bitefight\Controllers;
 
 use Bitefight\Config;
-use Bitefight\Models\BaseModel;
 use ORM;
 use Phalcon\Filter;
 use Phalcon\Mvc\Controller;

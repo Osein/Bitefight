@@ -42,6 +42,7 @@ $user = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
 $user->setPrefix('/user');
 $user->addGet('/profile', ['action' => 'getProfile']);
 $user->addPost('/profile/training', ['action' => 'postTrainingUp']);
+$user->addGet('/talents', ['action' => 'getTalents']);
 $user->addGet('/profile/logo', ['action' => 'getProfileLogo']);
 $user->addPost('/profile/logo', ['action' => 'postProfileLogo']);
 $user->addGet('/settings', ['action' => 'getSettings']);

@@ -50,6 +50,10 @@ class UserController extends GameController
 
         $this->view->hp_red_long = $this->user->hp_now / $this->user->hp_max * 400;
 
+        $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
+        $this->view->user_tlnt_max = $user_tlnt_lvl_sqrt * 2 - 1;
+        $this->view->next_tlnt_level = pow($user_tlnt_lvl_sqrt + 1, 2);
+
         $this->view->pick('user/profile');
     }
 
@@ -88,6 +92,12 @@ class UserController extends GameController
         $this->user->image_type = $type;
 
         return $this->response->redirect(getUrl('user/profile'));
+    }
+
+    public function getTalents()
+    {
+        $this->view->menu_active = 'profile';
+        $this->view->pick('user/talents');
     }
 
     public function getHideout()
