@@ -9,6 +9,7 @@
 namespace Bitefight\Controllers;
 
 use Bitefight\Config;
+use Bitefight\Models\BaseModel;
 use ORM;
 use Phalcon\Filter;
 use Phalcon\Mvc\Controller;
@@ -91,7 +92,7 @@ class BaseController extends Controller
                 return false;
             }
         } else {
-            if($dispatcher->getControllerName() != 'Home') {
+            if(!in_array($dispatcher->getControllerName(), ['Home', 'Base'])) {
                 $this->response->redirect(getUrl(''));
                 return false;
             }
@@ -113,11 +114,11 @@ class BaseController extends Controller
         }
 
         $this->session->set('bf.flash', $this->flashData);
+        $this->view->executeTime = microtime(true) - APP_START_TIME;
     }
 
     /**
      * Here to replace the ugly code
-     * @return mixed
      */
     public function notFound()
     {
@@ -263,51 +264,37 @@ class BaseController extends Controller
                 }
             }
 
+            $resultCount = ORM::for_table('clan');
+
             $result = ORM::for_table('clan')
-                ->select_many('id', 'name', 'tag', 'race');
+                ->select_many('clan.id', 'clan.name', 'clan.tag', 'clan.race')
+                ->left_outer_join('user', array('user.clan_id', '=', 'clan.id'))
+                ->group_by('clan.id');
 
             if ($this->view->race > 0 && $this->view->race < 3) {
                 $result = $result->where('race', $this->view->race);
+                $resultCount->where('race', $this->view->race);
             }
+
+            $resultCount = $resultCount->count();
 
             foreach ($this->view->show as $show) {
                 if ($show == 'castle') {
-                    $result = $result->select('stufe', 'castle');
+                    $result = $result->select('clan.stufe', 'castle');
                 } elseif ($show == 'raid') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_booty) FROM user WHERE clan_id = clan.id)',
-                        'raid'
-                    );
+                    $result = $result->selectExpr('SUM(user.s_booty)', 'raid');
                 } elseif ($show == 'warraid') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(battle_value) FROM user WHERE clan_id = clan.id)',
-                        'warraid'
-                    );
+                    $result = $result->selectExpr('SUM(user.battle_value)', 'warraid');
                 } elseif ($show == 'fights') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_fight) FROM user WHERE clan_id = clan.id)',
-                        'fights'
-                    );
+                    $result = $result->selectExpr('SUM(user.s_fight)', 'fights');
                 } elseif ($show == 'fight1') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_victory) FROM user WHERE clan_id = clan.id)',
-                        'fight1'
-                    );
+                    $result = $result->selectExpr('SUM(user.s_victory)', 'fight1');
                 } elseif ($show == 'fight2') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_defeat) FROM user WHERE clan_id = clan.id)',
-                        'fight2'
-                    );
+                    $result = $result->selectExpr('SUM(user.s_defeat)', 'fight2');
                 } elseif ($show == 'fight0') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_draw) FROM user WHERE clan_id = clan.id)',
-                        'fight0'
-                    );
+                    $result = $result->selectExpr('SUM(user.s_draw)', 'fight0');
                 } elseif ($show == 'members') {
-                    $result = $result->selectExpr(
-                        '(SELECT COUNT(1) FROM user WHERE clan_id = clan.id)',
-                        'members'
-                    );
+                    $result = $result->selectExpr('COUNT(1)', 'members');
                 } elseif ($show == 'ppm') {
                     // Average booty
                 } elseif ($show == 'seals') {
@@ -318,12 +305,10 @@ class BaseController extends Controller
                     // Last gate opening
                 }
             }
-
-            $resultCount = $result->count();
         }
 
         $result = $result->orderByDesc($this->view->order);
-        $result->orderByAsc('id');
+        $result->orderByDesc(($this->view->type == 'player'?'user':'clan').'.id');
 
         $this->view->results = $result->limit(50)->offset(($this->view->page - 1) * 50)->find_many();
         $this->view->maxPage = ceil($resultCount / 50);
@@ -404,6 +389,8 @@ class BaseController extends Controller
             } elseif ($this->view->order == 'henchmanlevels') {
                 // I dont know this too, but oh lol well find out later
             }
+
+            $resultCount = $result->count();
         } else {
             $this->view->show = array_slice(
                 $this->request->get('show', null, array('castle', 'raid', 'warraid')),
@@ -419,65 +406,85 @@ class BaseController extends Controller
                 }
             }
 
-            $result = ORM::for_table('clan')
-                ->select_many('id', 'name', 'tag', 'race');
+            // <editor-fold desc="get user clan object">
+            /**
+             * @var ORM $userClanOrm
+             */
+            $userClanOrm = ORM::for_table('clan')
+                ->select_many('clan.id', 'clan.name', 'clan.tag', 'clan.race', 'clan.stufe')
+                ->left_outer_join('user', array('user.clan_id', '=', 'clan.id'))
+                ->group_by('clan.id')
+                ->where('clan.id', $this->user->clan_id);
 
             if ($this->view->race > 0 && $this->view->race < 3) {
-                $result = $result->where('race', $this->view->race);
+                $userClanOrm = $userClanOrm->where('race', $this->view->race);
             }
 
-            foreach ($this->view->show as $show) {
-                if ($show == 'castle') {
-                    $result = $result->select('stufe', 'castle');
-                } elseif ($show == 'raid') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_booty) FROM user WHERE clan_id = clan.id)',
-                        'raid'
-                    );
-                } elseif ($show == 'warraid') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(battle_value) FROM user WHERE clan_id = clan.id)',
-                        'warraid'
-                    );
-                } elseif ($show == 'fights') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_fight) FROM user WHERE clan_id = clan.id)',
-                        'fights'
-                    );
-                } elseif ($show == 'fight1') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_victory) FROM user WHERE clan_id = clan.id)',
-                        'fight1'
-                    );
-                } elseif ($show == 'fight2') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_defeat) FROM user WHERE clan_id = clan.id)',
-                        'fight2'
-                    );
-                } elseif ($show == 'fight0') {
-                    $result = $result->selectExpr(
-                        '(SELECT SUM(s_draw) FROM user WHERE clan_id = clan.id)',
-                        'fight0'
-                    );
-                } elseif ($show == 'members') {
-                    $result = $result->selectExpr(
-                        '(SELECT COUNT(1) FROM user WHERE clan_id = clan.id)',
-                        'members'
-                    );
-                } elseif ($show == 'ppm') {
-                    //$result = $result->select('s_gold_lost', 'goldlost');
-                } elseif ($show == 'seals') {
-                    //$result = $result->select('s_damage_caused', 'hits1');
-                } elseif ($show == 'gatesopen') {
-                    //$result = $result->select('s_hp_lost', 'hits2');
-                } elseif ($show == 'lastgateopen') {
-                    //$result = $result->select('s_hp_lost', 'hits2');
-                }
+            if ($this->view->order == 'castle') {
+                $userClanOrm = $userClanOrm->select('clan.stufe', 'castle');
+            } elseif ($this->view->order == 'raid') {
+                $userClanOrm = $userClanOrm->selectExpr('SUM(user.s_booty)', 'raid');
+            } elseif ($this->view->order == 'warraid') {
+                $userClanOrm = $userClanOrm->selectExpr('SUM(user.battle_value)', 'warraid');
+            } elseif ($this->view->order == 'fights') {
+                $userClanOrm = $userClanOrm->selectExpr('SUM(user.s_fight)', 'fights');
+            } elseif ($this->view->order == 'fight1') {
+                $userClanOrm = $userClanOrm->selectExpr('SUM(user.s_victory)', 'fight1');
+            } elseif ($this->view->order == 'fight2') {
+                $userClanOrm = $userClanOrm->selectExpr('SUM(user.s_defeat)', 'fight2');
+            } elseif ($this->view->order == 'fight0') {
+                $userClanOrm = $userClanOrm->selectExpr('SUM(user.s_draw)', 'fight0');
+            } elseif ($this->view->order == 'members') {
+                $userClanOrm = $userClanOrm->selectExpr('COUNT(1)', 'members');
+            } elseif ($this->view->order == 'ppm') {
+                // Average booty
+            } elseif ($this->view->order == 'seals') {
+                //$userClanOrm = $userClanOrm->select('s_damage_caused', 'hits1');
+            } elseif ($this->view->order == 'gatesopen') {
+                //$userClanOrm = $userClanOrm->select('s_hp_lost', 'hits2');
+            } elseif ($this->view->order == 'lastgateopen') {
+                // Last gate opening
             }
+
+            $userClanObj = $userClanOrm->find_one();
+            // </editor-fold>
+
+            $countQuery = 'SELECT SQL_CALC_FOUND_ROWS clan.stufe FROM clan
+                          LEFT JOIN user ON user.clan_id = clan.id
+                          GROUP BY clan.id
+                          HAVING %havingcond%
+                          LIMIT 1';
+
+            if ($this->view->order == 'castle') {
+                $countQuery = 'SELECT SQL_CALC_FOUND_ROWS 1 FROM clan WHERE stufe > '.$userClanObj->stufe.' OR (stufe = '.$userClanObj->stufe.' AND id >= '.$userClanObj->id.') LIMIT 1';
+            } elseif ($this->view->order == 'raid') {
+                $countQuery = str_replace('%havingcond%', 'SUM(user.s_booty) >= '.$userClanObj->raid, $countQuery);
+            } elseif ($this->view->order == 'warraid') {
+                $countQuery = str_replace('%havingcond%', 'SUM(user.battle_value) >= '.$userClanObj->warraid, $countQuery);
+            } elseif ($this->view->order == 'fights') {
+                $countQuery = str_replace('%havingcond%', 'SUM(user.s_fight) >= '.$userClanObj->fights, $countQuery);
+            } elseif ($this->view->order == 'fight1') {
+                $countQuery = str_replace('%havingcond%', 'SUM(user.s_victory) >= '.$userClanObj->fight1, $countQuery);
+            } elseif ($this->view->order == 'fight2') {
+                $countQuery = str_replace('%havingcond%', 'SUM(user.s_defeat) >= '.$userClanObj->fight2, $countQuery);
+            } elseif ($this->view->order == 'fight0') {
+                $countQuery = str_replace('%havingcond%', 'SUM(user.s_draw) >= '.$userClanObj->fight0, $countQuery);
+            } elseif ($this->view->order == 'members') {
+                $countQuery = str_replace('%havingcond%', 'COUNT(user.id) >= '.$userClanObj->members, $countQuery);
+            } elseif ($this->view->order == 'ppm') {
+                // Average booty
+            } elseif ($this->view->order == 'seals') {
+                //$result = $result->select('s_damage_caused', 'hits1');
+            } elseif ($this->view->order == 'gatesopen') {
+                //$result = $result->select('s_hp_lost', 'hits2');
+            } elseif ($this->view->order == 'lastgateopen') {
+                // Last gate opening
+            }
+
+            ORM::raw_execute($countQuery);
+
+            $resultCount = ORM::for_table('clan')->raw_query('SELECT FOUND_ROWS() AS count')->find_one()->count;
         }
-
-        $result->orderByAsc('id');
-        $resultCount = $result->count();
         $this->view->page = ceil($resultCount / 50);
         $linkShowPart = '';
 

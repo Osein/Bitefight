@@ -47,7 +47,7 @@ return [
     'menu_search' => 'Search',
 
     // Layout Strings
-    'footer_string' => '%version% Bitefight Fun Private Server',
+    'footer_string' => '%version% Bitefight Fun Private Server - Execution time: %time%',
 
     // Forgot Password Strings
     'fp_email_sent' => 'An e-mail with password has been sent to you.',

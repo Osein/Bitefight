@@ -8,7 +8,7 @@
         <div class="wrap-content wrap-right clearfix">
             <h2><img src="<?php echo getAssetLink('img/symbols/race1small.gif'); ?>" alt="">Highscore</h2>
             <div class="table-wrap">
-                <?php if(isset($user)): ?>
+                <?php if(isset($user) && ($type == 'player' || $type == 'clan' && $user->clan_id > 0)): ?>
                     <form action="<?php echo getUrl('highscore/mypos'); ?>?type=<?php echo $type; ?>&race=<?php echo $race; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>" method="POST">
                         <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                         <div class="btn-left left">
@@ -171,12 +171,12 @@
                         <?php endforeach; ?>
                     </tr>
                     <?php foreach($results as $result): ?>
-                        <tr>
+                        <tr <?php if($type == 'player' && $user->id == $result->id || $type == 'clan' && $result->id == $user->clan_id) echo 'class="own"'; ?>>
                             <td align="right"><?php echo $startRank; ?></td>
                             <td><img src="<?php echo getAssetLink('img/symbols/race'.$result->race.'small.gif'); ?>" alt="<?php echo $result->race==1?'Vampires':'Werewolves'; ?>"></td>
                             <td><a href="<?php if($type == 'clan') echo getUrl('clan/'.$result->id); else echo getUrl('profile/player/'.$result->id); ?>" title="<?php echo e($result->name); ?>"><?php echo e($result->name); ?></a></td>
                             <?php foreach ($show as $s): ?>
-                                <td align="right"><?php echo $result->{$s}; ?></td>
+                                <td align="right"><?php echo (int)$result->{$s}; ?></td>
                             <?php endforeach; ?>
                         </tr>
                         <?php $startRank++; ?>
