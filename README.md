@@ -6,19 +6,17 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 # Progress
 
-**Highscore** - Needs my position button
+## Completed
 
-**User Preview** ( Needs: Buddy request, Message, Attack )
+Home, News, Login, Register, Forget password, Highscore
 
-**Clan Preview** ( Needs: Everything lol )
+Hideout, Notepad, Search
 
-## Guest Area
+## Progress
 
-Home, News, Login, Register, Forget password
+*User Preview* ( Needs: Buddy request, Message, Attack )
 
-## Ingame
-
-Hideout, Notepad, Search 100%
+*Clan Preview* ( Needs: Everything lol )
 
 **Profile** ( Done: Stats, Logo )
 
@@ -59,3 +57,7 @@ Hideout, Notepad, Search 100%
 *Clan fights*: -
 
 *Clan chat*: -
+
+Todo
+
+- Revise highscore.

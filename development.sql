@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 163.172.177.68 (MySQL 5.5.5-10.1.20-MariaDB-1~xenial)
+# Host: 127.0.0.1 (MySQL 5.5.5-10.1.19-MariaDB)
 # Database: bitefight
-# Generation Time: 2017-02-15 14:34:21 +0000
+# Generation Time: 2017-04-09 18:16:06 +0000
 # ************************************************************
 
 
@@ -108,6 +108,15 @@ CREATE TABLE `clan_rank` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+LOCK TABLES `clan_rank` WRITE;
+/*!40000 ALTER TABLE `clan_rank` DISABLE KEYS */;
+
+INSERT INTO `clan_rank` (`id`, `rank_name`, `read_message`, `write_message`, `read_clan_message`, `add_members`, `delete_message`, `send_clan_message`, `spend_gold`, `war_minister`, `vocalise_ritual`)
+VALUES
+	(1,'Master',1,1,1,1,1,1,1,1,1);
+
+/*!40000 ALTER TABLE `clan_rank` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 # Dump of table item
@@ -2777,7 +2786,8 @@ CREATE TABLE `user` (
   `last_activity` int(11) NOT NULL DEFAULT '0',
   `last_update` int(11) NOT NULL DEFAULT '0',
   `name_change` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `user_clan` (`clan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
