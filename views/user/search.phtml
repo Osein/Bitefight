@@ -51,7 +51,7 @@
                     <?php if($search_type == 'player'): ?>
                         <tr>
                             <td>
-                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?\Bitefight\Library\Translate::_('vampire'):\Bitefight\Library\Translate::_('werewolf'); ?>" border="0">
+                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo getRaceString($res->race); ?>" border="0">
                             </td>
                             <td>
                                 <a href="<?php echo getUrl('profile/player/'.$res->id); ?>"><?php echo $res->name; ?></a>
@@ -61,7 +61,7 @@
                     <?php else: ?>
                         <tr>
                             <td>
-                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo $res->race == 1?\Bitefight\Library\Translate::_('vampire'):\Bitefight\Library\Translate::_('werewolf'); ?>" border="0">
+                                <img src="<?php echo getAssetLink('img/symbols/race'.$res->race.'small.gif'); ?>" title="<?php echo getRaceString($res->race); ?>" border="0">
                             </td>
                             <td>
                                 <a href="<?php echo getUrl('clan/view/'.$res->id); ?>"><?php echo e($res->name); ?> [<?php echo e($res->tag); ?>]</a>

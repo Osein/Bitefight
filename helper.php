@@ -9,6 +9,10 @@
 const ACTIVITY_TYPE_CHURCH = 3;
 const ACTIVITY_TYPE_GRAVEYARD = 4;
 
+function getRaceString($race = 1) {
+    return $race === 1 ? \Bitefight\Library\Translate::_('vampire') : \Bitefight\Library\Translate::_('werewolf');
+}
+
 function getAssetLink($assetLink) {
     return \Bitefight\Config::CDN_URL . $assetLink;
 }
