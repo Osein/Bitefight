@@ -32,6 +32,11 @@ return [
     'clan' => 'Clan',
     'members' => 'Members',
     'entire_booty' => 'Entire booty',
+    'entire_booty_count' => '%count% blood',
+    'rank' => 'Rank',
+    'war_minister' => 'War minister',
+    'character_description' => 'Character description',
+    'characteristics_of_user' => 'The characteristics of %user%',
 
     // Menu Strings
     'menu_header_bitefight' => 'Bitefight',

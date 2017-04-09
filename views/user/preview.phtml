@@ -7,7 +7,7 @@
         </div>
         <div class="wrap-left">
             <div class="wrap-content wrap-right">
-                <img src="<?php echo getAssetLink('img/logo/'.$puser->race.'/'.$puser->gender.'/'.$puser->image_type.'.jpg') ?>" border="0" width="168" alt="playerlogo">
+                <img src="<?php echo getAssetLink('img/logo/'.$puser->race.'/'.$puser->gender.'/'.$puser->image_type.'.jpg') ?>" border="0" width="168">
                 <?php if($puser->clan_id > 0): ?>
                 <a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><img src="<?php echo getAssetLink('img/clan/'.$puser->logo_bg.'-'.$puser->logo_sym.'.png'); ?>" border="0"></a>
                 <?php endif; ?>
@@ -27,19 +27,19 @@
         </div>
         <div class="wrap-left clearfix">
             <div class="wrap-content wrap-right clearfix">
-                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$puser->race.'small.gif'); ?>" alt=""><?php echo $puser->race == 1?'Vampire':'Werewolf' ?> <span><?php echo e($puser->name); ?></span></h2>
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$puser->race.'small.gif'); ?>" alt=""><?php echo getRaceString($puser->race); ?> <span><?php echo e($puser->name); ?></span></h2>
                 <div class="table-wrap">
                     <table width="100%">
                         <tbody>
                         <tr>
                             <td class="no-bg">
-                                <h3>Entire Booty:</h3>
-                                <p><?php echo prettyNumber($puser->s_booty); ?> Blood</p>
+                                <h3><?php echo \Bitefight\Library\Translate::_('entire_booty'); ?>:</h3>
+                                <p><?php echo \Bitefight\Library\Translate::_('entire_booty_count', ['count' => prettyNumber($puser->s_booty)]); ?></p>
                                 <?php if($puser->clan_id > 0): ?>
-                                <h3>Clan:</h3>
+                                <h3><?php echo \Bitefight\Library\Translate::_('clan'); ?>:</h3>
                                 <p><a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><?php echo e($puser->clan_name); ?> [<?php echo e($puser->clan_tag); ?>]</a></p>
-                                <h3>Rank:</h3>
-                                <p><?php echo e($puser->rank_name); ?><?php if($puser->war_minister) { echo ' (War minister)'; } ?>
+                                <h3><?php echo \Bitefight\Library\Translate::_('rank'); ?>:</h3>
+                                <p><?php echo e($puser->rank_name); ?><?php if($puser->war_minister) { echo ' ('.\Bitefight\Library\Translate::_('war_minister').')'; } ?>
                                 </p>
                                 <?php endif; ?>
                             </td>
@@ -309,7 +309,7 @@
                         </tr>
                         <tr>
                             <td class="no-bg" colspan="2">
-                                <h3>Character description:<!-- &nbsp;<a href="/msg/complain/pprofile?id=77625&amp;cc=c3fdd5d" class="copyright">(report)</a>--></h3>
+                                <h3><?php echo \Bitefight\Library\Translate::_('character_description'); ?>:<!-- &nbsp;<a href="/msg/complain/pprofile?id=77625&amp;cc=c3fdd5d" class="copyright">(report)</a>--></h3>
 
                                 <p class="char-desc">
                                     <?php echo $puser->descriptionHtml; ?>
@@ -336,7 +336,7 @@
         </div>
         <div class="wrap-left clearfix">
             <div class="wrap-content wrap-right clearfix">
-                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$puser->race.'small.gif'); ?>" alt="">The characteristics of <?php echo $puser->name; ?></h2>
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$puser->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('characteristics_of_user', ['user' => e($puser->name)]); ?></h2>
                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                     <tbody><tr>
                         <td class="tdn">Level:</td>
