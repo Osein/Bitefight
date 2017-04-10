@@ -97,6 +97,20 @@ class UserController extends GameController
     public function getTalents()
     {
         $this->view->menu_active = 'profile';
+
+        $talentsResult = ORM::for_table('talent')->find_many();
+        $talents = array();
+
+        foreach ($talentsResult as $talent) {
+            if($talent->pair) {
+                $talents[$talent->pair][] = $talent;
+                continue;
+            }
+
+            $talents[$talent->id] = array($talent);
+        }
+
+        $this->view->talents = $talents;
         $this->view->pick('user/talents');
     }
 

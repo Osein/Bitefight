@@ -8,7 +8,6 @@
 
 namespace Bitefight\Library;
 
-
 use Phalcon\Http\Request;
 use Phalcon\Translate\Adapter\NativeArray;
 
@@ -55,6 +54,24 @@ class Translate
      */
     public static function _($translateKey, $placeholders = null) {
         return self::getInstance()->_($translateKey, $placeholders);
+    }
+
+    /**
+     * returns talent name
+     * @param string $talent_id
+     * @return string
+     */
+    public static function _tn($talent_id) {
+        return self::getInstance()->_('talent_id_' . $talent_id . '_name');
+    }
+
+    /**
+     * returns talent description
+     * @param string $talent_id
+     * @return string
+     */
+    public static function _td($talent_id) {
+        return self::getInstance()->_('talent_id_' . $talent_id . '_description');
     }
 
 }

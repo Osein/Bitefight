@@ -1,27 +1,21 @@
 <div class="btn-left left">
-    <div class="btn-right"><a href="<?php echo getUrl('profile/index#tabs-5'); ?>" class="btn">back</a></div>
+    <div class="btn-right"><a href="<?php echo getUrl('profile/index#tabs-5'); ?>" class="btn"><?php echo \Bitefight\Library\Translate::_('back'); ?></a></div>
 </div>
-
 <br class="clearfloat">
-
 <div id="specialSkills">
-    <!-- box HEADER START -->
     <div class="wrap-top-left clearfix">
         <div class="wrap-top-right clearfix">
             <div class="wrap-top-middle clearfix"></div>
         </div>
     </div>
-    <!-- box HEADER END -->
-    <!-- box CONTENT START -->
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <!-- CONTENT START -->
-            <h2><img src="/img/symbols/race1small.gif" alt="">Talents</h2>
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('profile_talent_talents'); ?></h2>
             <div class="table-wrap">
                 <table id="talentsOptions" width="100%" border="0">
                     <tbody><tr>
                         <td colspan="2">
-                            <span class="gold">Gold: 2.266 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"></span>&nbsp;&nbsp;<span class="gold"><a href="https://s202-en.bitefight.gameforge.com:443/city/voodoo">Hellstones</a>: 3 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></span>
+                            <span class="gold"><?php echo \Bitefight\Library\Translate::_('gold'); ?>: 2.266 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></span>&nbsp;&nbsp;<span class="gold"><a href="https://s202-en.bitefight.gameforge.com:443/city/voodoo">Hellstones</a>: 3 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></span>
                         </td>
                     </tr>
                     <tr>
@@ -90,439 +84,48 @@
                         <th>Level</th>
                         <th colspan="2" align="left">&nbsp;Talents</th>
                     </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>4</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Sharp aim</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Sharp aim</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You have learnt to hit where it hurts the most.</td></tr><tr><td nowrap="">+6 Basic damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>4</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Claws</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Claws</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your claws become longer and stronger so that you can cause more damage.</td></tr><tr><td nowrap="">+12 Bonus damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>5</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Fighting spirit</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Fighting spirit</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You gain the experience of your most fierce victims.</td></tr><tr><td nowrap="">+6 Basic damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Angry attack</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Angry attack</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You carry out your attacks with a lethal amount of fury and an enormous amount of cruelty.</td></tr><tr><td nowrap="">+12 Bonus damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>9</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Rage rush</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Rage rush</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>Your blood boils and you feel rage pulsating through you.</td></tr><tr><td nowrap="">+24 Basic damage<br>-10 Defence<br>Duration:3 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>9</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Poisonous saliva</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Poisonous saliva</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Toxic saliva oozes from your teeth, which in turn burns your opponent.</td></tr><tr><td nowrap="">+12 Bonus damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>9</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Martial arts</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Martial arts</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You move swiftly through the shadows and your attacks are foolproof.</td></tr><tr><td nowrap="">+2 Bonus hit chance</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>12</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Unnatural strength</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Unnatural strength</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your muscles develop a strength that can even destroy blocks of granite.</td></tr><tr><td nowrap="">+12 Bonus damage<br>+5 Strength</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Mana Thief</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Mana Thief</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You enslave the souls of your defeated enemies with incredible magic spells.</td></tr><tr><td nowrap="">+2 Mana effect duration</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>16</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Night Coat</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Night Coat</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>Dark shadows surround you and grant you protection.</td></tr><tr><td nowrap="">-10 Bonus hit chance (on opponent)<br>-12 Bonus damage (on opponent)<br>Duration:3 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Raider and Booty</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Raider and Booty</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>You recognise your booty`s weaknesses and therefore manage to carry out deadly attacks.</td></tr><tr><td nowrap="">+6 Basic damage<br>+12 Bonus damage<br>Duration:3 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>16</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Cruelty</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Cruelty</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You brutally navigate your attacks so that they cause maximum damage.</td></tr><tr><td nowrap="">+12 Basic damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>16</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Shadow bones</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Shadow bones</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You transform into a shadow whose ice cold limbs penetrate your opponent`s body.</td></tr><tr><td nowrap="">+2 Bonus hit chance<br>+5 Dexterity</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>20</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Iron Will to Live</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Iron Will to Live</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You tap into a power source within you so that you can handle even the worst injuries, without so much as the blink of an eye.</td></tr><tr><td nowrap="">+15000 Health</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Quick return</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Quick return</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your rampant flesh makes damage disappear a lot faster.</td></tr><tr><td nowrap="">+2500 Regeneration</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>25</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Inner beast</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Inner beast</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You unleash your inner beast and let your untamed violence run wild.</td></tr><tr><td nowrap="">+12 Bonus damage</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>25</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Shadow dance</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Shadow dance</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>The shredded souls of your previous victims surround you and increase your destruction power.</td></tr><tr><td nowrap="">+4 Bonus hit chance</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>30</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Willpower</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Willpower</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your willpower becomes so strong that you can use it to break your opponent.</td></tr><tr><td nowrap="">+2 Basic talent<br>+2 Bonus Talent</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Blur</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Blur</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your figure becomes blurred in front of the eyes of your bewildered opponents.</td></tr><tr><td nowrap="">-1 Hit Chance (on opponent)<br>-2 Bonus hit chance (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>36</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Merciless</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Merciless</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>Mercilessly you rip your enemy`s flesh and muscles apart.</td></tr><tr><td nowrap="">+24 Bonus damage<br>Duration:2 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>36</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Berserker</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Berserker</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You go crazy during combat and your rage becomes as powerful as a tornado.</td></tr><tr><td nowrap="">+24 Bonus damage<br>-2 Hit Chance</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>45</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Mana Robber</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Mana Robber</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You learn how to perfectly use the power of your defeated enemies.</td></tr><tr><td nowrap="">+2 Mana effect</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>49</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Life source</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Life source</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You tap into the vitality of all the creatures in your vicinity and use it for your own dark body.</td></tr><tr><td nowrap="">+25000 Health</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>55</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Unholy hate</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Unholy hate</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You have perfected your combat techniques against your arch enemy and let him feel your hate.</td></tr><tr><td nowrap="">+2 Bonus hit chance<br>+12 Bonus damage (only against other races)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Magic Power</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Magic Power</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>By sacrificing one hundred souls you can receive stronger magic powers.</td></tr><tr><td nowrap="">+5 Basic talent</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>64</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Know your enemy</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Know your enemy</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>You can read your opponent`s mind to anticipate his attacks.</td></tr><tr><td nowrap="">+20 Dexterity<br>-12 Bonus damage<br>-2 Hit Chance (on opponent)<br>Duration:2 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Terror hit</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Terror hit</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>You open your defence favouring extremely tough attacks.</td></tr><tr><td nowrap="">+12 Basic damage<br>+24 Bonus damage<br>-30 Defence<br>Duration:2 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>64</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Curse</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Curse</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Words spoken from an insane and deadly language make your opponent go crazy.</td></tr><tr><td nowrap="">-2 Basic talent (on opponent)<br>-4 Bonus Talent (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>81</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Secret power source</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Secret power source</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You receive access to forbidden secrets which unleash insanity and death everywhere you go.</td></tr><tr><td nowrap="">+6 Bonus damage<br>+1 Bonus hit chance<br>+10 Endurance</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>100</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Spirit form</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Spirit form</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your body is not quite from this world anymore and heals a lot faster.</td></tr><tr><td nowrap="">+1500 Regeneration<br>-12 Bonus damage (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>121</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Iciness</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Iciness</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You radiate iciness which freezes and paralyses your enemies.</td></tr><tr><td nowrap="">+2 Bonus hit chance<br>-10 Defence (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>128</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Strength raid</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Strength raid</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You suck the life out of your opponent with your secret magic powers and supply your own body with it.</td></tr><tr><td nowrap="">+12 Bonus damage<br>-10 Strength (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg"><div class="triggerTooltip"><b>Blood Haze</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Blood Haze</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your violent beatings make fountains of blood spurt out of your enemy, making it hard for him to see.</td></tr><tr><td nowrap="">+6 Bonus damage<br>-4 Bonus hit chance (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>196</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Death wish</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Death wish</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>You hunt your enemies to death with ancient evil magic spells.</td></tr><tr><td nowrap="">+6 Bonus hit chance</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>225</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Evil genius</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Evil genius</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Your intellect and your charisma are like no other.</td></tr><tr><td nowrap="">+4 Basic talent<br>+20 Charisma</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>230</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_passive.png" title="Passive Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Untouchable</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Untouchable</td></tr><tr><td nowrap="">Passive Talent</td></tr><tr><td>Dark powers break your opponent`s combat power and paralyse his willpower.</td></tr><tr><td nowrap="">-2 Basic talent (on opponent)<br>-4 Bonus Talent (on opponent)</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    <tr>
-                        <td align="center" class="talent_level"><b>250</b></td>
-                        <td class="talent_buyable">
-                            <table width="100%" border="0">
-                                <tbody><tr>
-                                    <td class="no-bg" align="left" width="25"><img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/talent_active.png" title="Active Talent"></td>
-                                    <td class="no-bg" align="left"><div class="triggerTooltip"><b>Arch Magic</b></div><div class="tooltip"><table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;">Arch Magic</td></tr><tr><td nowrap="">Active Talent</td></tr><tr><td>You get access to arcane powers that strengthen your skills.</td></tr><tr><td nowrap="">+1 Active talent effect duration<br>Duration:7 Rounds</td></tr></tbody></table></div></td>
-                                    <td class="no-bg align-right" align="right"></td>
-                                </tr>
-                                </tbody></table>
-                        </td>
-                        <td class="no-bg"></td></tr>
-                    </tbody></table>
+                    <?php foreach ($talents as $talent): ?>
+                        <tr>
+                            <td align="center" class="talent_level"><b><?php echo $talent[0]->level; ?></b></td>
+                            <td class="talent_buyable">
+                                <table width="100%" border="0">
+                                    <tbody>
+                                    <tr>
+                                        <td class="no-bg" align="left" width="25"><img src="<?php echo getAssetLink('img/symbols/talent_'.($talent[0]->active?'active':'passive').'.png'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[0]->active); ?>"></td>
+                                        <td class="no-bg" align="left">
+                                            <div class="tooltip" title='<table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;"><?php echo \Bitefight\Library\Translate::_tn($talent[0]->id); ?></td></tr><tr><td nowrap=""><?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[0]->active); ?></td></tr><tr><td><?php echo \Bitefight\Library\Translate::_td($talent[0]->id); ?></td></tr><?php foreach(getTalentPropertyArray($talent[0]) as $prop) echo '<tr><td nowrap="">'.$prop[1].' '.$prop[0].'</td></tr>' ?></tbody></table>'><b><?php echo \Bitefight\Library\Translate::_tn($talent[0]->id); ?></b></div>
+                                        </td>
+                                        <td class="no-bg align-right" align="right"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <?php if(isset($talent[1])): ?>
+                                <td class="talent_buyable">
+                                    <table width="100%" border="0">
+                                        <tbody>
+                                        <tr>
+                                            <td class="no-bg" align="left" width="25"><img src="<?php echo getAssetLink('img/symbols/talent_'.($talent[1]->active?'active':'passive').'.png'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[1]->active); ?>"></td>
+                                            <td class="no-bg" align="left">
+                                                <div class="tooltip" title='<table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;"><?php echo \Bitefight\Library\Translate::_tn($talent[1]->id); ?></td></tr><tr><td nowrap=""><?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[1]->active); ?></td></tr><tr><td><?php echo \Bitefight\Library\Translate::_td($talent[1]->id); ?></td></tr><?php foreach(getTalentPropertyArray($talent[1]) as $prop) echo '<tr><td nowrap="">'.$prop[1].' '.$prop[0].'</td></tr>' ?></tbody></table>'><b><?php echo \Bitefight\Library\Translate::_tn($talent[1]->id); ?></b></div>
+                                            </td>
+                                            <td class="no-bg align-right" align="right"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
                 <br class="cleafloat">
-
             </div>
-            <!-- CONTENT END -->
         </div>
     </div>
-    <!-- box CONTENT END -->
-    <!-- box FOOTER START -->
     <div class="wrap-bottom-left">
         <div class="wrap-bottom-right">
             <div class="wrap-bottom-middle"></div>
         </div>
     </div>
-    <!-- box CONTENT END -->
 </div>

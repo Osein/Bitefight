@@ -203,6 +203,114 @@ function parseBBCodes($text) {
     return str_replace(PHP_EOL, '<br>', preg_replace($find,$replace,e($text)));
 }
 
+function getTalentPropertyArray($obj) {
+    $properties = getItemTalentSharedProperties($obj);
+
+    if($obj->estr != 0) {
+        $properties[] = array('Strength (on opponent)', $obj->estr);
+    }
+    if($obj->edef != 0) {
+        $properties[] = array('Defence (on opponent)', $obj->edef);
+    }
+    if($obj->edex != 0) {
+        $properties[] = array('Dexterity (on opponent)', $obj->edex);
+    }
+    if($obj->eend != 0) {
+        $properties[] = array('Endurance (on opponent)', $obj->eend);
+    }
+    if($obj->echa != 0) {
+        $properties[] = array('Charisma (on opponent)', $obj->echa);
+    }
+    if($obj->attack != 0) {
+        $properties[] = array('Attack', $obj->attack);
+    }
+    if($obj->eattack != 0) {
+        $properties[] = array('Attack (on opponent)', $obj->eattack);
+    }
+    if($obj->id == 26) {
+        $properties[] = array('Mana effect', 2);
+    }
+    if($obj->id == 76) {
+        $properties[] = array('Health points after victory', 12500);
+    }
+    if($obj->id == 77) {
+        $properties[] = array('Active talent effect duration', 1);
+    }
+    if($obj->id == 86) {
+        $properties[] = array('Health extraction', '100%');
+    }
+
+    return $properties;
+}
+
+function getItemPropertyArray($itemObj) {
+
+}
+
+function getItemTalentSharedProperties($obj) {
+    $properties = array();
+
+    if($obj->str != 0) {
+        $properties[] = array('Strength', $obj->str);
+    }
+    if($obj->def != 0) {
+        $properties[] = array('Defence', $obj->def);
+    }
+    if($obj->dex != 0) {
+        $properties[] = array('Dexterity', $obj->dex);
+    }
+    if($obj->end != 0) {
+        $properties[] = array('Endurance', $obj->end);
+    }
+    if($obj->cha != 0) {
+        $properties[] = array('Charisma', $obj->cha);
+    }
+    if($obj->hpbonus != 0) {
+        $properties[] = array('Health', $obj->hpbonus);
+    }
+    if($obj->regen != 0) {
+        $properties[] = array('Regeneration', $obj->regen);
+    }
+    if($obj->sbschc != 0) {
+        $properties[] = array('Basic hit chance', $obj->sbschc);
+    }
+    if($obj->sbscdmg != 0) {
+        $properties[] = array('Basic damage', $obj->sbscdmg);
+    }
+    if($obj->sbsctlnt != 0) {
+        $properties[] = array('Basic talent', $obj->sbsctlnt);
+    }
+    if($obj->sbnshc != 0) {
+        $properties[] = array('Bonus hit chance', $obj->sbnshc);
+    }
+    if($obj->sbnsdmg != 0) {
+        $properties[] = array('Bonus damage', $obj->sbnsdmg);
+    }
+    if($obj->sbnstlnt != 0) {
+        $properties[] = array('Bonus talent', $obj->sbnstlnt);
+    }
+    if($obj->ebschc != 0) {
+        $properties[] = array('Basic hit chance (on opponent)', $obj->ebschc);
+    }
+    if($obj->ebscdmg != 0) {
+        $properties[] = array('Basic damage (on opponent)', $obj->ebscdmg);
+    }
+    if($obj->ebsctlnt != 0) {
+        $properties[] = array('Basic talent (on opponent)', $obj->ebsctlnt);
+    }
+    if($obj->ebnshc != 0) {
+        $properties[] = array('Bonus hit chance (on opponent)', $obj->ebnshc);
+    }
+    if($obj->ebnsdmg != 0) {
+        $properties[] = array('Bonus damage (on opponent)', $obj->ebnsdmg);
+    }
+    if($obj->ebnstlnt != 0) {
+        $properties[] = array('Bonus talent (on opponent)', $obj->ebnstlnt);
+    }
+
+    return $properties;
+}
+
 function profilePrintUserItem($i) {
     ?>
     <tr>
