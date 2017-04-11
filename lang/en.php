@@ -72,7 +72,11 @@ return [
     'footer_string' => '%version% Bitefight Fun Private Server - Execution time: %time%',
 
     // Profile Strings
-
+    'profile_change_logo' => 'edit character picture',
+    'profile_gender' => 'Gender',
+    'profile_gender_male' => 'Male',
+    'profile_gender_female' => 'Female',
+    'profile_type' => 'Type',
 
     // Profile Talent Strings
     'profile_talent_talents' => 'Talents',
