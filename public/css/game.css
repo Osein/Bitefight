@@ -14,6 +14,10 @@ body {
     text-align: center;
 }
 
+a:not([href]) {
+    cursor: pointer;
+}
+
 ::-moz-selection{ background: red; color:#fff; text-shadow: none; }
 ::selection { background:red; color:#fff; text-shadow: none; }
 

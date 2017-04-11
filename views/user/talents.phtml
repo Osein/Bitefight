@@ -15,33 +15,40 @@
                 <table id="talentsOptions" width="100%" border="0">
                     <tbody><tr>
                         <td colspan="2">
-                            <span class="gold"><?php echo \Bitefight\Library\Translate::_('gold'); ?>: 2.266 <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></span>&nbsp;&nbsp;<span class="gold"><a href="https://s202-en.bitefight.gameforge.com:443/city/voodoo">Hellstones</a>: 3 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></span>
+                            <span class="gold">
+                                <?php echo \Bitefight\Library\Translate::_('gold'); ?>: <?php echo prettyNumber($user->gold); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" align="absmiddle" border="0">
+                            </span>&nbsp;&nbsp;<span class="gold">
+                                <!--<a href="https://s202-en.bitefight.gameforge.com:443/city/voodoo">--><?php echo \Bitefight\Library\Translate::_('hellstones'); ?><!--</a>-->: <?php echo prettyNumber($user->hellstone); ?> <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('hellstones'); ?>" align="absmiddle" border="0">
+                            </span>
                         </td>
                     </tr>
                     <tr>
                         <td valign="top" align="left">
                             <table cellpadding="2" cellspacing="2" border="0" class="noBackground">
                                 <tbody><tr>
-                                    <td style="vertical-align:middle;"><strong>Display filter:</strong></td>
+                                    <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_display_filter'); ?>:</strong></td>
                                     <td>
                                         <select size="1" onchange="location = this.options[this.selectedIndex].value;">
-                                            <option value="talents?filter=1">All learned talents</option><option value="talents?filter=2" selected="">Learnable talents</option><option value="talents?filter=3">All talents</option>                            </select>
+                                            <option value="talents?filter=1" <?php if($filter == 1) echo 'selected=""' ?>><?php echo \Bitefight\Library\Translate::_('profile_talent_display_filter_learned'); ?></option>
+                                            <option value="talents?filter=2" <?php if($filter == 2) echo 'selected=""' ?>><?php echo \Bitefight\Library\Translate::_('profile_talent_display_filter_learnable'); ?></option>
+                                            <option value="talents?filter=3" <?php if($filter == 3) echo 'selected=""' ?>><?php echo \Bitefight\Library\Translate::_('profile_talent_display_filter_all'); ?></option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr class="next_point_info">
-                                    <td style="vertical-align:middle;"><strong>Available points:</strong></td>
-                                    <td style="vertical-align:middle;"><center><b>0</b></center></td>
+                                    <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_available_points'); ?>:</strong></td>
+                                    <td style="vertical-align:middle;"><center><b><?php echo $available; ?></b></center></td>
                                 </tr>
                                 <tr class="next_point_info">
-                                    <td style="vertical-align:middle;"><strong>Used points:</strong></td>
-                                    <td style="vertical-align:middle;"><center><b>31</b></center></td>
+                                    <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_used_points'); ?>:</strong></td>
+                                    <td style="vertical-align:middle;"><center><b><?php echo $used_points; ?></b></center></td>
                                 </tr>
                                 <tr class="next_point_info">
-                                    <td style="vertical-align:middle;"><strong>Maximum points:</strong></td>
-                                    <td style="vertical-align:middle;"><center><b>31</b></center></td>
+                                    <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_max_points'); ?>:</strong></td>
+                                    <td style="vertical-align:middle;"><center><b><?php echo $max_points; ?></b></center></td>
                                 </tr>
                                 <tr class="next_point_info">
-                                    <td style="vertical-align:middle;"><strong>Next points</strong><br>Level: 289</td>
+                                    <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_next_points'); ?></strong><br><?php echo \Bitefight\Library\Translate::_('level'); ?>: <?php echo $next_talent_level; ?></td>
                                     <td style="vertical-align:middle;"><center><b>+2</b></center></td>
                                 </tr>
                                 </tbody></table>
@@ -50,66 +57,117 @@
                         <td valign="top" align="right">
                             <table cellpadding="2" cellspacing="2" border="0">
                                 <tbody><tr>
-                                    <form action="https://s202-en.bitefight.gameforge.com:443/profile/talents?__token=c509f38d220a3c95329c4f18e93c099e" method="POST"></form>
-                                    <td style="vertical-align:middle;"><strong>next point:</strong></td>
-                                    <td><input type="hidden" name="filter" value="2"><input type="submit" class="input" name="buypoint" value="buy now" disabled=""></td>
-                                    <td style="vertical-align:middle;" nowrap="">535.062 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"></td>
-
+                                    <form action="<?php echo getUrl('user/talents'); ?>" method="POST">
+                                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                        <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_form_next_point'); ?>:</strong></td>
+                                        <td><input type="hidden" name="filter" value="<?php echo $filter; ?>"><input type="submit" class="input" name="buypoint" value="buy now" <?php if($max_points - $user->talent_points == 0 || $user->gold < $new_talent_price) echo 'disabled=""' ?>></td>
+                                        <td style="vertical-align:middle;" nowrap=""><?php echo prettyNumber($new_talent_price); ?> <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"></td>
+                                    </form>
                                 </tr>
                                 <tr>
-                                    <form action="https://s202-en.bitefight.gameforge.com:443/profile/talentsMasterReset?__token=c509f38d220a3c95329c4f18e93c099e" method="POST"></form>
-                                    <td style="vertical-align:middle;"><strong>Reset gold price and relearn all talents:</strong></td>
-                                    <td><input type="hidden" name="filter" value="2"><input type="submit" class="input" name="resetpoint" value="Reset" disabled=""></td>
-                                    <td style="vertical-align:middle;" nowrap="">19 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></td>
-
+                                    <form action="<?php echo getUrl('user/talents'); ?>" method="POST">
+                                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                        <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_form_reset_gold_and_talents'); ?>:</strong></td>
+                                        <td><input type="hidden" name="filter" value="<?php echo $filter; ?>"><input type="submit" class="input" name="resetpoinths" value="Reset" <?php if($user->hellstone < 19) echo 'disabled=""'; ?>></td>
+                                        <td style="vertical-align:middle;" nowrap="">19 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('hellstones'); ?>" align="absmiddle" border="0"></td>
+                                    </form>
                                 </tr>
                                 <tr>
-                                    <form action="https://s202-en.bitefight.gameforge.com:443/profile/talentsReset?__token=c509f38d220a3c95329c4f18e93c099e" method="POST"></form>
-                                    <td style="vertical-align:middle;"><strong>Reset all points:</strong></td>
-                                    <td><input type="hidden" name="filter" value="2"><input type="submit" class="input" name="resetpoint" value="Reset" disabled=""></td>
-                                    <td style="vertical-align:middle;" nowrap="">3.395.900 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"></td>
-
+                                    <form action="<?php echo getUrl('user/talents'); ?>" method="POST">
+                                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                        <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_form_reset_all_points'); ?>:</strong></td>
+                                        <td><input type="hidden" name="filter" value="<?php echo $filter; ?>"><input type="submit" class="input" name="resetpointg" value="Reset" <?php if($user->gold < $talent_reset_price || $user->talent_points == $available) echo 'disabled=""'; ?>></td>
+                                        <td style="vertical-align:middle;" nowrap=""><?php echo prettyNumber($talent_reset_price); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" align="absmiddle" border="0"></td>
+                                    </form>
                                 </tr>
                                 <tr>
-                                    <td style="vertical-align:middle;"><strong>Reset single talent:</strong></td>
-                                    <td style="vertical-align:middle;" colspan="2" nowrap="">2 <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res3.gif" alt="Hellstones" align="absmiddle" border="0"></td>
+                                    <td style="vertical-align:middle;"><strong><?php echo \Bitefight\Library\Translate::_('profile_talent_form_reset_single_talent'); ?>:</strong></td>
+                                    <td style="vertical-align:middle;" colspan="2" nowrap="">2 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('hellstones'); ?>" align="absmiddle" border="0"></td>
                                 </tr>
-                                </tbody></table>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
-                    </tbody></table>
-                <h2><img src="/img/symbols/race1small.gif">Talents</h2>
+                    </tbody>
+                </table>
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"><?php echo \Bitefight\Library\Translate::_('talents'); ?></h2>
                 <table border="0" cellpadding="0" cellspacing="2" width="100%" class="talents_bg">
                     <tbody><tr class="talents_headline">
-                        <th>Level</th>
-                        <th colspan="2" align="left">&nbsp;Talents</th>
+                        <th><?php echo \Bitefight\Library\Translate::_('level'); ?></th>
+                        <th colspan="2" align="left">&nbsp;<?php echo \Bitefight\Library\Translate::_('profile_talent_talents'); ?></th>
                     </tr>
                     <?php foreach ($talents as $talent): ?>
                         <tr>
                             <td align="center" class="talent_level"><b><?php echo $talent[0]->level; ?></b></td>
-                            <td class="talent_buyable">
+                            <td class="<?php if($talent[0]->user_id) echo 'talent_buyed'; elseif(getLevel($user->exp) >= $talent[0]->level && (!isset($talent[1]) || (isset($talent[1]) && !$talent[1]->user_id))) echo 'talent_buyable'; else echo 'talent_inactive' ?>">
                                 <table width="100%" border="0">
                                     <tbody>
                                     <tr>
                                         <td class="no-bg" align="left" width="25"><img src="<?php echo getAssetLink('img/symbols/talent_'.($talent[0]->active?'active':'passive').'.png'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[0]->active); ?>"></td>
                                         <td class="no-bg" align="left">
-                                            <div class="tooltip" title='<table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;"><?php echo \Bitefight\Library\Translate::_tn($talent[0]->id); ?></td></tr><tr><td nowrap=""><?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[0]->active); ?></td></tr><tr><td><?php echo \Bitefight\Library\Translate::_td($talent[0]->id); ?></td></tr><?php foreach(getTalentPropertyArray($talent[0]) as $prop) echo '<tr><td nowrap="">'.$prop[1].' '.$prop[0].'</td></tr>' ?></tbody></table>'><b><?php echo \Bitefight\Library\Translate::_tn($talent[0]->id); ?></b></div>
+                                            <div class="tooltip" title='<?php $this->partial('partials/talent_tooltip_content', ['talent_obj' => $talent[0]]) ?>'><b><?php echo \Bitefight\Library\Translate::_tn($talent[0]->id); ?></b></div>
                                         </td>
-                                        <td class="no-bg align-right" align="right"></td>
+                                        <td class="no-bg align-right" align="right">
+                                            <?php if($talent[0]->user_id && $user->hellstone >= 2 && $talent[0]->id != 1): ?>
+                                                <form id="talent_reset<?php echo $talent[0]->id; ?>" action="<?php echo getUrl('user/talent/reset/single'); ?>" method="post">
+                                                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                    <input type="hidden" name="talent_id" value="<?php echo $talent[0]->id; ?>">
+                                                    <input type="hidden" name="filter" value="<?php echo $filter; ?>">
+                                                </form>
+                                                <a onclick="document.forms['talent_reset<?php echo $talent[0]->id; ?>'].submit();" class="buytalent">
+                                                    <img src="<?php echo getAssetLink('img/symbols/reset.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('profile_talent_reset_single'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_reset_single'); ?>"/>
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php
+                                            if(!$talent[0]->user_id && $available && getLevel($user->exp) >= $talent[0]->level && (!isset($talent[1]) || (isset($talent[1]) && !$talent[1]->user_id))):
+                                                ?>
+                                                <form id="talent_buy<?php echo $talent[0]->id; ?>" action="<?php echo getUrl('user/talent/use'); ?>" method="post">
+                                                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                    <input type="hidden" name="talent_id" value="<?php echo $talent[0]->id; ?>">
+                                                    <input type="hidden" name="filter" value="<?php echo $filter; ?>">
+                                                </form>
+                                                <a onclick="document.forms['talent_buy<?php echo $talent[0]->id; ?>'].submit();" class="buytalent">
+                                                    <img src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('profile_talent_buy_now'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_buy_now'); ?>">
+                                                </a>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </td>
                             <?php if(isset($talent[1])): ?>
-                                <td class="talent_buyable">
+                                <td class="<?php if($talent[1]->user_id) echo 'talent_buyed'; elseif(getLevel($user->exp) >= $talent[1]->level && !$talent[0]->user_id) echo 'talent_buyable'; else echo 'talent_inactive' ?>">
                                     <table width="100%" border="0">
                                         <tbody>
                                         <tr>
                                             <td class="no-bg" align="left" width="25"><img src="<?php echo getAssetLink('img/symbols/talent_'.($talent[1]->active?'active':'passive').'.png'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[1]->active); ?>"></td>
                                             <td class="no-bg" align="left">
-                                                <div class="tooltip" title='<table class="noBackground"><tbody><tr><td nowrap="" style="font-size: 1.1em;"><?php echo \Bitefight\Library\Translate::_tn($talent[1]->id); ?></td></tr><tr><td nowrap=""><?php echo \Bitefight\Library\Translate::_('profile_talent_talent_type_'.$talent[1]->active); ?></td></tr><tr><td><?php echo \Bitefight\Library\Translate::_td($talent[1]->id); ?></td></tr><?php foreach(getTalentPropertyArray($talent[1]) as $prop) echo '<tr><td nowrap="">'.$prop[1].' '.$prop[0].'</td></tr>' ?></tbody></table>'><b><?php echo \Bitefight\Library\Translate::_tn($talent[1]->id); ?></b></div>
+                                                <div class="tooltip" title='<?php $this->partial('partials/talent_tooltip_content', ['talent_obj' => $talent[1]]) ?>'><b><?php echo \Bitefight\Library\Translate::_tn($talent[1]->id); ?></b></div>
                                             </td>
-                                            <td class="no-bg align-right" align="right"></td>
+                                            <td class="no-bg align-right" align="right">
+
+                                                <?php if($talent[1]->user_id && $user->hellstone > 1): ?>
+                                                    <form id="talent_reset<?php echo $talent[1]->id; ?>" action="<?php echo getUrl('user/talent/reset/single'); ?>" method="post">
+                                                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                        <input type="hidden" name="talent_id" value="<?php echo $talent[1]->id; ?>">
+                                                        <input type="hidden" name="filter" value="<?php echo $filter; ?>">
+                                                    </form>
+                                                    <a onclick="document.forms['talent_reset<?php echo $talent[1]->id; ?>'].submit();" href="javascript:;" class="buytalent">
+                                                        <img src="<?php echo getAssetLink('img/symbols/reset.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('profile_talent_reset_single'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_reset_single'); ?>"/>
+                                                    </a>
+                                                <?php endif; ?>
+                                                <?php if(!$talent[0]->user_id && $available && getLevel($user->exp) >= $talent[1]->level && !$talent[1]->user_id): ?>
+                                                    <form id="talent_buy<?php echo $talent[1]->id; ?>" action="<?php echo getUrl('user/talent/use'); ?>" method="post">
+                                                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                        <input type="hidden" name="talent_id" value="<?php echo $talent[1]->id; ?>">
+                                                        <input type="hidden" name="filter" value="<?php echo $filter; ?>">
+                                                    </form>
+                                                    <a onclick="document.forms['talent_buy<?php echo $talent[1]->id; ?>'].submit();" href="javascript:;" class="buytalent">
+                                                        <img src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('profile_talent_buy_now'); ?>" title="<?php echo \Bitefight\Library\Translate::_('profile_talent_buy_now'); ?>">
+                                                    </a>
+                                                <?php endif; ?>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>

@@ -87,12 +87,25 @@ class HomeController extends BaseController
         }
 
         if (!$error) {
-            $user = ORM::for_table('user')->create();
-            $user->name = $name;
-            $user->mail = $email;
-            $user->race = $id;
-            $user->pass = $pass;
-            $success = $user->save();
+            try {
+                ORM::getDb()->beginTransaction();
+
+                $user = ORM::for_table('user')->create();
+                $user->name = $name;
+                $user->mail = $email;
+                $user->race = $id;
+                $user->pass = $pass;
+                $success = $user->save();
+
+                $user_talent = ORM::for_table('user_talent')->create();
+                $user_talent->user_id = $user->id();
+                $user_talent->talent_id = 1;
+                $user_talent->save();
+
+                ORM::getDb()->commit();
+            } catch (\Exception $e) {
+                ORM::getDb()->rollBack();
+            }
 
             if ($success) {
                 return $this->response->redirect(getUrl('user/profile'));

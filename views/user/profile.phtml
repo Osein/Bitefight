@@ -381,11 +381,11 @@
                             <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                 <tr>
                                     <td>Available points</td>
-                                    <td><?php echo $user_tlnt_max - $user->talent_points; ?></td>
+                                    <td><?php echo $user->talent_points - $user_tlnt_used_count; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Used points</td>
-                                    <td><?php echo $user->talent_points; ?></td>
+                                    <td><?php echo $user_tlnt_used_count; ?></td>
                                 </tr>
                                 <tr>
                                     <td>Maximum points</td>

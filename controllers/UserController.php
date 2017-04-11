@@ -9,6 +9,7 @@
 namespace Bitefight\Controllers;
 
 use ORM;
+use Phalcon\Filter;
 
 class UserController extends GameController
 {
@@ -54,6 +55,8 @@ class UserController extends GameController
         $this->view->user_tlnt_max = $user_tlnt_lvl_sqrt * 2 - 1;
         $this->view->next_tlnt_level = pow($user_tlnt_lvl_sqrt + 1, 2);
 
+        $this->view->user_tlnt_used_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+
         $this->view->pick('user/profile');
     }
 
@@ -97,8 +100,24 @@ class UserController extends GameController
     public function getTalents()
     {
         $this->view->menu_active = 'profile';
+        $filter = $this->request->get('filter', Filter::FILTER_INT, 2);
 
-        $talentsResult = ORM::for_table('talent')->find_many();
+        /**
+         * @var ORM $talentsResult
+         */
+        $talentsResult = ORM::for_table('talent')
+            ->select_many('talent.*', 'user_talent.user_id')
+            ->left_outer_join('user_talent', array('user_talent.talent_id', '=', 'talent.id'))
+            ->orderByAsc('talent.id');
+
+        if($filter == 1) {
+            $talentsResult = $talentsResult->where_not_null('user_id');
+        } elseif($filter == 2) {
+            $talentsResult = $talentsResult->where_null('user_id')
+                ->where_lte('level', getLevel($this->user->exp));
+        }
+
+        $talentsResult = $talentsResult->find_many();
         $talents = array();
 
         foreach ($talentsResult as $talent) {
@@ -110,8 +129,82 @@ class UserController extends GameController
             $talents[$talent->id] = array($talent);
         }
 
+        $userTalentCount = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+
+        $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
+        $this->view->max_points = $user_tlnt_lvl_sqrt * 2 - 1;
+        $this->view->next_talent_level = pow($user_tlnt_lvl_sqrt + 1, 2);
+        $this->view->available = $this->user->talent_points - $userTalentCount;
+        $this->view->new_talent_price = pow($this->user->talent_points, 2.5) * 100;
+        $this->view->talent_reset_price = floor(pow(14, $this->user->talent_resets) * 33);
+        $this->view->used_points = $userTalentCount;
         $this->view->talents = $talents;
+        $this->view->filter = $filter;
         $this->view->pick('user/talents');
+    }
+
+    public function postTalentTopForm()
+    {
+        $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
+        $max_points = $user_tlnt_lvl_sqrt * 2 - 1;
+
+        if($this->request->get('buypoint')) {
+            $new_talent_price = pow($this->user->talent_points, 2.5) * 100;
+
+            if($this->user->talent_points < $max_points && $this->user->gold >= $new_talent_price) {
+                $this->user->gold -= $new_talent_price;
+                $this->user->talent_points++;
+            }
+        } elseif($this->request->get('resetpoinths')) {
+            $user_talent_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+
+            if($user_talent_count > 0 && $this->user->hellstone >= 19) {
+                $this->user->hellstone -= 19;
+                $this->user->talent_resets = 1;
+                ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ?' [$this->user->id]);
+            }
+        } elseif($this->request->get('resetpointsg')) {
+            $user_talent_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+            $talent_reset_price = floor(pow(14, $this->user->talent_resets) * 33);
+
+            if($user_talent_count > 0 && $this->user->gold >= $talent_reset_price) {
+                $this->user->gold -= $talent_reset_price;
+                $this->user->talent_resets++;
+                ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ?' [$this->user->id]);
+            }
+        }
+
+        return $this->response->redirect(getUrl('user/talents?filter='.$this->request->get('filter', Filter::FILTER_INT, 2)));
+    }
+
+    public function postTalentUse()
+    {
+        $talentId = $this->request->get('talent_id', Filter::FILTER_INT, 0);
+
+        if($talentId) {
+            $userTalentCount = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+
+            if($userTalentCount < $this->user->talent_points) {
+                $user_talent = ORM::for_table('user_talent')->create();
+                $user_talent->user_id = $this->user->id;
+                $user_talent->talent_id = $talentId;
+                $user_talent->save();
+            }
+        }
+
+        return $this->response->redirect(getUrl('user/talents?filter='.$this->request->get('filter', Filter::FILTER_INT, 2)));
+    }
+
+    public function postTalentResetSingle()
+    {
+        $talentId = $this->request->get('talent_id', Filter::FILTER_INT, 0);
+
+        if($talentId && $this->user->hellstone >= 2) {
+            ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id = ?', [$this->user->id, $talentId]);
+            $this->user->hellstone -= 2;
+        }
+
+        return $this->response->redirect(getUrl('user/talents?filter='.$this->request->get('filter', Filter::FILTER_INT, 2)));
     }
 
     public function getHideout()

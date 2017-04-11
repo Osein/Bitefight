@@ -21,8 +21,8 @@ function headLink($file) {
     return '<link rel="stylesheet" type="text/css" href="'.getAssetLink('css/'.$file).'">'.PHP_EOL;
 }
 
-function headJs($file) {
-    return '<script type="text/javascript" src="'.getAssetLink('js/'.$file).'"></script>'.PHP_EOL;
+function headJs($file, $eol = true) {
+    return '<script type="text/javascript" src="'.getAssetLink('js/'.$file).'"></script>'.($eol?PHP_EOL:'');
 }
 
 function getUrl($link) {
