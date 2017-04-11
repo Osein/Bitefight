@@ -1,5 +1,5 @@
-<h1>lust for hunting <?php echo e($user->name); ?></h1>
-<p>You are feeling a lust for hunting. Now choose your preferred hunting method for the attack. You can roam the area for werewolves and challenge them to a fight, or if you know their name you can search for a particular werewolf!</p>
+<h1><?php echo \Bitefight\Library\Translate::_('hunt_header', ['user' => e($user->name)]); ?></h1>
+<p><?php echo \Bitefight\Library\Translate::_('hunt_header_line'); ?></p>
 <br>
 <div>
     <!--
@@ -63,141 +63,139 @@
         </div>
         <div class="wrap-left clearfix">
             <div id="humanhunt" class="wrap-content wrap-right">
-                <h2>
-                    <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>
-                    Man Hunt                </h2>
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/><?php echo \Bitefight\Library\Translate::_('human_hunt_header'); ?></h2>
                 <div <?php if($user->ap_now > 1): ?>onclick="doHunt(1)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <img src="<?php echo getAssetLink('img/hunt/city1.jpg'); ?>" alt="Farm"/>
+                    <img src="<?php echo getAssetLink('img/hunt/city1.jpg'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_1'); ?>"/>
                     <div id="mjInfo_1" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Farm</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_1'); ?></b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                         </table>
                         <table class='noBackground' border="0" style="display:none;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Farm</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_1'); ?></b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: <?php echo $hunt1Chance; ?>%</td>
+                                <td nowrap><?php echo \Bitefight\Library\Translate::_('humen_hunt_chance_of_success'); ?>: <?php echo $hunt1Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap><?php echo prettyNumber($hunt1Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt1Exp; ?> Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt1Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" /> + <?php echo $hunt1Exp; ?> <?php echo \Bitefight\Library\Translate::_('experience'); ?></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button <?php if($user->ap_now > 1): ?>onclick="doHunt(1)"<?php endif; ?> class="btn">Farm</button>
+                        <button <?php if($user->ap_now > 1): ?>onclick="doHunt(1)"<?php endif; ?> class="btn"><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_1'); ?></button>
                     </div>
                 </div>
                 <br/>
                 <div <?php if($user->ap_now > 1): ?>onclick="doHunt(2)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <img src="<?php echo getAssetLink('img/hunt/city2.jpg'); ?>" alt="Village"/>
+                    <img src="<?php echo getAssetLink('img/hunt/city2.jpg'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_2'); ?>"/>
                     <div id="mjInfo_2" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Village</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_2'); ?></b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                         </table>
                         <table class='noBackground' border="0" style="display:none;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Village</b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_2'); ?></b> ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: <?php echo $hunt2Chance; ?>%</td>
+                                <td nowrap><?php echo \Bitefight\Library\Translate::_('humen_hunt_chance_of_success'); ?>: <?php echo $hunt2Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap><?php echo prettyNumber($hunt2Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt2Exp; ?> Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt2Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" /> + <?php echo $hunt2Exp; ?> <?php echo \Bitefight\Library\Translate::_('experience'); ?></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button <?php if($user->ap_now > 1): ?>onclick="doHunt(2)"<?php endif; ?> class="btn">Village</button>
+                        <button <?php if($user->ap_now > 1): ?>onclick="doHunt(2)"<?php endif; ?> class="btn"><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_2'); ?></button>
                     </div>
                 </div>
                 <br/>
                 <div <?php if($user->ap_now > 2): ?>onclick="doHunt(3)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <img src="<?php echo getAssetLink('img/hunt/city3.jpg'); ?>" alt="Small Town"/>
+                    <img src="<?php echo getAssetLink('img/hunt/city3.jpg'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_3'); ?>"/>
                     <div id="mjInfo_3" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Small Town</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_3'); ?></b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                         </table>
                         <table class='noBackground' border="0" style="display:none;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Small Town</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_3'); ?></b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: <?php echo $hunt3Chance; ?>%</td>
+                                <td nowrap><?php echo \Bitefight\Library\Translate::_('humen_hunt_chance_of_success'); ?>: <?php echo $hunt3Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap><?php echo prettyNumber($hunt3Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt3Exp; ?> Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt3Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" /> + <?php echo $hunt3Exp; ?> <?php echo \Bitefight\Library\Translate::_('experience'); ?></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button <?php if($user->ap_now > 2): ?>onclick="doHunt(3)"<?php endif; ?> class="btn">Small Town</button>
+                        <button <?php if($user->ap_now > 2): ?>onclick="doHunt(3)"<?php endif; ?> class="btn"><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_3'); ?></button>
                     </div>
                 </div>
                 <br/>
                 <div <?php if($user->ap_now > 2): ?>onclick="doHunt(4)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <img src="<?php echo getAssetLink('img/hunt/city4.jpg'); ?>" alt="City"/>
+                    <img src="<?php echo getAssetLink('img/hunt/city4.jpg'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_4'); ?>"/>
                     <div id="mjInfo_4" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>City</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_4'); ?></b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                         </table>
                         <table class='noBackground' border="0" style="display:none;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>City</b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_4'); ?></b> ( 2 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: <?php echo $hunt4Chance; ?>%</td>
+                                <td nowrap><?php echo \Bitefight\Library\Translate::_('humen_hunt_chance_of_success'); ?>: <?php echo $hunt4Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap><?php echo prettyNumber($hunt4Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt4Exp; ?> Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt4Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" /> + <?php echo $hunt4Exp; ?> <?php echo \Bitefight\Library\Translate::_('experience'); ?></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button <?php if($user->ap_now > 2): ?>onclick="doHunt(4)"<?php endif; ?> class="btn">City</button>
+                        <button <?php if($user->ap_now > 2): ?>onclick="doHunt(4)"<?php endif; ?> class="btn"><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_4'); ?></button>
                     </div>
                 </div>
                 <br/>
                 <div <?php if($user->ap_now > 3): ?>onclick="doHunt(5)"<?php endif; ?> class="mjs" style="position:relative; height:121px; cursor:pointer;">
-                    <img src="<?php echo getAssetLink('img/hunt/city5.jpg'); ?>" alt="Metropolis"/>
+                    <img src="<?php echo getAssetLink('img/hunt/city5.jpg'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_5'); ?>"/>
                     <div id="mjInfo_5" style="text-align:left;">
                         <table class='noBackground' border="0" style="display:block;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Metropolis</b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_5'); ?></b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                         </table>
                         <table class='noBackground' border="0" style="display:none;">
                             <tr>
-                                <td nowrap style='font-size: 1.1em;'><b>Metropolis</b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" /> )</td>
+                                <td nowrap style='font-size: 1.1em;'><b><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_5'); ?></b> ( 3 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('action_points'); ?>" /> )</td>
                             </tr>
                             <tr>
-                                <td nowrap>Chance of success: <?php echo $hunt5Chance; ?>%</td>
+                                <td nowrap><?php echo \Bitefight\Library\Translate::_('humen_hunt_chance_of_success'); ?>: <?php echo $hunt5Chance; ?>%</td>
                             </tr>
                             <tr>
-                                <td nowrap><?php echo prettyNumber($hunt5Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" /> + <?php echo $hunt5Exp; ?> Experience</td>
+                                <td nowrap><?php echo prettyNumber($hunt5Reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('gold'); ?>" /> + <?php echo $hunt5Exp; ?> <?php echo \Bitefight\Library\Translate::_('experience'); ?></td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="btn-left center">
                     <div class="btn-right">
-                        <button <?php if($user->ap_now > 3): ?>onclick="doHunt(5)"<?php endif; ?> class="btn">Metropolis</button>
+                        <button <?php if($user->ap_now > 3): ?>onclick="doHunt(5)"<?php endif; ?> class="btn"><?php echo \Bitefight\Library\Translate::_('human_hunt_hunt_5'); ?></button>
                     </div>
                 </div>
                 <script type="text/javascript">

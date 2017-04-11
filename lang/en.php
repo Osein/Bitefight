@@ -20,6 +20,7 @@ return [
     'hellstone' => 'Hellstone',
     'hellstones' => 'Hellstones',
     'exp' => 'Exp',
+    'experience' => 'Experience',
     'level' => 'Level',
     'battle_value' => 'Battle value',
     'vampire' => 'Vampire',
@@ -28,6 +29,7 @@ return [
     'no_result' => 'no results',
     'header_results' => 'Results',
     'talents' => 'Talents',
+    'action_points' => 'Action points',
 
     'race' => 'Race',
     'player' => 'Player',
@@ -143,11 +145,20 @@ return [
     'city_graveyard_graveyard_master' => 'Graveyard Master',
 
     // Hunt Strings
+    'hunt_header' => 'lust for hunting %user%',
+    'hunt_header_line' => 'You are feeling a lust for hunting. Now choose your preferred hunting method for the attack. You can roam the area for werewolves and challenge them to a fight, or if you know their name you can search for a particular werewolf!',
+    'human_hunt_header' => 'Man Hunt',
     'human_hunt_success_header' => 'Man Hunt',
+    'humen_hunt_chance_of_success' => 'Chance of success',
     'human_hunt_success_info1' => 'Your hunt leads you to a %huntname%.',
     'human_hunt_success_info2' => 'You have captured %blood% Blood and %gold% gold. You also receive %exp% experience points!',
     'human_hunt_success_failed' => 'It is a cold and dark night. Moths busily fly around the lanterns. And while you watch the buzz of activity surrounding these night creatures, you don`t notice the time passing by. When you finally take your eyes off them, you realise that quite a few minutes have passed.',
     'human_hunt_success_button_again' => 'Again',
+    'human_hunt_hunt_1' => 'Farm',
+    'human_hunt_hunt_2' => 'Village',
+    'human_hunt_hunt_3' => 'Small Town',
+    'human_hunt_hunt_4' => 'City',
+    'human_hunt_hunt_5' => 'Metropolis',
 
     // Validation Strings
     'validation_username_character_error' => 'Please enter at least 3 characters for your name.',
