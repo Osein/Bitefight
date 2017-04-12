@@ -8,7 +8,7 @@
         </div>
         <div class="wrap-left clearfix">
             <div class="wrap-content wrap-right clearfix">
-                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Notepad (<span id="charcount" style="display:inline-block; margin-bottom:0;">0</span> Characters)</h2>
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('notepad'); ?> (<span id="charcount" style="display:inline-block; margin-bottom:0;">0</span> <?php echo \Bitefight\Library\Translate::_('characters'); ?>)</h2>
                 <textarea name="note" rows="15" cols="84" style="text-align:left;"
                           onkeydown="CheckLen(this)"
                           onkeyup="CheckLen(this)"
@@ -31,8 +31,9 @@
                     var notes = document.getElementsByName('note')[0];
                     CheckLen(notes);
                 </script>
-                <div class="btn-left center"><div class="btn-right">
-                        <input name="save" class="btn" type="submit" value="Save">
+                <div class="btn-left center">
+                    <div class="btn-right">
+                        <input name="save" class="btn" type="submit" value="<?php echo \Bitefight\Library\Translate::_('save'); ?>">
                     </div>
                 </div>
             </div>

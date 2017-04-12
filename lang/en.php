@@ -32,6 +32,20 @@ return [
     'talents' => 'Talents',
     'action_points' => 'Action points',
 
+    'notepad' => 'Notepad',
+    'characters' => 'Characters',
+
+    'not_active' => 'not active',
+    'treasure_chest' => 'Treasure Chest',
+    'royal_chest' => 'Royal Chest',
+    'gargoyle_guardian' => 'Gargoyle Guardian',
+    'book_of_the_damned' => 'Book of the Damned',
+    'domicile' => 'Domicile',
+    'wall' => 'Wall',
+    'path' => 'Path',
+    'landscape' => 'Landscape',
+    'tip' => 'Tip',
+
     'name' => 'Name',
     'password' => 'Password',
     'login' => 'Login',
@@ -126,6 +140,23 @@ return [
     'profile_talent_form_reset_single_talent' => 'Reset single talent',
     'profile_talent_reset_single' => 'Reset (2 Hellstones)',
     'profile_talent_buy_now' => 'buy now',
+
+    // User Hideout Strings
+    'user_hideout_header' => 'Hideout of %user%',
+    'user_hideout_upgrade_hideout' => 'Upgrade hideout',
+    'user_hideout_xweek_costs' => '%week% costs you',
+    'user_hideout_next_level_costs' => 'The next level costs',
+    'user_hideout_info_header' => 'Your hideout protects you from your enemies. Your safety is increased every time you upgrade your hideout or its walls. Be aware that the upgraded level of your walls, path or landscape cannot exceed the level of your building.',
+    'user_hideout_info_treasure' => '<b>Treasure Chest</b>:&nbsp;You can save a portion of your gold from your enemies in the Treasure Chest. A full day`s pay (level-dependant) is protected and can`t be pillaged.',
+    'user_hideout_info_royal' => '<b>Royal Chest</b>:&nbsp;In the royal chest you can protect part of your looted Gold from your enemies. If you are attacked by an enemy, then 4 days\' pay (depending on your level) will definitely be safe in your royal chest. The royal chest works in addition to the treasure chest.',
+    'user_hideout_info_gargoyle' => '<b>Gargoyle Guardian</b>:&nbsp;The gargoyle protects you and helps you fight your enemies. Your defence will be 30% more powerful.<br>Defence +30%<br>You will only receive the increase when you are attacked.',
+    'user_hideout_info_book' => '<b>Book of the Damned</b>:&nbsp;The Elders have written much valuable information over the course of the centuries in the Book of the Damned, all of which can help you in the fight against your foes. Using the Book, your strength increases by 30%. <br>Strength +30%<br>You will only receive the increase when you are the attacker.',
+    'user_hideout_info_domi' => '<b>Domicile</b>:&nbsp;With every upgrade of your main building you will get two more items in your inventory.',
+    'user_hideout_info_wall' => '<b>Wall</b>:&nbsp;A wall protects you when you are attacked. It helps you to receive less damage.',
+    'user_hideout_info_wall_personal' => 'With your wall (level %level%, your opponent will receive %effect% bonus damage when they attack you.',
+    'user_hideout_info_path' => '<b>Path</b>:&nbsp;Having a good path gets you to your targets faster. As a result you can carry out more actions.<br> +1 on the maximum AP per path level.',
+    'user_hideout_info_land' => '<b>Landscape</b>:&nbsp;The landscape is a symbol of your dark aura. The more lavish it is, the stronger effect your particular skills will have on your enemies when you are attacked.',
+    'user_hideout_info_land_personal' => 'Your landscape (level %level%) provides you with +%effect%% bonus talent of activating your talents when you are attacked.',
 
     // Settings Strings
     'settings_profile_settings_for' => 'profile settings for %user%',
