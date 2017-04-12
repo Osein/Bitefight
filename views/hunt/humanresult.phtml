@@ -19,7 +19,7 @@
                 <img src="<?php echo getAssetLink('img/hunt/city'.$huntId.'.jpg'); ?>" title="Man Hunt" width="340" height="125" class="npc-logo left">
                 <?php if($success): ?>
                 <p>
-                    <?php echo \Bitefight\Library\Translate::_('human_hunt_success_info1', ['huntname' => getHuntNameFromId($huntId)]); ?><br><br>
+                    <?php echo \Bitefight\Library\Translate::_('human_hunt_success_info1', ['huntname' => \Bitefight\Library\Translate::_('human_hunt_hunt_'.$huntId)]); ?><br><br>
                     <?php echo \Bitefight\Library\Translate::_('human_hunt_success_info2', ['blood' => prettyNumber($rewardGold), 'gold' => prettyNumber($rewardGold), 'exp' => $rewardExp]); ?><br><br>
                     <?php if(isset($rewardFragment)): ?>+<?php echo $rewardFragment; ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('fragment'); ?>" align="absmiddle" border="0"><br><br><?php endif; ?>
                 </p>

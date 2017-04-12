@@ -46,35 +46,27 @@ function getClanHideoutCost($stufe) {
 }
 
 function highscoreShowToName($val) {
-    if($val == 'level') {return 'Level';} elseif($val == 'raid') {return 'Booty';}
-    elseif($val == 'fightvalue') {return 'Battle value';} elseif($val == 'fights') {return 'Fights';}
-    elseif($val == 'fight1') {return 'Victories';} elseif($val == 'fight2') {return 'Defeats';}
-    elseif($val == 'fight0') {return 'Draw';} elseif($val == 'lanter') {return 'Lanterns';}
-    elseif($val == 'goldwin') {return 'looted Gold';} elseif($val == 'goldlost') {return 'lost Gold';}
-    elseif($val == 'hits1') {return 'Damage caused';} elseif($val == 'hits2') {return 'Hit points lost';}
-    elseif($val == 'trophypoints') {return 'Trophy points';}
-    elseif($val == 'castle') {return 'Level';}
-    elseif($val == 'warraid') {return 'War Booty';}
-    elseif($val == 'members') {return 'Members';}
-    elseif($val == 'ppm') {return 'average Booty';}
-    elseif($val == 'seals') {return 'Seals';}
-    elseif($val == 'gatesopen') {return 'Gate openings';}
-    elseif($val == 'lastgateopen') {return 'last gate opening';}
-    else {return 'Henchmen power';}
-}
-
-function getHuntNameFromId($huntId) {
-    if($huntId == 1) {
-        return 'Farm';
-    } elseif($huntId == 2) {
-        return 'Village';
-    } elseif($huntId == 2) {
-        return 'Small Town';
-    } elseif($huntId == 2) {
-        return 'City';
-    } else {
-        return 'Metropolis';
-    }
+    if($val == 'level') {return \Bitefight\Library\Translate::_('level');}
+    elseif($val == 'raid') {return \Bitefight\Library\Translate::_('booty');}
+    elseif($val == 'fightvalue') {return \Bitefight\Library\Translate::_('battle_value');}
+    elseif($val == 'fights') {return \Bitefight\Library\Translate::_('fights');}
+    elseif($val == 'fight1') {return \Bitefight\Library\Translate::_('victories');}
+    elseif($val == 'fight2') {return \Bitefight\Library\Translate::_('defeats');}
+    elseif($val == 'fight0') {return \Bitefight\Library\Translate::_('draw');}
+    elseif($val == 'lanter') {return \Bitefight\Library\Translate::_('Lanterns');}
+    elseif($val == 'goldwin') {return \Bitefight\Library\Translate::_('looted_gold');}
+    elseif($val == 'goldlost') {return \Bitefight\Library\Translate::_('lost_gold');}
+    elseif($val == 'hits1') {return \Bitefight\Library\Translate::_('damage_caused');}
+    elseif($val == 'hits2') {return \Bitefight\Library\Translate::_('hit_points_lost');}
+    elseif($val == 'trophypoints') {return \Bitefight\Library\Translate::_('trophy_points');}
+    elseif($val == 'castle') {return \Bitefight\Library\Translate::_('level');}
+    elseif($val == 'warraid') {return \Bitefight\Library\Translate::_('war_booty');}
+    elseif($val == 'members') {return \Bitefight\Library\Translate::_('members');}
+    elseif($val == 'ppm') {return \Bitefight\Library\Translate::_('average_booty');}
+    elseif($val == 'seals') {return \Bitefight\Library\Translate::_('seals');}
+    elseif($val == 'gatesopen') {return \Bitefight\Library\Translate::_('gate_openings');}
+    elseif($val == 'lastgateopen') {return \Bitefight\Library\Translate::_('last_gate_opening');}
+    else {return \Bitefight\Library\Translate::_('henchmen_power');}
 }
 
 function getSkillCost($skillLevel) {
