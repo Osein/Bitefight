@@ -6,33 +6,33 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <h2>Please enter your name and password to login</h2>
+            <h2><?php echo \Bitefight\Library\Translate::_('home_login_header'); ?></h2>
             <div class="table-wrap">
                 <table width="100%">
                     <tr>
-                        <td><img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampire" ></td>
+                        <td><img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('vampire'); ?>" ></td>
                         <td>
                             <form id="loginForm" name="loginForm" action="<?php echo getUrl('login'); ?>"  method="POST">
                                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                     <tr>
-                                        <td>Name:</td>
+                                        <td><?php echo \Bitefight\Library\Translate::_('name'); ?>:</td>
                                         <td><input class="input" type="text" name="user" size="30" MAXLENGTH="30"></td>
                                     </tr>
                                     <tr>
-                                        <td>Password:</td>
+                                        <td><?php echo \Bitefight\Library\Translate::_('password'); ?>:</td>
                                         <td><input class="input" type="password" name="pass" size="30" MAXLENGTH="30">
                                             <br />
-                                            <a href="<?php echo getUrl('user/lostpw'); ?>" target="_top" id="pwlostLink">Have you forgotten your password?</a>
+                                            <a href="<?php echo getUrl('user/lostpw'); ?>" target="_top" id="pwlostLink"><?php echo \Bitefight\Library\Translate::_('home_login_forgot_password'); ?></a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td><input type="submit" class="btn-small" value="Login"></td>
+                                        <td><input type="submit" class="btn-small" value="<?php echo \Bitefight\Library\Translate::_('login'); ?>"></td>
                                 </table>
                             </form>
                         </td>
-                        <td><img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="Werewolf" ></td>
+                        <td><img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('werewolf'); ?>" ></td>
                     </tr>
                 </table>
                 <?php echo $this->flashSession->output(); ?>

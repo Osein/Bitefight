@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    $('#header').find('h1').text('Lost Password');
+    $('#header').find('h1').text('<?php echo \Bitefight\Library\Translate::_('lost_password'); ?>');
 </script>
 <div id="login">
     <div class="wrap-top-left clearfix">
@@ -9,31 +9,32 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <h2>Please enter your name and e-mail-address</h2>
+            <h2><?php echo \Bitefight\Library\Translate::_('home_forgot_pass_header'); ?></h2>
             <form action="<?php echo getUrl('user/lostpw'); ?>" method="POST">
                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <?php echo $this->flashSession->output(); ?>
                 <div class="table-wrap">
                     <table cellpadding="0" cellspacing="0" border="0" width="100%">
                         <tbody><tr>
-                            <td align="center" valign="top"><img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="Vampire"></td>
+                            <td align="center" valign="top"><img src="<?php echo getAssetLink('img/symbols/race1.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('vampire'); ?>"></td>
                             <td valign="top">
                                 <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                     <tbody><tr>
-                                        <td>Name</td>
+                                        <td><?php echo \Bitefight\Library\Translate::_('name'); ?></td>
                                         <td><input class="input" type="text" name="name" size="30" maxlength="30"></td>
                                     </tr>
                                     <tr>
-                                        <td>E-MAIL</td>
+                                        <td><?php echo strtoupper(\Bitefight\Library\Translate::_('e-mail')); ?></td>
                                         <td><input class="input" type="text" name="email" size="30" maxlength="130"></td>
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td><input type="submit" class="btn-small" value="send"></td>
+                                        <td><input type="submit" class="btn-small" value="<?php echo strtolower(\Bitefight\Library\Translate::_('send')); ?>"></td>
                                     </tr>
-                                    </tbody></table>
+                                    </tbody>
+                                </table>
                             </td>
-                            <td align="center" valign="top"><img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="Werewolf"></td>
+                            <td align="center" valign="top"><img src="<?php echo getAssetLink('img/symbols/race2.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('werewolf'); ?>"></td>
                         </tr>
                         </tbody>
                     </table>

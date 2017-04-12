@@ -13,6 +13,7 @@ return [
     'save' => 'Save',
     'font' => 'Font',
     'font_size' => 'Font size',
+    'send' => 'Send',
 
     // General Strings
     'gold' => 'Gold',
@@ -30,6 +31,13 @@ return [
     'header_results' => 'Results',
     'talents' => 'Talents',
     'action_points' => 'Action points',
+
+    'name' => 'Name',
+    'password' => 'Password',
+    'login' => 'Login',
+    'lost_password' => 'Lost Password',
+    'e-mail' => 'E-mail',
+    'email' => 'Email',
 
     'race' => 'Race',
     'player' => 'Player',
@@ -80,6 +88,17 @@ return [
     'home_index_thumb1' => 'Roam the city<br>looking for new victims.',
     'home_index_thumb2' => 'Equip yourself to defeat <br> your enemies.',
     'home_index_thumb3' => 'Build an immense stronghold<br> with your friends.',
+    'home_login_header' => 'Please enter your name and password to login',
+    'home_login_forgot_password' => 'Have you forgotten your password?',
+    'home_forgot_pass_header' => 'Please enter your name and e-mail-address',
+    'home_register_select_race' => 'Choose your race!',
+    'home_register_header' => 'BiteFight can be played for free.',
+    'home_register_unnecessary_info' => 'Please click "send" after filling out all given fields,<br> to join the game',
+    'home_register_name_label' => 'Choose your name',
+    'home_register_password_label' => 'Please enter a password',
+    'home_register_mail_label' => 'Your e-mail address',
+    'home_register_activation_info' => 'An e-mail containing your activation link will be sent to your email address. Please activate the account within the next 3 days.',
+    'home_register_accept_agb' => 'I accept the Terms and Conditions.',
 
     // Profile Strings
     'profile_change_logo' => 'edit character picture',
