@@ -73,6 +73,14 @@ return [
     // Layout Strings
     'footer_string' => '%version% Bitefight Fun Private Server - Execution time: %time%',
 
+    // Home Strings
+    'home_header_big' => 'Speed server x4',
+    'home_splash_text' => 'The struggle between Vampires and <br> Werewolves has been rampaging for centuries.<br> It`s your destiny to decide this battle`s outcome!',
+    'home_index_play_now' => 'Play now for free!',
+    'home_index_thumb1' => 'Roam the city<br>looking for new victims.',
+    'home_index_thumb2' => 'Equip yourself to defeat <br> your enemies.',
+    'home_index_thumb3' => 'Build an immense stronghold<br> with your friends.',
+
     // Profile Strings
     'profile_change_logo' => 'edit character picture',
     'profile_gender' => 'Gender',
