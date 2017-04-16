@@ -9,6 +9,7 @@
 
 namespace Bitefight\Controllers;
 
+use Bitefight\Library\Translate;
 use ORM;
 use Phalcon\Filter;
 
@@ -164,6 +165,11 @@ class ClanController extends GameController
         $tag = $this->request->get('tag');
         $name = $this->request->get('name');
 
+        if(strlen($name) < 2 || strlen($tag) < 2) {
+            $this->flashSession->error(Translate::_('validation_clan_name_or_tag_short'));
+            return $this->response->redirect(getUrl('clan/create'));
+        }
+
         $prevClan = ORM::for_table('clan')
             ->where_raw('name = ? OR tag = ?', [$name, $tag])
             ->find_one();
@@ -277,5 +283,86 @@ class ClanController extends GameController
         }
 
         $this->response->redirect(getUrl('clan/description'));
+    }
+
+    public function getChangeHomePage()
+    {
+        $clanObj = ORM::for_table('clan')
+            ->select('clan.*')->select('user.name', 'website_editor_name')
+            ->left_outer_join('user', ['user.id', '=', 'clan.website_set_by'])
+            ->where('id', $this->user->clan_id)
+            ->find_one();
+        $this->view->clan = $clanObj;
+        $this->view->pick('clan/homepage');
+    }
+
+    public function postChangeHomePage()
+    {
+        $clanObj = ORM::for_table('clan')->find_one($this->user->clan_id);
+
+        if(!empty($this->request->get('delete', Filter::FILTER_STRING, '')) && $clanObj) {
+            $clanObj->website = '';
+            $clanObj->website_set_by = $this->user->id;
+            $clanObj->save();
+        } else {
+            $homepage = $this->request->get('homepage', Filter::FILTER_STRING, '');
+
+            if($clanObj && filter_var($homepage, FILTER_VALIDATE_URL)) {
+                $clanObj->website = $homepage;
+                $clanObj->website_set_by = $this->user->id;
+                $clanObj->save();
+            }
+        }
+
+        return $this->response->redirect(getUrl('clan/change/homepage'));
+    }
+
+    public function getRename()
+    {
+        $clanObj = ORM::for_table('clan')->find_one($this->user->clan_id);
+
+        if(!$clanObj) {
+            return $this->notFound();
+        }
+
+        $this->view->clan = $clanObj;
+        $this->view->pick('clan/change_name');
+    }
+
+    public function postRename()
+    {
+        $tag = $this->request->get('tag');
+        $name = $this->request->get('name');
+
+        if(strlen($name) < 2 || strlen($tag) < 2) {
+            $this->flashSession->error(Translate::_('validation_clan_name_or_tag_short'));
+            return $this->response->redirect(getUrl('clan/change/name'));
+        }
+
+        $prevClan = ORM::for_table('clan')
+            ->where_raw('name = ? OR tag = ?', [$name, $tag])
+            ->find_one();
+
+        if ($prevClan) {
+            if ($prevClan->name == $name) {
+                $this->flashSession->error(Translate::_('validation_clan_name_used'));
+            } else {
+                $this->flashSession->error(Translate::_('validation_clan_tag_used'));
+            }
+
+            return $this->response->redirect(getUrl('clan/change/name'));
+        }
+
+        $clan = ORM::for_table('clan')->find_one($this->user->clan_id);
+        $clan->name = $name;
+        $clan->tag = $tag;
+        $clan->save();
+
+        return $this->response->redirect(getUrl('clan/change/name'));
+    }
+
+    public function getMemberRights()
+    {
+        $this->view->pick('clan/memberrights');
     }
 }

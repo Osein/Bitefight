@@ -59,3 +59,7 @@ Hideout, Notepad, Search
 ## Todo
 
 - Revise highscore.
+
+- City Quest - Ajax Result: {"result":true,"newNpcMark":"questInProgress"}
+
+- Fix clan permissions

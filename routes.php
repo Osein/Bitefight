@@ -7,14 +7,6 @@
  */
 
 $router = new \Phalcon\Mvc\Router(false);
-/*
- * There is a configuration here on line 18, if you point public folder
- * in apache configurations there is no problem, but if you give it a link
- * like xxx.xx/public or something like that, comment out line 18
- *
- * I am too lazy to test and fix it sorry lol
- * https://github.com/Osein/bitefight/issues/23
- */
 $router->setUriSource(\Phalcon\Mvc\Router::URI_SOURCE_SERVER_REQUEST_URI);
 $router->removeExtraSlashes(true);
 $router->setDefaultController('Home');
@@ -91,6 +83,11 @@ $clan->addPost('/logo/background', ['action' => 'postLogoBackground']);
 $clan->addPost('/logo/symbol', ['action' => 'postLogoSymbol']);
 $clan->addGet('/description', ['action' => 'getDescription']);
 $clan->addPost('/description', ['action' => 'postDescription']);
+$clan->addGet('/change/name', ['action' => 'getRename']);
+$clan->addGet('/change/homepage', ['action' => 'getChangeHomePage']);
+$clan->addPost('/change/name', ['action' => 'postRename']);
+$clan->addPost('/change/homepage', ['action' => 'postChangeHomePage']);
+$clan->addGet('/memberrights', ['action' => 'getMemberRights']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

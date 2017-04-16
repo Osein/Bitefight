@@ -1,0 +1,50 @@
+<div class="btn-left left"><div class="btn-right"><a class="btn" href="<?php echo getUrl('clan/index'); ?>"><?php echo \Bitefight\Library\Translate::_('back'); ?></a></div></div>
+<br class="clearfloat">
+<div id="changeName">
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('clan_rename_rename_clan'); ?></h2>
+            <?php echo $this->flashSession->output(); ?>
+            <div class="table-wrap">
+                <form method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                    <table width="100%" cellpadding="15">
+                        <tbody>
+                        <tr>
+                            <th align="right"><?php echo \Bitefight\Library\Translate::_('name'); ?>:</th>
+                            <th align="left"><?php echo e($clan->name); ?></th>
+                            <th align="right"><?php echo \Bitefight\Library\Translate::_('clan_tag'); ?>:</th>
+                            <th align="left"><?php echo e($clan->tag); ?></th>
+                        </tr>
+                        <tr>
+                            <th align="right"><?php echo \Bitefight\Library\Translate::_('clan_rename_new_name'); ?>:</th>
+                            <th align="left"><input type="text" name="name" value="" size="20" maxlength="35"></th>
+                            <th align="right"><?php echo \Bitefight\Library\Translate::_('clan_rename_new_tag'); ?>:</th>
+                            <th align="left"><input type="text" name="tag" value="" size="20" maxlength="35"></th>
+                        </tr>
+                        <tr>
+                            <th colspan="4" align="left">
+                                <div class="btn-left center">
+                                    <div class="btn-right">
+                                        <input class="btn" type="submit" value="<?php echo \Bitefight\Library\Translate::_('save'); ?>">
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+</div>

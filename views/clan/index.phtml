@@ -28,7 +28,7 @@
                     <tbody>
                     <tr>
                         <td class="no-bg" style="text-align:center;" rowspan="10" align="center">
-                            <a href="http://s202.en.bitefight.gameforge.com/clan/logo"><img src="<?php echo getAssetLink('img/clan/'.$clan->logo_bg.'-'.$clan->logo_sym.'.png'); ?>" border="0"></a>
+                            <a href="<?php echo getUrl('clan/logo/background'); ?>"><img src="<?php echo getAssetLink('img/clan/'.$clan->logo_bg.'-'.$clan->logo_sym.'.png'); ?>" border="0"></a>
                         </td>
                     </tr>
                     <tr>
@@ -45,7 +45,7 @@
                     </tr>
                     <tr>
                         <td>Members</td>
-                        <td><a href="http://s202.en.bitefight.gameforge.com/clan/memberlist/9267"><?php echo $member_count; ?> / <?php if($clan->stufe == 0) echo 1; else echo $clan->stufe * 3; ?> Member</a></td>
+                        <td><a href="<?php echo getUrl('clan/memberlist/'.$clan->id); ?>"><?php echo $member_count; ?> / <?php if($clan->stufe == 0) echo 1; else echo $clan->stufe * 3; ?> Member</a></td>
                     </tr>
                     <tr>
                         <td>Capital</td>
@@ -66,25 +66,28 @@
                     <?php if($rank->id == 1 || $rank->id == 2): ?>
                     <tr><th colspan="2"><a href="<?php echo getUrl('clan/description'); ?>">add description</a></th></tr>
                     <tr><th colspan="2"><a href="<?php echo getUrl('clan/logo/background'); ?>">edit clan symbol</a></th></tr>
-                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/homepage">set as homepage</a></th></tr>
-                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/change/clanname">rename clan</a></th></tr>
+                    <tr><th colspan="2"><a href="<?php echo getUrl('clan/change/homepage'); ?>">set as homepage</a></th></tr>
+                    <tr><th colspan="2"><a href="<?php echo getUrl('clan/change/name'); ?>">rename clan</a></th></tr>
                     <?php endif; ?>
 
+                    <!--
                     <?php if($rank->send_clan_message): ?>
                     <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/msg/clanmail">send a message to your clan</a></th></tr>
                     <?php endif; ?>
+                    -->
 
                     <?php if($rank->id == 1 || $rank->id == 2): ?>
-                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/memberrights">manage members</a></th></tr>
+                    <tr><th colspan="2"><a href="<?php echo getUrl('clan/memberrights'); ?>">manage members</a></th></tr>
                     <?php endif; ?>
 
                     <?php if($rank->spend_gold): ?>
-                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/clan/donationlist">view the donations made to your clan</a></th></tr>
+                    <tr><th colspan="2"><a href="<?php echo getUrl('clan/donationlist'); ?>">view the donations made to your clan</a></th></tr>
                     <?php endif; ?>
                     </tbody>
                 </table>
                 <p></p>
 
+                <!--
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan chat</h2>
                 <script>
                     function ajaxLoadContent(targetSelector, targetAction, requestData, reloadCheck)
@@ -142,7 +145,9 @@
                         <input type="button" id="clanChat" class="btn" href="#" value="Start Clan chat">
                     </div>
                 </div>
-                
+                -->
+
+                <!--
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan fights</h2>
                 <p></p>
                 <table id="clanwarsOverview" width="100%">
@@ -153,7 +158,9 @@
                 </table>
                 <p></p>
                 <br>
-                
+                -->
+
+                <!--
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan rituals</h2>
                 <table width="100%" id="ritusOverview">
                     <tbody>
@@ -170,6 +177,7 @@
                     </tbody>
                 </table>
                 There are currently no active rituals
+                -->
                 
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan applications</h2>
                 <p></p>

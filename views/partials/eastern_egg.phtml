@@ -1,0 +1,30 @@
+<div id="easterEgg" class="green" style="top: 177px; left: 990px; display: block;"></div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('div#easterEgg').css('top', Math.floor(Math.random() * (window.innerHeight - 30)));
+        $('div#easterEgg').css('left', Math.floor(Math.random() * (window.innerWidth - 30)));
+        $('div#easterEgg').click(function() {
+            $.ajax({
+                type: 'GET',
+                url: '/ajax/gameevent/foundEgg',
+                dataType: 'json',
+                success: function(data)
+                {
+                    $('div#easterEgg').css("display", "none");
+                    if (typeof(data) != "undefined" && typeof(data.reward) != "undefined") {
+                        $('body').append($(data.reward));
+                        $('div.eggreward').css('top', $('div#easterEgg').css('top')).css('left', $('div#easterEgg').css('left'));
+                        $('div.eggreward').fadeOut(1000).animate({top: 0}, {duration: 3000, queue: false});
+                    }
+                },
+                data: {
+                    eggHash: '2082f7521d'
+                },
+                async: true
+            });
+        });
+        $('div#easterEgg').css("display", "block");
+    });
+</script>
+
+<!-- {"result":true,"reward":"<div class=\"eggreward\">+1<img border=\"0\" align=\"absmiddle\" alt=\"Teufelssteine\" src=\"\/img\/symbols\/res3.gif\"><\/div>"} -->

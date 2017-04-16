@@ -1,0 +1,58 @@
+<div class="btn-left left"><div class="btn-right"><a class="btn" href="<?php echo getUrl('clan/index'); ?>"><?php echo \Bitefight\Library\Translate::_('back'); ?></a></div></div>
+<br class="clearfloat">
+<div id="changeHomepage">
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('clan_homepage_header'); ?></h2>
+            <div class="table-wrap">
+                <form method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                    <table width="100%" cellpadding="15">
+                        <tbody>
+                        <tr>
+                            <th align="right"><?php echo \Bitefight\Library\Translate::_('clan_homepage_homepage'); ?>:</th>
+                            <th align="left">
+                                <?php if($clan && !empty($clan->website)): ?>
+                                    <?php echo e($clan->website); ?>
+                                    <a href="<?php echo getUrl('profile/player/'.$clan->website_set_by); ?>">
+                                        <?php echo e($clan->website_editor_name); ?>
+                                    </a>
+                                <?php endif; ?>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th align="right"><?php echo \Bitefight\Library\Translate::_('clan_homepage_homepage'); ?>:</th>
+                            <th align="left"><input type="text" name="homepage" value="<?php if($clan && !empty($clan->website)) echo e($clan->website); else echo 'http://'; ?>" size="50" maxlength="250"></th>
+                        </tr>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>
+                                <div class="btn-left left">
+                                    <div class="btn-right">
+                                        <input class="btn" type="submit" value="<?php echo \Bitefight\Library\Translate::_('save'); ?>">
+                                    </div>
+                                </div>
+                                <div class="btn-left left">
+                                    <div class="btn-right">
+                                        <input class="btn" type="submit" name="delete" value="<?php echo \Bitefight\Library\Translate::_('delete'); ?>">
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+</div>

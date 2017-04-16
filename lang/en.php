@@ -12,6 +12,7 @@ return [
     'back' => 'Back',
     'save' => 'Save',
     'font' => 'Font',
+    'delete' => 'Delete',
     'font_size' => 'Font size',
     'send' => 'Send',
 
@@ -37,6 +38,7 @@ return [
     'action_points' => 'Action points',
     'pagination_to_the_start' => 'to the start',
     'pagination_to_the_end' => 'to the end',
+    'clan_tag' => 'Clan tag',
 
     'booty' => 'Booty',
     'battles' => 'Battles',
@@ -229,6 +231,13 @@ return [
     'city_graveyard_graveyard_manager' => 'Graveyard Manager',
     'city_graveyard_graveyard_master' => 'Graveyard Master',
 
+    // Clan Strings
+    'clan_homepage_homepage' => 'Homepage',
+    'clan_homepage_header' => 'set as homepage',
+    'clan_rename_rename_clan' => 'rename clan',
+    'clan_rename_new_name' => 'New clan name',
+    'clan_rename_new_tag' => 'New clan tag',
+
     // Hunt Strings
     'hunt_header' => 'lust for hunting %user%',
     'hunt_header_line' => 'You are feeling a lust for hunting. Now choose your preferred hunting method for the attack. You can roam the area for werewolves and challenge them to a fight, or if you know their name you can search for a particular werewolf!',
@@ -265,6 +274,7 @@ return [
     'validation_login_invalid_credentials' => 'Invalid credentials.',
     'validation_clan_name_used' => 'Sorry, this clan name is already in use',
     'validation_clan_tag_used' => 'Sorry, this clan tag is already in use',
+    'validation_clan_name_or_tag_short' => 'Please enter at least two characters into name and tag.',
 
     // 404 Page Not Found Strings
     '404_error_page_title' => '404 Bad Request',
