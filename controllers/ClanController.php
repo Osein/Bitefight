@@ -363,6 +363,19 @@ class ClanController extends GameController
 
     public function getMemberRights()
     {
+        $users = ORM::for_table('user')
+            ->select('user.id', 'user_id')->select('user.name')
+            ->select('clan_rank.id', 'rank_id')->select('clan_rank.rank_name')
+            ->left_outer_join('clan_rank', 'clan_rank.id = user.clan_rank')
+            ->where('user.clan_id', $this->user->clan_id)
+            ->find_many();
+
+        $ranks = ORM::for_table('clan_rank')
+            ->where_raw('clan_id = ? OR clan_id = 0', [$this->user->clan_id])
+            ->find_many();
+
+        $this->view->ranks = $ranks;
+        $this->view->users = $users;
         $this->view->pick('clan/memberrights');
     }
 }
