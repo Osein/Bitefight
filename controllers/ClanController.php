@@ -10,6 +10,7 @@
 namespace Bitefight\Controllers;
 
 use Bitefight\Library\Translate;
+use Bitefight\Models\ClanRank;
 use ORM;
 use Phalcon\Filter;
 
@@ -415,8 +416,110 @@ class ClanController extends GameController
 
     public function getKickUser($id)
     {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->notFound();
+        }
+
         $kick_user = ORM::for_table('user')->find_one($id);
         $this->view->kick_user = $kick_user;
         $this->view->pick('clan/kick_user');
+    }
+
+    public function postKickUser($id)
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->notFound();
+        }
+
+        $kick_user = ORM::for_table('user')->find_one($id);
+
+        if($kick_user) {
+            $kick_user->clan_id = 0;
+            $kick_user->save();
+        }
+
+        return $this->response->redirect(getUrl('clan/memberrights'));
+    }
+
+    public function postAddRank()
+    {
+        $rank_name = $this->request->get('newRank', Filter::FILTER_STRING, '');
+
+        if(empty($rank_name)) {
+            return $this->notFound();
+        }
+
+        $rank = ORM::for_table('clan_rank')->create();
+        $rank->clan_id = $this->user->clan_id;
+        $rank->rank_name = $rank_name;
+        $rank->save();
+
+        return $this->response->redirect(getUrl('clan/memberrights'));
+    }
+
+    public function postEditRankOptions()
+    {
+        $ranks = $this->request->get('ranks', null, array());
+
+        foreach($ranks as $rank_id => $properties)
+        {
+            $rank = ORM::for_table('clan_rank')->find_one($rank_id);
+
+            if(!$rank) {
+                return $this->notFound();
+            }
+
+            foreach($properties as $property => $tmp)
+            {
+                if(ClanRank::checkColumnExists($property))
+                {
+                    $rank->{$property} = 1;
+                }
+            }
+
+            $rank->save();
+        }
+
+        return $this->response->redirect(getUrl('clan/memberrights'));
+    }
+
+    public function postEditRights()
+    {
+        $users = $this->request->get('users', null, array());
+
+        if(empty($users)) {
+            return $this->response->redirect(getUrl('clan/memberrights'));
+        }
+
+        foreach($users as $user_id => $rank)
+        {
+            ORM::raw_execute('UPDATE user SET clan_rank = ? WHERE id = ?', [intval($rank), $user_id]);
+        }
+
+        return $this->response->redirect(getUrl('clan/memberrights'));
+    }
+
+    public function postDeleteRank($id = 0)
+    {
+        if($id < 4) {
+            return $this->response->redirect(getUrl('clan/memberrights'));
+        }
+
+        $users = ORM::for_table('user')
+            ->where('clan_id', $this->user->clan_id)
+            ->where('clan_rank', $id)
+            ->count();
+
+        if(!$users) {
+            ORM::raw_execute('DELETE FROM clan_rank WHERE clan_id = ? AND id = ?', [$this->user->clan_id, $id]);
+        }
+
+        return $this->response->redirect(getUrl('clan/memberrights'));
     }
 }

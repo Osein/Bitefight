@@ -8,9 +8,7 @@
 
 namespace Bitefight\Models;
 
-use ORM;
-
-class BaseModel extends ORM
+class BaseModel
 {
 
 }

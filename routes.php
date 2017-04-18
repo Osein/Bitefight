@@ -90,6 +90,11 @@ $clan->addPost('/change/homepage', ['action' => 'postChangeHomePage']);
 $clan->addGet('/memberrights', ['action' => 'getMemberRights']);
 $clan->addGet('/memberrights/setowner/{id:[0-9]+}', ['action' => 'getSetOwner']);
 $clan->addGet('/memberrights/kickuser/{id:[0-9]+}', ['action' => 'getKickUser']);
+$clan->addGet('/memberrights/kick/{id:[0-9]+}', ['action' => 'postKickUser']);
+$clan->addPost('/memberrights/addrank', ['action' => 'postAddRank']);
+$clan->addPost('/memberrights/editranks', ['action' => 'postEditRankOptions']);
+$clan->addPost('/memberrights/editrights', ['action' => 'postEditRights']);
+$clan->addGet('/memberrights/deleterank/{id:[0-9]+}', ['action' => 'postDeleteRank']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

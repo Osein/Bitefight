@@ -12,7 +12,8 @@
         <div class="wrap-content wrap-right clearfix">
             <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">manage members</h2>
             <div class="table-wrap">
-                <form action="http://s202.en.bitefight.gameforge.com/clan/memberrights?__token=804f83589d2b40ca0d0ad850585b1891" method="POST">
+                <form action="<?php echo getUrl('clan/memberrights/editrights'); ?>" method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                     <table width="100%">
                         <tbody>
                         <?php foreach($users as $clan_user): ?>
@@ -37,7 +38,7 @@
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <select name="zn<?php echo $clan_user->id; ?>" size="1" <?php if($clan_user->rank_id == 1) echo 'disabled=""'; ?>>
+                                    <select name="users[<?php echo $clan_user->id; ?>]" size="1" <?php if($clan_user->rank_id == 1) echo 'disabled=""'; ?>>
                                         <?php foreach ($ranks as $rank): ?>
                                         <option value="<?php echo $rank->id; ?>" <?php if($clan_user->rank_id == $rank->id) echo 'selected=""'; ?>>
                                             <?php echo e($rank->rank_name); ?>
@@ -53,7 +54,8 @@
                 </form>
             </div>
             <h3>add rank</h3>
-            <form id="addRank" class="clearfix" action="http://s202.en.bitefight.gameforge.com/clan/memberrights?__token=" method="POST">
+            <form id="addRank" class="clearfix" action="<?php echo getUrl('clan/memberrights/addrank'); ?>" method="POST">
+                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <label>Name</label>
                 <input type="text" name="newRank" size="30" maxlength="30">
                 <div class="btn-left left"><div class="btn-right"><input class="btn" type="submit" value="add"></div></div>
@@ -75,8 +77,9 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <h2><img src="/img/symbols/race1small.gif" alt="">rank options</h2>
-            <form action="http://s202.en.bitefight.gameforge.com/clan/memberrights?__token=804f83589d2b40ca0d0ad850585b1891" method="POST">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">rank options</h2>
+            <form action="<?php echo getUrl('clan/memberrights/editranks'); ?>" method="POST">
+                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <div class="info">
                     <b>Please remember that seals can only belong to strong clans:</b><br>
                     A clan needs at least 3 members to be able to own a seal.<br>
@@ -117,16 +120,22 @@
                     </tr>
                     <?php foreach ($ranks as $rank): ?>
                         <tr>
-                            <th><?php echo $rank->rank_name; ?></th>
-                            <th><input type="checkbox" <?php if($rank->read_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->write_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->read_clan_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->add_members) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->delete_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->send_clan_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->spend_gold) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->war_minister) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
-                            <th><input type="checkbox" <?php if($rank->vocalise_ritual) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?>></th>
+                            <th>
+                                <?php echo $rank->rank_name; ?>
+                                <?php if($rank->id > 3): ?>
+                                <br>
+                                <a href="<?php echo getUrl('clan/memberrights/deleterank/'.$rank->id.'?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>">(delete)</a>
+                                <?php endif; ?>
+                            </th>
+                            <th><input type="checkbox" <?php if($rank->read_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][read_message]"></th>
+                            <th><input type="checkbox" <?php if($rank->write_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][write_message]"></th>
+                            <th><input type="checkbox" <?php if($rank->read_clan_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][read_clan_message]"></th>
+                            <th><input type="checkbox" <?php if($rank->add_members) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][add_members]"></th>
+                            <th><input type="checkbox" <?php if($rank->delete_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][delete_message]"></th>
+                            <th><input type="checkbox" <?php if($rank->send_clan_message) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][send_clan_message]"></th>
+                            <th><input type="checkbox" <?php if($rank->spend_gold) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][spend_gold]"></th>
+                            <th><input type="checkbox" <?php if($rank->war_minister) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][war_minister]"></th>
+                            <th><input type="checkbox" <?php if($rank->vocalise_ritual) echo 'checked=""'; ?> <?php if($rank->clan_id == 0) echo 'disabled=""'; ?> name="ranks[<?php echo $rank->id; ?>][vocalise_ritual]"></th>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
