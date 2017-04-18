@@ -62,4 +62,8 @@ Hideout, Notepad, Search
 
 - City Quest - Ajax Result: {"result":true,"newNpcMark":"questInProgress"}
 
+- After 3 bowl hunt on the human hunt render quest popup on the screen to continue quest
+
 - Fix clan permissions
+
+- {"result":true,"reward":"<div class=\"eggreward\">+53200<img border=\"0\" align=\"absmiddle\" src=\"\/img\/symbols\/res2.gif\"><\/div>"}

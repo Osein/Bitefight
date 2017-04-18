@@ -364,7 +364,7 @@ class ClanController extends GameController
     public function getMemberRights()
     {
         $users = ORM::for_table('user')
-            ->select('user.id', 'user_id')->select('user.name')
+            ->select('user.id')->select('user.name')
             ->select('clan_rank.id', 'rank_id')->select('clan_rank.rank_name')
             ->left_outer_join('clan_rank', 'clan_rank.id = user.clan_rank')
             ->where('user.clan_id', $this->user->clan_id)
@@ -374,8 +374,49 @@ class ClanController extends GameController
             ->where_raw('clan_id = ? OR clan_id = 0', [$this->user->clan_id])
             ->find_many();
 
+        $user_rank = ORM::for_table('clan_rank')
+            ->find_one($this->user->clan_rank);
+
+        $this->view->user_rank = $user_rank;
         $this->view->ranks = $ranks;
         $this->view->users = $users;
         $this->view->pick('clan/memberrights');
+    }
+
+    public function getSetOwner($id)
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->notFound();
+        }
+
+        if($this->getFlashData('declare_new_master', false)) {
+            $user = ORM::for_table('user')->find_one($id);
+
+            if(!$user) {
+                return $this->notFound();
+            }
+
+            $user->clan_rank = 1;
+            $user->save();
+
+            $this->user->clan_rank = 2;
+
+            return $this->response->redirect(getUrl('clan/memberrights'));
+        }
+
+        $this->view->declare_master_form = $id;
+        $this->setFlashData('declare_new_master', $id);
+
+        self::getMemberRights();
+    }
+
+    public function getKickUser($id)
+    {
+        $kick_user = ORM::for_table('user')->find_one($id);
+        $this->view->kick_user = $kick_user;
+        $this->view->pick('clan/kick_user');
     }
 }

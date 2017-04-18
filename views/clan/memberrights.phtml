@@ -15,17 +15,31 @@
                 <form action="http://s202.en.bitefight.gameforge.com/clan/memberrights?__token=804f83589d2b40ca0d0ad850585b1891" method="POST">
                     <table width="100%">
                         <tbody>
-                        <?php foreach($users as $user): ?>
+                        <?php foreach($users as $clan_user): ?>
                             <tr>
-                                <td><a class="member-name" href="<?php echo getUrl('profile/player/'.$user->id); ?>"><?php echo e($user->name); ?></a></td>
+                                <td><a class="member-name" href="<?php echo getUrl('profile/player/'.$clan_user->id); ?>"><?php echo e($clan_user->name); ?></a></td>
                                 <td>
-                                    <div class="btn-left left"><div class="btn-right"><a class="btn" href="http://s202.en.bitefight.gameforge.com/clan/memberrights/kickquestion/81533?__token=804f83589d2b40ca0d0ad850585b1891">kick</a></div></div>
-                                    <div class="btn-left left"><div class="btn-right"><a class="btn" href="http://s202.en.bitefight.gameforge.com/clan/memberrights/setowner/81533?__token=804f83589d2b40ca0d0ad850585b1891"><?php if(isset($declare_master_form)) echo '<font color="yellow"> ---&gt;Declare a master&lt;--- </font>'; else echo 'Declare a master'; ?></a></div></div>
+                                    <?php if($user_rank->add_members && $clan_user->id != $user->id): ?>
+                                    <div class="btn-left left"><div class="btn-right"><a class="btn" href="<?php echo getUrl('clan/memberrights/kickuser/'.$clan_user->id.'?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>">kick</a></div></div>
+                                    <?php endif; ?>
+                                    <?php if($user->clan_rank == 1 && $clan_user->id != $user->id): ?>
+                                    <div class="btn-left left">
+                                        <div class="btn-right">
+                                            <a class="btn" href="<?php echo getUrl('clan/memberrights/setowner/'.$clan_user->id.'?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>">
+                                                <?php if(isset($declare_master_form) && $declare_master_form == $clan_user->id): ?>
+                                                <font color="yellow"> ---&gt;Declare a master&lt;--- </font>
+                                                <?php else: ?>
+                                                Declare a master
+                                                <?php endif; ?>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
-                                    <select name="zn<?php echo $user->id; ?>" size="1" <?php if($user->rank_id == 1) echo 'disabled=""'; ?>>
+                                    <select name="zn<?php echo $clan_user->id; ?>" size="1" <?php if($clan_user->rank_id == 1) echo 'disabled=""'; ?>>
                                         <?php foreach ($ranks as $rank): ?>
-                                        <option value="<?php echo $rank->id; ?>" <?php if($user->rank_id == $rank->id) echo 'selected=""'; ?>>
+                                        <option value="<?php echo $rank->id; ?>" <?php if($clan_user->rank_id == $rank->id) echo 'selected=""'; ?>>
                                             <?php echo e($rank->rank_name); ?>
                                         </option>
                                         <?php endforeach; ?>
