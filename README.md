@@ -12,7 +12,7 @@ Hideout, Notepad, Search
 
 ## Progress
 
-*User Preview* ( Needs: Buddy request, Message, Attack )
+*User Preview* ( Needs: Message )
 
 *Clan Preview* ( Needs: Everything lol )
 
@@ -20,9 +20,7 @@ Hideout, Notepad, Search
 
 *Items*: -
 
-*Talents*: -
-
-*Aspects*: -
+*Talents*: Page is completed, needs functionality
 
 *Orbs*: -
 
@@ -36,34 +34,16 @@ Hideout, Notepad, Search
 
 *Shop*: -
 
-**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo, Description )
+**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo, Description, Rename clan, Member rights )
 
 *Application*: View only
-
-*Manage members page*: View only
 
 *Donation page*: -
 
 *Clan mail*: Needs user messages
 
-*Rename clan*: -
-
-*Change homepage*: -
-
-*Rituals*: -
-
-*Clan fights*: -
-
-*Clan chat*: -
-
 ## Todo
 
 - Revise highscore.
 
-- City Quest - Ajax Result: {"result":true,"newNpcMark":"questInProgress"}
-
-- After 3 bowl hunt on the human hunt render quest popup on the screen to continue quest
-
 - Fix clan permissions
-
-- {"result":true,"reward":"<div class=\"eggreward\">+53200<img border=\"0\" align=\"absmiddle\" src=\"\/img\/symbols\/res2.gif\"><\/div>"}
