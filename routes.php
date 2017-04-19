@@ -47,6 +47,11 @@ $router->mount($user);
 $router->addGet('/hideout', ['controller' => 'User', 'action' => 'getHideout']);
 $router->addGet('/hideout/upgrade', ['controller' => 'User', 'action' => 'getHideoutUpgrade']);
 
+$message = new \Phalcon\Mvc\Router\Group(['controller' => 'Message']);
+$message->setPrefix('/message');
+$message->addGet('', ['action' => 'getIndex']);
+$router->mount($message);
+
 $city = new \Phalcon\Mvc\Router\Group(['controller' => 'City']);
 $city->setPrefix('/city');
 $city->addGet('/index', ['action' => 'getIndex']);

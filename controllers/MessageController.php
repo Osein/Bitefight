@@ -11,4 +11,15 @@ namespace Bitefight\Controllers;
 class MessageController extends GameController
 {
 
+    public function initialize()
+    {
+        $this->view->menu_active = 'message';
+        return parent::initialize();
+    }
+
+    public function getIndex()
+    {
+        $this->view->pick('message/index');
+    }
+
 }

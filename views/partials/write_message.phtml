@@ -1,0 +1,202 @@
+<script type="text/javascript">
+    var showNewMessage = false;
+    var writeDivId = '#newMessageScreen';
+    var newMessageContent = '#newMessageContent';
+    var blackDiv = '#blackDiv';
+    var proposalReceiver = [];
+
+    function writeMessageSplash()
+    {
+        if (showNewMessage) {
+            hideNewMessageSplash();
+            return;
+        } else {
+            showBlackDiv();
+            showNewMessage = true;
+        }
+        var doc_width  = window.innerWidth;
+        $(writeDivId).css("display", "block");
+        var off = $(writeDivId).offsetWidth;
+        var left = Math.floor((doc_width / 2) - (off / 2));
+        var top = 100;
+        var width = 600;
+        $(writeDivId).css("left", left+"px");
+        $(writeDivId).css("top", top+"px");
+        $(writeDivId).css("width", width+"px");
+        $(writeDivId).css("zIndex", "501");
+
+        var content = '';
+        content += '<div id="write_error" style="display:none;"></div>';
+        content += '<table id="write_form" width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<tr>';
+        content += '<td><b>Sender</b>:</td>';
+        content += '<td>Xyir</td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td><b>Recipient</b>:</td>';
+        content += '<td style="padding:1px 5px;">';
+        content += '<input id="receivername" style="margin:0px;" type="text" name="receiver" size="30" maxlength="30" class="input" value="" autocomplete="off">';
+        content += '</td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td style="padding:1px 5px;"><b>Subject</b>:</td>';
+        content += '<td style="padding:1px 5px;"><input id="subject" style="margin:0px;" type="text" name="subject" size="30" maxlength="30" class="input" value=""></td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td><b>message</b><br>(<span id="charcount1" style="display:inline-block; margin-bottom:0px;">2000</span> Characters)</td>';
+        content += '<td><textarea id="message" class="no-bg fakeMsgBorder" style="margin:0px;" name="text" rows="9" cols="55" onkeydown="CheckLen2(this)" onkeyup="CheckLen2(this)" onfocus="CheckLen2(this)" onchange="CheckLen2(this)"></textarea></td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<table id="write_form2" width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<tr>';
+        content += '<td width="100%" nowrap><center><a href="#" onClick="sendMessage()">( send )</a></center></td>';
+        content += '<td nowrap><a href="#" onClick="hideNewMessageSplash()">( Close )</a></td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<center>';
+        content += '<table id="write_form3" width="100%" border="0" cellpadding="0" cellspacing="0" style="display:none;">';
+        content += '<tr>';
+        content += '<td><center><a href="#" onClick="hideNewMessageSplash()">( Close )</a></center></td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '</center>';
+        content += '<div id="senderid" style="display:none;"><?php echo $user->id; ?></div>';
+        content += '<div id="receiverid" style="display:none;"></div>';
+        content += '<div id="sendkey" style="display:none;">32d2c08c|77625</div>';
+
+        $(newMessageContent).html(content);
+
+        $("#receivername").keyup(function ()
+        {
+            ajaxCheckReceiver();
+        });
+
+        function ajaxCheckReceiver()
+        {
+            $.getJSON('/ajax/user/ajaxcheckreceiver',
+                'key=63f084|77625'+
+                '&name='+encodeURIComponent($("#receivername").val()),
+                function(data){
+                    if (data.list.length > 0)
+                    {
+                        proposalReceiver = [];
+                        $.each(data.list, function(i, proposal){
+                            proposalReceiver[i] = proposal;
+                        });
+
+                        $( "#receivername" ).autocomplete({
+                            source: proposalReceiver
+                        });
+                    }
+                    else
+                    {
+                        proposalReceiver = [];
+                    }
+                })
+        }
+    }
+
+    function sendMessage()
+    {
+        $.getJSON('/ajax/msg/ajaxwritemail',
+            'receivername='+encodeURIComponent($('#receivername').val())+
+            '&subject='+encodeURIComponent($('#subject').val())+
+            '&message='+encodeURIComponent($('#message').val()),
+            function(data)
+            {
+                if (data.errorstatus == 0)
+                {
+                    msgSendSuccess(data.error);
+                }
+                else
+                {
+                    msgSendFail(data.error);
+                }
+            })
+    }
+
+    function msgSendSuccess(message)
+    {
+        $('#write_error').css('display', 'block');
+        $('#write_error').html('<p class="info">'+message+'</p>');
+        $('#write_form').css('display', 'none');
+        $('#write_form2').css('display', 'none');
+        $('#write_form3').css('display', 'block');
+    }
+
+    function msgSendFail(error)
+    {
+        $('#write_error').css('display', 'block');
+        $('#write_error').html('<p class="info">'+error+'</p>');
+    }
+
+    function CheckLen2(Target)
+    {
+        var maxlength = "2000";
+        StrLen=Target.value.replace(/\r\n?/g, "\n").length;
+        if (StrLen==1&&Target.value.substring(0,1)==" ")
+        {
+            Target.value="";
+            StrLen=0;
+        }
+        if (StrLen>maxlength )
+        {
+            Target.value=Target.value.substring(0,maxlength);
+            CharsLeft=0;
+        }
+        else
+        {
+            CharsLeft=maxlength-StrLen;
+        }
+        document.getElementById('charcount1').innerHTML=CharsLeft;
+    }
+
+    function showBlackDiv()
+    {
+        var div=document.createElement('div');
+        div.id = 'blackDiv';
+        div.className = 'break_div';
+        //div.onmousedown = function() {hideNewMessageSplash();};
+        div.style.zIndex = 500;
+        div.style.overflow = 'hidden';
+        if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+        {
+            document.body.style.width='100%';
+            document.body.style.height='100%';
+            div.style.width=document.body.offsetWidth+'px';
+            div.style.height=document.body.offsetHeight+'px';
+        }
+        else
+        {
+            div.style.position='fixed';
+            div.style.width='100%';
+            div.style.height='100%';
+        }
+        document.body.appendChild(div);
+    }
+
+    function hideNewMessageSplash()
+    {
+        if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+        {
+        }
+        else
+        {
+            hideBlackDiv();
+        }
+        $(writeDivId).css('display', 'none');
+        $(writeDivId).css('zIndex', '-1');
+        $(newMessageContent).html('');
+        showNewMessage = false;
+        content = '';
+    }
+
+    function hideBlackDiv()
+    {
+        if ($(blackDiv))
+        {
+            $(blackDiv).remove();
+        }
+    }
+
+</script>
