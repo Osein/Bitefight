@@ -9,6 +9,9 @@
 const ACTIVITY_TYPE_CHURCH = 3;
 const ACTIVITY_TYPE_GRAVEYARD = 4;
 
+const MESSAGE_TYPE_USER_MESSAGE = 1;
+const MESSAGE_TYPE_SYSTEM_MESSAGE = 2;
+
 function getRaceString($race = 1) {
     return $race === 1 ? \Bitefight\Library\Translate::_('vampire') : \Bitefight\Library\Translate::_('werewolf');
 }

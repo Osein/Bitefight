@@ -41,6 +41,11 @@ class BaseController extends Controller
             $this->user = ORM::for_table('user')->find_one($this->session->get('user_id'));
             $this->view->user = $this->user;
 
+            $this->view->user_new_message_count = ORM::for_table('message')
+                ->where('receiver_id', $this->user->id)
+                ->where('read', false)
+                ->count();
+
             $lastUpdate = $this->user->last_update;
             $timeNow = time();
             $timeDiff = $timeNow - $lastUpdate;

@@ -50,6 +50,12 @@ $router->addGet('/hideout/upgrade', ['controller' => 'User', 'action' => 'getHid
 $message = new \Phalcon\Mvc\Router\Group(['controller' => 'Message']);
 $message->setPrefix('/message');
 $message->addGet('', ['action' => 'getIndex']);
+$message->addGet('/ajax/checkreceiver', ['action' => 'jsonCheckReceiver']);
+$message->addGet('/ajax/writemessage', ['action' => 'jsonWriteMessage']);
+$message->addGet('/folders', ['action' => 'getFolders']);
+$message->addPost('/folders', ['action' => 'postFolders']);
+$message->addGet('/settings', ['action' => 'getSettings']);
+$message->addGet('/block', ['action' => 'getBlockedPlayers']);
 $router->mount($message);
 
 $city = new \Phalcon\Mvc\Router\Group(['controller' => 'City']);
