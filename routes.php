@@ -108,6 +108,11 @@ $clan->addPost('/memberrights/addrank', ['action' => 'postAddRank']);
 $clan->addPost('/memberrights/editranks', ['action' => 'postEditRankOptions']);
 $clan->addPost('/memberrights/editrights', ['action' => 'postEditRights']);
 $clan->addGet('/memberrights/deleterank/{id:[0-9]+}', ['action' => 'postDeleteRank']);
+$clan->addGet('/view/homepage/{id:[0-9]+}', ['action' => 'postClanVisitHomepage', 'controller' => 'Base']);
+$clan->addGet('/apply/{id:[0-9]+}', ['action' => 'getApply']);
+$clan->addPost('/apply/{id:[0-9]+}', ['action' => 'postApply']);
+$clan->addGet('/applications', ['action' => 'getApplications']);
+$clan->addPost('/applications/{id:[0-9]+}', ['action' => 'postApplications']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

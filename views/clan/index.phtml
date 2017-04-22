@@ -37,7 +37,7 @@
                     </tr>
                     <tr>
                         <td>Homepage</td>
-                        <td><?php if(strlen($clan->website) > 0): ?><a href="<?php echo e($clan->website); ?>"><?php echo e($clan->website); ?></a><?php else: ?>no clan page available<?php endif; ?></td>
+                        <td><?php if(strlen($clan->website) > 0): ?><a href="<?php echo getUrl('clan/view/homepage/'.$clan->id.'?_token='.$this->security->getToken().'&_tkey='.$this->security->getTokenKey()); ?>" target="_blank"><?php echo e($clan->website); ?></a>	(<?php echo $clan->website_counter; ?> Visitors)<?php else: ?>no clan page available<?php endif; ?></td>
                     </tr>
                     <tr>
                         <td>Total booty</td>
@@ -184,8 +184,11 @@
                 <table width="100%">
                     <tbody>
                     <tr>
-                        <th colspan="2">No Applications</th>
-                        <th colspan="2"><a href="/clan/applications/">Application(1)</a></th>
+                        <?php if($application_count): ?>
+                            <th colspan="2"><a href="<?php echo getUrl('clan/applications'); ?>">Application(<?php echo $application_count; ?>)</a></th>
+                        <?php else: ?>
+                            <th colspan="2">No Applications</th>
+                        <?php endif; ?>
                     </tr>
                     </tbody>
                 </table>

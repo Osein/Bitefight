@@ -551,6 +551,38 @@ class BaseController extends Controller
     public function getClanPreview($id)
     {
         $this->view->menu_active = 'clan_preview';
-        var_dump($id);
+        $this->view->clan = ORM::for_table('clan')
+            ->leftOuterJoin('user', ['user.clan_id', '=', 'clan.id'])
+            ->leftOuterJoin('clan_description', ['clan.id', '=', 'clan_description.clan_id'])
+            ->select('clan.*')
+            ->select('clan_description.descriptionHtml')
+            ->selectExpr('SUM(user.s_booty)', 'total_booty')
+            ->selectExpr('COUNT(1)', 'member_count')
+            ->selectExpr('SUM(user.gold)', 'gold_count')
+            ->selectExpr('IF(clan.stufe = 0, 1, clan.stufe * 3)', 'max_members')
+            ->where('id', $id)
+            ->find_one();
+        $this->view->pick('clan/preview');
+    }
+
+    public function postClanVisitHomepage($id) {
+        $clan = ORM::for_table('clan')
+            ->find_one($id);
+
+        if(!$clan || !strlen($clan->website)) {
+            return $this->response->redirect(getUrl(''));
+        }
+
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token, false)) {
+            return $this->response->redirect(getUrl(''));
+        }
+
+        $clan->website_counter++;
+        $clan->save();
+
+        return $this->response->redirect($clan->website);
     }
 }

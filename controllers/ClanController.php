@@ -52,6 +52,10 @@ class ClanController extends GameController
                 ->where('clan_id', $this->user->clan_id)
                 ->count();
 
+            $this->view->application_count = ORM::for_table('clan_application')
+                ->where('clan_id', $this->user->clan_id)
+                ->count();
+
             if ($this->view->rank->read_message) {
                 $this->view->clan_messages = ORM::for_table('clan_message')
                     ->select_many('user.name', 'clan_message.*', 'clan_rank.rank_name')
@@ -521,5 +525,88 @@ class ClanController extends GameController
         }
 
         return $this->response->redirect(getUrl('clan/memberrights'));
+    }
+
+    public function getApply($id)
+    {
+        if($this->user->clan_id > 0) {
+            return $this->response->redirect(getUrl(''));
+        }
+
+        $pdo = ORM::getDb();
+        $stmt = $pdo->prepare('
+            SELECT clan.name, clan.tag, clan_application.id AS application_id
+            FROM clan
+            LEFT JOIN clan_application ON clan.id = clan_application.clan_id AND clan_application.user_id = ?
+            WHERE clan.id = ?');
+        $stmt->execute([$this->user->id, $id]);
+        $this->view->clan = $stmt->fetch(\PDO::FETCH_OBJ);
+
+        $this->view->pick('clan/apply');
+    }
+
+    public function postApply($id)
+    {
+        $appText = $this->request->get('applicationText', null, '');
+
+        if(strlen($appText) > 2000) {
+            return $this->notFound();
+        }
+
+        $clanExists = ORM::for_table('clan')->find_one($id);
+
+        if(!$clanExists) {
+            return $this->notFound();
+        }
+
+        $application = ORM::for_table('clan_application')->create();
+        $application->clan_id = $id;
+        $application->user_id = $this->user->id;
+        $application->note = $appText;
+        $application->save();
+
+        $this->view->form_sent = true;
+        $this->view->pick('clan/apply');
+    }
+
+    public function getApplications()
+    {
+        $this->view->applications = ORM::for_table('clan_application')
+            ->left_outer_join('user', ['user.id', '=', 'clan_application.user_id'])
+            ->select('clan_application.*')->select('user.name')
+            ->where('clan_application.clan_id', $this->user->clan_id)
+            ->find_many();
+
+        if(count($this->view->applications) == 0) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        $this->view->pick('clan/applications');
+    }
+
+    public function postApplications($id)
+    {
+        $application = ORM::for_table('clan_application')->where('clan_id', $this->user->clan_id)->find_one($id);
+
+        if(!$application) {
+            return $this->notFound();
+        }
+
+        $reject = $this->request->get('abl');
+        $rejectText = $this->request->get('abltext');
+        $accept = $this->request->get('ann');
+
+        if($accept) {
+            $user = ORM::for_table('user')->find_one($application->user_id);
+            $user->clan_id = $this->user->clan_id;
+            $user->clan_rank = 3;
+            $user->save();
+            $application->delete();
+        } elseif($reject) {
+            // send message to user
+            $application->delete();
+        }
+
+        return $this->response->redirect(getUrl('clan/applications'));
     }
 }
