@@ -8,13 +8,13 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 Home, News, Login, Register, Forget password, Highscore
 
-Hideout, Notepad, Search
+Hideout, Notepad, Search, Human Hunt
+
+Preview: Clan
 
 ## Progress
 
 *User Preview* ( Needs: Message )
-
-*Clan Preview* ( Needs: Everything lol )
 
 **Profile** ( Done: Stats, Logo )
 
@@ -22,23 +22,13 @@ Hideout, Notepad, Search
 
 *Talents*: Page is completed, needs functionality
 
-*Orbs*: -
-
-**Hunt** ( Done: Human Hunt )
-
-*Race Hunt*: -
-
 **Settings** ( Done: Description )
 
 **City** ( Done: Index, Library, Church, Graveyard )
 
 *Shop*: -
 
-**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo, Description, Rename clan, Member rights )
-
-*Application*: View only
-
-*Donation page*: -
+**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo, Description, Rename clan, Member rights, Donation, Application )
 
 *Clan mail*: Needs user messages
 
