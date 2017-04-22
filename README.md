@@ -8,7 +8,7 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 Home, News, Login, Register, Forget password, Highscore
 
-Hideout, Notepad, Search, Human Hunt, Clan
+Hideout, Notepad, Search, Human Hunt, Clan, Messages
 
 Preview: Clan, User
 
@@ -25,10 +25,6 @@ Preview: Clan, User
 **City** ( Done: Index, Library, Church, Graveyard )
 
 *Shop*: -
-
-**Messages** ( Done: Block, Settings, Folders, Send )
-
-*Folder view*: -
 
 ## Todo
 
