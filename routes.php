@@ -116,6 +116,8 @@ $clan->addPost('/applications/{id:[0-9]+}', ['action' => 'postApplications']);
 $clan->addGet('/memberlistExt/{id:[0-9]+}', ['action' => 'getClanMemberListExt', 'controller' => 'Base']);
 $clan->addGet('/memberlist', ['action' => 'getMemberList']);
 $clan->addGet('/donationlist', ['action' => 'getDonationList']);
+$clan->addGet('/mail', ['action' => 'getClanMail']);
+$clan->addPost('/mail', ['action' => 'postClanMail']);
 $router->mount($clan);
 
 $router->addGet('/search', ['controller' => 'Game', 'action' => 'getSearch']);

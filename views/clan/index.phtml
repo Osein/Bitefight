@@ -70,11 +70,9 @@
                     <tr><th colspan="2"><a href="<?php echo getUrl('clan/change/name'); ?>">rename clan</a></th></tr>
                     <?php endif; ?>
 
-                    <!--
                     <?php if($rank->send_clan_message): ?>
-                    <tr><th colspan="2"><a href="http://s202.en.bitefight.gameforge.com/msg/clanmail">send a message to your clan</a></th></tr>
+                    <tr><th colspan="2"><a href="<?php echo getUrl('clan/mail'); ?>">send a message to your clan</a></th></tr>
                     <?php endif; ?>
-                    -->
 
                     <?php if($rank->id == 1 || $rank->id == 2): ?>
                     <tr><th colspan="2"><a href="<?php echo getUrl('clan/memberrights'); ?>">manage members</a></th></tr>

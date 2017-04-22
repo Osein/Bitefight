@@ -163,6 +163,10 @@ class ClanController extends GameController
 
     public function getCreate()
     {
+        if($this->user->clan_id) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
         $this->view->pick('clan/create');
     }
 
@@ -734,5 +738,46 @@ class ClanController extends GameController
         $this->view->donateList = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         $this->view->pick('clan/donationlist');
+    }
+
+    public function getClanMail()
+    {
+        $this->view->mail_users = ORM::for_table('user')
+            ->select_many('user.id', 'user.name', 'clan_rank.rank_name')
+            ->selectExpr('SUM(user.s_booty)', 'total_booty')
+            ->left_outer_join('clan_rank', ['clan_rank.id', '=', 'user.clan_rank'])
+            ->where('user.clan_id', $this->user->clan_id)
+            ->group_by('user.id')
+            ->find_many();
+        $this->view->pick('clan/mail');
+    }
+
+    public function postClanMail()
+    {
+        $receivers = $this->request->get('receiver', null, array());
+        $text = $this->request->get('text', null, '');
+
+        if(strlen($text) > 2000 || empty($receivers)) {
+            return $this->notFound();
+        }
+
+        $users = ORM::for_table('user')
+            ->select('id')->select('name')
+            ->where_in('id', $receivers)
+            ->find_many();
+
+        foreach ($users as $user) {
+            $mail = ORM::for_table('message')->create();
+            $mail->sender_id = 0;
+            $mail->receiver_id = $user->id;
+            $mail->type = MESSAGE_TYPE_CLAN_MESSAGE;
+            $mail->subject = 'Clan message';
+            $mail->message = $text;
+            $mail->save();
+        }
+
+        $this->view->users = $users;
+        $this->view->form_sent = true;
+        $this->view->pick('clan/mail');
     }
 }
