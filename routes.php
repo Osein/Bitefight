@@ -52,12 +52,16 @@ $message->setPrefix('/message');
 $message->addGet('', ['action' => 'getIndex']);
 $message->addGet('/ajax/checkreceiver', ['action' => 'jsonCheckReceiver']);
 $message->addGet('/ajax/writemessage', ['action' => 'jsonWriteMessage']);
+$message->addGet('/ajax/readmessage', ['action' => 'jsonReadMessage']);
+$message->addGet('/ajax/sendanswer', ['action' => 'jsonSendAnswer']);
 $message->addGet('/folders', ['action' => 'getFolders']);
 $message->addPost('/folders', ['action' => 'postFolders']);
 $message->addGet('/settings', ['action' => 'getSettings']);
 $message->addPost('/settings', ['action' => 'postSettings']);
 $message->addGet('/block', ['action' => 'getBlockedPlayers']);
 $message->addPost('/block', ['action' => 'postBlockedPlayers']);
+$message->addGet('/read', ['action' => 'getRead']);
+$message->addPost('/read', ['action' => 'postRead']);
 $router->mount($message);
 
 $city = new \Phalcon\Mvc\Router\Group(['controller' => 'City']);

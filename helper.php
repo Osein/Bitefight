@@ -10,8 +10,9 @@ const ACTIVITY_TYPE_CHURCH = 3;
 const ACTIVITY_TYPE_GRAVEYARD = 4;
 
 const MESSAGE_TYPE_USER_MESSAGE = 1;
-const MESSAGE_TYPE_SYSTEM_MESSAGE = 2;
+const MESSAGE_TYPE_RACE_HUNT = 2;
 const MESSAGE_TYPE_CLAN_MESSAGE = 3;
+const MESSAGE_TYPE_GROTTO = 4;
 
 function getClanStatusColor($last_activity) {
     $delta = time() - $last_activity;

@@ -768,7 +768,7 @@ class ClanController extends GameController
 
         foreach ($users as $user) {
             $mail = ORM::for_table('message')->create();
-            $mail->sender_id = 0;
+            $mail->sender_id = $this->user->id;
             $mail->receiver_id = $user->id;
             $mail->type = MESSAGE_TYPE_CLAN_MESSAGE;
             $mail->subject = 'Clan message';

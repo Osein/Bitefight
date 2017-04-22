@@ -40,7 +40,7 @@ class BaseController extends Controller
 
             $this->view->user_new_message_count = ORM::for_table('message')
                 ->where('receiver_id', $this->user->id)
-                ->where('read', false)
+                ->where('status', 1)
                 ->count();
 
             $this->view->clan_application_count = ORM::for_table('clan_application')

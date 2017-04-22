@@ -10,6 +10,7 @@ namespace Bitefight\Controllers;
 
 use Bitefight\Models\MessageSettings;
 use ORM;
+use PDO;
 use Phalcon\Filter;
 use Phalcon\Http\Response;
 
@@ -24,7 +25,187 @@ class MessageController extends GameController
 
     public function getIndex()
     {
+        $inbox = new \stdClass();
+        $inbox->folder_name = 'Inbox';
+        $inbox->id = 0;
+        $inbox->newMsgCount = ORM::for_table('message')
+            ->where('receiver_id', $this->user->id)
+            ->where('status', 1)
+            ->where('folder_id', 0)
+            ->count();
+        $inbox->msgCount = ORM::for_table('message')
+            ->where('receiver_id', $this->user->id)
+            ->where('folder_id', 0)
+            ->count();
+
+        $outbox = new \stdClass();
+        $outbox->folder_name = 'Outbox';
+        $outbox->id = -1;
+        $outbox->newMsgCount = 0;
+        $outbox->msgCount = ORM::for_table('message')
+            ->where('sender_id', $this->user->id)
+            ->where('folder_id', 0)
+            ->count();
+
+        $folders = array(
+            $inbox
+        );
+
+        $pdo = ORM::getDb();
+        $stmt = $pdo->prepare('
+            SELECT
+              umf.folder_name,
+              umf.id,
+              COUNT(m.id) AS newMsgCount,
+              (SELECT COUNT(1) FROM message WHERE folder_id = umf.id AND receiver_id = umf.user_id) AS msgCount
+            FROM user_message_folder umf
+            LEFT JOIN message m ON m.folder_id = umf.id AND m.receiver_id = ? AND m.status = 1
+            WHERE umf.user_id = ?
+            GROUP BY umf.id
+        ');
+
+        $stmt->execute([$this->user->id, $this->user->id]);
+        $dbFolders = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $folders = array_merge($folders, $dbFolders);
+        $folders[] = $outbox;
+
+        $this->view->folders = $folders;
         $this->view->pick('message/index');
+    }
+
+    public function getRead()
+    {
+        $folder_id = $this->request->get('folder', Filter::FILTER_INT, 0);
+        $page = $this->request->get('page', Filter::FILTER_INT, 1);
+        $folder = ORM::for_table('user_message_folder')
+            ->find_one($folder_id);
+
+        if($folder_id == 0) {
+            $folder = new \stdClass();
+            $folder->user_id = $this->user->id;
+            $folder->folder_name = 'Inbox';
+            $folder->id = 0;
+        }
+
+        if($folder->user_id !== $this->user->id) {
+            return $this->response->redirect(getUrl('message'));
+        }
+
+        if($folder_id == -1) {
+            $messages = ORM::for_table('message')
+                ->where('sender_id', $this->user->id)
+                ->offset(($page - 1) * 15)
+                ->limit(15)
+                ->find_many();
+
+            $messageCount = ORM::for_table('message')
+                ->where('sender_id', $this->user->id)
+                ->count();
+        } else {
+            $messages = ORM::for_table('message')
+                ->select_many('message.*', 'user.name')
+                ->where('folder_id', $folder_id)
+                ->where('receiver_id', $this->user->id)
+                ->left_outer_join('user', ['user.id', '=', 'message.sender_id'])
+                ->offset(($page - 1) * 15)
+                ->limit(15)
+                ->find_many();
+
+            $messageCount = ORM::for_table('message')
+                ->where('folder_id', $folder_id)
+                ->where('receiver_id', $this->user->id)
+                ->count();
+        }
+
+        $messageFilteredCount = count($messages);
+
+        for($i = 0; $i < $messageFilteredCount; $i++) {
+            if($i > 0) {
+                $messages[$i]->previous_id = $messages[$i - 1]->id;
+            }
+
+            if($i < $messageFilteredCount - 1) {
+                $messages[$i]->next_id = $messages[$i + 1]->id;
+            }
+        }
+
+        $this->view->folder = $folder;
+        $this->view->msg_count = $messageCount;
+        $this->view->messages = $messages;
+        $this->view->page = $page;
+        $this->view->pick('message/read');
+    }
+
+    public function postRead()
+    {
+        $select = $this->request->get('select', Filter::FILTER_STRING, 'masked');
+        $do = $this->request->get('do', Filter::FILTER_STRING, 'read');
+        $folder = $this->request->get('folder', Filter::FILTER_INT, 0);
+        $page = $this->request->get('page', Filter::FILTER_INT, 1);
+
+        if($select == 'masked') {
+            $msgIds = array();
+
+            foreach ($this->request->get() as $p => $v) {
+                if(substr($p, 0, 1) == 'x') {
+                    $msgIds[] = intval(substr($p, 1));
+                }
+            }
+
+            if(count($msgIds)) {
+                $messages = ORM::for_table('message')
+                    ->where('receiver_id', $this->user->id)
+                    ->where_in('id', $msgIds)
+                    ->find_many();
+
+                if($do == 'read') {
+                    foreach ($messages as $msg) {
+                        $msg->status = 2;
+                        $msg->save();
+                    }
+                } elseif($do == 'del') {
+                    foreach ($messages as $msg) {
+                        $msg->delete();
+                    }
+                }
+            }
+        } elseif($select == 'all') {
+            if($do == 'read') {
+                ORM::raw_execute('UPDATE message SET status = 2 WHERE receiver_id = ?', [$this->user->id]);
+            } elseif($do == 'del') {
+                ORM::raw_execute('DELETE FROM message WHERE receiver_id = ?', [$this->user->id]);
+            }
+        } elseif($select == 'unmasked') {
+            $msgIds = array();
+
+            foreach ($this->request->get() as $p => $v) {
+                if(substr($p, 0, 1) == 'x') {
+                    $msgIds[] = intval(substr($p, 1));
+                }
+            }
+
+            $messages = ORM::for_table('message')
+                ->where('receiver_id', $this->user->id)
+                ->limit(15)
+                ->offset(($page - 1) * 15)
+                ->find_many();
+
+            foreach ($messages as $msg) {
+                if(in_array($msg->id, $msgIds)) {
+                    continue;
+                }
+
+                if($do == 'read') {
+                    $msg->status = 2;
+                    $msg->save();
+                } elseif($do == 'del') {
+                    $msg->delete();
+                }
+            }
+        }
+
+        return $this->response->redirect(getUrl('message/read?folder='.$folder.'&page='.$page));
     }
 
     public function jsonCheckReceiver()
@@ -54,31 +235,16 @@ class MessageController extends GameController
         return $response;
     }
 
-    public function jsonWriteMessage()
+    private function pWriteMessage($receiverId, $text, $subject)
     {
-        $token = $this->request->get('__token');
-        $tokenKey = $this->request->get('__tkey');
-        $receiverName = $this->request->get('receivername', Filter::FILTER_STRING, '');
-        $messageText = $this->request->get('message', Filter::FILTER_STRING, '');
-        $subject = $this->request->get('subject', Filter::FILTER_STRING, '');
         $responseData = new \stdClass();
         $responseData->errorstatus = 0;
         $responseData->error = 'message sent';
         $response = new Response();
 
-        if(!$this->security->checkToken($tokenKey, $token, false)) {
-            $responseData->errorstatus = 1;
-            $responseData->error = 'Token error';
-        }
+        $receiver = ORM::for_table('user')->find_one($receiverId);
 
-        if(!empty($receiverName)) {
-            $receiver = ORM::for_table('user')->select('id')->where('name', $receiverName)->find_one();
-
-            if(!$receiver) {
-                $responseData->errorstatus = 1;
-                $responseData->error = 'This player doesn`t exist';
-            }
-        } else {
+        if(!$receiver) {
             $responseData->errorstatus = 1;
             $responseData->error = 'This player doesn`t exist';
         }
@@ -88,7 +254,7 @@ class MessageController extends GameController
             $responseData->error = 'Subject must contain at least 2 characters';
         }
 
-        if(strlen($messageText) > 2000) {
+        if(strlen($text) > 2000) {
             $responseData->errorstatus = 1;
             $responseData->error = 'Message can not have higher than 2000 characters';
         }
@@ -99,11 +265,97 @@ class MessageController extends GameController
             $message->receiver_id = $receiver->id;
             $message->type = MESSAGE_TYPE_USER_MESSAGE;
             $message->subject = $subject;
-            $message->message = $messageText;
+            $message->message = $text;
             $message->save();
         }
 
         $response->setJsonContent($responseData);
+        return $response;
+    }
+
+    public function jsonWriteMessage()
+    {
+        $token = $this->request->get('__token');
+        $tokenKey = $this->request->get('__tkey');
+        $receiverName = $this->request->get('receivername', Filter::FILTER_STRING, '');
+        $messageText = $this->request->get('message', Filter::FILTER_STRING, '');
+        $subject = $this->request->get('subject', Filter::FILTER_STRING, '');
+
+        if(!$this->security->checkToken($tokenKey, $token, false)) {
+            $responseData = new \stdClass();
+            $responseData->errorstatus = 1;
+            $responseData->error = 'Token error';
+            $response = new Response();
+            $response->setJsonContent($responseData);
+            return $response;
+        }
+
+        $user = ORM::for_table('user')->where('name', $receiverName)->find_one();
+        return $this->pWriteMessage($user ? $user : 0, $messageText, $subject);
+    }
+
+    public function jsonSendAnswer()
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+        $receiverid = $this->request->get('receiverid', Filter::FILTER_STRING, '');
+        $messageText = $this->request->get('message', Filter::FILTER_STRING, '');
+        $subject = $this->request->get('subject', Filter::FILTER_STRING, '');
+
+        if(!$this->security->checkToken($tokenKey, $token, false)) {
+            $responseData = new \stdClass();
+            $responseData->errorstatus = 1;
+            $responseData->error = 'Token error';
+            $response = new Response();
+            $response->setJsonContent($responseData);
+            return $response;
+        }
+
+        $response = $this->pWriteMessage($receiverid, $messageText, $subject);
+        $jsonContent = $response->getContent();
+        $responseObj = json_decode($jsonContent);
+        $responseObj->msgmenu = 'newmessage';
+
+        if($responseObj->errorstatus == 0) {
+            $msgnr = $this->request->get('msgnr', Filter::FILTER_INT, 0);
+            $msg = ORM::for_table('message')->find_one($msgnr);
+
+            if($msg && $msg->receiver_id == $this->user->id) {
+                $msg->status = 3;
+                $msg->save();
+                $responseObj->msgicon = 3;
+            }
+        }
+
+        $response = new Response();
+        $response->setJsonContent($responseObj);
+        return $response;
+    }
+
+    public function jsonReadMessage() {
+        $this->view->disable();
+        $rmcheck = explode('|', $this->request->get('rmcheck'));
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if(count($rmcheck) != 2 || !$this->security->checkToken($tokenKey, $token, false)) {
+            return $this->notFound();
+        }
+
+        $user_id = $rmcheck[0];
+        $message_id = $rmcheck[1];
+
+        if($user_id != $this->user->id) {
+            return $this->notFound();
+        }
+
+        ORM::raw_execute('UPDATE message SET status = 2 WHERE receiver_id = ? AND id = ?', [$user_id, $message_id]);
+
+        $response = new Response();
+        $response->setJsonContent(array(
+            'msgicon' => 2,
+            'msgmenu' => 'newmessage'
+        ));
         return $response;
     }
 

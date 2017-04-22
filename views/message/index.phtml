@@ -6,7 +6,6 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <!-- CONTENT START -->
             <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">messages</h2>
             <div class="clearfix">
                 <?php echo $this->partial('partials/write_message'); ?>
@@ -17,60 +16,35 @@
                 </div>
                 <div class="btn-left right">
                     <div class="btn-right">
-                        <a href="<?php echo getUrl('message/settings'); ?>" class="btn">Settings</a>        </div>
+                        <a href="<?php echo getUrl('message/settings'); ?>" class="btn">Settings</a>
+                    </div>
                 </div>
                 <div class="btn-left right">
                     <div class="btn-right">
-                        <a href="<?php echo getUrl('message/folders'); ?>" class="btn">manage folders</a>        </div>
+                        <a href="<?php echo getUrl('message/folders'); ?>" class="btn">manage folders</a>
+                    </div>
                 </div>
                 <br class="clearfloat">
                 <div class="table-wrap">
                     <table width="100%" cellspacing="0" style="margin:0px;">
-                        <tbody><tr>
-                            <td class="tdn" width="25" style="padding:1px 5px;">
-                                <img alt="new Message" src="/img/symbols/mail_status1.png">                        </td>
-                            <td class="tdn" style="padding:1px 5px;">
-                                <a href="https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=0">Inbox</a>                            (
-                                2 / 5 messages                            )
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdn" width="25" style="padding:1px 5px;">
-                                <img alt="" src="/img/symbols/mail_status0.png">                        </td>
-                            <td class="tdn" style="padding:1px 5px;">
-                                <a href="https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=2">asgagasgasg</a>                            (
-                                0 message                            )
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdn" width="25" style="padding:1px 5px;">
-                                <img alt="" src="/img/symbols/mail_status0.png">                        </td>
-                            <td class="tdn" style="padding:1px 5px;">
-                                <a href="https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=1">xx</a>                            (
-                                0 message                            )
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdn" width="25" style="padding:1px 5px;">
-                                <img alt="" src="/img/symbols/mail_status0.png">                        </td>
-                            <td class="tdn" style="padding:1px 5px;">
-                                <a href="https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=5">gg</a>                            (
-                                0 message                            )
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="tdn" width="25" style="padding:1px 5px;">
-                                <img alt="" src="/img/symbols/mail_status0.png">                        </td>
-                            <td class="tdn" style="padding:1px 5px;">
-                                <a href="https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=100">Outbox</a>                            (
-                                0 message                            )
-                            </td>
-                        </tr>
-                        </tbody></table>
+                        <tbody>
+                        <?php foreach ($folders as $folder): ?>
+                            <tr>
+                                <td class="tdn" width="25" style="padding:1px 5px;">
+                                    <img alt="new Message" src="<?php echo getAssetLink('img/symbols/mail_status'.($folder->newMsgCount > 0 ? 1 : 0).'.png'); ?>">
+                                </td>
+                                <td class="tdn" style="padding:1px 5px;">
+                                    <a href="<?php echo getUrl('message/read?folder='.$folder->id); ?>"><?php echo e($folder->folder_name); ?></a> (<?php echo prettyNumber($folder->newMsgCount); ?> / <?php echo prettyNumber($folder->msgCount); ?> messages)
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="btn-left right">
                     <div class="btn-right">
-                        <a href="<?php echo getUrl('message/block'); ?>" class="btn">blocked players</a>        </div>
+                        <a href="<?php echo getUrl('message/block'); ?>" class="btn">blocked players</a>
+                    </div>
                 </div>
                 <br class="clearfloat">
             </div>

@@ -1,0 +1,515 @@
+<div class="btn-left left">
+    <div class="btn-right">
+        <a href="<?php echo getUrl('message'); ?>" class="btn">back</a>    </div>
+</div>
+<?php $this->partial('partials/write_message'); ?>
+<div class="btn-left left">
+    <div class="btn-right">
+        <a href="#" class="btn" onclick="writeMessageSplash()">Write message</a>
+    </div>
+</div>
+<br class="clearfloat">
+<script type="text/javascript">
+    var showMessage = false;
+    var dialogDivId = '#messageScreen';
+    var messageContent = '#messageContent';
+    var breakDiv = '#breakDiv';
+    var content = '';
+
+    function showAnswerMessageSplash(msgnr)
+    {
+        if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+        {
+        }
+        else
+        {
+            if (!$(breakDiv))
+            {
+                showBreakDiv();
+            }
+        }
+        $(dialogDivId).css('display', 'none');
+        $(dialogDivId).css('zIndex', '-1');
+        $(messageContent).html('');
+        showMessage = false;
+        content = '';
+        showAnswerForm(msgnr);
+    }
+
+    function showAnswerForm(msgnr)
+    {
+        if (navigator.userAgent.indexOf('MSIE') >= 0)
+        {
+            var doc_width  = document.documentElement.clientWidth;
+        }
+        else
+        {
+            var doc_width  = window.innerWidth;
+        }
+        $(dialogDivId).css("display", "block");
+
+        var off = $(dialogDivId).offsetWidth;
+        var left = Math.floor((doc_width / 2) - (off / 2));
+        var top = 100;
+        var width = 600;
+        $(dialogDivId).css("left", left+"px");
+        $(dialogDivId).css("top", top+"px");
+        $(dialogDivId).css("width", width+"px");
+        $(dialogDivId).css("zIndex", "501");
+
+        content += '<div id="answer_error" style="display:none;"></div>';
+        content += '<table id="answer_form" width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<tr>';
+        content += '<td>' + $('#title_sender').html() + ':</td>';
+        content += '<td><?php echo e($user->name); ?></td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td><b>Recipient</b>:</td>';
+        content += '<td>' + $('#message_'+msgnr+'_sender').html() + '</td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td style="padding:1px 5px;">' + $('#title_subject').html() + ':</td>';
+        content += '<td style="padding:1px 5px;"><input id="subject" style="margin:0px;" type="text" name="subject" size="30" maxlength="30" class="input" value="Re:' + $('#message_'+msgnr+'_content_subject').html() + '"></td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td><b>message</b><br>(<span id="charcount1" style="display:inline-block; margin-bottom:0px;">2000</span> Characters)</td>';
+        content += '<td><textarea id="message" class="no-bg fakeMsgBorder" style="margin:0px;" name="text" rows="9" cols="55" onkeydown="CheckLen(this)" onkeyup="CheckLen(this)" onfocus="CheckLen(this)" onchange="CheckLen(this)"></textarea></td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<table id="answer_form2" width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<td nowrap width="100%"><center><a href="#" onClick="sendAnswer()">( send )</a></center></td>';
+        content += '<td nowrap><center><a href="#" onClick="hideMessageSplash()">( Close )</a></center></td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<center>';
+        content += '<table id="answer_form3" width="100%" border="0" cellpadding="0" cellspacing="0" style="display:none;">';
+        content += '<tr>';
+        content += '<td><center><a href="#" onClick="hideMessageSplash()">( Close )</a></center></td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '</center>';
+        content += '<div id="msgnr" style="display:none;">'+msgnr+'</div>';
+        content += '<div id="receiverid" style="display:none;">'+$('#message_'+msgnr+'_receiver_id').html()+'</div>';
+        $(messageContent).html(content);
+    }
+
+    function sendAnswer()
+    {
+        $.getJSON('<?php echo getUrl('message/ajax/sendanswer'); ?>',
+            '&receiverid='+$('#receiverid').html()+
+            '&subject='+encodeURIComponent($('#subject').val())+
+            '&message='+encodeURIComponent($('#message').val())+
+            '&msgnr='+$('#msgnr').html()+
+            '&_token=<?php echo $this->security->getToken() ?>'+
+            '&_tkey=<?php echo $this->security->getTokenKey() ?>',
+            function(data)
+            {
+                if (data.errorstatus == 0)
+                {
+                    showMsgSendSuccess($('#msgnr').html(), data.error, data.msgicon, data.msgmenu);
+                }
+                else
+                {
+                    showMsgSendFail(data.error);
+                }
+            })
+    }
+
+    function showMsgSendSuccess(msgnr, message, msgicon, menuicon)
+    {
+        $('#answer_error').css('display', 'block');
+        $('#answer_error').html('<p class="info">'+message+'</p>');
+        $('#answer_form').css('display', 'none');
+        $('#answer_form2').css('display', 'none');
+        $('#answer_form3').css('display', 'block');
+        if (msgicon == 3)
+        {
+            $('#msg_status_'+msgnr).attr('src', '<?php echo getAssetLink('img/symbols/mail_status3.png'); ?>');
+        }
+        $('#msgmenu').attr('class', menuicon);
+    }
+
+    function showMsgSendFail(error)
+    {
+        $('#answer_error').css('display', 'block');
+        $('#answer_error').html('<p class="info">'+error+'</p>');
+    }
+
+    function CheckLen(Target)
+    {
+        var maxlength = "2000";
+        StrLen=Target.value.replace(/\r\n?/g, "\n").length;
+        if (StrLen==1&&Target.value.substring(0,1)==" ")
+        {
+            Target.value="";
+            StrLen=0;
+        }
+        if (StrLen>maxlength )
+        {
+            Target.value=Target.value.substring(0,maxlength);
+            CharsLeft=0;
+        }
+        else
+        {
+            CharsLeft=maxlength-StrLen;
+        }
+        document.getElementById('charcount1').innerHTML=CharsLeft;
+    }
+
+    function showMessageSplash(msgnr)
+    {
+        if (showMessage)
+        {
+            hideMessageSplash();
+            return;
+        }
+        else
+        {
+            if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+            {
+            }
+            else
+            {
+                showBreakDiv();
+            }
+            showMessage = true;
+        }
+        if ($('#message_'+msgnr+'_overlay_marks_as_read').length > 0) {
+            ajaxMailRead(msgnr);
+        }
+        if (navigator.userAgent.indexOf('MSIE') >= 0)
+        {
+            var doc_width  = document.documentElement.clientWidth;
+        }
+        else
+        {
+            var doc_width  = window.innerWidth;
+        }
+        $(dialogDivId).css("display", "block");
+
+        var off = $(dialogDivId).offsetWidth;
+        var left = Math.floor((doc_width / 2) - (off / 2));
+        var top = 100;
+        var width = 600;
+        $(dialogDivId).css("left", left+"px");
+        $(dialogDivId).css("top", top+"px");
+        $(dialogDivId).css("width", width+"px");
+        $(dialogDivId).css("zIndex", "501");
+
+        content += '<div id="message_previous_next_container">';
+        addPreviousAndNextLinksToContent(msgnr);
+        content += '</div>';
+
+        content += '<table width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<tr>';
+        if ($('#message_'+msgnr+'_receiver_id').length > 0 && $('#message_'+msgnr+'_announce').length > 0)
+        {
+            content += '<td width="100%">' + $('#title_date').html() + ': ' + $('#message_'+msgnr+'_time').html() + '</td>';
+            content += '<td nowrap>' + $('#message_'+msgnr+'_announce').html() + '</td>';
+        }
+        else
+        {
+            content += '<td colspan="2">' + $('#title_date').html() + ': ' + $('#message_'+msgnr+'_time').html() + '</td>';
+        }
+        content += '</tr>';
+        content += '</table>';
+        content += '<table width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<tr>';
+        content += '<td colspan="2">' + $('#title_sender').html() + ': ' + $('#message_'+msgnr+'_sender').html() + '</td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td colspan="2">' + $('#title_subject').html() + ': ' + $('#message_'+msgnr+'_content_subject').html() + '</td>';
+        content += '</tr>';
+        content += '<tr>';
+        content += '<td colspan="2" class="no-bg fakeMsgBorder">' + $('#message_'+msgnr+'_content_text').html() + '</td>';
+        content += '</tr>';
+        content += '</table>';
+        content += '<table width="100%" border="0" cellpadding="0" cellspacing="0">';
+        content += '<tr>';
+        if ($('#message_'+msgnr+'_receiver_id').length > 0 && $('#message_'+msgnr+'_answer').length > 0)
+        {
+            content += '<td nowrap><center>'+$('#message_'+msgnr+'_answer').html()+'</center></td>';
+            content += '<td nowrap><center><a href="#" onClick="hideMessageSplash()">( Close )</a></center></td>';
+        }
+        else
+        {
+            content += '<td nowrap colspan="2"><center><a href="#" onClick="hideMessageSplash()">( Close )</a></center></td>';
+        }
+        content += '</tr>';
+        content += '</table>';
+        $(messageContent).html(content);
+    }
+
+    function addPreviousAndNextLinksToContent(msgnr) {
+        if ($('#message_'+msgnr+'_previous_id').length > 0) {
+            content += '<a href="#" onclick="hideMessageSplash();showMessageSplash(' + $('#message_'+msgnr+'_previous_id').html() + ')"><</a>';
+        }
+        else {
+            content += '&nbsp;&nbsp;';
+        }
+        content += '&nbsp;&nbsp;&nbsp;';
+        if ($('#message_'+msgnr+'_next_id').length > 0) {
+            content += '<a href="#" onclick="hideMessageSplash();showMessageSplash(' + $('#message_'+msgnr+'_next_id').html() + ')">></a>';
+        }
+        else {
+            content += '&nbsp;&nbsp;';
+        }
+    }
+
+    function hideMessageSplash()
+    {
+        if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+        {
+        }
+        else
+        {
+            hideBreakDiv();
+        }
+        $(dialogDivId).css('display', 'none');
+        $(dialogDivId).css('zIndex', '-1');
+        $(messageContent).html('');
+        showMessage = false;
+        content = '';
+    }
+
+    function showBreakDiv()
+    {
+        var div=document.createElement('div');
+        div.id = 'breakDiv';
+        div.className = 'break_div';
+        div.onmousedown = function() {hideMessageSplash();};
+        div.style.zIndex = 500;
+        div.style.overflow = 'hidden';
+        if (navigator.userAgent.indexOf('MSIE 6.0') >= 0)
+        {
+            document.body.style.width='100%';
+            document.body.style.height='100%';
+            div.style.width=document.body.offsetWidth+'px';
+            div.style.height=document.body.offsetHeight+'px';
+        }
+        else
+        {
+            div.style.position='fixed';
+            div.style.width='100%';
+            div.style.height='100%';
+        }
+        document.body.appendChild(div);
+    }
+
+    function hideBreakDiv()
+    {
+        if ($(breakDiv))
+        {
+            $(breakDiv).remove();
+        }
+    }
+
+    function ajaxMailRead(msgnr, isSynchronous)
+    {
+        isSynchronous = typeof(isSynchronous) != 'undefined' ? isSynchronous : false;
+
+        if ($('#message_'+msgnr+'_read_key').length > 0)
+        {
+            $.ajax({
+                type: 'GET',
+                url: '<?php echo getUrl('message/ajax/readmessage'); ?>',
+                dataType: 'json',
+                success: function(data)
+                {
+                    if (data.msgicon == 2)
+                    {
+                        $('#msg_status_'+msgnr).attr('src', '<?php echo getAssetLink('img/symbols/mail_status2.png'); ?>');
+                    }
+                    $('#msgmenu').attr('class', data.msgmenu);
+                },
+                data: {
+                    rmcheck: $('#message_'+msgnr+'_read_key').html(),
+                    _tkey: "<?php echo $this->security->getTokenKey() ?>",
+                    _token: "<?php echo $this->security->getToken() ?>"
+                },
+                async: !isSynchronous
+            });
+
+        }
+    }
+</script>
+<div id="inbox">
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Folder <?php echo e($folder->folder_name); ?> (<?php echo $msg_count; ?>)</h2>
+
+            <div id="messageScreen" class="message_screen">
+                <div id="messageReader">
+                    <div class="wrap-top-left clearfix">
+                        <div class="wrap-top-right clearfix">
+                            <div class="wrap-top-middle clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="wrap-left clearfix">
+                        <div class="wrap-content wrap-right clearfix">
+                            <div id="messageContent" class="message_content"></div>
+                        </div>
+                    </div>
+                    <div class="wrap-bottom-left">
+                        <div class="wrap-bottom-right">
+                            <div class="wrap-bottom-middle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                <!--
+                function AllMessages(form)
+                {
+                    for (var x = 0; x< form.elements.length; x++) {
+                        var y = form.elements[x];
+                        if (y.name != 'ALLMSGS') {
+                            y.checked = form.ALLMSGS.checked;
+                        }
+                    }
+                }
+                //-->
+            </script>
+            <form method="POST">
+                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                <input type="hidden" name="page" value="<?php echo $page; ?>">
+                <input type="hidden" name="folder" value="<?php echo $folder->id; ?>">
+                <br class="clearfloat">
+                <div class="table-wrap">
+                    <div id="msgOptions" class="clearfix">
+                        <select name="select" size="1">
+                            <option value="masked">tagged messages</option>
+                            <option value="all">all messages</option>
+                            <option value="unmasked">untagged messages</option>
+                        </select>
+                        <select name="do" size="1">
+                            <option value="del">delete</option>
+                            <option value="read" selected="selected">mark as read</option>
+
+                        </select>
+                        <div class="btn-left left">
+                            <div class="btn-right">
+                                <input type="submit" class="btn" name="edit" value="Go!">
+                            </div>
+                        </div>
+                    </div>
+                    <table id="message_overview" width="100%" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td class="tdn" colspan="5" style="padding:0px 5px;">
+                                <input class="check" type="checkbox" name="ALLMSGS" value="ALLMSGS" onclick="AllMessages(this.form);">all messages
+                            </td>
+                        </tr>
+                        <tr class="noBackground">
+                            <td colspan="2">&nbsp;</td>
+                            <td id="title_date"><b>Date</b></td>
+                            <td id="title_sender"><b>Sender</b></td>
+                            <td id="title_subject"><b>Subject</b></td>
+                        </tr>
+                        <?php foreach ($messages as $msg): ?>
+                            <tr>
+                                <td class="tdn" width="15" valign="top" style="padding:1px 5px;">
+                                    <input class="check" type="checkbox" name="x<?php echo $msg->id; ?>" value="y" style="margin:0px;">
+                                </td>
+                                <td class="tdn" width="30" valign="top" style="padding:1px 5px;">
+                                    <img id="msg_status_<?php echo $msg->id; ?>" alt="" src="<?php echo getAssetLink('img/symbols/mail_status'.$msg->status.'.png'); ?>" style="display:inline; margin:0px;">
+                                </td>
+                                <td width="100" class="tdn" valign="top" style="padding:1px 5px;">
+                                    <span id="message_<?php echo $msg->id; ?>_time"><?php echo date('d.m.Y H:i', strtotime($msg->sent_at)); ?></span>
+                                </td>
+                                <td class="tdn" width="20%" valign="top" style="padding:1px 5px;">
+                                    <span id="message_<?php echo $msg->id; ?>_sender"><?php echo e($msg->name); ?></span>
+                                    <div id="message_<?php echo $msg->id; ?>_receiver_id" style="display:none;"><?php echo $msg->sender_id; ?></div>
+                                </td>
+                                <td class="tdn" valign="top" style="padding:1px 5px;">
+                                <span id="message_<?php echo $msg->id; ?>_subject" class="">
+                                    <a href="#"
+                                       <?php if($msg->type == MESSAGE_TYPE_CLAN_MESSAGE || $msg->type == MESSAGE_TYPE_USER_MESSAGE): ?>
+                                       onclick="showMessageSplash('<?php echo $msg->id; ?>');"
+                                       <?php else: ?>
+                                       onclick="ajaxMailRead(<?php echo $msg->id; ?>, true); return true;"
+                                       <?php endif; ?>
+                                    ><?php echo e($msg->subject); ?></a>
+                                    <div id="message_<?php echo $msg->id; ?>_content" style="display:none;">
+                                        <div id="message_<?php echo $msg->id; ?>_content_subject"><?php echo e($msg->subject); ?></div>
+                                        <!--<div id="message_<?php /*echo $msg->id; */?>_announce">
+                                            <a class="copyright" href="/msg/complain/cmail?id=<?php /*echo $msg->id; */?>&amp;cc=2b55453">( report )</a>
+                                        </div>-->
+                                        <div id="message_<?php echo $msg->id; ?>_content_text">
+                                            <?php if($msg->type == MESSAGE_TYPE_RACE_HUNT || $msg->type == MESSAGE_TYPE_GROTTO): ?>
+                                                <a href="/report/fightreport/83753058" onclick="ajaxMailRead(117727712, true); return true;">Battle Report</a>
+                                            <?php else: ?>
+                                                <?php echo e($msg->message); ?>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div id="message_<?php echo $msg->id; ?>_read_key"><?php echo $user->id; ?>|<?php echo $msg->id; ?></div>
+
+                                        <?php if($msg->type == MESSAGE_TYPE_USER_MESSAGE): ?>
+                                        <div id="message_<?php echo $msg->id; ?>_answer"><a href="#" onclick="showAnswerMessageSplash('<?php echo $msg->id; ?>')">( answer )</a></div>
+                                        <div id="message_<?php echo $msg->id; ?>_answer_key"><?php echo $msg->sender_id; ?>|<?php echo $user->id; ?>|<?php echo $msg->id; ?></div>
+                                        <?php endif; ?>
+
+                                        <?php if($msg->type == MESSAGE_TYPE_USER_MESSAGE || $msg->type == MESSAGE_TYPE_CLAN_MESSAGE): ?>
+                                            <div id="message_<?php echo $msg->id; ?>_overlay_marks_as_read">true</div>
+                                        <?php endif; ?>
+
+                                        <?php if(isset($msg->previous_id)): ?><div id="message_<?php echo $msg->id; ?>_previous_id"><?php echo $msg->previous_id; ?></div><?php endif; ?>
+                                        <?php if(isset($msg->next_id)): ?><div id="message_<?php echo $msg->id; ?>_next_id"><?php echo $msg->next_id; ?></div><?php endif; ?>
+                                    </div>
+                                </span>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        <?php if(ceil($msg_count / 15) > 0): ?>
+                            <tr>
+                                <td align="center" class="no-bg" colspan="4">
+                                    Page:
+                                    <?php for($i = 1; $i <= ceil($msg_count / 15); $i++): ?>
+                                        <?php if($page == $i): echo $i; ?>
+                                        <?php else: ?>
+                                            <a href="<?php echo getUrl('message/read/?folder='.$folder->id.'&page='.$i); ?>"><?php echo $i; ?></a>
+                                        <?php endif; ?>
+                                    <?php endfor; ?>
+                                    <script>
+                                        function redirectToPage(option) {
+                                            var pageNumber = option.value;
+                                            window.location.href = "https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=0&page=" + pageNumber;
+                                        }
+                                    </script>
+
+                                    <select size="1" onchange="redirectToPage(this)">
+                                        <?php for($i = 1; $i <= ceil($msg_count / 15); $i++): ?>
+                                            <option value="<?php echo $i; ?>" <?php if($page == $i) echo 'selected=""'; ?>><?php echo $i; ?></option>
+                                        <?php endfor; ?>
+                                    </select>
+
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <script type="text/javascript" language="javascript">
+                    function show_hide_menus(ele)    {
+                        if (document.getElementById(ele).style.display=='') {
+                            document.getElementById(ele).style.display='none';
+                        } else {
+                            document.getElementById(ele).style.display='';
+                        }
+                    }
+                </script>
+            </form>
+        </div>
+    </div>
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+</div>
