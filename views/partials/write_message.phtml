@@ -36,7 +36,7 @@
         content += '<tr>';
         content += '<td><b>Recipient</b>:</td>';
         content += '<td style="padding:1px 5px;">';
-        content += '<input id="receivername" style="margin:0;" type="text" name="receiver" size="30" maxlength="30" class="input" value="" autocomplete="off">';
+        content += '<input id="receivername" style="margin:0;" type="text" name="receiver" size="30" maxlength="30" class="input" value="<?php if(isset($receiverName)) echo e($receiverName); ?>" autocomplete="off">';
         content += '</td>';
         content += '</tr>';
         content += '<tr>';
@@ -177,3 +177,23 @@
     }
 
 </script>
+
+<div id="newMessageScreen" class="message_screen">
+    <div id="messageWriter">
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <div id="newMessageContent" class="message_content"></div>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+    </div>
+</div>
