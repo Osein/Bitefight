@@ -10,11 +10,9 @@ Home, News, Login, Register, Forget password, Highscore
 
 Hideout, Notepad, Search, Human Hunt, Clan
 
-Preview: Clan
+Preview: Clan, User
 
 ## Progress
-
-*User Preview* ( Needs: Message )
 
 **Profile** ( Done: Stats, Logo )
 
