@@ -32,9 +32,6 @@ class BaseController extends Controller
      */
     protected $oldFlashData;
 
-    /**
-     * @return bool
-     */
     public function initialize()
     {
         if ($this->session->get('user_id', false)) {
@@ -44,6 +41,10 @@ class BaseController extends Controller
             $this->view->user_new_message_count = ORM::for_table('message')
                 ->where('receiver_id', $this->user->id)
                 ->where('read', false)
+                ->count();
+
+            $this->view->clan_application_count = ORM::for_table('clan_application')
+                ->where('clan_id', $this->user->clan_id)
                 ->count();
 
             $lastUpdate = $this->user->last_update;
@@ -63,7 +64,7 @@ class BaseController extends Controller
                     $this->user->hp_now = min($hpDelta + $this->user->hp_now, $this->user->hp_max);
                 }
 
-                $this->user->last_update = $timeNow;
+                $this->user->last_activity = $timeNow;
             }
         }
 
@@ -73,12 +74,6 @@ class BaseController extends Controller
         return true;
     }
 
-    /**
-     * Called before the execution of handler
-     *
-     * @param Dispatcher $dispatcher
-     * @return bool
-     */
     public function beforeExecuteRoute(Dispatcher $dispatcher)
     {
         if ($this->request->isPost() && !$this->security->checkToken() && $dispatcher->getControllerName() != 'Error') {
@@ -105,9 +100,6 @@ class BaseController extends Controller
         return true;
     }
 
-    /**
-     * Works after the route executed.
-     */
     public function afterExecuteRoute()
     {
         // Idiorm will look for dirty fields.
@@ -121,9 +113,6 @@ class BaseController extends Controller
         $this->view->executeTime = microtime(true) - APP_START_TIME;
     }
 
-    /**
-     * Here to replace the ugly code
-     */
     public function notFound()
     {
         return $this->dispatcher->forward(array(

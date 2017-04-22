@@ -12,6 +12,23 @@ const ACTIVITY_TYPE_GRAVEYARD = 4;
 const MESSAGE_TYPE_USER_MESSAGE = 1;
 const MESSAGE_TYPE_SYSTEM_MESSAGE = 2;
 
+function getClanStatusColor($last_activity) {
+    $delta = time() - $last_activity;
+
+    if($delta < 300) {
+        return 'lime';
+    } elseif($delta < 900) {
+        return 'green';
+    } else {
+        return 'red';
+    }
+}
+
+function getClanStatusString($last_activity)
+{
+    return floor((time() - $last_activity) / 3600).'d '.gmdate("H:i:s", time() - $last_activity);
+}
+
 function getRaceString($race = 1) {
     return $race === 1 ? \Bitefight\Library\Translate::_('vampire') : \Bitefight\Library\Translate::_('werewolf');
 }

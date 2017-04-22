@@ -36,7 +36,7 @@
             <img border="0" src="<?php echo getAssetLink('img/voodoo/res3_rotation.gif'); ?>">
             <a href="<?php echo getUrl('profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_voodoo_shop'); ?></a>
         </li>-->
-        <li <?php if ($menu_active == 'clan') echo 'class="active"'; ?>><a href="<?php echo getUrl('clan/index'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_clan'); ?></a></li>
+        <li <?php if ($menu_active == 'clan') echo 'class="active"'; ?>><a href="<?php echo getUrl('clan/index'); ?>" <?php if($clan_application_count) echo 'class="newmessage"'; ?> target="_top"><?php echo \Bitefight\Library\Translate::_('menu_clan'); ?></a></li>
         <!--<li <?php if ($menu_active == 'register') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_buddy_list'); ?></a></li>-->
         <li <?php if ($menu_active == 'notepad') echo 'class="active"'; ?>><a href="<?php echo getUrl('notepad'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_notepad'); ?></a></li>
         <!--<li class="free-space "></li>-->

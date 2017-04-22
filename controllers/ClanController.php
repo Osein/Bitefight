@@ -609,4 +609,50 @@ class ClanController extends GameController
 
         return $this->response->redirect(getUrl('clan/applications'));
     }
+
+    public function getMemberList()
+    {
+        $this->view->clan = ORM::for_table('clan')->find_one($this->user->clan_id);
+
+        $order = $this->request->get('order', null, 'exp');
+        $type = $this->request->get('type', null, 'desc');
+        $this->view->type = $type;
+        $this->view->order = $order;
+
+        if(!$this->view->clan) {
+            return $this->notFound();
+        }
+
+        $users = ORM::for_table('user')
+            ->select('user.*')->select('clan_rank.rank_name')
+            ->left_outer_join('clan_rank', ['user.clan_rank', '=', 'clan_rank.id'])
+            ->where('user.clan_id', $this->user->clan_id);
+
+        if($order == 'name') {
+            $order = 'user.name';
+        } elseif($order == 'level') {
+            $order = 'user.exp';
+        } elseif($order == 'rank') {
+            $order = 'clan_rank.rank_name';
+        } elseif($order == 'res1') {
+            $order = 'user.s_booty';
+        } elseif($order == 'goldwon') {
+            $order = 'user.s_gold_captured';
+        } elseif($order == 'goldlost') {
+            $order = 'user.s_gold_lost';
+        } elseif($order == 'status') {
+            $order = 'user.last_activity';
+        }
+
+        if($type == 'desc') {
+            $users = $users->orderByDesc($order);
+        } else {
+            $users = $users->orderByAsc($order);
+        }
+
+        $this->view->members = $users
+            ->find_many();
+
+        $this->view->pick('clan/memberlist');
+    }
 }
