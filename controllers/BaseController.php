@@ -539,7 +539,7 @@ class BaseController extends Controller
 
     public function getClanPreview($id)
     {
-        $this->view->menu_active = 'clan_preview';
+        $this->view->menu_active = 'clan';
         $this->view->clan = ORM::for_table('clan')
             ->leftOuterJoin('user', ['user.clan_id', '=', 'clan.id'])
             ->leftOuterJoin('clan_description', ['clan.id', '=', 'clan_description.clan_id'])
