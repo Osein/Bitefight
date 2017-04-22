@@ -8,7 +8,7 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 Home, News, Login, Register, Forget password, Highscore
 
-Hideout, Notepad, Search, Human Hunt
+Hideout, Notepad, Search, Human Hunt, Clan
 
 Preview: Clan
 
@@ -28,9 +28,9 @@ Preview: Clan
 
 *Shop*: -
 
-**Clan** ( Done: Create, Leave, Clan messages, Donate, Hideout upgrade, Change logo, Description, Rename clan, Member rights, Donation, Application )
+**Messages** ( Done: Block, Settings, Folders, Send )
 
-*Clan mail*: Needs user messages
+*Folder view*: -
 
 ## Todo
 
