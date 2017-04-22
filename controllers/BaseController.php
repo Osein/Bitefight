@@ -565,7 +565,8 @@ class BaseController extends Controller
         $this->view->pick('clan/preview');
     }
 
-    public function postClanVisitHomepage($id) {
+    public function postClanVisitHomepage($id)
+    {
         $clan = ORM::for_table('clan')
             ->find_one($id);
 
@@ -584,5 +585,23 @@ class BaseController extends Controller
         $clan->save();
 
         return $this->response->redirect($clan->website);
+    }
+
+    public function getClanMemberListExt($id)
+    {
+        $this->view->clan = ORM::for_table('clan')->find_one($id);
+
+        if(!$this->view->clan) {
+            return $this->notFound();
+        }
+
+        $this->view->memberList = ORM::for_table('user')
+            ->select('user.*')->select('clan_rank.rank_name')
+            ->left_outer_join('clan_rank', ['user.clan_rank', '=', 'clan_rank.id'])
+            ->where('clan_id', $id)
+            ->find_many();
+
+        $this->view->menu_active = 'clan_memberlist_ext';
+        $this->view->pick('clan/memberlist_ext');
     }
 }

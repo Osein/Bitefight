@@ -38,7 +38,7 @@
                     <tr>
                         <td>Members</td>
                         <td>
-                            <a href="https://s202-en.bitefight.gameforge.com:443/clan/memberlistExt/9305"><?php echo $clan->member_count; ?> / <?php echo $clan->max_members; ?> Member</a>
+                            <a href="<?php echo getUrl('clan/memberlistExt/'.$clan->id); ?>"><?php echo $clan->member_count; ?> / <?php echo $clan->max_members; ?> Member</a>
                         </td>
                     </tr>
                     <tr>
