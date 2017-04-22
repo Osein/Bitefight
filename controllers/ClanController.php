@@ -12,6 +12,7 @@ namespace Bitefight\Controllers;
 use Bitefight\Library\Translate;
 use Bitefight\Models\ClanRank;
 use ORM;
+use PDO;
 use Phalcon\Filter;
 
 class ClanController extends GameController
@@ -540,7 +541,7 @@ class ClanController extends GameController
             LEFT JOIN clan_application ON clan.id = clan_application.clan_id AND clan_application.user_id = ?
             WHERE clan.id = ?');
         $stmt->execute([$this->user->id, $id]);
-        $this->view->clan = $stmt->fetch(\PDO::FETCH_OBJ);
+        $this->view->clan = $stmt->fetch(PDO::FETCH_OBJ);
 
         $this->view->pick('clan/apply');
     }
@@ -654,5 +655,84 @@ class ClanController extends GameController
             ->find_many();
 
         $this->view->pick('clan/memberlist');
+    }
+
+    public function getDonationList()
+    {
+        if($this->request->get('action') == 'refresh') {
+            $this->user->clan_dtime = time();
+        }
+
+        $order = $this->request->get('order', null, 'name');
+        $type = $this->request->get('type', null, 'desc') == 'desc' ? 'desc' : 'asc';
+        $this->view->type = $type;
+        $this->view->order = $order;
+
+        if($order == 'status') {
+            $order = 'clan_rank.rank_name';
+        } elseif($order == 'amount') {
+            $order = 'total_donate';
+        } elseif($order == 'time') {
+            $order = 'user.last_activity';
+        } else {
+            $order = 'user.name';
+        }
+
+        $pdo = ORM::getDb();
+
+        $stmt = $pdo->prepare('
+            SELECT
+              user.id,
+              user.name,
+              clan_rank.rank_name,
+              SUM(clan_donate.donate) AS total_donate,
+              user.last_activity,
+              (SELECT COUNT(1) FROM clan_donate WHERE donate_date >= ?) AS donate_amount
+            FROM user
+            LEFT JOIN clan_rank ON clan_rank.id = user.clan_rank
+            LEFT JOIN clan_donate ON user.id = clan_donate.user_id
+            WHERE user.clan_id = ?
+            GROUP BY user.id
+            ORDER BY '.$order.' '.$type.'
+        ');
+
+        $stmt->execute(array(
+            $this->user->clan_dtime,
+            $this->user->clan_id
+        ));
+
+        $this->view->userList = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $order2 = $this->request->get('order2', null, 'time');
+        $type2 = $this->request->get('type2', null, 'desc') == 'desc' ? 'desc' : 'asc';
+        $this->view->type2 = $type2;
+        $this->view->order2 = $order2;
+
+        if($order2 == 'status') {
+            $order2 = 'clan_rank.rank_name';
+        } elseif($order2 == 'amount') {
+            $order2 = 'clan_donate.donate';
+        } elseif($order2 == 'time') {
+            $order2 = 'clan_donate.donate_date';
+        } else {
+            $order2 = 'user.name';
+        }
+
+        $stmt = $pdo->prepare('
+            SELECT clan_donate.*, user.id, user.name, clan_rank.rank_name
+            FROM clan_donate
+            LEFT JOIN user ON clan_donate.user_id = user.id
+            LEFT JOIN clan_rank ON user.clan_rank = clan_rank.id
+            WHERE clan_donate.clan_id = ?
+            ORDER BY '.$order2.' '.$type2.'
+        ');
+
+        $stmt->execute(array(
+            $this->user->clan_id
+        ));
+
+        $this->view->donateList = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $this->view->pick('clan/donationlist');
     }
 }

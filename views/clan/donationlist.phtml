@@ -1,0 +1,70 @@
+<div class="btn-left left"><div class="btn-right"><a href="<?php echo getUrl('clan/index'); ?>" class="btn">back</a></div></div>
+<br class="clearfloat">
+<div id="donationList">
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Clan donation</h2>
+
+            <div class="table-wrap">
+                <p>green display = the member has made a donation</p>
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <td><a href="<?php echo getUrl('clan/donationlist/?order=name&type='.($order == 'name' && $type == 'desc' ? 'asc' : 'desc')); ?>">Player</a></td>
+                        <td><a href="<?php echo getUrl('clan/donationlist/?order=status&type='.($order == 'status' && $type == 'desc' ? 'asc' : 'desc')); ?>">Rank</a></td>
+                        <td align="right"><a href="<?php echo getUrl('clan/donationlist/?order=amount&type='.($order == 'amount' && $type == 'desc' ? 'asc' : 'desc')); ?>">Gold</a></td>
+                        <td align="right"><a href="<?php echo getUrl('clan/donationlist/?order=time&type='.($order == 'time' && $type == 'desc' ? 'asc' : 'desc')); ?>">Status</a></td>
+                    </tr>
+                    <?php foreach($userList as $duser): ?>
+                        <tr>
+                            <td><a href="<?php echo getUrl('profile/player/'.$duser->id); ?>"><?php echo e($duser->name); ?></a></td>
+                            <td><?php echo $duser->rank_name; ?></td>
+                            <td align="right"><font <?php if($duser->donate_amount > 0) echo 'color="lime"' ?>><?php echo prettyNumber($duser->total_donate); ?></font></td>
+                            <td align="right"><font color="<?php echo getClanStatusColor($duser->last_activity); ?>"><?php echo getClanStatusString($duser->last_activity); ?></font></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="btn-left left"><div class="btn-right">
+                    <a class="btn" href="/clan/donationlist/?action=refresh">refresh</a>
+                </div>
+            </div>
+
+            <br class="clearfloat">
+
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">Details about Clan donations</h2>
+
+            <div class="table-wrap">
+                <table width="100%">
+                    <tbody>
+                    <tr>
+                        <td><a href="<?php echo getUrl('clan/donationlist/?order2=name&type2='.($order2 == 'name' && $type2 == 'desc' ? 'asc' : 'desc')); ?>">Player</a></td>
+                        <td><a href="<?php echo getUrl('clan/donationlist/?order2=status&type2='.($order2 == 'status' && $type2 == 'desc' ? 'asc' : 'desc')); ?>">Rank</a></td>
+                        <td align="right"><a href="<?php echo getUrl('clan/donationlist/?order2=amount&type2='.($order2 == 'amount' && $type2 == 'desc' ? 'asc' : 'desc')); ?>">Gold</a></td>
+                        <td align="right"><a href="<?php echo getUrl('clan/donationlist/?order2=time&type2='.($order2 == 'time' && $type2 == 'desc' ? 'asc' : 'desc')); ?>">Date</a></td>
+                    </tr>
+                    <?php foreach($donateList as $donate): ?>
+                        <tr>
+                            <td><a href="<?php echo getUrl('profile/player/'.$donate->id); ?>"><?php echo e($donate->name); ?></a></td>
+                            <td><?php echo $donate->rank_name; ?></td>
+                            <td align="right"><?php echo prettyNumber($donate->donate); ?></td>
+                            <td align="right"><?php echo date('D, d.m.Y - H:i:s', $donate->donate_date); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+</div>
