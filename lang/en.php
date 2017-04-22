@@ -40,6 +40,8 @@ return [
     'pagination_to_the_end' => 'to the end',
     'clan_tag' => 'Clan tag',
 
+    'inbox' => 'Inbox',
+
     'booty' => 'Booty',
     'battles' => 'Battles',
     'fights' => 'Fights',
@@ -197,6 +199,27 @@ return [
     'settings_link_clan_name' => 'Clan - Name',
     'settings_link_clan_tag' => 'Clan - Clan tag',
     'settings_font_colour' => 'Font colour',
+
+    // Message Strings
+    'messages_mark_read' => 'mark as read',
+    'message_folder_select' => 'Folder %folder%',
+    'message_delete_immediately' => 'delete immediately',
+    'message_setting_string_work' => 'Messages from work',
+    'message_setting_string_clan_founded' => 'Clan founded',
+    'message_setting_string_left_clan' => 'You have left the clan',
+    'message_setting_string_disbanded_clan' => 'You have disbanded the clan',
+    'message_setting_string_clan_disbanded' => 'The clan was disbanded',
+    'message_setting_string_clan_mail' => 'Clan mails',
+    'message_setting_string_clan_app_rejected' => 'The clan application was rejected',
+    'message_setting_string_clan_app_accepted' => 'The application to the clan was accepted',
+    'message_setting_string_clan_member_left' => 'A member has left the clan',
+    'message_setting_string_attacked' => 'You`ve attacked someone',
+    'message_setting_string_got_attacked' => 'You were attacked',
+    'message_setting_string_clan_wars' => 'Clan wars',
+    'message_setting_string_grotto' => 'Grotto fight',
+    'message_setting_string_adventure' => 'Adventure messages',
+    'message_setting_string_mission' => 'Mission accomplished',
+    'message_setting_string_report_answer' => 'Answers to the reported messages',
 
     // Search Strings
     'search_header_form' => 'What are you looking for?',

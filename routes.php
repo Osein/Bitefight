@@ -55,7 +55,9 @@ $message->addGet('/ajax/writemessage', ['action' => 'jsonWriteMessage']);
 $message->addGet('/folders', ['action' => 'getFolders']);
 $message->addPost('/folders', ['action' => 'postFolders']);
 $message->addGet('/settings', ['action' => 'getSettings']);
+$message->addPost('/settings', ['action' => 'postSettings']);
 $message->addGet('/block', ['action' => 'getBlockedPlayers']);
+$message->addPost('/block', ['action' => 'postBlockedPlayers']);
 $router->mount($message);
 
 $city = new \Phalcon\Mvc\Router\Group(['controller' => 'City']);

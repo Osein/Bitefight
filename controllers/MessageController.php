@@ -8,6 +8,7 @@
 
 namespace Bitefight\Controllers;
 
+use Bitefight\Models\MessageSettings;
 use ORM;
 use Phalcon\Filter;
 use Phalcon\Http\Response;
@@ -246,12 +247,112 @@ class MessageController extends GameController
 
     public function getSettings()
     {
+        $this->view->folders = ORM::for_table('user_message_folder')
+            ->where('user_id', $this->user->id)
+            ->orderByAsc('folder_order')
+            ->find_many();
+
+        $this->view->msgSettings = MessageSettings::getUserSettings();
+
         $this->view->pick('message/settings');
+    }
+
+    public function postSettings()
+    {
+        $userSettings = ORM::for_table('user_message_settings')
+            ->where('user_id', $this->user->id)
+            ->find_many();
+
+        $userMessageFolders = array(-1, 0);
+        $userMessageFoldersRes = ORM::for_table('user_message_folder')
+            ->where('user_id', $this->user->id)
+            ->find_many();
+
+        foreach ($userMessageFoldersRes as $folder) {
+            $userMessageFolders[] = $folder->id;
+        }
+
+        $requestVars = $this->request->get();
+
+        foreach ($requestVars as $var => $val) {
+            if(substr($var, 0, 1) == 'x') {
+                $settingId = substr($var, 1);
+
+                isset($requestVars['m'.$settingId])?$settingReadCheckbox = 1: $settingReadCheckbox = 0;
+
+                $settingType = MessageSettings::getMessageSettingTypeFromSettingViewId($settingId);
+
+                if(empty($settingType) || (!in_array($val, $userMessageFolders))) {
+                    continue;
+                }
+
+                $settingExists = false;
+
+                foreach ($userSettings as $settingObj) {
+                    if($settingObj->setting == $settingType) {
+                        $settingObj->folder_id = $val;
+                        $settingObj->mark_read = $settingReadCheckbox;
+                        $settingObj->save();
+                        $settingExists = true;
+                    }
+                }
+
+                if(!$settingExists) {
+                    $setting = ORM::for_table('user_message_settings')
+                        ->create();
+                    $setting->user_id = $this->user->id;
+                    $setting->setting = $settingType;
+                    $setting->folder_id = $val;
+                    $setting->mark_read = $settingReadCheckbox;
+                    $setting->save();
+                }
+            }
+        }
+
+        return $this->response->redirect(getUrl('message/settings'));
     }
 
     public function getBlockedPlayers()
     {
+        $this->view->bottom_info = self::getFlashData('message_block_info');
+        $this->view->blocked_users = ORM::for_table('user_message_block')
+            ->select('user.id')->select('user.name')
+            ->left_outer_join('user', ['user.id', '=', 'user_message_block.blocked_id'])
+            ->where('user_message_block.user_id', $this->user->id)
+            ->find_many();
         $this->view->pick('message/blocked_players');
+    }
+
+    public function postBlockedPlayers()
+    {
+        $action = $this->request->get('action', Filter::FILTER_STRING, '');
+
+        if($action == 'add') {
+            $name = $this->request->get('name', Filter::FILTER_STRING, '');
+
+            if(!empty($name)) {
+                $blockUser = ORM::for_table('user')
+                    ->select('id')
+                    ->where('name', $name)
+                    ->find_one();
+
+                if($blockUser) {
+                    $blockObj = ORM::for_table('user_message_block')->create();
+                    $blockObj->user_id = $this->user->id;
+                    $blockObj->blocked_id = $blockUser->id;
+                    $blockObj->save();
+                } else {
+                    $this->setFlashData('message_block_info', 'This player doesn`t exist');
+                }
+            } else {
+                $this->setFlashData('message_block_info', 'This player doesn`t exist');
+            }
+        } elseif($action == 'delete') {
+            $user_id = $this->request->get('list', Filter::FILTER_INT, 0);
+            ORM::raw_execute('DELETE FROM user_message_block WHERE blocked_id = ?', [$user_id]);
+        }
+
+        return $this->response->redirect(getUrl('message/block'));
     }
 
 }
