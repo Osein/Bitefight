@@ -1,0 +1,17 @@
+<div>
+    <?php if(isset($content['total'])): ?>
+        <div class='tooltipHead'>
+            <?php echo $content['total'][0]; ?>: <?php echo ($content['total'][1] > 0 ? '+' : '').prettyNumber($content['total'][1]); ?>
+        </div>
+    <?php endif; ?>
+    <div class='tooltipContent'>
+        <table>
+            <?php foreach ($content['detail'] as $d): ?>
+                <tr>
+                    <td><?php echo $d[0]; ?>:</td>
+                    <td align='right'><?php echo ($d[1] > 0 ? '+' : '').prettyNumber($d[1]); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
+</div>

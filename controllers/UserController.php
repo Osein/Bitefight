@@ -8,6 +8,8 @@
 
 namespace Bitefight\Controllers;
 
+use Bitefight\Config;
+use Bitefight\Library\Translate;
 use ORM;
 use Phalcon\Filter;
 
@@ -26,19 +28,216 @@ class UserController extends GameController
 
         $this->view->highscorePosition = $hsRow->greater + $hsRow->equal + 1;
 
-        $this->view->str_cost = getSkillCost($this->user->str);
-        $this->view->def_cost = getSkillCost($this->user->def);
-        $this->view->dex_cost = getSkillCost($this->user->dex);
-        $this->view->end_cost = getSkillCost($this->user->end);
-        $this->view->cha_cost = getSkillCost($this->user->cha);
+        $user_active_items = array();
+        $user_items = array();
 
-        $max_skill = max($this->user->str, $this->user->def, $this->user->dex, $this->user->end, $this->user->cha);
+        $potions = array();
+        $weapons = array();
+        $helmets = array();
+        $armour = array();
+        $jewellery = array();
+        $gloves = array();
+        $boots = array();
+        $shields = array();
 
-        $this->view->str_red_long = 400 * ($this->user->str / $max_skill);
-        $this->view->def_red_long = 400 * ($this->user->def / $max_skill);
-        $this->view->dex_red_long = 400 * ($this->user->dex / $max_skill);
-        $this->view->end_red_long = 400 * ($this->user->end / $max_skill);
-        $this->view->cha_red_long = 400 * ($this->user->cha / $max_skill);
+        //Attributes
+        $stat_str_tooltip = array(
+            'detail' => array(array('Basic value', $this->user->str))
+        );
+
+        $stat_def_tooltip = array(
+            'detail' => array(array('Basic value', $this->user->def))
+        );
+
+        $stat_dex_tooltip = array(
+            'detail' => array(array('Basic value', $this->user->dex))
+        );
+
+        $stat_end_tooltip = array(
+            'detail' => array(array('Basic value', $this->user->end))
+        );
+
+        $stat_cha_tooltip = array(
+            'detail' => array(array('Basic value', $this->user->cha))
+        );
+
+        $stat_hp_tooltip = array(
+            'detail' => array(
+                array('Basic value', Config::BASIC_HP),
+                array('Defence', Config::DEF_HP_RATIO * $this->user->def)
+            )
+        );
+
+        // Fight Modifications
+        $fm_attack_tooltip = array(
+            'detail' => array(array('Basic value', Config::BASIC_ATTACK))
+        );
+
+        $fm_bsc_dmg_tooltip = array(
+            'detail' => array(array('Basic value', Config::BASIC_DAMAGE))
+        );
+
+        $fm_bsc_hc_tooltip = array(
+            'detail' => array(array('Basic value', Config::HIT_CHANCE))
+        );
+
+        $fm_bsc_tlnt_tooltip = array(
+            'detail' => array(array('Basic value', Config::BASIC_TALENT))
+        );
+
+        $fm_bns_dmg_tooltip = array(
+            'detail' => array(array('Basic value', Config::BONUS_DAMAGE))
+        );
+
+        $fm_bns_hc_tooltip = array(
+            'detail' => array(array('Basic value', Config::BONUS_HIT_CHANCE))
+        );
+
+        $fm_bns_tlnt_tooltip = array(
+            'detail' => array(array('Basic value', Config::BONUS_TALENT))
+        );
+
+        $fm_regen_tooltip = array(
+            'detail' => array(
+                array('Basic value', Config::BASIC_REGEN),
+                array('Endurance', $this->user->end * Config::END_REGEN_RATIO)
+            )
+        );
+
+        $fm_attack_total = Config::BASIC_ATTACK;
+        $fm_bsc_dmg_total = Config::BASIC_DAMAGE;
+        $fm_bsc_hc_total = Config::HIT_CHANCE;
+        $fm_bsc_tlnt_total = Config::BASIC_TALENT;
+        $fm_bns_dmg_total = Config::BONUS_DAMAGE;
+        $fm_bns_hc_total = Config::BONUS_HIT_CHANCE;
+        $fm_bns_tlnt_total = Config::BONUS_TALENT;
+        $fm_regen_total = Config::BASIC_REGEN + $this->user->end * Config::END_REGEN_RATIO;
+
+        $stat_str_total = $this->user->str;
+        $stat_def_total = $this->user->def;
+        $stat_dex_total = $this->user->dex;
+        $stat_end_total = $this->user->end;
+        $stat_cha_total = $this->user->cha;
+        $stat_hp_total = Config::BASIC_HP + Config::DEF_HP_RATIO * $stat_def_total;
+
+        $talents = ORM::for_table('user_talent')
+            ->left_outer_join('talent', ['user_talent.talent_id', '=', 'talent.id'])
+            ->where('user_talent.user_id', $this->user->id)
+            ->where('talent.active', 0)
+            ->find_many();
+
+        foreach ($talents as $t) {
+
+            if($t->attack > 0)
+            {
+                $fm_attack_tooltip['detail'][] = array(Translate::_tn($t->id), $t->str);
+                $fm_attack_total += $t->attack;
+            }
+
+            if($t->str > 0)
+            {
+                $stat_str_tooltip['detail'][] = array(Translate::_tn($t->id), $t->str);
+                $stat_str_total += $t->str;
+            }
+
+            if($t->def > 0)
+            {
+                $stat_def_tooltip['detail'][] = array(Translate::_tn($t->id), $t->def);
+                $stat_def_total += $t->def;
+            }
+
+            if($t->dex > 0)
+            {
+                $stat_dex_tooltip['detail'][] = array(Translate::_tn($t->id), $t->dex);
+                $stat_dex_total += $t->dex;
+            }
+
+            if($t->end > 0)
+            {
+                $stat_end_tooltip['detail'][] = array(Translate::_tn($t->id), $t->end);
+                $stat_end_total += $t->end;
+            }
+
+            if($t->cha > 0)
+            {
+                $stat_cha_tooltip['detail'][] = array(Translate::_tn($t->id), $t->cha);
+                $stat_cha_total += $t->cha;
+            }
+
+            if($t->hpbonus > 0)
+            {
+                $stat_hp_tooltip['detail'][] = array(Translate::_tn($t->id), $t->hpbonus);
+                $stat_hp_total += $t->hpbonus;
+            }
+
+            if($t->regen > 0)
+            {
+                $fm_regen_tooltip['detail'][] = array(Translate::_tn($t->id), $t->regen);
+                $fm_regen_total += $t->regen;
+            }
+
+            if($t->sbscdmg > 0)
+            {
+                $fm_bsc_dmg_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbscdmg);
+                $fm_bsc_dmg_total += $t->sbscdmg;
+            }
+
+            if($t->sbnsdmg > 0)
+            {
+                $fm_bns_dmg_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbnsdmg);
+                $fm_bns_dmg_total += $t->sbnsdmg;
+            }
+
+            if($t->sbschc > 0)
+            {
+                $fm_bsc_hc_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbschc);
+                $fm_bsc_hc_total += $t->sbschc;
+            }
+
+            if($t->sbnshc > 0)
+            {
+                $fm_bns_hc_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbnshc);
+                $fm_bns_hc_total += $t->sbnshc;
+            }
+
+            if($t->sbsctlnt > 0)
+            {
+                $fm_bsc_tlnt_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbsctlnt);
+                $fm_bsc_tlnt_total += $t->sbsctlnt;
+            }
+
+            if($t->sbnstlnt > 0)
+            {
+                $fm_bns_tlnt_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbnstlnt);
+                $fm_bns_tlnt_total += $t->sbnstlnt;
+            }
+
+        }
+
+        $fm_attack_tooltip['total'] = array('Attack', $fm_attack_total);
+        $stat_str_tooltip['total'] = array('Strength', $stat_str_total);
+        $stat_def_tooltip['total'] = array('Defence', $stat_def_total);
+        $stat_dex_tooltip['total'] = array('Dexterity', $stat_dex_total);
+        $stat_end_tooltip['total'] = array('Endurance', $stat_end_total);
+        $stat_cha_tooltip['total'] = array('Charisma', $stat_cha_total);
+        $stat_hp_tooltip['total'] = array('Total Health', $stat_hp_total);
+        $fm_regen_tooltip['total'] = array('Regeneration', $fm_regen_total);
+        $fm_bsc_dmg_tooltip['total'] = array('Basic Damage', $fm_bsc_dmg_total);
+        $fm_bns_dmg_tooltip['total'] = array('Bonus Damage', $fm_bns_dmg_total);
+        $fm_bsc_hc_tooltip['total'] = array('Basic Hit Chance', $fm_bsc_hc_total);
+        $fm_bns_hc_tooltip['total'] = array('Bonus Hit Chance', $fm_bns_hc_total);
+        $fm_bsc_tlnt_tooltip['total'] = array('Basic Talent', $fm_bsc_tlnt_total);
+        $fm_bns_tlnt_tooltip['total'] = array('Bonus Talent', $fm_bns_tlnt_total);
+
+        $max_stat = max($stat_str_total, $stat_def_total, $stat_dex_total, $stat_end_total, $stat_cha_total);
+
+        $str_total_long = $stat_str_total / $max_stat * 300;
+        $def_total_long = $stat_def_total / $max_stat * 300;
+        $dex_total_long = $stat_dex_total / $max_stat * 300;
+        $end_total_long = $stat_end_total / $max_stat * 300;
+        $cha_total_long = $stat_cha_total / $max_stat * 300;
+
+        $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
 
         $userLevel = getLevel($this->user->exp);
 
@@ -46,16 +245,80 @@ class UserController extends GameController
         $nextLevelExp = getExpNeeded($userLevel);
         $levelExpDiff = $nextLevelExp - $previousLevelExp;
 
-        $this->view->exp_red_long = ($this->user->exp - $previousLevelExp) / $levelExpDiff * 400;
-        $this->view->required_exp = $nextLevelExp;
+        $this->view->setVars(array(
+            'str_total_long' => $str_total_long,
+            'def_total_long' => $def_total_long,
+            'dex_total_long' => $dex_total_long,
+            'end_total_long' => $end_total_long,
+            'cha_total_long' => $cha_total_long,
 
-        $this->view->hp_red_long = $this->user->hp_now / $this->user->hp_max * 400;
+            'str_cost' => getSkillCost($this->user->str),
+            'def_cost' => getSkillCost($this->user->def),
+            'dex_cost' => getSkillCost($this->user->dex),
+            'end_cost' => getSkillCost($this->user->end),
+            'cha_cost' => getSkillCost($this->user->cha),
 
-        $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
-        $this->view->user_tlnt_max = $user_tlnt_lvl_sqrt * 2 - 1;
-        $this->view->next_tlnt_level = pow($user_tlnt_lvl_sqrt + 1, 2);
+            'str_red_long' => $this->user->str / $max_stat * 300,
+            'def_red_long' => $this->user->def / $max_stat * 300,
+            'dex_red_long' => $this->user->dex / $max_stat * 300,
+            'end_red_long' => $this->user->end / $max_stat * 300,
+            'cha_red_long' => $this->user->cha / $max_stat * 300,
 
-        $this->view->user_tlnt_used_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+            'stat_str_tooltip' => $stat_str_tooltip,
+            'stat_def_tooltip' => $stat_def_tooltip,
+            'stat_dex_tooltip' => $stat_dex_tooltip,
+            'stat_end_tooltip' => $stat_end_tooltip,
+            'stat_cha_tooltip' => $stat_cha_tooltip,
+            'stat_hp_tooltip' => $stat_hp_tooltip,
+
+            'stat_str_total' => $stat_str_total,
+            'stat_def_total' => $stat_def_total,
+            'stat_dex_total' => $stat_dex_total,
+            'stat_end_total' => $stat_end_total,
+            'stat_cha_total' => $stat_cha_total,
+            'stat_hp_total' => $stat_hp_total,
+
+            'fm_attack_tooltip' => $fm_attack_tooltip,
+            'fm_bsc_dmg_tooltip' => $fm_bsc_dmg_tooltip,
+            'fm_bsc_hc_tooltip' => $fm_bsc_hc_tooltip,
+            'fm_bsc_tlnt_tooltip' => $fm_bsc_tlnt_tooltip,
+            'fm_bns_dmg_tooltip' => $fm_bns_dmg_tooltip,
+            'fm_bns_hc_tooltip' => $fm_bns_hc_tooltip,
+            'fm_bns_tlnt_tooltip' => $fm_bns_tlnt_tooltip,
+            'fm_regen_tooltip' => $fm_regen_tooltip,
+
+            'fm_attack_total' => $fm_attack_total,
+            'fm_bsc_dmg_total' => $fm_bsc_dmg_total,
+            'fm_bsc_hc_total' => $fm_bsc_hc_total,
+            'fm_bsc_tlnt_total' => $fm_bsc_tlnt_total,
+            'fm_bns_dmg_total' => $fm_bns_dmg_total,
+            'fm_bns_hc_total' => $fm_bns_hc_total,
+            'fm_bns_tlnt_total' => $fm_bns_tlnt_total,
+            'fm_regen_total' => $fm_regen_total,
+
+            'user_item_count' => count($user_items),
+            'user_item_max_count' => 13 + $this->user->h_domicile * 2,
+
+            'user_active_items' => $user_active_items,
+
+            'potions' => $potions,
+            'weapons' => $weapons,
+            'helmets' => $helmets,
+            'armour' => $armour,
+            'jewellery' => $jewellery,
+            'gloves' => $gloves,
+            'boots' => $boots,
+            'shields' => $shields,
+
+            'hp_red_long' => $this->user->hp_now / $this->user->hp_max * 400,
+            'exp_red_long' => ($this->user->exp - $previousLevelExp) / $levelExpDiff * 400,
+            'required_exp' => $nextLevelExp,
+
+            'user_tlnt_max' => $user_tlnt_lvl_sqrt * 2 - 1,
+            'next_tlnt_level' => pow($user_tlnt_lvl_sqrt + 1, 2),
+            'user_tlnt_used_count' => ORM::for_table('user_talent')
+                ->where('user_id', $this->user->id)->count(),
+        ));
 
         $this->view->pick('user/profile');
     }
