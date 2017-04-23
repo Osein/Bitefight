@@ -178,15 +178,23 @@ class CityController extends GameController
 
     public function getBonusGraveyardGold()
     {
-        $bonusWithStr = $this->user->str * 0.5;
+        $userTalentStr = ORM::for_table('user_talent')
+            ->left_outer_join('talent', ['user_talent.talent_id', '=', 'talent.id'])
+            ->selectExpr('SUM(talent.str)', 'totalTalentStr')
+            ->where('user_talent.user_id', $this->user->id)
+            ->find_one();
+
+        $userTotalStr = $this->user->str + $userTalentStr->totalTalentStr;
+
+        $bonusWithStr = $userTotalStr * 0.5;
         $level = getLevel($this->user->exp);
 
         if ($level > 19) {
-            $bonusWithStr = $this->user->str * 2;
+            $bonusWithStr = $userTotalStr * 2;
         } elseif ($level > 14) {
-            $bonusWithStr = $this->user->str * 1.5;
+            $bonusWithStr = $userTotalStr * 1.5;
         } elseif ($level > 4) {
-            $bonusWithStr = $this->user->str * 1;
+            $bonusWithStr = $userTotalStr * 1;
         }
 
         $bonusWithLevel = ($level * (0.1035 * $level));

@@ -8,6 +8,7 @@
 
 namespace Bitefight\Controllers;
 
+use ORM;
 use Phalcon\Http\Response;
 use Phalcon\Mvc\View;
 
@@ -104,24 +105,30 @@ class HuntController extends GameController
     public function getHuntReward($huntNo)
     {
         $user_level = getLevel($this->user->exp);
+        $userTalentCha = ORM::for_table('user_talent')
+            ->left_outer_join('talent', ['user_talent.talent_id', '=', 'talent.id'])
+            ->selectExpr('SUM(talent.cha)', 'totalTalentCha')
+            ->where('user_talent.user_id', $this->user->id)
+            ->find_one();
+        $userTotalCha = $userTalentCha->totalTalentCha + $this->user->cha;
 
         if ($huntNo == 1) {
-            return ($this->user->cha*2)+($user_level*1)+450;
+            return ($userTotalCha * 2) + ($user_level * 1) + 450;
         }
 
         if ($huntNo == 2) {
-            return ($this->user->cha*3)+($user_level*2)+540;
+            return ($userTotalCha * 3) + ($user_level * 2) + 540;
         }
 
         if ($huntNo == 3) {
-            return ($this->user->cha*3)+($user_level*3)+609;
+            return ($userTotalCha * 3) + ($user_level * 3) + 609;
         }
 
         if ($huntNo == 4) {
-            return ($this->user->cha*4)+($user_level*4)+714;
+            return ($userTotalCha * 4) + ($user_level * 4) + 714;
         }
 
-        return ($this->user->cha*5)+($user_level*5)+860;
+        return ($userTotalCha * 5) + ($user_level * 5) + 860;
     }
 
     /**
