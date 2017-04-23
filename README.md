@@ -14,11 +14,9 @@ Preview: Clan, User
 
 ## Progress
 
-**Profile** ( Done: Stats, Logo )
+**Profile** ( Done: Stats, Logo, Talents )
 
 *Items*: -
-
-*Talents*: Page is completed, needs functionality
 
 **Settings** ( Done: Description )
 
