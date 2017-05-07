@@ -4,25 +4,17 @@ Bitefight clone version for study purposes. I am going to build a private server
 
 Also if you are efficient on calculating formulas you can help me with grotte and tavern missions.
 
-## Completed
-
-Home, News, Login, Register, Forget password, Highscore
-
-Hideout, Notepad, Search, Human Hunt, Clan, Messages
-
-Preview: Clan, User
-
-## Progress
-
-**Profile** ( Done: Stats, Logo, Talents )
-
-*Items*: -
+## Progress before new version
 
 **Settings** ( Done: Description )
 
-**City** ( Done: Index, Library, Church, Graveyard )
+*change email*
 
-*Shop*: -
+*show character picture*
+
+*change password*
+
+*delete accounts*
 
 ## Todo
 
