@@ -621,6 +621,8 @@ class UserController extends GameController
         if ($userDescription) {
             $this->view->userDescription = $userDescription->description;
         }
+        $this->view->vacationDays = floor((time() - $this->user->vacation) / (60 * 60 * 24));
+        $this->view->pw_change_error = $this->getFlashData('settings_password_change_error', false);
         $this->view->pick('user/settings');
     }
 
@@ -636,6 +638,32 @@ class UserController extends GameController
         $dbDesc->description = $this->request->get('rpg');
         $dbDesc->descriptionHtml = $parsedBb;
         $dbDesc->save();
+
+        $vacation = $this->request->get('vacation');
+        $vacationDiffDay = floor((time() - $this->user->vacation) / 60 * 60 * 24);
+
+        if($vacation && $vacationDiffDay >= 30) {
+            $this->user->vacation = time();
+        } elseif(!$vacation && $vacationDiffDay >= 2) {
+            $this->user->vacation = time() - 31 * 60 * 60 * 24;
+        }
+
+        $pass0 = $this->request->get('pass0');
+        $pass1 = $this->request->get('pass1');
+        $pass2 = $this->request->get('pass2');
+
+        if(!empty($pass1) && !empty($pass2) && !empty($pass0)) {
+            if($pass0 != $this->user->pass) {
+                $this->setFlashData('settings_password_change_error', 'Your password is incorrect');
+            } elseif($pass1 != $pass2) {
+                $this->setFlashData('settings_password_change_error', 'The passwords you entered do not match each other.');
+            } elseif(strlen($pass1) < 3) {
+                $this->setFlashData('settings_password_change_error', 'The password must have at least 3 characters');
+            } else {
+                $this->user->pass = $pass1;
+            }
+        }
+
         return $this->response->redirect(getUrl('user/settings'));
     }
 

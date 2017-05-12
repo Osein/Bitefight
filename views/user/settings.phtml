@@ -290,7 +290,6 @@
             </div>
         </div>
         -->
-        <!--
         <div id="setVacation">
             <div class="wrap-top-left clearfix">
                 <div class="wrap-top-right clearfix">
@@ -299,9 +298,9 @@
             </div>
             <div class="wrap-left clearfix">
                 <div class="wrap-content wrap-right clearfix">
-                    <h2><img src="/img/symbols/race1small.gif" alt="">Go into hiding</h2>
+                    <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Go into hiding</h2>
                     <div class="clearfix">
-                        <input type="checkbox" name="vacation">
+                        <input type="checkbox" name="vacation" <?php if($vacationDays < 30) echo 'checked'; ?>>
                         <label>You cannot be attacked while you are in hiding (min. 2 days, max. 30 days).</label>
                         <br class="clearfloat">
                     </div>
@@ -313,8 +312,7 @@
                 </div>
             </div>
         </div>
-        -->
-        <!--
+
         <div id="pwChange">
             <div class="wrap-top-left clearfix">
                 <div class="wrap-top-right clearfix">
@@ -323,7 +321,7 @@
             </div>
             <div class="wrap-left clearfix">
                 <div class="wrap-content wrap-right clearfix">
-                    <h2><img src="/img/symbols/race1small.gif" alt="">change password</h2>
+                    <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">change password</h2>
                     <div class="table-wrap">
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
                             <colgroup>
@@ -365,11 +363,11 @@
                                     <div class="password_prop" style="text-align:left;">
                                         <p>The password should contain the following characteristics:</p>
                                         <ul>
-                                            <li id="password-meter-status-length">min. 8 characters            <img src="/img/tick.gif" class="status-checked" style="visibility: hidden;"></li>
-                                            <li id="password-meter-status-mixed-case">Upper and lower case            <img src="/img/tick.gif" class="status-checked" style="visibility: hidden;"></li>
+                                            <li id="password-meter-status-length">min. 8 characters            <img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" class="status-checked" style="visibility: hidden;"></li>
+                                            <li id="password-meter-status-mixed-case">Upper and lower case            <img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" class="status-checked" style="visibility: hidden;"></li>
 
-                                            <li id="password-meter-status-special-chars">Special characters (e.g.!?:_., )            <img src="/img/tick.gif" class="status-checked" style="visibility: hidden;"></li>
-                                            <li id="password-meter-status-numbers">Numbers            <img src="/img/tick.gif" class="status-checked" style="visibility: hidden;"></li>
+                                            <li id="password-meter-status-special-chars">Special characters (e.g.!?:_., )            <img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" class="status-checked" style="visibility: hidden;"></li>
+                                            <li id="password-meter-status-numbers">Numbers            <img src="<?php echo getAssetLink('img/symbols/tick.gif'); ?>" class="status-checked" style="visibility: hidden;"></li>
                                         </ul>
                                     </div>
 
@@ -436,6 +434,7 @@
                             </tr>
                             </tbody></table>
                     </div>
+                    <?php if($pw_change_error): ?><div class="error">The password must have at least 3 characters</div><?php endif; ?>
                 </div>
             </div>
             <div class="wrap-bottom-left">
@@ -444,7 +443,6 @@
                 </div>
             </div>
         </div>
-        -->
         <!--
         <div id="accDelete">
             <div class="wrap-top-left clearfix">
