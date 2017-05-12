@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.1.19-MariaDB)
 # Database: bitefight
-# Generation Time: 2017-04-09 18:16:06 +0000
+# Generation Time: 2017-05-12 19:46:32 +0000
 # ************************************************************
 
 
@@ -26,17 +26,35 @@
 DROP TABLE IF EXISTS `clan`;
 
 CREATE TABLE `clan` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `race` tinyint(2) NOT NULL DEFAULT '1',
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `tag` varchar(32) NOT NULL DEFAULT '',
-  `logo_bg` int(11) NOT NULL DEFAULT '1',
-  `logo_sym` int(11) NOT NULL DEFAULT '1',
-  `website` varchar(255) NOT NULL DEFAULT '',
-  `capital` int(11) NOT NULL DEFAULT '0',
-  `stufe` int(11) NOT NULL DEFAULT '0',
-  `found_date` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`race` tinyint(2) NOT NULL DEFAULT '1',
+	`name` varchar(32) NOT NULL DEFAULT '',
+	`tag` varchar(32) NOT NULL DEFAULT '',
+	`logo_bg` int(11) NOT NULL DEFAULT '1',
+	`logo_sym` int(11) NOT NULL DEFAULT '1',
+	`website` varchar(255) NOT NULL DEFAULT '',
+	`website_set_by` int(11) NOT NULL DEFAULT '0',
+	`website_counter` int(11) NOT NULL DEFAULT '0',
+	`capital` int(11) NOT NULL DEFAULT '0',
+	`stufe` int(11) NOT NULL DEFAULT '0',
+	`found_date` int(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table clan_application
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `clan_application`;
+
+CREATE TABLE `clan_application` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`clan_id` int(11) NOT NULL,
+	`user_id` int(11) NOT NULL,
+	`note` varchar(2000) NOT NULL DEFAULT '',
+	`date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -47,11 +65,11 @@ CREATE TABLE `clan` (
 DROP TABLE IF EXISTS `clan_description`;
 
 CREATE TABLE `clan_description` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `clan_id` int(11) DEFAULT NULL,
-  `description` text,
-  `descriptionHtml` text,
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`clan_id` int(11) DEFAULT NULL,
+	`description` text,
+	`descriptionHtml` text,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -62,12 +80,12 @@ CREATE TABLE `clan_description` (
 DROP TABLE IF EXISTS `clan_donate`;
 
 CREATE TABLE `clan_donate` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `clan_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `donate` int(11) DEFAULT NULL,
-  `donate_date` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`clan_id` int(11) DEFAULT NULL,
+	`user_id` int(11) DEFAULT NULL,
+	`donate` int(11) DEFAULT NULL,
+	`donate_date` int(11) DEFAULT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -78,12 +96,12 @@ CREATE TABLE `clan_donate` (
 DROP TABLE IF EXISTS `clan_message`;
 
 CREATE TABLE `clan_message` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `clan_id` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `clan_message` varchar(2000) DEFAULT NULL,
-  `clan_message_date` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`clan_id` int(11) DEFAULT NULL,
+	`user_id` int(11) DEFAULT NULL,
+	`clan_message` varchar(2000) DEFAULT NULL,
+	`clan_message_date` int(11) DEFAULT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -94,26 +112,29 @@ CREATE TABLE `clan_message` (
 DROP TABLE IF EXISTS `clan_rank`;
 
 CREATE TABLE `clan_rank` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `rank_name` varchar(32) DEFAULT NULL,
-  `read_message` tinyint(1) NOT NULL DEFAULT '0',
-  `write_message` tinyint(1) NOT NULL DEFAULT '0',
-  `read_clan_message` tinyint(1) NOT NULL DEFAULT '0',
-  `add_members` tinyint(1) NOT NULL DEFAULT '0',
-  `delete_message` tinyint(1) NOT NULL DEFAULT '0',
-  `send_clan_message` tinyint(1) NOT NULL DEFAULT '0',
-  `spend_gold` tinyint(1) NOT NULL DEFAULT '0',
-  `war_minister` tinyint(1) NOT NULL DEFAULT '0',
-  `vocalise_ritual` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`clan_id` int(11) NOT NULL DEFAULT '0',
+	`rank_name` varchar(32) DEFAULT NULL,
+	`read_message` tinyint(1) NOT NULL DEFAULT '0',
+	`write_message` tinyint(1) NOT NULL DEFAULT '0',
+	`read_clan_message` tinyint(1) NOT NULL DEFAULT '0',
+	`add_members` tinyint(1) NOT NULL DEFAULT '0',
+	`delete_message` tinyint(1) NOT NULL DEFAULT '0',
+	`send_clan_message` tinyint(1) NOT NULL DEFAULT '0',
+	`spend_gold` tinyint(1) NOT NULL DEFAULT '0',
+	`war_minister` tinyint(1) NOT NULL DEFAULT '0',
+	`vocalise_ritual` tinyint(1) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `clan_rank` WRITE;
 /*!40000 ALTER TABLE `clan_rank` DISABLE KEYS */;
 
-INSERT INTO `clan_rank` (`id`, `rank_name`, `read_message`, `write_message`, `read_clan_message`, `add_members`, `delete_message`, `send_clan_message`, `spend_gold`, `war_minister`, `vocalise_ritual`)
+INSERT INTO `clan_rank` (`id`, `clan_id`, `rank_name`, `read_message`, `write_message`, `read_clan_message`, `add_members`, `delete_message`, `send_clan_message`, `spend_gold`, `war_minister`, `vocalise_ritual`)
 VALUES
-	(1,'Master',1,1,1,1,1,1,1,1,1);
+	(1,0,'Master',1,1,1,1,1,1,1,1,1),
+	(2,0,'Admin',1,1,1,1,1,1,1,1,1),
+	(3,0,'Biter',0,0,0,0,0,0,0,0,0);
 
 /*!40000 ALTER TABLE `clan_rank` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -125,37 +146,37 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `item`;
 
 CREATE TABLE `item` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `stern` smallint(6) NOT NULL DEFAULT '0',
-  `model` smallint(6) NOT NULL,
-  `name` varchar(100) NOT NULL DEFAULT '',
-  `level` mediumint(9) NOT NULL,
-  `gcost` int(11) NOT NULL,
-  `slcost` int(11) NOT NULL,
-  `scost` int(11) NOT NULL,
-  `str` mediumint(9) NOT NULL,
-  `def` mediumint(9) NOT NULL,
-  `dex` mediumint(9) NOT NULL,
-  `end` mediumint(9) NOT NULL,
-  `cha` mediumint(9) NOT NULL,
-  `hpbonus` int(11) NOT NULL,
-  `regen` mediumint(9) NOT NULL,
-  `sbschc` smallint(6) NOT NULL,
-  `sbscdmg` smallint(6) NOT NULL,
-  `sbsctlnt` smallint(6) NOT NULL,
-  `sbnshc` smallint(6) NOT NULL,
-  `sbnsdmg` smallint(6) NOT NULL,
-  `sbnstlnt` smallint(6) NOT NULL,
-  `ebschc` smallint(6) NOT NULL,
-  `ebscdmg` smallint(6) NOT NULL,
-  `ebsctlnt` smallint(6) NOT NULL,
-  `ebnshc` smallint(6) NOT NULL,
-  `ebnsdmg` smallint(6) NOT NULL,
-  `ebnstlnt` smallint(6) NOT NULL,
-  `apup` smallint(6) NOT NULL,
-  `cooldown` mediumint(9) NOT NULL,
-  `duration` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`stern` smallint(6) NOT NULL DEFAULT '0',
+	`model` smallint(6) NOT NULL,
+	`name` varchar(100) NOT NULL DEFAULT '',
+	`level` mediumint(9) NOT NULL,
+	`gcost` int(11) NOT NULL,
+	`slcost` int(11) NOT NULL,
+	`scost` int(11) NOT NULL,
+	`str` mediumint(9) NOT NULL,
+	`def` mediumint(9) NOT NULL,
+	`dex` mediumint(9) NOT NULL,
+	`end` mediumint(9) NOT NULL,
+	`cha` mediumint(9) NOT NULL,
+	`hpbonus` int(11) NOT NULL,
+	`regen` mediumint(9) NOT NULL,
+	`sbschc` smallint(6) NOT NULL,
+	`sbscdmg` smallint(6) NOT NULL,
+	`sbsctlnt` smallint(6) NOT NULL,
+	`sbnshc` smallint(6) NOT NULL,
+	`sbnsdmg` smallint(6) NOT NULL,
+	`sbnstlnt` smallint(6) NOT NULL,
+	`ebschc` smallint(6) NOT NULL,
+	`ebscdmg` smallint(6) NOT NULL,
+	`ebsctlnt` smallint(6) NOT NULL,
+	`ebnshc` smallint(6) NOT NULL,
+	`ebnsdmg` smallint(6) NOT NULL,
+	`ebnstlnt` smallint(6) NOT NULL,
+	`apup` smallint(6) NOT NULL,
+	`cooldown` mediumint(9) NOT NULL,
+	`duration` int(11) NOT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `item` WRITE;
@@ -2579,18 +2600,38 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table message
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `message`;
+
+CREATE TABLE `message` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`sender_id` int(11) NOT NULL DEFAULT '0',
+	`receiver_id` int(11) NOT NULL DEFAULT '0',
+	`folder_id` int(11) NOT NULL DEFAULT '0',
+	`type` tinyint(2) NOT NULL DEFAULT '1',
+	`subject` varchar(100) NOT NULL DEFAULT '',
+	`message` text NOT NULL,
+	`status` smallint(2) NOT NULL DEFAULT '1',
+	`sent_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # Dump of table news
 # ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `news`;
 
 CREATE TABLE `news` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `adder_id` int(11) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `date` timestamp NULL DEFAULT NULL,
-  `message` text,
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`adder_id` int(11) DEFAULT NULL,
+	`title` varchar(255) DEFAULT NULL,
+	`date` timestamp NULL DEFAULT NULL,
+	`message` text,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2601,135 +2642,133 @@ CREATE TABLE `news` (
 DROP TABLE IF EXISTS `talent`;
 
 CREATE TABLE `talent` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL DEFAULT '',
-  `description` varchar(200) NOT NULL DEFAULT '',
-  `active` tinyint(1) NOT NULL,
-  `level` mediumint(9) NOT NULL,
-  `pair` int(11) NOT NULL DEFAULT '0',
-  `duration` int(11) NOT NULL DEFAULT '0',
-  `attack` smallint(6) NOT NULL DEFAULT '0',
-  `eattack` smallint(6) NOT NULL DEFAULT '0',
-  `str` mediumint(9) NOT NULL DEFAULT '0',
-  `def` mediumint(9) NOT NULL DEFAULT '0',
-  `dex` mediumint(9) NOT NULL DEFAULT '0',
-  `end` mediumint(9) NOT NULL DEFAULT '0',
-  `cha` mediumint(9) NOT NULL DEFAULT '0',
-  `estr` mediumint(9) NOT NULL DEFAULT '0',
-  `edef` mediumint(9) NOT NULL DEFAULT '0',
-  `edex` mediumint(9) NOT NULL DEFAULT '0',
-  `eend` mediumint(9) NOT NULL DEFAULT '0',
-  `echa` mediumint(9) NOT NULL DEFAULT '0',
-  `hpbonus` int(11) NOT NULL DEFAULT '0',
-  `regen` mediumint(9) NOT NULL DEFAULT '0',
-  `sbschc` smallint(6) NOT NULL DEFAULT '0',
-  `sbscdmg` smallint(6) NOT NULL DEFAULT '0',
-  `sbsctlnt` smallint(6) NOT NULL DEFAULT '0',
-  `sbnshc` smallint(6) NOT NULL DEFAULT '0',
-  `sbnsdmg` smallint(6) NOT NULL DEFAULT '0',
-  `sbnstlnt` smallint(6) NOT NULL DEFAULT '0',
-  `ebschc` smallint(6) NOT NULL DEFAULT '0',
-  `ebscdmg` smallint(6) NOT NULL DEFAULT '0',
-  `ebsctlnt` smallint(6) NOT NULL DEFAULT '0',
-  `ebnshc` smallint(6) NOT NULL DEFAULT '0',
-  `ebnsdmg` smallint(6) NOT NULL DEFAULT '0',
-  `ebnstlnt` smallint(6) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`active` tinyint(1) NOT NULL,
+	`level` mediumint(9) NOT NULL,
+	`pair` int(11) NOT NULL DEFAULT '0',
+	`duration` int(11) NOT NULL DEFAULT '0',
+	`attack` smallint(6) NOT NULL DEFAULT '0',
+	`eattack` smallint(6) NOT NULL DEFAULT '0',
+	`str` mediumint(9) NOT NULL DEFAULT '0',
+	`def` mediumint(9) NOT NULL DEFAULT '0',
+	`dex` mediumint(9) NOT NULL DEFAULT '0',
+	`end` mediumint(9) NOT NULL DEFAULT '0',
+	`cha` mediumint(9) NOT NULL DEFAULT '0',
+	`estr` mediumint(9) NOT NULL DEFAULT '0',
+	`edef` mediumint(9) NOT NULL DEFAULT '0',
+	`edex` mediumint(9) NOT NULL DEFAULT '0',
+	`eend` mediumint(9) NOT NULL DEFAULT '0',
+	`echa` mediumint(9) NOT NULL DEFAULT '0',
+	`hpbonus` int(11) NOT NULL DEFAULT '0',
+	`regen` mediumint(9) NOT NULL DEFAULT '0',
+	`sbschc` smallint(6) NOT NULL DEFAULT '0',
+	`sbscdmg` smallint(6) NOT NULL DEFAULT '0',
+	`sbsctlnt` smallint(6) NOT NULL DEFAULT '0',
+	`sbnshc` smallint(6) NOT NULL DEFAULT '0',
+	`sbnsdmg` smallint(6) NOT NULL DEFAULT '0',
+	`sbnstlnt` smallint(6) NOT NULL DEFAULT '0',
+	`ebschc` smallint(6) NOT NULL DEFAULT '0',
+	`ebscdmg` smallint(6) NOT NULL DEFAULT '0',
+	`ebsctlnt` smallint(6) NOT NULL DEFAULT '0',
+	`ebnshc` smallint(6) NOT NULL DEFAULT '0',
+	`ebnsdmg` smallint(6) NOT NULL DEFAULT '0',
+	`ebnstlnt` smallint(6) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `talent` WRITE;
 /*!40000 ALTER TABLE `talent` DISABLE KEYS */;
 
-INSERT INTO `talent` (`id`, `name`, `description`, `active`, `level`, `pair`, `duration`, `attack`, `eattack`, `str`, `def`, `dex`, `end`, `cha`, `estr`, `edef`, `edex`, `eend`, `echa`, `hpbonus`, `regen`, `sbschc`, `sbscdmg`, `sbsctlnt`, `sbnshc`, `sbnsdmg`, `sbnstlnt`, `ebschc`, `ebscdmg`, `ebsctlnt`, `ebnshc`, `ebnsdmg`, `ebnstlnt`)
+INSERT INTO `talent` (`id`, `active`, `level`, `pair`, `duration`, `attack`, `eattack`, `str`, `def`, `dex`, `end`, `cha`, `estr`, `edef`, `edex`, `eend`, `echa`, `hpbonus`, `regen`, `sbschc`, `sbscdmg`, `sbsctlnt`, `sbnshc`, `sbnsdmg`, `sbnstlnt`, `ebschc`, `ebscdmg`, `ebsctlnt`, `ebnshc`, `ebnsdmg`, `ebnstlnt`)
 VALUES
-	(1,'Extra Hit','You rapidly lash down on your opponent several times, at a great speed.',1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(2,'Sharp aim','You have learnt to hit where it hurts the most.',0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0),
-	(3,'Claws','Your claws become longer and stronger so that you can cause more damage.',0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(4,'Fighting spirit','You gain the experience of your most fierce victims.',0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0),
-	(5,'Angry Attack','You carry out your attacks with a lethal amount of fury and an enormous amount of cruelty.',0,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(6,'Rage rush','Your blood boils and you feel rage pulsating through you.',1,9,0,3,0,0,0,-10,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
-	(7,'Poisonous saliva','Toxic saliva oozes from your teeth, which in turn burns your opponent.',0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(8,'Martial arts','You move swiftly through the shadows and your attacks are foolproof.',0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0),
-	(9,'Unnatural strength','Your muscles develop a strength that can even destroy blocks of granite.',0,12,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(10,'Mana Thief','You enslave the souls of your defeated enemies with incredible magic spells.',0,12,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(11,'Night Coat','Dark shadows surround you and grant you protection.',1,16,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-10,-12,0),
-	(12,'Raider and Booty','You recognise your booty`s weaknesses and therefore manage to carry out deadly attacks.',1,16,11,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,12,0,0,0,0,0,0,0),
-	(13,'Cruelty','You brutally navigate your attacks so that they cause maximum damage.',0,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0),
-	(14,'Shadow bones','You transform into a shadow whose ice cold limbs penetrate your opponent`s body.',0,16,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0),
-	(15,'Iron Will to Live','You tap into a power source within you so that you can handle even the worst injuries, without so much as the blink of an eye.',0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15000,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(16,'Quick return','Your rampant flesh makes damage disappear a lot faster.',0,20,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0),
-	(17,'Inner beast','You unleash your inner beast and let your untamed violence run wild.',0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(18,'Shadow dance','The shredded souls of your previous victims surround you and increase your destruction power.',0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0),
-	(19,'Willpower','Your willpower becomes so strong that you can use it to break your opponent.',0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0),
-	(20,'Blur','Your figure becomes blurred in front of the eyes of your bewildered opponents.',0,30,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-2,0,0),
-	(21,'Merciless','Mercilessly you rip your enemy`s flesh and muscles apart.',1,36,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0),
-	(22,'Malicious fight','You have mastered combat techniques that are so abominable that weaker spirits crack under the pressure.',0,36,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0),
-	(23,'Berserker','You go crazy during combat and your rage becomes as powerful as a tornado.',0,36,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,0,0,24,0,0,0,0,0,0,0),
-	(24,'Crippling hit','Your attacks rip your enemy`s nerve centres apart and make him break down helplessly.',0,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0),
-	(25,'Terrible hit','You strengthen your attack with hate from rotted souls of the underworld.',0,40,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0),
-	(26,'Mana Robber','You learn how to perfectly use the power of your defeated enemies.',0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(27,'Poison','Poisonous slime squirts from your mouth, eyes and wounds, burning your opponent.',0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0),
-	(28,'Life source','You tap into the vitality of all the creatures in your vicinity and use it for your own dark body.',0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25000,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(29,'Unholy Hate','You have perfected your combat techniques against your arch enemy and let him feel your hate.',0,55,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,12,0,0,0,0,0,0,0),
-	(30,'Magic Power','By sacrificing one hundred souls you can receive stronger magic powers.',0,55,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0),
-	(31,'Know your enemy','You can read your opponent`s mind to anticipate his attacks.',1,64,0,2,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,-12,0,-2,0,0,0,0,0),
-	(32,'Terror hit','You open your defence favouring extremely tough attacks.',1,64,31,2,0,0,0,-30,0,0,0,0,0,0,0,0,0,0,0,12,0,0,24,0,0,0,0,0,0,0),
-	(33,'Bone scissors','Your hands transform into deadly weapons consisting of steel muscle fibres and adamantine claws, that are able to rip the bones from your enemy`s body.',0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
-	(34,'Curse','Words spoken from an insane and deadly language make your opponent go crazy.',0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,0,-4),
-	(35,'Stone heart','Your bones conjoin and harden, making your body almost impenetrable.',0,70,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-12,0,0,0,0),
-	(36,'Iron grip','Your muscles develop a strength that can smash steel and rip down houses.',0,70,35,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(37,'Death wind','You unleash a lethal wind that shaves the skin off your enemy`s bones.',1,81,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,10,12,0,0,0,0,0,0,0),
-	(38,'Death aura','The thousands of deaths you have caused surround you like an aura and make defeating you almost impossible.',0,81,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0),
-	(39,'Secret power source','You receive access to forbidden secrets which unleash insanity and death everywhere you go.',0,81,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,1,6,0,0,0,0,0,0,0),
-	(40,'Pulse of Wrath','Your wrath runs ahead of you like a shock wave and sweeps everything out of your path.',0,90,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,12,0,0,0,0,0,0,0),
-	(41,'Hunting Instinct','Instinctively you master the art of hunting and assassination.',0,90,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0),
-	(42,'Fight reflexes','You are intoxicated and become so fast that you paralyse your opponent with fear.',1,100,0,3,0,0,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0),
-	(43,'Essence Withdrawal (Small)','Vermicular shadow spells gush out of your eyes and gnaw away at your opponent`s essence.',1,100,42,3,0,0,0,0,0,0,0,-10,-10,-10,-10,-10,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(44,'Inhuman speed','You are faster than the wind.',0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
-	(45,'Spirit form','Your body is not quite from this world anymore and heals a lot faster.',0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0,0,0,-12,0),
-	(46,'Iron bones','Your bones becomes as tough as iron, making your hits as destructive as shots from a catapult.',0,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0),
-	(47,'Jump attack','You can jump so far and so powerfully that you can strike into your opponents like a flash of lightning.',0,110,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0),
-	(48,'Transparency','You can read your enemy`s mind.',1,121,0,2,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,60,0,0,0,0,-10,0,0),
-	(49,'Powerful defence','You harden up your skin and toughen up your bones, so that you can evade the worst attacks.',1,121,48,2,0,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,0,0,0,0,0,0),
-	(50,'Evil spirits','You call upon the spirits of your previous victims to torment your enemies.',0,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
-	(51,'Iciness','You radiate iciness which freezes and paralyses your enemies.',0,121,0,0,0,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0),
-	(52,'Strength raid','You suck the life out of your opponent with your secret magic powers and supply your own body with it.',0,128,0,0,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
-	(53,'Blood Haze','Your violent beatings make fountains of blood spurt out of your enemy, making it hard for him to see.',0,128,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,-4,0,0),
-	(54,'Pure power','You bundle your energy into an incredibly powerful attack.',1,144,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,10,36,0,0,0,0,0,0,0),
-	(55,'Thaumaturgy','You have mastered dangerous magic that reinforces your attacks with fire and energy.',0,144,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
-	(56,'Clever evasion','You are so quick and skilled that you can barely be hit any more.',0,144,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-12,0,0,0,0),
-	(57,'Aura of the night','The night protects you and makes weapons divert away from you.',0,150,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-4,0,0,0,0,0),
-	(58,'Veteran of the night','You have collected so much experience that nothing surprises you any more.',0,150,57,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,12,0,0,0,0,0,0,0),
-	(59,'Greed of the Abyss','Death`s abyss lurks within your spirit and is ready to eat your opponent`s life.',0,169,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0),
-	(60,'Face of death','You hide your face behind gruesome illusions, which consume your enemies` powers.',0,169,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,12,0,0,0,0,0,0,0),
-	(61,'Shadow stride','You gain the ability to jump from shadow to shadow and thus carry out sneaky attacks.',0,180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,18,0,0,0,0,0,0,0),
-	(62,'Fog Creature','You transform your body into an unearthly haze that can barely be injured.',0,180,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-3,-18,0),
-	(63,'Pure venom','Nothing can withstand the terror of your evil spirit.',1,196,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,-10,0,0,0,-24,0,0,0,0,0,0,0),
-	(64,'Crystal claws','Your claws become as tough as diamond and can cut almost everything.',0,196,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
-	(65,'Death wish','You hunt your enemies to death with ancient evil magic spells.',0,196,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0),
-	(66,'Wyrm Magic','You call upon the Wyrm Totem to receive its strength.',1,200,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
-	(67,'Snake Magic','The power of the snake totems make you faster and more flexible.',1,200,66,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0),
-	(68,'Lord of the Flesh','You have real power over your body`s flesh and bones and can barely be injured anymore.',0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-60,0),
-	(69,'Lord of the Blood','You can control blood and use it to destroy your opponent`s own body.',0,200,68,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-6,0,0,0,0,0),
-	(70,'Spell','The hypnotising power of your eyes force your opponents under a paralysing spell.',1,225,0,1,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(71,'Power word','You learn an ancient magic word, which unleashes a huge amount of destructive power.',0,225,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
-	(72,'Evil genius','Your intellect and your charisma are like no other.',0,225,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0),
-	(73,'Fossilisation','Your flesh contains the durability of the rocks that the towers of hell consist of.',1,230,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-42,0),
-	(74,'Death Craze','A crazy rush of demonic hate gives your attacks incredible power.',1,230,73,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,0,0,0,0,0,0,0),
-	(75,'Untouchable','Dark powers break your opponent`s combat power and paralyse his willpower.',0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,0,-4),
-	(76,'Victory Rush','You greedily gobble up the blood and flesh of your defeated opponents to restore your own strength.',0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(77,'Arch Magic','You get access to arcane powers that strengthen your skills.',1,250,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(78,'Ruler of the Night','You become one of the mightiest creatures of the night.',0,250,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(79,'Darker than Black','You can hide in the darkness so well that it gives you a great advantage during combat.',0,260,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,-12,0,0,0,0),
-	(80,'Negation Master','You banish the supernatural skills of your enemy with unfamiliar evocations.',1,275,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-30,0,0,-30),
-	(81,'Shadow Storm','A volley of evil attacks at breakneck speed rupture your enemy`s defence.',1,275,80,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(82,'Iron Skin','The power of your body taunts the maggot-like suppleness of menial creatures.',0,275,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-24,0,0,0,0),
-	(83,'Mind Haze','You confuse your enemy`s mind so that crazy visions distract him from combat.',0,275,82,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-4,0,0,0,0,0),
-	(84,'Soul Devourer','You devour souls and your sheer presence makes your opponents tremble.',0,285,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,-3,0,0,0,0,0),
-	(85,'Moloch','You become a powerful and terrifying creature with an aura of dark magnificence.',0,290,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15000,0,0,0,0,0,24,0,0,-6,0,0,0,0),
-	(86,'The great feast','You take delight in indulging in the blood, flesh and soul power of your doomed enemy.',1,300,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,5,0,0,0,0,0,0),
-	(87,'Essence Withdrawal (Big)','You rip the sparks of life from the body and soul of your whimpering opponent so that you can feed yourself with them.',1,300,86,5,0,0,20,20,20,20,20,-20,-20,-20,-20,-20,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-	(88,'Prince of Darkness','Even the rulers of the night are subjected to your special status.',0,300,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+	(1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(2,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0),
+	(3,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(4,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0,0,0),
+	(5,0,5,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(6,1,9,0,3,0,0,0,-10,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
+	(7,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(8,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0),
+	(9,0,12,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(10,0,12,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(11,1,16,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-10,-12,0),
+	(12,1,16,11,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,12,0,0,0,0,0,0,0),
+	(13,0,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0),
+	(14,0,16,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0),
+	(15,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15000,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(16,0,20,15,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2500,0,0,0,0,0,0,0,0,0,0,0,0),
+	(17,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(18,0,25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0),
+	(19,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0),
+	(20,0,30,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-2,0,0),
+	(21,1,36,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0),
+	(22,0,36,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0),
+	(23,0,36,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,0,0,24,0,0,0,0,0,0,0),
+	(24,0,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0),
+	(25,0,40,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0),
+	(26,0,45,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(27,0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0,0,0,0),
+	(28,0,49,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25000,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(29,0,55,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,12,0,0,0,0,0,0,0),
+	(30,0,55,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0),
+	(31,1,64,0,2,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,-12,0,-2,0,0,0,0,0),
+	(32,1,64,31,2,0,0,0,-30,0,0,0,0,0,0,0,0,0,0,0,12,0,0,24,0,0,0,0,0,0,0),
+	(33,0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
+	(34,0,64,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,0,-4),
+	(35,0,70,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-12,0,0,0,0),
+	(36,0,70,35,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(37,1,81,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,0,0,10,12,0,0,0,0,0,0,0),
+	(38,0,81,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0),
+	(39,0,81,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,1,6,0,0,0,0,0,0,0),
+	(40,0,90,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,12,0,0,0,0,0,0,0),
+	(41,0,90,40,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0),
+	(42,1,100,0,3,0,0,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0),
+	(43,1,100,42,3,0,0,0,0,0,0,0,-10,-10,-10,-10,-10,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(44,0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
+	(45,0,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1500,0,0,0,0,0,0,0,0,0,0,-12,0),
+	(46,0,110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0),
+	(47,0,110,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0),
+	(48,1,121,0,2,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0,0,0,60,0,0,0,0,-10,0,0),
+	(49,1,121,48,2,0,0,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,36,0,0,0,0,0,0,0),
+	(50,0,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
+	(51,0,121,0,0,0,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0),
+	(52,0,128,0,0,0,0,0,0,0,0,0,-10,0,0,0,0,0,0,0,0,0,0,12,0,0,0,0,0,0,0),
+	(53,0,128,52,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,-4,0,0),
+	(54,1,144,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,10,36,0,0,0,0,0,0,0),
+	(55,0,144,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
+	(56,0,144,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-12,0,0,0,0),
+	(57,0,150,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-4,0,0,0,0,0),
+	(58,0,150,57,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,12,0,0,0,0,0,0,0),
+	(59,0,169,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0),
+	(60,0,169,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,0,0,12,0,0,0,0,0,0,0),
+	(61,0,180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,18,0,0,0,0,0,0,0),
+	(62,0,180,61,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-3,-18,0),
+	(63,1,196,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,-10,0,0,0,-24,0,0,0,0,0,0,0),
+	(64,0,196,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
+	(65,0,196,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,0,0,0),
+	(66,1,200,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,18,0,0,0,0,0,0,0,0,0,0),
+	(67,1,200,66,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0,0,0,0,0,0,0,0,0),
+	(68,0,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-60,0),
+	(69,0,200,68,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-6,0,0,0,0,0),
+	(70,1,225,0,1,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(71,0,225,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,0,0,0,0,0,0,0,0,0),
+	(72,0,225,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0),
+	(73,1,230,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-42,0),
+	(74,1,230,73,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,42,0,0,0,0,0,0,0),
+	(75,0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-2,0,0,-4),
+	(76,0,230,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(77,1,250,0,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(78,0,250,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(79,0,260,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,-12,0,0,0,0),
+	(80,1,275,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-30,0,0,-30),
+	(81,1,275,80,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(82,0,275,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-24,0,0,0,0),
+	(83,0,275,82,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-4,0,0,0,0,0),
+	(84,0,285,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,24,0,-3,0,0,0,0,0),
+	(85,0,290,0,0,0,0,0,0,0,0,0,0,0,0,0,0,15000,0,0,0,0,0,24,0,0,-6,0,0,0,0),
+	(86,1,300,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,48,5,0,0,0,0,0,0),
+	(87,1,300,86,5,0,0,20,20,20,20,20,-20,-20,-20,-20,-20,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+	(88,0,300,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
 /*!40000 ALTER TABLE `talent` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -2741,53 +2780,55 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `pass` varchar(64) NOT NULL DEFAULT '',
-  `mail` varchar(255) NOT NULL DEFAULT '',
-  `race` tinyint(4) NOT NULL DEFAULT '1',
-  `gender` tinyint(4) NOT NULL DEFAULT '1',
-  `image_type` smallint(6) NOT NULL DEFAULT '1',
-  `clan_id` int(11) NOT NULL DEFAULT '0',
-  `clan_rank` int(11) NOT NULL DEFAULT '0',
-  `exp` int(11) NOT NULL DEFAULT '0',
-  `battle_value` int(11) NOT NULL DEFAULT '41',
-  `gold` int(11) NOT NULL DEFAULT '0',
-  `hellstone` int(11) NOT NULL DEFAULT '0',
-  `fragment` int(11) NOT NULL DEFAULT '0',
-  `ap_now` float NOT NULL DEFAULT '120',
-  `ap_max` int(11) NOT NULL DEFAULT '120',
-  `hp_now` float NOT NULL DEFAULT '21500',
-  `hp_max` int(11) NOT NULL DEFAULT '21500',
-  `str` int(11) NOT NULL DEFAULT '5',
-  `def` int(11) NOT NULL DEFAULT '5',
-  `dex` int(11) NOT NULL DEFAULT '5',
-  `end` int(11) NOT NULL DEFAULT '5',
-  `cha` int(11) NOT NULL DEFAULT '5',
-  `s_booty` int(11) NOT NULL DEFAULT '0',
-  `s_fight` int(11) NOT NULL DEFAULT '0',
-  `s_victory` int(11) NOT NULL DEFAULT '0',
-  `s_defeat` int(11) NOT NULL DEFAULT '0',
-  `s_draw` int(11) NOT NULL DEFAULT '0',
-  `s_gold_captured` int(11) NOT NULL DEFAULT '0',
-  `s_gold_lost` int(11) NOT NULL DEFAULT '0',
-  `s_damage_caused` int(11) NOT NULL DEFAULT '0',
-  `s_hp_lost` int(11) NOT NULL DEFAULT '0',
-  `talent_points` int(11) NOT NULL DEFAULT '1',
-  `talent_resets` int(11) NOT NULL DEFAULT '1',
-  `h_treasure` int(11) NOT NULL DEFAULT '0',
-  `h_royal` int(11) NOT NULL DEFAULT '0',
-  `h_gargoyle` int(11) NOT NULL DEFAULT '0',
-  `h_book` int(11) NOT NULL DEFAULT '0',
-  `h_domicile` int(11) NOT NULL DEFAULT '1',
-  `h_wall` int(11) NOT NULL DEFAULT '0',
-  `h_path` int(11) NOT NULL DEFAULT '0',
-  `h_land` int(11) NOT NULL DEFAULT '0',
-  `last_activity` int(11) NOT NULL DEFAULT '0',
-  `last_update` int(11) NOT NULL DEFAULT '0',
-  `name_change` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `user_clan` (`clan_id`)
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`name` varchar(32) NOT NULL DEFAULT '',
+	`pass` varchar(64) NOT NULL DEFAULT '',
+	`mail` varchar(255) NOT NULL DEFAULT '',
+	`race` tinyint(4) NOT NULL DEFAULT '1',
+	`gender` tinyint(4) NOT NULL DEFAULT '1',
+	`image_type` smallint(6) NOT NULL DEFAULT '1',
+	`clan_id` int(11) NOT NULL DEFAULT '0',
+	`clan_rank` int(11) NOT NULL DEFAULT '0',
+	`clan_dtime` int(11) NOT NULL DEFAULT '0' COMMENT 'Clan donate refresh time',
+	`clan_btime` int(11) NOT NULL DEFAULT '0' COMMENT 'Clan booty refresh time',
+	`exp` int(11) NOT NULL DEFAULT '0',
+	`battle_value` int(11) NOT NULL DEFAULT '41',
+	`gold` int(11) NOT NULL DEFAULT '0',
+	`hellstone` int(11) NOT NULL DEFAULT '0',
+	`fragment` int(11) NOT NULL DEFAULT '0',
+	`ap_now` float NOT NULL DEFAULT '120',
+	`ap_max` int(11) NOT NULL DEFAULT '120',
+	`hp_now` float NOT NULL DEFAULT '21500',
+	`hp_max` int(11) NOT NULL DEFAULT '21500',
+	`str` int(11) NOT NULL DEFAULT '5',
+	`def` int(11) NOT NULL DEFAULT '5',
+	`dex` int(11) NOT NULL DEFAULT '5',
+	`end` int(11) NOT NULL DEFAULT '5',
+	`cha` int(11) NOT NULL DEFAULT '5',
+	`s_booty` int(11) NOT NULL DEFAULT '0',
+	`s_fight` int(11) NOT NULL DEFAULT '0',
+	`s_victory` int(11) NOT NULL DEFAULT '0',
+	`s_defeat` int(11) NOT NULL DEFAULT '0',
+	`s_draw` int(11) NOT NULL DEFAULT '0',
+	`s_gold_captured` int(11) NOT NULL DEFAULT '0',
+	`s_gold_lost` int(11) NOT NULL DEFAULT '0',
+	`s_damage_caused` int(11) NOT NULL DEFAULT '0',
+	`s_hp_lost` int(11) NOT NULL DEFAULT '0',
+	`talent_points` int(11) NOT NULL DEFAULT '1',
+	`talent_resets` int(11) NOT NULL DEFAULT '1',
+	`h_treasure` int(11) NOT NULL DEFAULT '0',
+	`h_royal` int(11) NOT NULL DEFAULT '0',
+	`h_gargoyle` int(11) NOT NULL DEFAULT '0',
+	`h_book` int(11) NOT NULL DEFAULT '0',
+	`h_domicile` int(11) NOT NULL DEFAULT '1',
+	`h_wall` int(11) NOT NULL DEFAULT '0',
+	`h_path` int(11) NOT NULL DEFAULT '0',
+	`h_land` int(11) NOT NULL DEFAULT '0',
+	`last_activity` int(11) NOT NULL DEFAULT '0',
+	`name_change` int(11) NOT NULL DEFAULT '0',
+	`vacation` int(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`),
+	KEY `user_clan` (`clan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2798,12 +2839,12 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `user_activity`;
 
 CREATE TABLE `user_activity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `activity_type` int(11) NOT NULL,
-  `start_time` int(11) DEFAULT NULL,
-  `end_time` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`activity_type` int(11) NOT NULL,
+	`start_time` int(11) DEFAULT NULL,
+	`end_time` int(11) NOT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2814,11 +2855,11 @@ CREATE TABLE `user_activity` (
 DROP TABLE IF EXISTS `user_description`;
 
 CREATE TABLE `user_description` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `description` text,
-  `descriptionHtml` text,
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) DEFAULT NULL,
+	`description` text,
+	`descriptionHtml` text,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2829,16 +2870,61 @@ CREATE TABLE `user_description` (
 DROP TABLE IF EXISTS `user_item`;
 
 CREATE TABLE `user_item` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
-  `volume` int(11) NOT NULL,
-  `equipped` tinyint(1) NOT NULL,
-  `expire` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `item_id` (`item_id`),
-  CONSTRAINT `user_item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+	`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`item_id` int(11) NOT NULL,
+	`volume` int(11) NOT NULL,
+	`equipped` tinyint(1) NOT NULL,
+	`expire` int(11) NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `user_id` (`user_id`),
+	KEY `item_id` (`item_id`),
+	CONSTRAINT `user_item_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table user_message_block
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_message_block`;
+
+CREATE TABLE `user_message_block` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL DEFAULT '0',
+	`blocked_id` int(11) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table user_message_folder
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_message_folder`;
+
+CREATE TABLE `user_message_folder` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`folder_name` varchar(50) NOT NULL DEFAULT '',
+	`folder_order` int(11) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+# Dump of table user_message_settings
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user_message_settings`;
+
+CREATE TABLE `user_message_settings` (
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`setting` enum('work','attacked','got_attacked','clan_wars','grotto','adventure','mission','clan_founded','left_clan','disbanded_clan','clan_disbanded','clan_mail','clan_app_rejected','clan_app_accepted','clan_member_left','report_answer') NOT NULL DEFAULT 'work',
+	`folder_id` int(11) NOT NULL DEFAULT '0',
+	`mark_read` tinyint(1) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2849,10 +2935,10 @@ CREATE TABLE `user_item` (
 DROP TABLE IF EXISTS `user_note`;
 
 CREATE TABLE `user_note` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `note` text,
-  PRIMARY KEY (`id`)
+	`id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) DEFAULT NULL,
+	`note` text,
+	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -2863,10 +2949,11 @@ CREATE TABLE `user_note` (
 DROP TABLE IF EXISTS `user_talent`;
 
 CREATE TABLE `user_talent` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `talent_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) NOT NULL,
+	`talent_id` int(11) NOT NULL,
+	PRIMARY KEY (`id`),
+	UNIQUE KEY `user_talent_unique` (`user_id`,`talent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
