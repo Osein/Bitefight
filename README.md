@@ -21,3 +21,5 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 - Revise highscore.
 
 - Fix clan permissions
+
+- Server speed variable
