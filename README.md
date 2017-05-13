@@ -6,13 +6,11 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 ## Progress before new version
 
-**Settings** ( Done: Description )
+**Settings** ( Done: Description, Vacation, Password Change )
 
 *change email*
 
 *show character picture*
-
-*change password*
 
 *delete accounts*
 
