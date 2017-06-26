@@ -79,14 +79,14 @@ class ClanController extends GameController
             return $this->response->redirect(getUrl('clan/index'));
         }
 
-        $clan = ORM::for_table('clan')
-            ->find_one($this->user->clan_id);
-
         $rank = $this->getUserRankOptions();
 
         if (!$rank->spend_gold) {
             return $this->notFound();
         }
+
+        $clan = ORM::for_table('clan')
+            ->find_one($this->user->clan_id);
 
         $hideoutCost = getClanHideoutCost($clan->stufe + 1);
         if ($clan->capital < $hideoutCost) {
@@ -233,11 +233,13 @@ class ClanController extends GameController
 
     public function getLogoBackground()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
         $this->getLogoPage('background');
     }
 
     public function getLogoSymbol()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
         $this->getLogoPage('symbol');
     }
 
@@ -251,6 +253,7 @@ class ClanController extends GameController
 
     public function postLogoBackground()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
         $bg = $this->request->getPost('bg', Filter::FILTER_INT, 1);
         ORM::raw_execute("UPDATE clan SET logo_bg = ? WHERE id = ?", [$bg, $this->user->clan_id]);
         return $this->response->redirect(getUrl('clan/logo/background'));
@@ -258,6 +261,7 @@ class ClanController extends GameController
 
     public function postLogoSymbol()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
         $symbol = $this->request->getPost('symbol', Filter::FILTER_INT, 1);
         ORM::raw_execute("UPDATE clan SET logo_sym = ? WHERE id = ?", [$symbol, $this->user->clan_id]);
         return $this->response->redirect(getUrl('clan/logo/symbol'));
@@ -265,6 +269,8 @@ class ClanController extends GameController
 
     public function getDescription()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $this->view->description = ORM::for_table('clan_description')
             ->where('clan_id', $this->user->clan_id)
             ->find_one();
@@ -274,6 +280,8 @@ class ClanController extends GameController
 
     public function postDescription()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $save = $this->request->getPost('save');
 
         if ($save) {
@@ -297,6 +305,7 @@ class ClanController extends GameController
 
     public function getChangeHomePage()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
         $clanObj = ORM::for_table('clan')
             ->select('clan.*')->select('user.name', 'website_editor_name')
             ->left_outer_join('user', ['user.id', '=', 'clan.website_set_by'])
@@ -308,6 +317,7 @@ class ClanController extends GameController
 
     public function postChangeHomePage()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
         $clanObj = ORM::for_table('clan')->find_one($this->user->clan_id);
 
         if(!empty($this->request->get('delete', Filter::FILTER_STRING, '')) && $clanObj) {
@@ -329,6 +339,8 @@ class ClanController extends GameController
 
     public function getRename()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $clanObj = ORM::for_table('clan')->find_one($this->user->clan_id);
 
         if(!$clanObj) {
@@ -341,6 +353,8 @@ class ClanController extends GameController
 
     public function postRename()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $tag = $this->request->get('tag');
         $name = $this->request->get('name');
 
@@ -373,6 +387,8 @@ class ClanController extends GameController
 
     public function getMemberRights()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $users = ORM::for_table('user')
             ->select('user.id')->select('user.name')
             ->select('clan_rank.id', 'rank_id')->select('clan_rank.rank_name')
@@ -395,6 +411,8 @@ class ClanController extends GameController
 
     public function getSetOwner($id)
     {
+        if($this->user->clan_rank != 1) $this->notFound();
+
         $token = $this->request->get('_token');
         $tokenKey = $this->request->get('_tkey');
 
@@ -425,6 +443,8 @@ class ClanController extends GameController
 
     public function getKickUser($id)
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $token = $this->request->get('_token');
         $tokenKey = $this->request->get('_tkey');
 
@@ -439,6 +459,8 @@ class ClanController extends GameController
 
     public function postKickUser($id)
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $token = $this->request->get('_token');
         $tokenKey = $this->request->get('_tkey');
 
@@ -458,6 +480,8 @@ class ClanController extends GameController
 
     public function postAddRank()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $rank_name = $this->request->get('newRank', Filter::FILTER_STRING, '');
 
         if(empty($rank_name)) {
@@ -474,6 +498,8 @@ class ClanController extends GameController
 
     public function postEditRankOptions()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $ranks = $this->request->get('ranks', null, array());
 
         foreach($ranks as $rank_id => $properties)
@@ -500,6 +526,8 @@ class ClanController extends GameController
 
     public function postEditRights()
     {
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $users = $this->request->get('users', null, array());
 
         if(empty($users)) {
@@ -520,6 +548,8 @@ class ClanController extends GameController
             return $this->response->redirect(getUrl('clan/memberrights'));
         }
 
+        if($this->user->clan_rank != 1 && $this->user->clan_rank != 2) $this->notFound();
+
         $users = ORM::for_table('user')
             ->where('clan_id', $this->user->clan_id)
             ->where('clan_rank', $id)
@@ -536,6 +566,12 @@ class ClanController extends GameController
     {
         if($this->user->clan_id > 0) {
             return $this->response->redirect(getUrl(''));
+        }
+
+        $userRights = $this->getUserRankOptions();
+
+        if(!$userRights->add_member) {
+            return $this->notFound();
         }
 
         $pdo = ORM::getDb();
@@ -558,6 +594,10 @@ class ClanController extends GameController
             return $this->notFound();
         }
 
+        if($this->user->clan_id > 0) {
+            return $this->notFound();
+        }
+
         $clanExists = ORM::for_table('clan')->find_one($id);
 
         if(!$clanExists) {
@@ -576,6 +616,12 @@ class ClanController extends GameController
 
     public function getApplications()
     {
+        $userRights = $this->getUserRankOptions();
+
+        if(!$userRights->add_member) {
+            return $this->notFound();
+        }
+
         $this->view->applications = ORM::for_table('clan_application')
             ->left_outer_join('user', ['user.id', '=', 'clan_application.user_id'])
             ->select('clan_application.*')->select('user.name')
@@ -591,6 +637,12 @@ class ClanController extends GameController
 
     public function postApplications($id)
     {
+        $userRights = $this->getUserRankOptions();
+
+        if(!$userRights->add_member) {
+            return $this->notFound();
+        }
+
         $application = ORM::for_table('clan_application')->where('clan_id', $this->user->clan_id)->find_one($id);
 
         if(!$application) {
@@ -663,6 +715,12 @@ class ClanController extends GameController
 
     public function getDonationList()
     {
+        $userRights = $this->getUserRankOptions();
+
+        if(!$userRights->spend_gold) {
+            return $this->notFound();
+        }
+
         if($this->request->get('action') == 'refresh') {
             $this->user->clan_dtime = time();
         }
@@ -742,6 +800,12 @@ class ClanController extends GameController
 
     public function getClanMail()
     {
+        $memberRights = $this->getUserRankOptions();
+
+        if(!$memberRights->send_clan_message) {
+            return $this->notFound();
+        }
+
         $this->view->mail_users = ORM::for_table('user')
             ->select_many('user.id', 'user.name', 'clan_rank.rank_name')
             ->selectExpr('SUM(user.s_booty)', 'total_booty')
@@ -754,6 +818,12 @@ class ClanController extends GameController
 
     public function postClanMail()
     {
+        $memberRights = $this->getUserRankOptions();
+
+        if(!$memberRights->send_clan_message) {
+            return $this->notFound();
+        }
+
         $receivers = $this->request->get('receiver', null, array());
         $text = $this->request->get('text', null, '');
 

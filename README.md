@@ -16,8 +16,4 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 ## Todo
 
-- Revise highscore.
-
-- Fix clan permissions
-
 - Server speed variable

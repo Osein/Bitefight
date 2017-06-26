@@ -58,7 +58,7 @@
                     </tbody>
                 </table>
 
-
+                <?php if($rank->id == 1 || $rank->id == 2 || $rank->send_clan_message || $rank->spend_gold): ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan settings</h2>
                 <p></p>
                 <table width="100%">
@@ -84,6 +84,7 @@
                     </tbody>
                 </table>
                 <p></p>
+                <?php endif; ?>
 
                 <!--
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan chat</h2>
@@ -176,7 +177,8 @@
                 </table>
                 There are currently no active rituals
                 -->
-                
+
+                <?php if($rank->add_members): ?>
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Clan applications</h2>
                 <p></p>
                 <table width="100%">
@@ -191,6 +193,7 @@
                     </tbody>
                 </table>
                 <p></p>
+                <?php endif; ?>
 
 
                 <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> View of the clan hideout</h2>
