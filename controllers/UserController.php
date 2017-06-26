@@ -664,6 +664,22 @@ class UserController extends GameController
             }
         }
 
+        $showPicture = $this->request->get('showlogo');
+        $showPicture ? $this->user->show_picture = 1 : $this->user->show_picture = 0;
+
+        $newEmail = $this->request->get('email');
+
+        if(filter_var($newEmail, FILTER_VALIDATE_EMAIL)) {
+            $this->user->mail = $newEmail;
+        }
+
+        $delete = $this->request->get('delete');
+
+        if($delete) {
+            $this->user->delete();
+            $this->session->destroy(true);
+        }
+
         return $this->response->redirect(getUrl('user/settings'));
     }
 

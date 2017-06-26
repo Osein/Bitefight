@@ -105,7 +105,10 @@ class BaseController extends Controller
         // Idiorm will look for dirty fields.
         // If there is none, it will not send query.
         // So I think this is a good practice for me.
-        if ($this->user) {
+        // Extra, if this is a user delete request, dont save.
+        $delete = $this->request->get('delete');
+
+        if ($this->user && !$delete) {
             $this->user->save();
         }
 

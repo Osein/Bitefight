@@ -4,16 +4,6 @@ Bitefight clone version for study purposes. I am going to build a private server
 
 Also if you are efficient on calculating formulas you can help me with grotte and tavern missions.
 
-## Progress before new version
-
-**Settings** ( Done: Description, Vacation, Password Change )
-
-*change email*
-
-*show character picture*
-
-*delete accounts*
-
 ## Todo
 
 - Server speed variable

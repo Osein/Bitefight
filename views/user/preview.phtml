@@ -7,7 +7,11 @@
         </div>
         <div class="wrap-left">
             <div class="wrap-content wrap-right">
-                <img src="<?php echo getAssetLink('img/logo/'.$puser->race.'/'.$puser->gender.'/'.$puser->image_type.'.jpg') ?>" border="0" width="168">
+                <?php if($puser->show_picture): ?>
+                    <img src="<?php echo getAssetLink('img/logo/'.$puser->race.'/'.$puser->gender.'/'.$puser->image_type.'.jpg') ?>" border="0" width="168">
+                <?php else: ?>
+                    <img src="<?php echo getAssetLink('img/symbols/race'.$puser->race.'.gif') ?>" border="0" width="168">
+                <?php endif; ?>
                 <?php if($puser->clan_id > 0): ?>
                 <a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><img src="<?php echo getAssetLink('img/clan/'.$puser->logo_bg.'-'.$puser->logo_sym.'.png'); ?>" border="0"></a>
                 <?php endif; ?>
