@@ -218,8 +218,65 @@ function parseBBCodes($text) {
 }
 
 function getTalentPropertyArray($obj) {
-    $properties = getItemTalentSharedProperties($obj);
+    $properties = array();
 
+    if($obj->str != 0) {
+        $properties[] = array('Strength', $obj->str);
+    }
+    if($obj->def != 0) {
+        $properties[] = array('Defence', $obj->def);
+    }
+    if($obj->dex != 0) {
+        $properties[] = array('Dexterity', $obj->dex);
+    }
+    if($obj->end != 0) {
+        $properties[] = array('Endurance', $obj->end);
+    }
+    if($obj->cha != 0) {
+        $properties[] = array('Charisma', $obj->cha);
+    }
+    if($obj->hpbonus != 0) {
+        $properties[] = array('Health', $obj->hpbonus);
+    }
+    if($obj->regen != 0) {
+        $properties[] = array('Regeneration', $obj->regen);
+    }
+    if($obj->sbschc != 0) {
+        $properties[] = array('Basic hit chance', $obj->sbschc);
+    }
+    if($obj->sbscdmg != 0) {
+        $properties[] = array('Basic damage', $obj->sbscdmg);
+    }
+    if($obj->sbsctlnt != 0) {
+        $properties[] = array('Basic talent', $obj->sbsctlnt);
+    }
+    if($obj->sbnshc != 0) {
+        $properties[] = array('Bonus hit chance', $obj->sbnshc);
+    }
+    if($obj->sbnsdmg != 0) {
+        $properties[] = array('Bonus damage', $obj->sbnsdmg);
+    }
+    if($obj->sbnstlnt != 0) {
+        $properties[] = array('Bonus talent', $obj->sbnstlnt);
+    }
+    if($obj->ebschc != 0) {
+        $properties[] = array('Basic hit chance (on opponent)', $obj->ebschc);
+    }
+    if($obj->ebscdmg != 0) {
+        $properties[] = array('Basic damage (on opponent)', $obj->ebscdmg);
+    }
+    if($obj->ebsctlnt != 0) {
+        $properties[] = array('Basic talent (on opponent)', $obj->ebsctlnt);
+    }
+    if($obj->ebnshc != 0) {
+        $properties[] = array('Bonus hit chance (on opponent)', $obj->ebnshc);
+    }
+    if($obj->ebnsdmg != 0) {
+        $properties[] = array('Bonus damage (on opponent)', $obj->ebnsdmg);
+    }
+    if($obj->ebnstlnt != 0) {
+        $properties[] = array('Bonus talent (on opponent)', $obj->ebnstlnt);
+    }
     if($obj->estr != 0) {
         $properties[] = array('Strength (on opponent)', $obj->estr);
     }
@@ -257,11 +314,7 @@ function getTalentPropertyArray($obj) {
     return $properties;
 }
 
-function getItemPropertyArray($itemObj) {
-
-}
-
-function getItemTalentSharedProperties($obj) {
+function getItemPropertyArray($obj) {
     $properties = array();
 
     if($obj->str != 0) {
@@ -325,21 +378,20 @@ function getItemTalentSharedProperties($obj) {
     return $properties;
 }
 
-function profilePrintUserItem($i) {
+function plusSignedNumberString($number) {
+    return sprintf("%+d",$number);
+}
+
+function printProfileItemRow($i) {
     ?>
     <tr>
         <td class='<?php if($i->equipped) echo 'active'; else echo 'inactive'; ?> itemslot' style="text-align:center;">
             <div style="position:relative;width:300px;">
                 <img src="<?php echo getAssetLink('img/items/'.$i->model.'/'.$i->id.'.jpg') ?>" <?php if($i->scost > 0) echo 'style="border: 1px solid #6f86a9;"'; ?> alt="<?php echo $i->name ?>">
-
-                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
                 <div style="position: absolute; right: 20px; top: 15px; z-index: 9999;">
-                    <?php if ($i->stern >= 1): ?>
-                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0px none;">
-                    <?php endif ?>
-                    <?php if ($i->stern == 2): ?>
-                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0px none;">
-                    <?php endif ?>
+                    <?php for($y = 0; $y < $i->stern; $y++): ?>
+                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                    <?php endfor; ?>
                 </div>
             </div>
         </td>
@@ -369,56 +421,35 @@ function profilePrintUserItem($i) {
 
         <td class='<?php if($i->equipped) echo 'active'; else echo 'tdn'; ?>'>
             <strong><?php echo $i->name; ?> </strong><br>
-            (Your inventory: <?php if($i->volume) echo $i->volume; else echo 0; ?> item(s))<br><br>
-            Resale value: <?php echo number_format($i->slcost, 0, ",", "."); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br><br>
-            <?php if($i->str > 0): ?>        Strenght: +<?php echo $i->str; ?><br> <?php endif; ?>
-            <?php if($i->def > 0): ?>         Defence: +<?php echo $i->def; ?><br> <?php endif; ?>
-            <?php if($i->dex > 0): ?>         Dexterity: +<?php echo $i->dex; ?><br> <?php endif; ?>
-            <?php if($i->end > 0): ?>         Endurance: +<?php echo $i->end; ?><br> <?php endif; ?>
-            <?php if($i->cha > 0): ?>         Charisma: +<?php echo $i->cha; ?><br> <?php endif; ?>
-            <?php if($i->str < 0): ?>         Strenght: <?php echo $i->str; ?><br> <?php endif; ?>
-            <?php if($i->def < 0): ?>         Defence: <?php echo $i->def; ?><br> <?php endif; ?>
-            <?php if($i->dex < 0): ?>         Dexterity: <?php echo $i->dex; ?><br> <?php endif; ?>
-            <?php if($i->end < 0): ?>         Endurance: <?php echo $i->end; ?><br> <?php endif; ?>
-            <?php if($i->cha < 0): ?>         Charisma: <?php echo $i->cha; ?><br> <?php endif; ?>
-            <?php if($i->hpbonus > 0): ?>     Vitality: +<?php echo number_format($i->hpbonus, 0, ",", "."); ?><br> <?php endif; ?>
-            <?php if($i->regen > 0): ?>       Regeneration: +<?php echo number_format($i->regen, 0, ",", "."); ?><br> <?php endif; ?>
-            <?php if($i->hpbonus < 0): ?>     Vitality: <?php echo number_format($i->hpbonus, 0, ",", "."); ?><br> <?php endif; ?>
-            <?php if($i->regen < 0): ?>       Regeneration: <?php echo number_format($i->regen, 0, ",", "."); ?><br> <?php endif; ?>
-            <?php if($i->sbschc > 0): ?>      Basic hit chance: +<?php echo $i->sbschc; ?><br> <?php endif; ?>
-            <?php if($i->sbscdmg > 0): ?>     Basic damage: +<?php echo $i->sbscdmg; ?><br> <?php endif; ?>
-            <?php if($i->sbsctlnt > 0): ?>    Basic talent: +<?php echo $i->sbsctlnt; ?><br> <?php endif; ?>
-            <?php if($i->sbnshc > 0): ?>      Bonus hit chance: +<?php echo $i->sbnshc; ?><br> <?php endif; ?>
-            <?php if($i->sbnsdmg > 0): ?>     Bonus damage: +<?php echo $i->sbnsdmg; ?><br>   <?php endif; ?>
-            <?php if($i->sbnstlnt > 0): ?>    Bonus talent: +<?php echo $i->sbnstlnt; ?><br> <?php endif; ?>
-            <?php if($i->sbschc < 0): ?>      Basic hit chance: <?php echo $i->sbschc; ?><br> <?php endif; ?>
-            <?php if($i->sbscdmg < 0): ?>     Basic damage: <?php echo $i->sbscdmg; ?><br> <?php endif; ?>
-            <?php if($i->sbsctlnt < 0): ?>    Basic talent: <?php echo $i->sbsctlnt; ?><br> <?php endif; ?>
-            <?php if($i->sbnshc < 0): ?>      Bonus hit chance: <?php echo $i->sbnshc; ?><br> <?php endif; ?>
-            <?php if($i->sbnsdmg < 0): ?>     Bonus damage: <?php echo $i->sbnsdmg; ?><br>   <?php endif; ?>
-            <?php if($i->sbnstlnt < 0): ?>    Bonus talent: <?php echo $i->sbnstlnt; ?><br> <?php endif; ?>
+            (Your inventory: <?php echo $i->volume; ?> item(s))<br><br>
+            Resale value: <?php echo prettyNumber($i->slcost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br><br>
+            <?php if($i->str != 0): ?>        Strenght: <?php echo plusSignedNumberString($i->str); ?><br> <?php endif; ?>
+            <?php if($i->def != 0): ?>        Defence: <?php echo plusSignedNumberString($i->def); ?><br> <?php endif; ?>
+            <?php if($i->dex != 0): ?>        Dexterity: <?php echo plusSignedNumberString($i->dex); ?><br> <?php endif; ?>
+            <?php if($i->end != 0): ?>        Endurance: <?php echo plusSignedNumberString($i->end); ?><br> <?php endif; ?>
+            <?php if($i->cha != 0): ?>        Charisma: <?php echo plusSignedNumberString($i->cha); ?><br> <?php endif; ?>
+            <?php if($i->hpbonus != 0): ?>    Vitality: <?php if($i->hpbonus > 0) echo '+'; echo prettyNumber($i->hpbonus) ?><br> <?php endif; ?>
+            <?php if($i->regen != 0): ?>      Regeneration: <?php if($i->regen > 0) echo '+'; echo prettyNumber($i->regen) ?><br> <?php endif; ?>
+            <?php if($i->sbschc > 0): ?>      Basic hit chance: <?php echo plusSignedNumberString($i->sbschc); ?><br> <?php endif; ?>
+            <?php if($i->sbscdmg > 0): ?>     Basic damage: <?php echo plusSignedNumberString($i->sbscdmg); ?><br> <?php endif; ?>
+            <?php if($i->sbsctlnt > 0): ?>    Basic talent: <?php echo plusSignedNumberString($i->sbsctlnt); ?><br> <?php endif; ?>
+            <?php if($i->sbnshc > 0): ?>      Bonus hit chance: <?php echo plusSignedNumberString($i->sbnshc); ?><br> <?php endif; ?>
+            <?php if($i->sbnsdmg > 0): ?>     Bonus damage: <?php echo plusSignedNumberString($i->sbnsdmg); ?><br>   <?php endif; ?>
+            <?php if($i->sbnstlnt > 0): ?>    Bonus talent: <?php echo plusSignedNumberString($i->sbnstlnt); ?><br> <?php endif; ?>
             <?php if($i->ebschc < 0): ?>      Basic hit chance (on opponent): <?php echo $i->ebschc; ?><br> <?php endif; ?>
             <?php if($i->ebscdmg < 0): ?>     Basic damage (on opponent): <?php echo $i->ebscdmg; ?><br> <?php endif; ?>
             <?php if($i->ebsctlnt < 0): ?>    Basic talent (on opponent): <?php echo $i->ebsctlnt; ?><br> <?php endif; ?>
             <?php if($i->ebnshc < 0): ?>      Bonus hit chance (on opponent): <?php echo $i->ebnshc; ?><br> <?php endif; ?>
             <?php if($i->ebnsdmg < 0): ?>     Bonus damage (on opponent): <?php echo $i->ebnsdmg; ?><br> <?php endif; ?>
             <?php if($i->ebnstlnt < 0): ?>    Bonus talent (on opponent): <?php echo $i->ebnstlnt; ?><br> <?php endif; ?>
-            <?php if($i->apup > 0): ?>    Energy: <?php echo $i->apup; ?><br> <?php endif; ?>
+            <?php if($i->apup > 0): ?>        Energy: <?php echo $i->apup; ?><br> <?php endif; ?>
             <?php if($i->id == 156): ?>       Man hunt: gold and booty x2<br> <?php endif; ?>
             <?php if($i->duration > 0): ?>    Duration of effect: <?php echo $durationString; ?><br> <?php endif; ?>
-            <?php if(!$i->duration > 0): if($i->cooldown > 0): ?>    Cooldown time: <?php echo $cooldownString; ?><br> <?php endif; endif; ?>
+            <?php if($i->cooldown > 0): ?>    Cooldown time: <?php echo $cooldownString; ?><br> <?php endif; ?>
             <br>
-            Requirement: level <?php echo number_format($i->level, 0, ",", "."); ?><br>
+            Requirement: level <?php echo prettyNumber($i->level); ?><br>
 
-            <?php if(!$i->equipped && $i->expire <= time()): ?>
-            <br><div class="btn-left left"><div class="btn-right">
-                        <form method="post" action="<?php echo getUrl('profile/item/equip'); ?>">
-                            <input type="hidden" name="__token" value="">
-                            <input type="hidden" name="item_id" value="<?php echo $i->id; ?>">
-                            <button class="btn">Use this item</button>
-                        </form>
-                    </div></div><br/>
-            <?php elseif($i->cooldown > 0 && $i->expire > time()): ?>
+            <?php if($i->cooldown > 0 && $i->expire > time()): ?>
                 Cooldown time <span id="item_cooldown2_<?php echo $i->id; ?>" ></span><br/>
                 <script type="text/javascript">
                     $(function () {
@@ -426,13 +457,25 @@ function profilePrintUserItem($i) {
                             until: +<?php echo $i->expire - time(); ?>,
                             compact: true,
                             compactLabels: ['y', 'm', 'w', 'd'],
-                            description: '',onExpiry: redirectUser
+                            description: '',
+                            onExpiry: redirectUser
                         });
                     });
                     function redirectUser() {
-                        setTimeout('window.location = "<?php echo url('profile/index') ?>"',3000);
+                        setTimeout('window.location = "<?php echo getUrl('profile/index') ?>"',3000);
                     }
                 </script>
+            <?php elseif(!$i->equipped && $i->expire <= time()): ?>
+            <div class="btn-left left">
+                <div class="btn-right">
+                    <form method="post" action="<?php echo getUrl('profile/item/equip'); ?>">
+                        <input type="hidden" name="__token" value="">
+                        <input type="hidden" name="item_id" value="<?php echo $i->id; ?>">
+                        <button class="btn">Use this item</button>
+                    </form>
+                </div>
+            </div>
+            <br/>
             <?php endif; ?>
         </td>
     </tr>

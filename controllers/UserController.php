@@ -29,9 +29,9 @@ class UserController extends GameController
         $this->view->highscorePosition = $hsRow->greater + $hsRow->equal + 1;
 
         $user_active_items = array();
-        $user_items = array();
 
         $potions = array();
+        $potion_count = 0;
         $weapons = array();
         $helmets = array();
         $armour = array();
@@ -39,6 +39,7 @@ class UserController extends GameController
         $gloves = array();
         $boots = array();
         $shields = array();
+        $totems = array();
 
         //Attributes
         $stat_str_tooltip = array(
@@ -127,91 +128,62 @@ class UserController extends GameController
             ->find_many();
 
         foreach ($talents as $t) {
-
-            if($t->attack > 0)
-            {
+            if($t->attack > 0) {
                 $fm_attack_tooltip['detail'][] = array(Translate::_tn($t->id), $t->attack);
                 $fm_attack_total += $t->attack;
             }
-
-            if($t->str > 0)
-            {
+            if($t->str > 0) {
                 $stat_str_tooltip['detail'][] = array(Translate::_tn($t->id), $t->str);
                 $stat_str_total += $t->str;
             }
-
-            if($t->def > 0)
-            {
+            if($t->def > 0) {
                 $stat_def_tooltip['detail'][] = array(Translate::_tn($t->id), $t->def);
                 $stat_def_total += $t->def;
             }
-
-            if($t->dex > 0)
-            {
+            if($t->dex > 0) {
                 $stat_dex_tooltip['detail'][] = array(Translate::_tn($t->id), $t->dex);
                 $stat_dex_total += $t->dex;
             }
-
-            if($t->end > 0)
-            {
+            if($t->end > 0) {
                 $stat_end_tooltip['detail'][] = array(Translate::_tn($t->id), $t->end);
                 $stat_end_total += $t->end;
             }
-
-            if($t->cha > 0)
-            {
+            if($t->cha > 0) {
                 $stat_cha_tooltip['detail'][] = array(Translate::_tn($t->id), $t->cha);
                 $stat_cha_total += $t->cha;
             }
-
-            if($t->hpbonus > 0)
-            {
+            if($t->hpbonus > 0) {
                 $stat_hp_tooltip['detail'][] = array(Translate::_tn($t->id), $t->hpbonus);
                 $stat_hp_total += $t->hpbonus;
             }
-
-            if($t->regen > 0)
-            {
+            if($t->regen > 0) {
                 $fm_regen_tooltip['detail'][] = array(Translate::_tn($t->id), $t->regen);
                 $fm_regen_total += $t->regen;
             }
-
-            if($t->sbscdmg > 0)
-            {
+            if($t->sbscdmg > 0) {
                 $fm_bsc_dmg_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbscdmg);
                 $fm_bsc_dmg_total += $t->sbscdmg;
             }
-
-            if($t->sbnsdmg > 0)
-            {
+            if($t->sbnsdmg > 0) {
                 $fm_bns_dmg_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbnsdmg);
                 $fm_bns_dmg_total += $t->sbnsdmg;
             }
-
-            if($t->sbschc > 0)
-            {
+            if($t->sbschc > 0) {
                 $fm_bsc_hc_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbschc);
                 $fm_bsc_hc_total += $t->sbschc;
             }
-
-            if($t->sbnshc > 0)
-            {
+            if($t->sbnshc > 0) {
                 $fm_bns_hc_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbnshc);
                 $fm_bns_hc_total += $t->sbnshc;
             }
-
-            if($t->sbsctlnt > 0)
-            {
+            if($t->sbsctlnt > 0) {
                 $fm_bsc_tlnt_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbsctlnt);
                 $fm_bsc_tlnt_total += $t->sbsctlnt;
             }
-
-            if($t->sbnstlnt > 0)
-            {
+            if($t->sbnstlnt > 0) {
                 $fm_bns_tlnt_tooltip['detail'][] = array(Translate::_tn($t->id), $t->sbnstlnt);
                 $fm_bns_tlnt_total += $t->sbnstlnt;
             }
-
         }
 
         $items = ORM::for_table('user_item')
@@ -220,85 +192,85 @@ class UserController extends GameController
             ->find_many();
 
         foreach($items as $item) {
+            $modelString = getItemModelFromModelNo($item->model);
 
-            if($item->str > 0)
+            if($item->expire > time() && $item->duration > 0)
             {
-                $stat_str_tooltip['detail'][] = array($item->name, $item->str);
-                $stat_str_total += $item->str;
+                $user_active_items[] = $item;
             }
 
-            if($item->def > 0)
-            {
-                $stat_def_tooltip['detail'][] = array($item->name, $item->def);
-                $stat_def_total += $item->def;
+            if($item->model == 2) {
+                $potion_count += $item->volume;
             }
 
-            if($item->dex > 0)
-            {
-                $stat_dex_tooltip['detail'][] = array($item->name, $item->dex);
-                $stat_dex_total += $item->dex;
+            if($item->equipped ||($item->duration > 0 && $item->expire > time())) {
+                if($item->str > 0) {
+                    $stat_str_tooltip['detail'][] = array($item->name, $item->str);
+                    $stat_str_total += $item->str;
+                }
+
+                if($item->def > 0) {
+                    $stat_def_tooltip['detail'][] = array($item->name, $item->def);
+                    $stat_def_total += $item->def;
+                }
+
+                if($item->dex > 0) {
+                    $stat_dex_tooltip['detail'][] = array($item->name, $item->dex);
+                    $stat_dex_total += $item->dex;
+                }
+
+                if($item->end > 0) {
+                    $stat_end_tooltip['detail'][] = array($item->name, $item->end);
+                    $stat_end_total += $item->end;
+                }
+
+                if($item->cha > 0) {
+                    $stat_cha_tooltip['detail'][] = array($item->name, $item->cha);
+                    $stat_cha_total += $item->cha;
+                }
+
+                if($item->hpbonus > 0) {
+                    $stat_hp_tooltip['detail'][] = array($item->name, $item->hpbonus);
+                    $stat_hp_total += $item->hpbonus;
+                }
+
+                if($item->regen > 0) {
+                    $fm_regen_tooltip['detail'][] = array($item->name, $item->regen);
+                    $fm_regen_total += $item->regen;
+                }
+
+                if($item->sbscdmg > 0) {
+                    $fm_bsc_dmg_tooltip['detail'][] = array($item->name, $item->sbscdmg);
+                    $fm_bsc_dmg_total += $item->sbscdmg;
+                }
+
+                if($item->sbnsdmg > 0) {
+                    $fm_bns_dmg_tooltip['detail'][] = array($item->name, $item->sbnsdmg);
+                    $fm_bns_dmg_total += $item->sbnsdmg;
+                }
+
+                if($item->sbschc > 0) {
+                    $fm_bsc_hc_tooltip['detail'][] = array($item->name, $item->sbschc);
+                    $fm_bsc_hc_total += $item->sbschc;
+                }
+
+                if($item->sbnshc > 0) {
+                    $fm_bns_hc_tooltip['detail'][] = array($item->name, $item->sbnshc);
+                    $fm_bns_hc_total += $item->sbnshc;
+                }
+
+                if($item->sbsctlnt > 0) {
+                    $fm_bsc_tlnt_tooltip['detail'][] = array($item->name, $item->sbsctlnt);
+                    $fm_bsc_tlnt_total += $item->sbsctlnt;
+                }
+
+                if($item->sbnstlnt > 0) {
+                    $fm_bns_tlnt_tooltip['detail'][] = array($item->name, $item->sbnstlnt);
+                    $fm_bns_tlnt_total += $item->sbnstlnt;
+                }
             }
 
-            if($item->end > 0)
-            {
-                $stat_end_tooltip['detail'][] = array($item->name, $item->end);
-                $stat_end_total += $item->end;
-            }
-
-            if($item->cha > 0)
-            {
-                $stat_cha_tooltip['detail'][] = array($item->name, $item->cha);
-                $stat_cha_total += $item->cha;
-            }
-
-            if($item->hpbonus > 0)
-            {
-                $stat_hp_tooltip['detail'][] = array($item->name, $item->hpbonus);
-                $stat_hp_total += $item->hpbonus;
-            }
-
-            if($item->regen > 0)
-            {
-                $fm_regen_tooltip['detail'][] = array($item->name, $item->regen);
-                $fm_regen_total += $item->regen;
-            }
-
-            if($item->sbscdmg > 0)
-            {
-                $fm_bsc_dmg_tooltip['detail'][] = array($item->name, $item->sbscdmg);
-                $fm_bsc_dmg_total += $item->sbscdmg;
-            }
-
-            if($item->sbnsdmg > 0)
-            {
-                $fm_bns_dmg_tooltip['detail'][] = array($item->name, $item->sbnsdmg);
-                $fm_bns_dmg_total += $item->sbnsdmg;
-            }
-
-            if($item->sbschc > 0)
-            {
-                $fm_bsc_hc_tooltip['detail'][] = array($item->name, $item->sbschc);
-                $fm_bsc_hc_total += $item->sbschc;
-            }
-
-            if($item->sbnshc > 0)
-            {
-                $fm_bns_hc_tooltip['detail'][] = array($item->name, $item->sbnshc);
-                $fm_bns_hc_total += $item->sbnshc;
-            }
-
-            if($item->sbsctlnt > 0)
-            {
-                $fm_bsc_tlnt_tooltip['detail'][] = array($item->name, $item->sbsctlnt);
-                $fm_bsc_tlnt_total += $item->sbsctlnt;
-            }
-
-            if($item->sbnstlnt > 0)
-            {
-                $fm_bns_tlnt_tooltip['detail'][] = array($item->name, $item->sbnstlnt);
-                $fm_bns_tlnt_total += $item->sbnstlnt;
-            }
-
+            ${$modelString}[] = $item;
         }
 
         $fm_attack_tooltip['total'] = array('Attack', $fm_attack_total);
@@ -389,12 +361,13 @@ class UserController extends GameController
             'fm_bns_tlnt_total' => $fm_bns_tlnt_total,
             'fm_regen_total' => $fm_regen_total,
 
-            'user_item_count' => count($user_items),
+            'user_item_count' => count($items),
             'user_item_max_count' => 13 + $this->user->h_domicile * 2,
 
             'user_active_items' => $user_active_items,
 
             'potions' => $potions,
+            'potion_count' => $potion_count,
             'weapons' => $weapons,
             'helmets' => $helmets,
             'armour' => $armour,
@@ -402,6 +375,7 @@ class UserController extends GameController
             'gloves' => $gloves,
             'boots' => $boots,
             'shields' => $shields,
+            'totems' => $totems,
 
             'hp_red_long' => $this->user->hp_now / $stat_hp_total * 400,
             'exp_red_long' => ($this->user->exp - $previousLevelExp) / $levelExpDiff * 400,

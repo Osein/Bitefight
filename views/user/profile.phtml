@@ -692,7 +692,7 @@
     -->
 </div>
 
-<!--
+<?php if($user_item_count > 0): ?>
 <script type="text/javascript">
     jQuery().ready(function(){
         $('#accordion').accordion({
@@ -713,153 +713,145 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-
             <div class="table-wrap">
-                <h2>&nbsp;Items ( 22 / 25 )</h2>
-                <div id="accordion">
+                <?php if(count($user_active_items) > 0): ?>
+                <h2>&nbsp;Items are active ( <?php echo count($user_active_items); ?> )</h2>
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody>
+                    <?php foreach($user_active_items as $i): ?>
+                    <tr>
+                        <td class="active itemslot">
+                            <img src="<?php echo getAssetLink('img/items/'.$i->model.'/'.$i->id.'.jpg') ?>" alt="Energy Potion" <?php if($i->scost > 0) echo 'style="border: 1px solid #6f86a9;"'; ?>>
+                        </td>
+                        <td class="active">
+                            <strong><?php echo $i->name; ?></strong>
+                            <br><br>
+                            <?php if($i->str != 0): ?>        Strenght: <?php echo plusSignedNumberString($i->str); ?><br> <?php endif; ?>
+                            <?php if($i->def != 0): ?>        Defence: <?php echo plusSignedNumberString($i->def); ?><br> <?php endif; ?>
+                            <?php if($i->dex != 0): ?>        Dexterity: <?php echo plusSignedNumberString($i->dex); ?><br> <?php endif; ?>
+                            <?php if($i->end != 0): ?>        Endurance: <?php echo plusSignedNumberString($i->end); ?><br> <?php endif; ?>
+                            <?php if($i->cha != 0): ?>        Charisma: <?php echo plusSignedNumberString($i->cha); ?><br> <?php endif; ?>
+                            <?php if($i->sbsctlnt > 0): ?>    Basic talent: <?php echo plusSignedNumberString($i->sbsctlnt); ?><br> <?php endif; ?>
+                            <?php if($i->sbnstlnt > 0): ?>    Bonus talent: <?php echo plusSignedNumberString($i->sbnstlnt); ?><br> <?php endif; ?>
+                            <?php if($i->id == 156): ?>       Man hunt: gold and booty x2<br> <?php endif; ?>
+                            <?php if($i->apup > 0): ?>        Energy: <?php echo $i->apup; ?><br> <?php endif; ?>
+                            <br>
+                            Duration of effect <span id="item_active_counter_<?php echo $i->id; ?>"></span>
+                            <script type="text/javascript">
+                                $(function () {
+                                    $("#item_active_counter_<?php echo $i->id; ?>").countdown({
+                                        until: +<?php echo $i->expire - time(); ?>,
+                                        compact: true,
+                                        compactLabels: ['y', 'm', 'w', 'd'],
+                                        description: ''
+                                    });
+                                });
+                            </script>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+                <h2>&nbsp;Items ( <?php echo $user_item_count; ?> / <?php echo $user_item_max_count; ?> )</h2>
+                <div id="accordion" class="ui-accordion-icons">
+                    <?php if(count($potions) > 0): ?>
                     <h3>
-                        <a href="#">Potions ( 15 )</a>
+                        <a href="#">Potions ( <?php echo $potion_count; ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='inactive itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/2/4.jpg" alt="100% Healing Potion (will give you full health)" style="border: 1px solid #6f86a9;">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='inactive'>
-                                    <strong>100% Healing Potion (will give you full health)</strong><br />(Your inventory: 2 item(s))<br /><br />Resale value: 0<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Immediately heals 100% of your Health<br /><br />Requirement: level 1        <br />
-                                    <div class="btn-left left"><div class="btn-right">
-                                            <a class="btn" href="http://s202.en.bitefight.gameforge.com/profile/useItem/2/4?__token=0ce051019480c8a8046458f2dfd98c2f">Use this item</a>
-                                        </div></div>
-                                    <br/></td>
-                            </tr><tr>
-                                <td class='inactive itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/2/17.jpg" alt="Energy Potion">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='inactive'>
-                                    <strong>Energy Potion</strong><br />(Your inventory: 13 item(s))<br /><br />Resale value: 250<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Energy: +10<br />Duration of effect: 06:00:00<br /><br />Requirement: level 1        <br />
-                                    <div class="btn-left left"><div class="btn-right">
-                                            <a class="btn" href="http://s202.en.bitefight.gameforge.com/profile/useItem/2/17?__token=0ce051019480c8a8046458f2dfd98c2f">Use this item</a>
-                                        </div></div>
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($potions as $potion): ?>
+                                <?php printProfileItemRow($potion); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($weapons) > 0): ?>
                     <h3>
-                        <a href="#">Weapons ( 1 )</a>
+                        <a href="#">Weapons ( <?php echo count($weapons); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/1/78.jpg" alt="Sonisha">
-                                        <div style="position:absolute;right:20px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Sonisha</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 942.603<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Basic damage: +8<br />Bonus damage: +24<br />Strength: +50<br /><br />Requirement: level 195        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($weapons as $weapon): ?>
+                            <?php printProfileItemRow($weapon); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($helmets) > 0): ?>
                     <h3>
-                        <a href="#">Helmets ( 1 )</a>
+                        <a href="#">Helmets ( <?php echo count($helmets); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/3/45.jpg" alt="Bergor">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Bergor</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 931.061<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Basic damage (on opponent): -5<br />Bonus damage (on opponent): -13<br />Endurance: +50<br /><br />Requirement: level 194        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($helmets as $helmet): ?>
+                                <?php printProfileItemRow($helmet); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($armour) > 0): ?>
                     <h3>
-                        <a href="#">Armour ( 1 )</a>
+                        <a href="#">Armour ( <?php echo count($armour); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/4/53.jpg" alt="Urrosh">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Urrosh</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 885.719<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Basic damage (on opponent): -4<br />Bonus damage (on opponent): -12<br />Endurance: +49<br /><br />Requirement: level 190        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($armour as $armr): ?>
+                                <?php printProfileItemRow($armr); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($jewellery) > 0): ?>
                     <h3>
-                        <a href="#">Jewellery ( 1 )</a>
+                        <a href="#">Jewellery ( <?php echo count($jewellery); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/5/42.jpg" alt="Sytyr">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Sytyr</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 560.793<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Dexterity: +85<br /><br />Requirement: level 157        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($jewellery as $jwllry): ?>
+                                <?php printProfileItemRow($jwllry); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($gloves) > 0): ?>
                     <h3>
-                        <a href="#">Gloves ( 1 )</a>
+                        <a href="#">Gloves ( <?php echo count($gloves); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/6/45.jpg" alt="Kwera">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Kwera</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 1.075.088<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Strength: +63<br />Dexterity: +42<br /><br />Requirement: level 206        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($gloves as $glvs): ?>
+                                <?php printProfileItemRow($glvs); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($boots) > 0): ?>
                     <h3>
-                        <a href="#">Boots ( 1 )</a>
+                        <a href="#">Boots ( <?php echo count($boots); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/7/26.jpg" alt="Penumbraal">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Penumbraal</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 778.095<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Defence: +38<br />Dexterity: +57<br /><br />Requirement: level 180        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($boots as $boot): ?>
+                                <?php printProfileItemRow($boot); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php if(count($shields) > 0): ?>
                     <h3>
-                        <a href="#">Shields ( 1 )</a>
+                        <a href="#">Shields ( <?php echo count($shields); ?> )</a>
                     </h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
-                            <tr>
-                                <td class='active itemslot'><div style="position:relative;width:300px;">
-                                        <img src="http://s202.en.bitefight.gameforge.com/img/items/8/26.jpg" alt="Jameter">
-                                        <div style="position:absolute;right:90px;top:15px;z-index:9999">
-                                        </div>
-                                    </div></td>
-                                <td class='active'>
-                                    <strong>Jameter</strong><br />(Your inventory: 1 item(s))<br /><br />Resale value: 463.560<img src="http://s202.en.bitefight.gameforge.com/img/symbols/res2.gif" alt="Gold" align="absmiddle" border="0"><br /><br />Defence: +80<br /><br />Requirement: level 145        <br />
-                                    <br/></td>
-                            </tr>                        </table>
+                            <?php foreach($shields as $shield): ?>
+                                <?php printProfileItemRow($shield); ?>
+                            <?php endforeach; ?>
+                        </table>
                     </div>
+                    <?php endif; ?>
+                    <?php /*if(count($totems) > 0): */?><!--
                     <h3><a href="#">Totems ( 1 / 11 )</a></h3>
                     <div>
                         <table cellpadding="2" cellspacing="2" border="0" width="100%">
@@ -873,6 +865,7 @@
                                     Dexterity: +4<br />Endurance: +3<br />    </td>
                             </tr>                        </table>
                     </div>
+                    --><?php /*endif; */?>
                 </div>
             </div>
         </div>
@@ -883,4 +876,4 @@
         </div>
     </div>
 </div>
--->
+<?php endif; ?>
