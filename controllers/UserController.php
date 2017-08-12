@@ -130,7 +130,7 @@ class UserController extends GameController
 
             if($t->attack > 0)
             {
-                $fm_attack_tooltip['detail'][] = array(Translate::_tn($t->id), $t->str);
+                $fm_attack_tooltip['detail'][] = array(Translate::_tn($t->id), $t->attack);
                 $fm_attack_total += $t->attack;
             }
 
