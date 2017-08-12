@@ -115,7 +115,7 @@
                                 <td>Strength:</td>
                                 <td nowrap>
                                     <div class="tooltip left"  title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $stat_str_tooltip]); ?>" style="text-align:left;">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $str_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->str); ?>)</span>
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $str_red_long; ?>"><?php if($str_total_long-$str_red_long > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $str_total_long-$str_red_long; ?>"><img src="<?php echo getAssetLink('img/b7.gif') ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""><?php endif; ?> <span class="fontsmall">(<?php echo prettyNumber($stat_str_total); ?>)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -136,7 +136,7 @@
                                 <td>Defence:</td>
                                 <td nowrap>
                                     <div class="tooltip left"  title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $stat_def_tooltip]); ?>" style="text-align:left;">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $def_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->def); ?>)</span>
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $def_red_long; ?>"><?php if($def_total_long-$def_red_long > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $def_total_long-$def_red_long; ?>"><img src="<?php echo getAssetLink('img/b7.gif') ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""><?php endif; ?> <span class="fontsmall">(<?php echo prettyNumber($stat_def_total); ?>)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -157,7 +157,7 @@
                                 <td>Dexterity:</td>
                                 <td nowrap>
                                     <div class="tooltip left"  title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $stat_dex_tooltip]); ?>" style="text-align:left;">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $dex_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->dex); ?>)</span>
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $dex_red_long; ?>"><?php if($dex_total_long-$dex_red_long > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $dex_total_long-$dex_red_long; ?>"><img src="<?php echo getAssetLink('img/b7.gif') ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""><?php endif; ?> <span class="fontsmall">(<?php echo prettyNumber($stat_dex_total); ?>)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -178,7 +178,7 @@
                                 <td>Endurance:</td>
                                 <td nowrap>
                                     <div class="tooltip left"  title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $stat_end_tooltip]); ?>" style="text-align:left;">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $end_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->end); ?>)</span>
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $end_red_long; ?>"><?php if($end_total_long-$end_red_long > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $end_total_long-$end_red_long; ?>"><img src="<?php echo getAssetLink('img/b7.gif') ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""><?php endif; ?> <span class="fontsmall">(<?php echo prettyNumber($stat_end_total); ?>)</span>
                                     </div>
                                 </td>
                                 <td>
@@ -199,7 +199,7 @@
                                 <td>Charisma:</td>
                                 <td nowrap>
                                     <div class="tooltip left"  title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $stat_cha_tooltip]); ?>" style="text-align:left;">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $cha_red_long; ?>"><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""> <span class="fontsmall">(<?php echo prettyNumber($user->cha); ?>)</span>
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $cha_red_long; ?>"><?php if($cha_total_long-$cha_red_long > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $cha_total_long-$cha_red_long; ?>"><img src="<?php echo getAssetLink('img/b7.gif') ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif') ?>" alt=""><?php endif; ?> <span class="fontsmall">(<?php echo prettyNumber($stat_cha_total); ?>)</span>
                                     </div>
                                 </td>
                                 <td>

@@ -214,6 +214,93 @@ class UserController extends GameController
 
         }
 
+        $items = ORM::for_table('user_item')
+            ->left_outer_join('item', ['item.id', '=', 'user_item.item_id'])
+            ->where('user_item.user_id', $this->user->id)
+            ->find_many();
+
+        foreach($items as $item) {
+
+            if($item->str > 0)
+            {
+                $stat_str_tooltip['detail'][] = array(Translate::_in($item->id), $item->str);
+                $stat_str_total += $item->str;
+            }
+
+            if($item->def > 0)
+            {
+                $stat_def_tooltip['detail'][] = array(Translate::_in($item->id), $item->def);
+                $stat_def_total += $item->def;
+            }
+
+            if($item->dex > 0)
+            {
+                $stat_dex_tooltip['detail'][] = array(Translate::_in($item->id), $item->dex);
+                $stat_dex_total += $item->dex;
+            }
+
+            if($item->end > 0)
+            {
+                $stat_end_tooltip['detail'][] = array(Translate::_in($item->id), $item->end);
+                $stat_end_total += $item->end;
+            }
+
+            if($item->cha > 0)
+            {
+                $stat_cha_tooltip['detail'][] = array(Translate::_in($item->id), $item->cha);
+                $stat_cha_total += $item->cha;
+            }
+
+            if($item->hpbonus > 0)
+            {
+                $stat_hp_tooltip['detail'][] = array(Translate::_in($item->id), $item->hpbonus);
+                $stat_hp_total += $item->hpbonus;
+            }
+
+            if($item->regen > 0)
+            {
+                $fm_regen_tooltip['detail'][] = array(Translate::_in($item->id), $item->regen);
+                $fm_regen_total += $item->regen;
+            }
+
+            if($item->sbscdmg > 0)
+            {
+                $fm_bsc_dmg_tooltip['detail'][] = array(Translate::_in($item->id), $item->sbscdmg);
+                $fm_bsc_dmg_total += $item->sbscdmg;
+            }
+
+            if($item->sbnsdmg > 0)
+            {
+                $fm_bns_dmg_tooltip['detail'][] = array(Translate::_in($item->id), $item->sbnsdmg);
+                $fm_bns_dmg_total += $item->sbnsdmg;
+            }
+
+            if($item->sbschc > 0)
+            {
+                $fm_bsc_hc_tooltip['detail'][] = array(Translate::_in($item->id), $item->sbschc);
+                $fm_bsc_hc_total += $item->sbschc;
+            }
+
+            if($item->sbnshc > 0)
+            {
+                $fm_bns_hc_tooltip['detail'][] = array(Translate::_in($item->id), $item->sbnshc);
+                $fm_bns_hc_total += $item->sbnshc;
+            }
+
+            if($item->sbsctlnt > 0)
+            {
+                $fm_bsc_tlnt_tooltip['detail'][] = array(Translate::_in($item->id), $item->sbsctlnt);
+                $fm_bsc_tlnt_total += $item->sbsctlnt;
+            }
+
+            if($item->sbnstlnt > 0)
+            {
+                $fm_bns_tlnt_tooltip['detail'][] = array(Translate::_in($item->id), $item->sbnstlnt);
+                $fm_bns_tlnt_total += $item->sbnstlnt;
+            }
+
+        }
+
         $fm_attack_tooltip['total'] = array('Attack', $fm_attack_total);
         $stat_str_tooltip['total'] = array('Strength', $stat_str_total);
         $stat_def_tooltip['total'] = array('Defence', $stat_def_total);
@@ -237,6 +324,12 @@ class UserController extends GameController
         $end_total_long = $stat_end_total / $max_stat * 300;
         $cha_total_long = $stat_cha_total / $max_stat * 300;
 
+        $str_red_long = $this->user->str / $str_total_long * 300;
+        $def_red_long = $this->user->str / $str_total_long * 300;
+        $dex_red_long = $this->user->str / $str_total_long * 300;
+        $end_red_long = $this->user->str / $str_total_long * 300;
+        $cha_red_long = $this->user->str / $str_total_long * 300;
+
         $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
 
         $userLevel = getLevel($this->user->exp);
@@ -258,11 +351,11 @@ class UserController extends GameController
             'end_cost' => getSkillCost($this->user->end),
             'cha_cost' => getSkillCost($this->user->cha),
 
-            'str_red_long' => $this->user->str / $max_stat * 300,
-            'def_red_long' => $this->user->def / $max_stat * 300,
-            'dex_red_long' => $this->user->dex / $max_stat * 300,
-            'end_red_long' => $this->user->end / $max_stat * 300,
-            'cha_red_long' => $this->user->cha / $max_stat * 300,
+            'str_red_long' => $str_red_long,
+            'def_red_long' => $def_red_long,
+            'dex_red_long' => $dex_red_long,
+            'end_red_long' => $end_red_long,
+            'cha_red_long' => $cha_red_long,
 
             'stat_str_tooltip' => $stat_str_tooltip,
             'stat_def_tooltip' => $stat_def_tooltip,

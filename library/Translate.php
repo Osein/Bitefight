@@ -74,4 +74,22 @@ class Translate
         return self::getInstance()->_('talent_id_' . $talent_id . '_description');
     }
 
+    /**
+     * returns item name
+     * @param string $item_id
+     * @return string
+     */
+    public static function _in($item_id) {
+        return self::getInstance()->_('item_id_' . $item_id . '_name');
+    }
+
+    /**
+     * returns item description
+     * @param string $item_id
+     * @return string
+     */
+    public static function _id($item_id) {
+        return self::getInstance()->_('item_id_' . $item_id . '_description');
+    }
+
 }
