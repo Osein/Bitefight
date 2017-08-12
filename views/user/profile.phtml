@@ -224,7 +224,7 @@
                                 <td>Health:</td>
                                 <td colspan="2">
                                     <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $stat_hp_tooltip]); ?>">
-                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt="" ><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $hp_red_long; ?>"><img src="<?php echo getAssetLink('img/b4.gif'); ?>" alt="" height="12" width="<?php echo 400 - $hp_red_long; ?>"><?php if($user->hp_now < $user->hp_max): ?><img src="<?php echo getAssetLink('img/b5.gif'); ?>" alt="" ><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt="" ><?php endif; ?><br><span class="fontsmall left">(<?php echo prettyNumber($user->hp_now); ?> / <?php echo prettyNumber($user->hp_max); ?>)</span>
+                                        <img src="<?php echo getAssetLink('img/b1.gif'); ?>" alt="" ><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $hp_red_long; ?>"><img src="<?php echo getAssetLink('img/b4.gif'); ?>" alt="" height="12" width="<?php echo 400 - $hp_red_long; ?>"><?php if($user->hp_now < $stat_hp_total): ?><img src="<?php echo getAssetLink('img/b5.gif'); ?>" alt="" ><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt="" ><?php endif; ?><br><span class="fontsmall left">(<?php echo prettyNumber($user->hp_now); ?> / <?php echo prettyNumber($stat_hp_total); ?>)</span>
                                     </div>
                                 </td>
                             </tr>
@@ -311,49 +311,49 @@
                             <tr>
                                 <td>Attack:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_attack_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BASIC_ATTACK); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_attack_tooltip]); ?>"><?php echo prettyNumber($fm_attack_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Basic damage:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bsc_dmg_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BASIC_DAMAGE); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bsc_dmg_tooltip]); ?>"><?php echo prettyNumber($fm_bsc_dmg_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bonus damage:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bns_dmg_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BONUS_DAMAGE); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bns_dmg_tooltip]); ?>"><?php echo prettyNumber($fm_bns_dmg_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Hit Chance:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bsc_hc_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::HIT_CHANCE); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bsc_hc_tooltip]); ?>"><?php echo prettyNumber($fm_bsc_hc_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bonus hit chance:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bns_hc_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BONUS_HIT_CHANCE); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bns_hc_tooltip]); ?>"><?php echo prettyNumber($fm_bns_hc_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Basic talent:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bsc_tlnt_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BASIC_TALENT); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bsc_tlnt_tooltip]); ?>"><?php echo prettyNumber($fm_bsc_tlnt_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Bonus Talent:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bns_tlnt_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BONUS_TALENT); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_bns_tlnt_tooltip]); ?>"><?php echo prettyNumber($fm_bns_tlnt_total); ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Regeneration:</td>
                                 <td>
-                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_regen_tooltip]); ?>"><?php echo prettyNumber(\Bitefight\Config::BASIC_REGEN + $user->end * \Bitefight\Config::END_REGEN_RATIO); ?></div>
+                                    <div class="tooltip left" title="<?php echo $this->partial('partials/profile_tooltip_content', ['content' => $fm_regen_tooltip]); ?>"><?php echo prettyNumber($fm_regen_total); ?></div>
                                 </td>
                             </tr>
                         </table>

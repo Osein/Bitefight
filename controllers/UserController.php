@@ -403,7 +403,7 @@ class UserController extends GameController
             'boots' => $boots,
             'shields' => $shields,
 
-            'hp_red_long' => $this->user->hp_now / $this->user->hp_max * 400,
+            'hp_red_long' => $this->user->hp_now / $stat_hp_total * 400,
             'exp_red_long' => ($this->user->exp - $previousLevelExp) / $levelExpDiff * 400,
             'required_exp' => $nextLevelExp,
 
