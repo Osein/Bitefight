@@ -110,7 +110,12 @@ class HuntController extends GameController
             ->selectExpr('SUM(talent.cha)', 'totalTalentCha')
             ->where('user_talent.user_id', $this->user->id)
             ->find_one();
-        $userTotalCha = $userTalentCha->totalTalentCha + $this->user->cha;
+        $userItemCha = ORM::for_table('user_item')
+            ->left_outer_join('item', ['user_talent.item_id', '=', 'item.id'])
+            ->selectExpr('SUM(item.cha)', 'totalItemCha')
+            ->where('user_item.user_id', $this->user->id)
+            ->find_one();
+        $userTotalCha = $userTalentCha->totalTalentCha + $userItemCha->totalItemCha + $this->user->cha;
 
         if ($huntNo == 1) {
             return ($userTotalCha * 2) + ($user_level * 1) + 450;
