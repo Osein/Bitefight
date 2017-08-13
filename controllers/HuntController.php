@@ -113,27 +113,32 @@ class HuntController extends GameController
         $userItemCha = ORM::for_table('user_item')
             ->left_outer_join('item', ['user_item.item_id', '=', 'item.id'])
             ->selectExpr('SUM(item.cha)', 'totalItemCha')
-            ->where('user_item.user_id', $this->user->id)
+            ->where_raw('user_item.user_id = ? AND ((item.model = 2 AND user_item.expire > ?) OR (item.model != 2 AND user_item.equipped = 1))', [$this->user->id, time()])
             ->find_one();
+        $serendipity = ORM::for_table('user_item')
+            ->where('item_id', 156)
+            ->where('user_id', $this->user->id)
+            ->where_gte('expire', time())
+            ->count();
         $userTotalCha = $userTalentCha->totalTalentCha + $userItemCha->totalItemCha + $this->user->cha;
 
         if ($huntNo == 1) {
-            return ($userTotalCha * 2) + ($user_level * 1) + 450;
+            $reward = ($userTotalCha * 2) + ($user_level * 1) + 450;
+        } elseif ($huntNo == 2) {
+            $reward = ($userTotalCha * 3) + ($user_level * 2) + 540;
+        } elseif ($huntNo == 3) {
+            $reward = ($userTotalCha * 3) + ($user_level * 3) + 609;
+        } elseif ($huntNo == 4) {
+            $reward = ($userTotalCha * 4) + ($user_level * 4) + 714;
+        } else {
+            $reward = ($userTotalCha * 5) + ($user_level * 5) + 860;
         }
 
-        if ($huntNo == 2) {
-            return ($userTotalCha * 3) + ($user_level * 2) + 540;
+        if($serendipity) {
+            $reward *= 2;
         }
 
-        if ($huntNo == 3) {
-            return ($userTotalCha * 3) + ($user_level * 3) + 609;
-        }
-
-        if ($huntNo == 4) {
-            return ($userTotalCha * 4) + ($user_level * 4) + 714;
-        }
-
-        return ($userTotalCha * 5) + ($user_level * 5) + 860;
+        return $reward;
     }
 
     /**
