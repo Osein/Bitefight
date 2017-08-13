@@ -392,6 +392,31 @@ class UserController extends GameController
         $this->view->pick('user/profile');
     }
 
+    public function postItemEquip($id) {
+        $item = ORM::for_table('user_item')
+            ->left_outer_join('item', ['item.id', '=', 'user_item.item_id'])
+            ->where('user_item.item_id', $id)
+            ->where('user_item.user_id', $this->user->id)
+            ->find_one();
+
+        if(!$item || $item->equipped || $item->volume < 1) {
+            return $this->notFound();
+        }
+
+        if($item->model != 2) {
+            ORM::raw_execute('UPDATE user_item LEFT JOIN item ON item.id = user_item.item_id SET equipped = 0 WHERE item.model = ? AND user_item.user_id = ?', [$item->model, $this->user->id]);
+
+            ORM::raw_execute('UPDATE user_item SET equipped = 1 WHERE user_id = ? AND item_id = ?', [$this->user->id, $id]);
+        } else {
+            $duration = $item->duration > 0 ? $item->duration : $item->cooldown;
+            $expire = $item->expire > time() ? $item->expire + $duration : time() + $duration;
+
+            ORM::raw_execute('UPDATE user_item SET volume = volume-1, expire = ? WHERE user_id = ? AND item_id = ?', [$expire, $this->user->id, $id]);
+        }
+
+        return $this->response->redirect(getUrl('user/profile'));
+    }
+
     public function postTrainingUp()
     {
         $stat_type = $this->request->getPost('stat_type');

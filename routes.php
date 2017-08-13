@@ -33,6 +33,7 @@ $router->addPost('/user/lostpw', ['controller' => 'Home', 'action' => 'postLostP
 $user = new \Phalcon\Mvc\Router\Group(['controller' => 'User']);
 $user->setPrefix('/user');
 $user->addGet('/profile', ['action' => 'getProfile']);
+$user->addPost('/profile/item/equip/{id:[0-9]+}', ['action' => 'postItemEquip']);
 $user->addPost('/profile/training', ['action' => 'postTrainingUp']);
 $user->addGet('/talents', ['action' => 'getTalents']);
 $user->addPost('/talents', ['action' => 'postTalentTopForm']);

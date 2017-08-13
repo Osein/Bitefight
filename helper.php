@@ -498,9 +498,8 @@ function printProfileItemRow($i) {
             <?php elseif(!$i->equipped && $i->expire <= time()): ?>
             <div class="btn-left left">
                 <div class="btn-right">
-                    <form method="post" action="<?php echo getUrl('profile/item/equip'); ?>">
-                        <input type="hidden" name="__token" value="">
-                        <input type="hidden" name="item_id" value="<?php echo $i->id; ?>">
+                    <form method="post" action="<?php echo getUrl('user/profile/item/equip/'.$i->id); ?>">
+                        <input type="hidden" name="<?php echo \Phalcon\Di::getDefault()->get('security')->getTokenKey() ?>" value="<?php echo \Phalcon\Di::getDefault()->get('security')->getToken() ?>"/>
                         <button class="btn">Use this item</button>
                     </form>
                 </div>
