@@ -8,6 +8,10 @@ Also if you are efficient on calculating formulas you can help me with grotte an
 
 Looking for some testers to work with me on weekends. We are going to finish basic version with only human hunt. Any help would be nice, thank you.
 
-## Todo
+## ChangeLog
 
-- Server speed variable
+### 13.08.2017
+
+- Human hunt error fixed
+- Search wasnt working properly, fixed
+- Shop completed
