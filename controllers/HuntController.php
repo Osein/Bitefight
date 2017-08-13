@@ -111,7 +111,7 @@ class HuntController extends GameController
             ->where('user_talent.user_id', $this->user->id)
             ->find_one();
         $userItemCha = ORM::for_table('user_item')
-            ->left_outer_join('item', ['user_talent.item_id', '=', 'item.id'])
+            ->left_outer_join('item', ['user_item.item_id', '=', 'item.id'])
             ->selectExpr('SUM(item.cha)', 'totalItemCha')
             ->where('user_item.user_id', $this->user->id)
             ->find_one();
