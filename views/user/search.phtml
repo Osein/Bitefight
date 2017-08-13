@@ -11,15 +11,15 @@
                 <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                 <div id="searchOptions">
                     <div>
-                        <input type="radio" name="searchtyp" value="name" <?php if($search_type == 'name') echo 'checked'; ?>>
+                        <input type="radio" name="searchtyp" value="name" <?php if(isset($search_type) && $search_type == 'player') echo 'checked'; ?>>
                         <label><?php echo \Bitefight\Library\Translate::_('search_type_player'); ?></label>
                     </div>
                     <div>
-                        <input type="radio" name="searchtyp" value="clan" <?php if($search_type == 'clan') echo 'checked'; ?>>
+                        <input type="radio" name="searchtyp" value="clan" <?php if(isset($search_type) && $search_type == 'clan') echo 'checked'; ?>>
                         <label><?php echo \Bitefight\Library\Translate::_('search_type_clan_name'); ?></label>
                     </div>
                     <div>
-                        <input type="radio" name="searchtyp" value="tag" <?php if($search_type == 'tag') echo 'checked'; ?>>
+                        <input type="radio" name="searchtyp" value="tag" <?php if(isset($search_type) && $search_type == 'tag') echo 'checked'; ?>>
                         <label><?php echo \Bitefight\Library\Translate::_('search_type_clan_tag'); ?></label>
                     </div>
                 </div>

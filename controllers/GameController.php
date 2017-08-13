@@ -46,9 +46,9 @@ class GameController extends BaseController
             $this->view->search_type = 'clan';
             $result = ORM::for_table('clan')
                 ->select_many('id', 'name', 'tag', 'stufe')
-                ->selectExpr('(SELECT SUM(s_booty) FROM user WHERE clan_id = id)', 'booty')
-                ->selectExpr('(SELECT COUNT(1) FROM user WHERE clan_id = id)', 'members')
-                ->selectExpr('(SELECT race FROM user WHERE clan_id = id LIMIT 1)', 'race');
+                ->selectExpr('(SELECT SUM(s_booty) FROM user WHERE clan_id = clan.id)', 'booty')
+                ->selectExpr('(SELECT COUNT(1) FROM user WHERE clan_id = clan.id)', 'members')
+                ->selectExpr('(SELECT race FROM user WHERE clan_id = clan.id LIMIT 1)', 'race');
 
             if ($searchType == 'clan') {
                 if ($exact) {
