@@ -10,6 +10,7 @@ namespace Bitefight\Controllers;
 
 use Bitefight\Library\Translate;
 use ORM;
+use Phalcon\Filter;
 
 class CityController extends GameController
 {
@@ -243,4 +244,72 @@ class CityController extends GameController
         $activity->save();
         return $this->response->redirect(getUrl('city/graveyard'));
     }
+
+    public function getShop()
+    {
+        $modelArray = array('weapons', 'potions', 'helmets', 'armour', 'jewellery', 'gloves', 'boots', 'shields');
+        $itemModel = $this->request->get('model', Filter::FILTER_STRING);
+        $levelFrom = $this->request->get('lvlfrom', Filter::FILTER_INT);
+        $levelTo = $this->request->get('lvlto', Filter::FILTER_INT);
+        $pfilter = $this->request->get('premiumfilter', Filter::FILTER_STRING);
+        $page = $this->request->get('page', Filter::FILTER_INT);
+        $modelId = getItemModelIdFromModel($itemModel);
+        $userLevel = getLevel($this->user->exp);
+
+        $this->view->setVars([
+            'iLevelFrom' => $levelFrom,
+            'iLevelTo' => $levelTo,
+            'iModel' => $itemModel,
+            'iPFilter' => $pfilter,
+            'iPage' => $page,
+            'rPage' => empty($page)?1:$page
+        ]);
+
+        if(empty($levelFrom)) $levelFrom = 1;
+        if(empty($levelTo)) $levelTo = getLevel($this->user->exp);
+        if(empty($pfilter)) $pfilter = 'all';
+        if(empty($itemModel)) $itemModel = 'weapons';
+        if(empty($page)) $page = 1;
+
+        if(!in_array($itemModel, $modelArray)) {
+            $this->notFound();
+        }
+
+        if($levelFrom > $levelTo) {
+            return $this->response->redirect(getUrl('city/shop?lvlfrom='.$levelTo.'&lvlto='.$levelFrom.($itemModel!='weapons'?'&model='.$itemModel:'')));
+        }
+
+        $dbq = ORM::for_table('item')
+            ->select('item.*')->select('user_item.volume')
+            ->left_outer_join('user_item', ['user_item.item_id', '=', 'item.id'])
+            ->where_gte('level', min($levelFrom, $userLevel))
+            ->where_lte('level', max($userLevel, $levelTo))
+            ->where('model', $modelId)
+            ->orderByDesc('level');
+
+        if($pfilter == 'premium') {
+            $dbq = $dbq->where_gt('scost', 0);
+        } elseif($pfilter == 'nonpremium') {
+            $dbq = $dbq->where('scost', 0);
+        }
+
+        $item_count = $dbq->count();
+
+        $results = $dbq->limit(20)
+            ->offset(($page - 1) * 20)
+            ->find_many();
+
+        $user_item_max_count = 3 + ($this->user->h_domicile * 2);
+
+        $this->view->setVars([
+            'user_item_max_count' => $user_item_max_count,
+            'user_item_available_slot' => $user_item_max_count - ORM::for_table('user_item')->where('user_id', $this->user->id)->count(),
+            'items' => $results,
+            'item_count' => $item_count,
+            'total_pages' => ceil($item_count / 20)
+        ]);
+
+        $this->view->pick('city/shop');
+    }
+
 }

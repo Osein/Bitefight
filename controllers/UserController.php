@@ -362,7 +362,7 @@ class UserController extends GameController
             'fm_regen_total' => $fm_regen_total,
 
             'user_item_count' => count($items),
-            'user_item_max_count' => 13 + $this->user->h_domicile * 2,
+            'user_item_max_count' => 3 + $this->user->h_domicile * 2,
 
             'user_active_items' => $user_active_items,
 
