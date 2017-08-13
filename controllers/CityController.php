@@ -303,13 +303,89 @@ class CityController extends GameController
 
         $this->view->setVars([
             'user_item_max_count' => $user_item_max_count,
-            'user_item_available_slot' => $user_item_max_count - ORM::for_table('user_item')->where('user_id', $this->user->id)->count(),
+            'user_item_available_slot' => $user_item_max_count - ORM::for_table('user_item')->where('user_id', $this->user->id)->sum('volume'),
             'items' => $results,
             'item_count' => $item_count,
             'total_pages' => ceil($item_count / 20)
         ]);
 
         $this->view->pick('city/shop');
+    }
+
+    public function postShopItemBuy($id) {
+        $model = $this->request->get('model');
+        $page = $this->request->get('page');
+        $lvlfrom = $this->request->get('lvlfrom');
+        $lvlto = $this->request->get('lvlto');
+        $premiumfilter = $this->request->get('premiumfilter');
+        $volume = $this->request->get('volume');
+
+        $redirect_link = getLinkWithParams(getUrl('city/shop'), array('page' => $page, 'lvlto' => $lvlto, 'lvlfrom' => $lvlfrom, 'premiumfilter' => $premiumfilter, 'model' => $model));
+
+        $item = ORM::for_table('item')->find_one($id);
+
+        if(!$item && !in_array($volume, [1, 5, 10])) {
+            return $this->notFound();
+        }
+
+        $user_item_count = ORM::for_table('user_item')->where('user_id', $this->user->id)->sum('volume');
+        $user_max_item_count = $this->user->h_domicile * 2 + 3;
+
+        if($item->gcost * $volume > $this->user->gold || $item->scost * $volume > $this->user->hellstone || $user_item_count + $volume >= $user_max_item_count)
+        {
+            return $this->notFound();
+        }
+
+        $this->user->gold -= $item->gcost * $volume;
+        $this->user->hellstone -= $item->scost * $volume;
+
+        $user_item_rst = ORM::for_table('user_item')
+            ->where('user_id', $this->user->id)
+            ->where('item_id', $item->id)
+            ->find_one();
+
+        if($user_item_rst) {
+            $user_item_rst->volume += $volume;
+            $user_item_rst->save();
+        } else {
+            $user_item_rst = ORM::for_table('user_item')->create();
+            $user_item_rst->user_id = $this->user->id;
+            $user_item_rst->item_id = $item->id;
+            $user_item_rst->volume = $volume;
+            $user_item_rst->equipped = 0;
+            $user_item_rst->expire = 0;
+            $user_item_rst->save();
+        }
+
+        return $this->response->redirect($redirect_link);
+    }
+
+    public function postShopItemSell($id) {
+        $model = $this->request->get('model');
+        $page = $this->request->get('page');
+        $lvlfrom = $this->request->get('lvlfrom');
+        $lvlto = $this->request->get('lvlto');
+        $premiumfilter = $this->request->get('premiumfilter');
+
+        $redirect_link = getLinkWithParams(getUrl('city/shop'), array('page' => $page, 'lvlto' => $lvlto, 'lvlfrom' => $lvlfrom, 'premiumfilter' => $premiumfilter, 'model' => $model));
+
+        $user_item = ORM::for_table('user_item')
+            ->where('user_id', $this->user->id)
+            ->where('item_id', $id)
+            ->find_one();
+
+        if(!$user_item) return $this->notFound();
+
+        $item = ORM::for_table('item')->find_one($id);
+
+        if($user_item->volume > 0)
+        {
+            $this->user->gold += $item->slcost;
+            $user_item->volume -= 1;
+            $user_item->save();
+        }
+
+        return $this->response->redirect($redirect_link);
     }
 
 }

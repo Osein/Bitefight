@@ -101,9 +101,132 @@
                             <td class='tdn'>
                                 <?php printItemDetails($i, true); ?><br>
                             </td>
-                            <td class="tdn" style="width:150px;" align="center">---</td>
+                            <td class="tdn" style="width:150px;" align="center">
+                                <?php if($i->gcost <= $user->gold && $i->scost <= $user->hellstone && $user_item_available_slot > 0): ?>
+                                    <div class="btn-left left">
+                                        <div class="btn-right">
+                                            <form method="post" action="<?php echo getUrl('city/shop/item/buy/'.$i->id); ?>">
+                                                <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                <input type="hidden" name="model" value="<?php echo $iModel; ?>">
+                                                <input type="hidden" name="page" value="<?php echo $iPage; ?>">
+                                                <input type="hidden" name="lvlfrom" value="<?php echo $iLevelFrom; ?>">
+                                                <input type="hidden" name="lvlto" value="<?php echo $iLevelTo; ?>">
+                                                <input type="hidden" name="premiumfilter" value="<?php echo $iPFilter; ?>">
+                                                <input type="hidden" name="volume" value="1">
+                                                <?php if($i->model == 2): ?>
+                                                    <button class="btn">1x buy now</button>
+                                                <?php else: ?>
+                                                    <button class="btn">buy now</button>
+                                                <?php endif; ?>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <?php if($i->gcost * 5 <= $user->gold && $i->scost * 5 <= $user->hellstone && 5 <= $user_item_available_slot && $i->model == 2): ?>
+                                        <br/>
+                                        <div class="btn-left left">
+                                            <div class="btn-right">
+                                                <form method="post" action="<?php echo getUrl('city/shop/item/buy/'.$i->id); ?>">
+                                                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                    <input type="hidden" name="model" value="<?php echo $iModel; ?>">
+                                                    <input type="hidden" name="page" value="<?php echo $iPage; ?>">
+                                                    <input type="hidden" name="lvlfrom" value="<?php echo $iLevelFrom; ?>">
+                                                    <input type="hidden" name="lvlto" value="<?php echo $iLevelTo; ?>">
+                                                    <input type="hidden" name="premiumfilter" value="<?php echo $iPFilter; ?>">
+                                                    <input type="hidden" name="volume" value="5">
+                                                    <button class="btn">5x buy now</button>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                        <?php if($i->gcost * 10 <= $user->gold && $i->scost * 10 <= $user->hellstone && 10 <= $user_item_available_slot && $i->model == 2): ?>
+
+                                            <br/>
+                                            <div class="btn-left left">
+                                                <div class="btn-right">
+                                                    <form method="post" action="<?php echo getUrl('city/shop/item/buy/'.$i->id); ?>">
+                                                        <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                        <input type="hidden" name="model" value="<?php echo $iModel; ?>">
+                                                        <input type="hidden" name="page" value="<?php echo $iPage; ?>">
+                                                        <input type="hidden" name="lvlfrom" value="<?php echo $iLevelFrom; ?>">
+                                                        <input type="hidden" name="lvlto" value="<?php echo $iLevelTo; ?>">
+                                                        <input type="hidden" name="premiumfilter" value="<?php echo $iPFilter; ?>">
+                                                        <input type="hidden" name="volume" value="10">
+                                                        <button class="btn">10x buy now</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>
+                                <?php elseif(!$i->volume): ?>
+                                    ---
+                                <?php endif; ?>
+
+                                <?php if($i->volume): ?>
+                                    <div id="usescreen_1_<?php echo $i->id; ?>">
+                                        <div class="btn-left left">
+                                            <div class="btn-right">
+                                                <button class="btn" onclick="confirmUserPremium('1_<?php echo $i->id; ?>')">Sell</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div style="clear:both;">
+                                        <div id="confirmscreen_1_<?php echo $i->id; ?>" style="display:none;">
+                                            <table class="noBackground">
+                                                <tbody>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <span style="color:#FFCC33;">Do you really want to sell?</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="50%">
+                                                        <div class="btn-left left">
+                                                            <div class="btn-right">
+                                                                <form method="post" action="<?php echo getUrl('city/shop/item/sell/'.$i->id); ?>">
+                                                                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                                                                    <input type="hidden" name="model" value="<?php echo $iModel; ?>">
+                                                                    <input type="hidden" name="page" value="<?php echo $iPage; ?>">
+                                                                    <input type="hidden" name="lvlfrom" value="<?php echo $iLevelFrom; ?>">
+                                                                    <input type="hidden" name="lvlto" value="<?php echo $iLevelTo; ?>">
+                                                                    <input type="hidden" name="premiumfilter" value="<?php echo $iPFilter; ?>">
+                                                                    <button class="btn">Yes</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td width="50%">
+                                                        <div class="btn-left left">
+                                                            <div class="btn-right">
+                                                                <button class="btn" onclick="notConfirm('1_<?php echo $i->id; ?>')">No</button>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
+                    <script>
+                        function confirmUserPremium(nr)
+                        {
+                            $('#usescreen_' + nr).css('display', 'none');
+                            $('#confirmscreen_' + nr).css('display', 'block');
+                        }
+
+                        function notConfirm(nr)
+                        {
+                            $('#usescreen_' + nr).css('display', '');
+                            $('#confirmscreen_' + nr).css('display', 'none');
+                        }
+                    </script>
                 </table>
                 <center>
                     <?php if($rPage > 2): ?>

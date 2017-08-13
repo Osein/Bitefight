@@ -436,7 +436,7 @@ function printItemDetails($i, $shop = false) {
     ?>
 
     <strong><?php echo $i->name; ?> </strong><br>
-    (Your inventory: <?php echo $i->volume; ?> item(s))<br><br>
+    (Your inventory: <?php echo intval($i->volume); ?> item(s))<br><br>
     Resale value: <?php echo prettyNumber($i->slcost); ?><img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br><br>
     <?php if($i->str != 0): ?>        Strenght: <?php echo plusSignedNumberString($i->str); ?><br> <?php endif; ?>
     <?php if($i->def != 0): ?>        Defence: <?php echo plusSignedNumberString($i->def); ?><br> <?php endif; ?>
@@ -525,7 +525,7 @@ function getLinkWithParams($url, $params=array()) {
         }
     }
 
-    if(isset($params['page']) && count($params) == 1 && $params['page'] == 1) {
+    if(isset($params['page']) && $params['page'] == 1) {
         unset($params['page']);
     }
 

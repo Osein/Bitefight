@@ -192,11 +192,13 @@ class UserController extends GameController
             ->find_many();
 
         foreach($items as $item) {
-            $modelString = getItemModelFromModelNo($item->model);
-
             if($item->expire > time() && $item->duration > 0)
             {
                 $user_active_items[] = $item;
+            }
+
+            if($item->volume == 0) {
+                continue;
             }
 
             if($item->model == 2) {
@@ -270,7 +272,7 @@ class UserController extends GameController
                 }
             }
 
-            ${$modelString}[] = $item;
+            ${getItemModelFromModelNo($item->model)}[] = $item;
         }
 
         $fm_attack_tooltip['total'] = array('Attack', $fm_attack_total);
