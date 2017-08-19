@@ -298,11 +298,11 @@ class UserController extends GameController
         $end_total_long = $stat_end_total / $max_stat * 300;
         $cha_total_long = $stat_cha_total / $max_stat * 300;
 
-        $str_red_long = $this->user->str / $str_total_long * 300;
-        $def_red_long = $this->user->str / $str_total_long * 300;
-        $dex_red_long = $this->user->str / $str_total_long * 300;
-        $end_red_long = $this->user->str / $str_total_long * 300;
-        $cha_red_long = $this->user->str / $str_total_long * 300;
+        $str_red_long = $this->user->str / $max_stat * 300;
+        $def_red_long = $this->user->def / $max_stat * 300;
+        $dex_red_long = $this->user->dex / $max_stat * 300;
+        $end_red_long = $this->user->end / $max_stat * 300;
+        $cha_red_long = $this->user->cha / $max_stat * 300;
 
         $user_tlnt_lvl_sqrt = floor(sqrt(getLevel($this->user->exp)));
 
