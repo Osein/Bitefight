@@ -518,7 +518,8 @@ class UserController extends GameController
             if($user_talent_count > 0 && $this->user->hellstone >= 19) {
                 $this->user->hellstone -= 19;
                 $this->user->talent_resets = 1;
-                ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ?' [$this->user->id]);
+                $this->user->talent_points = 1;
+                ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id != 1' [$this->user->id]);
             }
         } elseif($this->request->get('resetpointsg')) {
             $user_talent_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
@@ -527,7 +528,8 @@ class UserController extends GameController
             if($user_talent_count > 0 && $this->user->gold >= $talent_reset_price) {
                 $this->user->gold -= $talent_reset_price;
                 $this->user->talent_resets++;
-                ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ?' [$this->user->id]);
+                $this->user->talent_points = 1;
+                ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id != 1' [$this->user->id]);
             }
         }
 
@@ -559,6 +561,7 @@ class UserController extends GameController
         if($talentId && $this->user->hellstone >= 2) {
             ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id = ?', [$this->user->id, $talentId]);
             $this->user->hellstone -= 2;
+            $this->user->talent_points--;
         }
 
         return $this->response->redirect(getUrl('user/talents?filter='.$this->request->get('filter', Filter::FILTER_INT, 2)));
