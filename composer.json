@@ -17,9 +17,6 @@
         "fzaninotto/faker": "^1.6"
     },
     "autoload": {
-        "psr-4": {
-            "Bitefight\\": "./"
-        },
         "files": ["./config.php", "./helper.php"]
     }
 }

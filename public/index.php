@@ -24,7 +24,9 @@ include_once APP_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . '
 
 $loader = new \Phalcon\Loader();
 $loader->registerNamespaces([
-    'Bitefight\Controllers' => APP_PATH.DIRECTORY_SEPARATOR.'controllers'
+    'Bitefight\Controllers' => APP_PATH.DIRECTORY_SEPARATOR.'controllers',
+    'Bitefight\Library' => APP_PATH.DIRECTORY_SEPARATOR.'library',
+    'Bitefight\Models' => APP_PATH.DIRECTORY_SEPARATOR.'models'
 ]);
 $loader->register();
 
