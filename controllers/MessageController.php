@@ -291,7 +291,7 @@ class MessageController extends GameController
         }
 
         $user = ORM::for_table('user')->where('name', $receiverName)->find_one();
-        return $this->pWriteMessage($user ? $user : 0, $messageText, $subject);
+        return $this->pWriteMessage($user ? $user->id : 0, $messageText, $subject);
     }
 
     public function jsonSendAnswer()
