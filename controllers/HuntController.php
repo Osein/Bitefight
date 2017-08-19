@@ -77,7 +77,14 @@ class HuntController extends GameController
         $success = false;
 
         if ($rand <= $huntChance) {
+            $userLastLevel = getLevel($this->user->exp);
             $this->user->exp += $rewardExp;
+            $userNewLevel = getLevel($this->user->exp);
+
+            if($userNewLevel > $userLastLevel) {
+                $this->user->battle_value += 4;
+            }
+
             $this->user->gold += $rewardGold;
             $this->user->s_booty += $rewardGold;
 

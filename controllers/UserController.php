@@ -434,6 +434,7 @@ class UserController extends GameController
 
         $this->user->gold -= $cost;
         $this->user->{$stat_type}++;
+        $this->user->battle_value++;
 
         return $this->response->redirect(getUrl('user/profile#tabs-2'));
     }
@@ -510,25 +511,25 @@ class UserController extends GameController
 
             if($this->user->talent_points < $max_points && $this->user->gold >= $new_talent_price) {
                 $this->user->gold -= $new_talent_price;
-                $this->user->talent_points++;
+                $this->user->battle_value += 12;
             }
         } elseif($this->request->get('resetpoinths')) {
-            $user_talent_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+            $user_talent_count = ORM::for_table('user_talent')->where_not_equal('talent_id', 1)->where('user_id', $this->user->id)->count();
 
             if($user_talent_count > 0 && $this->user->hellstone >= 19) {
                 $this->user->hellstone -= 19;
                 $this->user->talent_resets = 1;
-                $this->user->talent_points = 1;
+                $this->user->battle_value -= $user_talent_count * 12;
                 ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id != 1' [$this->user->id]);
             }
         } elseif($this->request->get('resetpointsg')) {
-            $user_talent_count = ORM::for_table('user_talent')->where('user_id', $this->user->id)->count();
+            $user_talent_count = ORM::for_table('user_talent')->where_not_equal('talent_id', 1)->where('user_id', $this->user->id)->count();
             $talent_reset_price = floor(pow(14, $this->user->talent_resets) * 33);
 
             if($user_talent_count > 0 && $this->user->gold >= $talent_reset_price) {
                 $this->user->gold -= $talent_reset_price;
                 $this->user->talent_resets++;
-                $this->user->talent_points = 1;
+                $this->user->battle_value -= $user_talent_count * 12;
                 ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id != 1' [$this->user->id]);
             }
         }
@@ -561,7 +562,7 @@ class UserController extends GameController
         if($talentId && $this->user->hellstone >= 2) {
             ORM::raw_execute('DELETE FROM user_talent WHERE user_id = ? AND talent_id = ?', [$this->user->id, $talentId]);
             $this->user->hellstone -= 2;
-            $this->user->talent_points--;
+            $this->user->battle_value -= 12;
         }
 
         return $this->response->redirect(getUrl('user/talents?filter='.$this->request->get('filter', Filter::FILTER_INT, 2)));

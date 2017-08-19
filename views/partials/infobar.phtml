@@ -14,7 +14,7 @@
                 <?php echo prettyNumber(floor($user->ap_now)); ?>&nbsp;/&nbsp;<?php echo prettyNumber($user->ap_max); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('menu_infobar_action_points'); ?>" align="absmiddle" border="0">&nbsp;&nbsp;
                 <?php echo prettyNumber(floor($user->hp_now)); ?>&nbsp;/&nbsp;<?php echo prettyNumber($user->hp_max); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/herz.png'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('menu_infobar_health'); ?>" align="absmiddle" border="0">&nbsp;&nbsp;
                 <img src="<?php echo getAssetLink('img/symbols/level.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('menu_infobar_level'); ?>" align="absmiddle" border="0">&nbsp;<?php echo prettyNumber(getLevel($user->exp)); ?>&nbsp;&nbsp;
-                <img src="<?php echo getAssetLink('img/symbols/fightvalue.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('menu_infobar_battle_value'); ?>" align="absmiddle" border="0">&nbsp;<?php echo prettyNumber(getLevel($user->exp) * 4 + $user->str + $user->def + $user->dex + $user->end + $user->cha + $user->talent_points * 12); ?></div>
+                <img src="<?php echo getAssetLink('img/symbols/fightvalue.gif'); ?>" alt="<?php echo \Bitefight\Library\Translate::_('menu_infobar_battle_value'); ?>" align="absmiddle" border="0">&nbsp;<?php echo prettyNumber($user->battle_value); ?></div>
         </div>
     </div>
     <div class="wrap-bottom-left">
