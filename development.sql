@@ -2741,6 +2741,7 @@ CREATE TABLE `user` (
 	`s_gold_lost` int(11) NOT NULL DEFAULT '0',
 	`s_damage_caused` int(11) NOT NULL DEFAULT '0',
 	`s_hp_lost` int(11) NOT NULL DEFAULT '0',
+	`talent_points` int(11) NOT NULL DEFAULT '1',
 	`talent_resets` int(11) NOT NULL DEFAULT '1',
 	`h_treasure` int(11) NOT NULL DEFAULT '0',
 	`h_royal` int(11) NOT NULL DEFAULT '0',

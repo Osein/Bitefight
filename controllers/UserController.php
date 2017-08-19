@@ -511,7 +511,7 @@ class UserController extends GameController
 
             if($this->user->talent_points < $max_points && $this->user->gold >= $new_talent_price) {
                 $this->user->gold -= $new_talent_price;
-                $this->user->battle_value += 12;
+                $this->user->talent_points++;
             }
         } elseif($this->request->get('resetpoinths')) {
             $user_talent_count = ORM::for_table('user_talent')->where_not_equal('talent_id', 1)->where('user_id', $this->user->id)->count();
@@ -549,6 +549,7 @@ class UserController extends GameController
                 $user_talent->user_id = $this->user->id;
                 $user_talent->talent_id = $talentId;
                 $user_talent->save();
+                $this->user->battle_value += 12;
             }
         }
 
