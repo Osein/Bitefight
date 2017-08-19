@@ -22,6 +22,12 @@ if (function_exists('mb_substitute_character')) {
 
 include_once APP_PATH . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
+$loader = new \Phalcon\Loader();
+$loader->registerNamespaces([
+    'Bitefight' => APP_PATH
+]);
+$loader->register();
+
 $run = new Whoops\Run;
 
 if(\Bitefight\Config::DEBUG) {
