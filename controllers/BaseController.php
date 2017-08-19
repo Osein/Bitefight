@@ -47,7 +47,7 @@ class BaseController extends Controller
                 ->where('clan_id', $this->user->clan_id)
                 ->count();
 
-            $lastUpdate = $this->user->last_update;
+            $lastUpdate = $this->user->last_activity;
             $timeNow = time();
             $timeDiff = $timeNow - $lastUpdate;
 
