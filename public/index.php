@@ -32,12 +32,9 @@ $run = new Whoops\Run;
 
 if(\Bitefight\Config::DEBUG) {
     $debugHandler = new \Whoops\Handler\PrettyPageHandler();
-
-    //$handler->addDataTable('Killer App Details', array(
-    //    "Important Data" => $myApp->getImportantData(),
-    //    "Thingamajig-id" => $someId
-    //));
-
+    $debugHandler->addDataTable('Path details', [
+        'APP_PATH' => APP_PATH
+    ]);
     $debugHandler->setPageTitle("Whoops! There was a problem.");
     $run->pushHandler($debugHandler);
 
