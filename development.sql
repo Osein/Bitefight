@@ -2719,7 +2719,6 @@ CREATE TABLE `user` (
 	`clan_dtime` int(11) NOT NULL DEFAULT '0' COMMENT 'Clan donate refresh time',
 	`clan_btime` int(11) NOT NULL DEFAULT '0' COMMENT 'Clan booty refresh time',
 	`exp` int(11) NOT NULL DEFAULT '0',
-	`battle_value` int(11) NOT NULL DEFAULT '41',
 	`gold` int(11) NOT NULL DEFAULT '0',
 	`hellstone` int(11) NOT NULL DEFAULT '0',
 	`fragment` int(11) NOT NULL DEFAULT '0',
