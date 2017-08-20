@@ -28,6 +28,13 @@ class HuntController extends GameController
      */
     public function getHunt()
     {
+        $activity = ORM::for_table('user_activity')
+            ->where('user_id', $this->user->id)
+            ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
+            ->find_one();
+
+        $activity->end_time > time() ? $this->view->onGraveyardWork = true : $this->view->onGraveyardWork = false;
+
         $this->view->hunt1Chance = $this->getHuntChance(1);
         $this->view->hunt2Chance = $this->getHuntChance(2);
         $this->view->hunt3Chance = $this->getHuntChance(3);
