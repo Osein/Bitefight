@@ -76,6 +76,15 @@ class HuntController extends GameController
             return $this->response->redirect(getUrl('hunt/index'));
         }
 
+        $activity = ORM::for_table('user_activity')
+            ->where('user_id', $this->user->id)
+            ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
+            ->find_one();
+
+        if($activity->end_time > time()) {
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
         $this->user->ap_now -= $requiredAp;
         $rewardExp = $this->getHuntExp($id);
         $rewardGold = $this->getHuntReward($id);
