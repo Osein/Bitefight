@@ -285,6 +285,7 @@ class CityController extends GameController
             ->where_gte('level', min($levelFrom, $userLevel))
             ->where_lte('level', max($userLevel, $levelTo))
             ->where('model', $modelId)
+            ->where('user_item.user_id', $this->user->id)
             ->orderByDesc('level');
 
         if($pfilter == 'premium') {
