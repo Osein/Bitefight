@@ -331,7 +331,7 @@ class CityController extends GameController
         $user_item_count = ORM::for_table('user_item')->where('user_id', $this->user->id)->sum('volume');
         $user_max_item_count = $this->user->h_domicile * 2 + 3;
 
-        if($item->gcost * $volume > $this->user->gold || $item->scost * $volume > $this->user->hellstone || $user_item_count + $volume >= $user_max_item_count)
+        if($item->gcost * $volume > $this->user->gold || $item->scost * $volume > $this->user->hellstone || $user_item_count + $volume > $user_max_item_count)
         {
             return $this->notFound();
         }
