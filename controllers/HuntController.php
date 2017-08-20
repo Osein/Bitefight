@@ -33,7 +33,7 @@ class HuntController extends GameController
             ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
             ->find_one();
 
-        $activity->end_time > time() ? $this->view->onGraveyardWork = true : $this->view->onGraveyardWork = false;
+        $activity && $activity->end_time > time() ? $this->view->onGraveyardWork = true : $this->view->onGraveyardWork = false;
 
         $this->view->hunt1Chance = $this->getHuntChance(1);
         $this->view->hunt2Chance = $this->getHuntChance(2);
@@ -81,7 +81,7 @@ class HuntController extends GameController
             ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
             ->find_one();
 
-        if($activity->end_time > time()) {
+        if($activity && $activity->end_time > time()) {
             return $this->response->redirect(getUrl('hunt/index'));
         }
 
