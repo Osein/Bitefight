@@ -84,6 +84,7 @@ $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);
 $hunt->setPrefix('/hunt');
 $hunt->addGet('/index', ['action' => 'getHunt']);
 $hunt->addGet('/human/{id:[1-5]}', ['action' => 'getHumanHunt']);
+$hunt->addGet('/attack/{id:[0-9]+}', ['action' => 'postRaceAttack']);
 $router->mount($hunt);
 
 $clan = new \Phalcon\Mvc\Router\Group(['controller' => 'Clan']);

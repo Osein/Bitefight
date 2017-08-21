@@ -1,0 +1,966 @@
+<h1 id="fighter_details_header" style="cursor:pointer;">Report details</h1>
+<div id="fighter_details" style="">
+    <div id="reportResult">
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <h2>Report details</h2>
+                <div class="table-wrap clearfix">
+                    <div id="fighter_details_attacker" class="fighter_details_view" style="width:350px;z-index:10000;float:left;">
+                        <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td class="tdh" align="center" colspan="2">
+                                    <h3><a href="<?php echo getUrl('profile/player/'.$attacker->id); ?>"><?php echo e($attacker->name); ?><?php if($attacker->clan_id > 0): ?></a>&nbsp;<a href="<?php echo getUrl('clan/'.$attacker->clan_id); ?>">[<?php echo e($attacker->tag); ?>]</a><?php endif; ?></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="logo" align="center" valign="middle" colspan="2">
+                                    <?php if($attacker->show_picture): ?>
+                                        <img src="<?php echo getAssetLink('img/logo/'.$attacker->race.'/'.$attacker->gender.'/'.$attacker->image_type.'.jpg') ?>" border="0" width="168" alt="playerlogo">
+                                    <?php else: ?>
+                                        <img src="<?php echo getAssetLink('img/symbols/race'.$attacker->race.'.gif'); ?>" border="0" width="168" alt="playerlogo">
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Level:</td>
+                                <td class="rbg"><?php echo prettyNumber($report->attacker->level); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Battle value:</td>
+                                <td class="rbg" colspan="2"><?php echo prettyNumber($report->attacker->battle_value); ?></td>
+                            </tr>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td class="rbg">Strength:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->attacker->str + $report->attacker->str_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus Damage (self)</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->attacker->str); ?></td>
+                                                </tr>
+                                                <?php foreach($report->attacker->str_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->str / $report->attacker->max_stat * 130; ?>"><?php if($report->attacker->str_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->str_extra / $report->attacker->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->attacker->str + $report->attacker->str_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Defence:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Defence: +<?php echo prettyNumber($report->attacker->def + $report->attacker->def_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus hit chance (on opponents)</p><p>* Maximum health</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->attacker->def); ?></td>
+                                                </tr>
+                                                <?php foreach($report->attacker->def_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->def / $report->attacker->max_stat * 130; ?>"><?php if($report->attacker->def_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->def_extra / $report->attacker->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->attacker->def + $report->attacker->def_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Dexterity:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->attacker->dex + $report->attacker->dex_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus hit chance (self)</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->attacker->dex); ?></td>
+                                                </tr>
+                                                <?php foreach($report->attacker->dex_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->dex / $report->attacker->max_stat * 130; ?>"><?php if($report->attacker->dex_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->dex_extra / $report->attacker->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->attacker->dex + $report->attacker->dex_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Endurance:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->attacker->end + $report->attacker->end_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus damage (on opponents)</p><p>* Regeneration</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->attacker->end); ?></td>
+                                                </tr>
+                                                <?php foreach($report->attacker->end_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->end / $report->attacker->max_stat * 130; ?>"><?php if($report->attacker->end_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->end_extra / $report->attacker->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->attacker->end + $report->attacker->end_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Charisma:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->attacker->cha + $report->attacker->cha_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus talents (self)</p><p>* Bonus talents (on opponents)</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->attacker->cha); ?></td>
+                                                </tr>
+                                                <?php foreach($report->attacker->cha_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->cha / $report->attacker->max_stat * 130; ?>"><?php if($report->attacker->cha_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->attacker->cha_extra / $report->attacker->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->attacker->cha + $report->attacker->cha_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody><tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Health (at the beginning):</td>
+                                <td class="rbg"><?php echo prettyNumber($report->attacker->hp_start); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Health (after battle):</td>
+                                <td class="rbg"><?php echo prettyNumber($report->attacker->hp_end); ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <?php if(isset($report->attacker->items['weapon']) > 0 || isset($report->attacker->items['weapon']) > 0 || isset($report->attacker->items['weapon']) > 0 || isset($report->attacker->items['weapon']) > 0 || isset($report->attacker->items['weapon']) > 0 || isset($report->attacker->items['weapon']) > 0 || isset($report->attacker->items['weapon']) > 0): ?>
+                        <h3>Items</h3>
+                        <table class="items" cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <?php if(isset($report->attacker->items['weapon'])): ?>
+                                <tr>
+                                    <td>Weapon</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['weapon']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['weapon']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['weapon']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['weapon']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->attacker->items['helmet'])): ?>
+                                <tr>
+                                    <td>Helmet</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['helmet']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['helmet']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['helmet']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['helmet']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->attacker->items['armour'])): ?>
+                                <tr>
+                                    <td>Armour</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['armour']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['armour']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['armour']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['armour']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->attacker->items['jewellery'])): ?>
+                                <tr>
+                                    <td>Jewellery</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['jewellery']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['jewellery']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['jewellery']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['jewellery']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->attacker->items['glove'])): ?>
+                                <tr>
+                                    <td>Gloves</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['glove']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['glove']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['glove']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['glove']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->attacker->items['boot'])): ?>
+                                <tr>
+                                    <td>Boots</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['boot']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['boot']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['boot']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['boot']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->attacker->items['shield'])): ?>
+                                <tr>
+                                    <td>Shield</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->attacker->items['shield']['id'].'.jpg') ?>" alt="<?php echo $report->attacker->items['shield']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->attacker->items['shield']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->attacker->items['shield']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                        <?php endif; ?>
+                    </div>
+                    <div id="fighter_details_defender" class="fighter_details_view" style="width:350px;z-index:10000;float:left;">
+                        <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td class="tdh" align="center" colspan="2">
+                                    <h3><a href="<?php echo getUrl('profile/player/'.$defender->id); ?>"><?php echo e($defender->name); ?><?php if($defender->clan_id > 0): ?></a>&nbsp;<a href="<?php echo getUrl('clan/'.$defender->clan_id); ?>">[<?php echo e($defender->tag); ?>]</a><?php endif; ?></h3>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="logo" align="center" valign="middle" colspan="2">
+                                    <?php if($defender->show_picture): ?>
+                                        <img src="<?php echo getAssetLink('img/logo/'.$defender->race.'/'.$defender->gender.'/'.$defender->image_type.'.jpg') ?>" border="0" width="168" alt="playerlogo">
+                                    <?php else: ?>
+                                        <img src="<?php echo getAssetLink('img/symbols/race'.$defender->race.'.gif'); ?>" border="0" width="168" alt="playerlogo">
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Level:</td>
+                                <td class="rbg"><?php echo prettyNumber($report->defender->level); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Battle value:</td>
+                                <td class="rbg" colspan="2"><?php echo prettyNumber($report->defender->battle_value); ?></td>
+                            </tr>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td class="rbg">Strength:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->defender->str + $report->defender->str_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus Damage (self)</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->defender->str); ?></td>
+                                                </tr>
+                                                <?php foreach($report->defender->str_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->str / $report->defender->max_stat * 130; ?>"><?php if($report->defender->str_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->str_extra / $report->defender->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->defender->str + $report->defender->str_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Defence:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Defence: +<?php echo prettyNumber($report->defender->def + $report->defender->def_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus hit chance (on opponents)</p><p>* Maximum health</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->defender->def); ?></td>
+                                                </tr>
+                                                <?php foreach($report->defender->def_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->def / $report->defender->max_stat * 130; ?>"><?php if($report->defender->def_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->def_extra / $report->defender->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->defender->def + $report->defender->def_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Dexterity:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->defender->dex + $report->defender->dex_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus hit chance (self)</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->defender->dex); ?></td>
+                                                </tr>
+                                                <?php foreach($report->defender->dex_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->dex / $report->defender->max_stat * 130; ?>"><?php if($report->defender->dex_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->dex_extra / $report->defender->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->defender->dex + $report->defender->dex_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Endurance:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->defender->end + $report->defender->end_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus damage (on opponents)</p><p>* Regeneration</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->defender->end); ?></td>
+                                                </tr>
+                                                <?php foreach($report->defender->end_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->end / $report->defender->max_stat * 130; ?>"><?php if($report->defender->end_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->end_extra / $report->defender->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->defender->end + $report->defender->end_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Charisma:</td>
+                                <td class="rbg">
+                                    <div class="tooltip" title="<div>
+                                        <div class='tooltipHead'>Strength: +<?php echo prettyNumber($report->defender->cha + $report->defender->cha_extra) ?></div>
+                                        <div class='tooltipHeadInfo'><p>* Bonus talents (self)</p><p>* Bonus talents (on opponents)</p></div>
+                                        <div class='tooltipContent'>
+                                            <table>
+                                                <tr>
+                                                    <td>Basic value:</td>
+                                                    <td align='right'>+<?php echo prettyNumber($report->defender->cha); ?></td>
+                                                </tr>
+                                                <?php foreach($report->defender->cha_extra_tooltip as $tooltip): ?>
+                                                <tr>
+                                                    <td><?php echo $tooltip['name']; ?>:</td>
+                                                    <td align='right'><?php echo plusSignedNumberString($tooltip['val']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div></div>" style="text-align:left;">
+                                        <img src="<?php echo getAssetLink('img/b1.gif') ?>" alt=""><img src="<?php echo getAssetLink('img/b2.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->cha / $report->defender->max_stat * 130; ?>"><?php if($report->defender->cha_extra > 0): ?><img src="<?php echo getAssetLink('img/b6.gif'); ?>" alt="" height="12" width="<?php echo $report->defender->cha_extra / $report->defender->max_stat * 130; ?>"><img src="<?php echo getAssetLink('img/b7.gif'); ?>" alt=""><?php else: ?><img src="<?php echo getAssetLink('img/b3.gif'); ?>" alt=""><?php endif; ?>
+                                        <span class="fontsmall">(<?php echo prettyNumber($report->defender->cha + $report->defender->cha_extra); ?>)</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody><tr>
+                                <th>&nbsp;</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Health (at the beginning):</td>
+                                <td class="rbg"><?php echo prettyNumber($report->defender->hp_start); ?></td>
+                            </tr>
+                            <tr>
+                                <td class="rbg">Health (after battle):</td>
+                                <td class="rbg"><?php echo prettyNumber($report->defender->hp_end); ?></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <?php if(isset($report->defender->items['weapon']) > 0 || isset($report->defender->items['weapon']) > 0 || isset($report->defender->items['weapon']) > 0 || isset($report->defender->items['weapon']) > 0 || isset($report->defender->items['weapon']) > 0 || isset($report->defender->items['weapon']) > 0 || isset($report->defender->items['weapon']) > 0): ?>
+                        <h3>Items</h3>
+                        <table class="items" cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <?php if(isset($report->defender->items['weapon'])): ?>
+                                <tr>
+                                    <td>Weapon</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['weapon']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['weapon']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['weapon']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['weapon']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->defender->items['helmet'])): ?>
+                                <tr>
+                                    <td>Helmet</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['helmet']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['helmet']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['helmet']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['helmet']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->defender->items['armour'])): ?>
+                                <tr>
+                                    <td>Armour</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['armour']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['armour']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['armour']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['armour']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->defender->items['jewellery'])): ?>
+                                <tr>
+                                    <td>Jewellery</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['jewellery']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['jewellery']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['jewellery']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['jewellery']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->defender->items['glove'])): ?>
+                                <tr>
+                                    <td>Gloves</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['glove']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['glove']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['glove']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['glove']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->defender->items['boot'])): ?>
+                                <tr>
+                                    <td>Boots</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['boot']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['boot']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['boot']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['boot']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <?php if(isset($report->defender->items['shield'])): ?>
+                                <tr>
+                                    <td>Shield</td>
+                                    <td>
+                                        <span class="tooltip" title='<div style="width:300px;">
+                                                <img src="<?php echo getAssetLink('img/items/1/'.$report->defender->items['shield']['id'].'.jpg') ?>" alt="<?php echo $report->defender->items['shield']['name']; ?>">
+
+                                                <!-- Unterscheidung ob Waffe oder nicht, da unterschiedliches Bildformat -->
+                                                <div style="position:absolute;right:20px;top:15px;z-index:9999">
+                                                    <?php for($y = 0; $y < $report->defender->items['shield']['stern']; $y++): ?>
+                                                        <img src="<?php echo getAssetLink('img/symbols/stern.png'); ?>" style="border: 0 none;">
+                                                    <?php endfor; ?>
+                                                </div>
+                                            </div>' style="text-align:left;"><?php echo $report->defender->items['shield']['name']; ?></span>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            </tbody>
+                        </table>
+                        <?php endif; ?>
+                        <h3>Active effects</h3>
+                        <table class="items" cellpadding="2" cellspacing="2" border="0" width="100%">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <span class="tooltip" title='<img alt="Wall" src="<?php echo getAssetLink('img/hideout/1/palace2.jpg'); ?>">' style="text-align:left;">Wall</span>
+                                </td>
+                                <td>Bonus damage (on opponent): -15</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="tooltip" title='<img alt="Landscape" src="<?php echo getAssetLink('img/hideout/1/palace4.jpg'); ?>">' style="text-align:left;">Landscape</span>
+                                </td>
+                                <td>Bonus Talent: +12</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!-- CONTENT END -->
+            </div>
+        </div>
+        <!-- box CONTENT END -->
+        <!-- box FOOTER START -->
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+        <!-- box CONTENT END -->
+    </div>
+    <!-- box-model END -->
+</div>
+<div style="clear:both"></div>
+<h1 id="fightround_details_header" style="cursor:pointer;">Detailed fight rounds</h1>
+<div id="fightround_details" style="">
+    <!-- box-model START -->
+    <div id="reportResult">
+        <!-- box HEADER START -->
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <!-- box HEADER END -->
+        <!-- box CONTENT START -->
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <span id="fightround_details_contents">
+                    <h2 style="text-align:left;padding-left:10px;">
+                        <span style="float: right; cursor: pointer;">
+                            <img id="show_all_round_details" src="/img/symbols/iconplus.png" alt="" border="0">
+                        </span>
+                    </h2>
+                    <?php for($i = 1; $i <= count($report->rounds); $i++): ?>
+                        <?php $r = $report->rounds[$i]; ?>
+                        <h2 style="text-align:left;padding-left:10px;">
+                            <span style="float: right; cursor: pointer;"><img id="show_round_details<?php echo $i; ?>" src="<?php echo getAssetLink('img/symbols/iconplus.png'); ?>" alt="" border="0"></span>
+                            Round 1 - <?php echo e($attacker->name); ?>: <?php echo prettyNumber($r['attacker_total_damage']); ?> Damage, <?php echo e($defender->name); ?>: <?php echo prettyNumber($r['defender_total_damage']); ?> Damage
+                        </h2>
+                        <div id="round_details<?php echo $i; ?>" class="table-wrap clearfix" style="display:none;">
+                            <div style="width: 350px; z-index: 10000; float: left;">
+                                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">hit: <?php echo prettyNumber($r['attacker_total_damage']); ?> Damage&nbsp;
+                                        <span class="tooltip" title="
+                                            <div class='tooltipContent'>
+                                                <table>
+                                                <?php foreach($r['attacker_tooltip_damage'] as $tt): ?>
+                                                    <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
+                                                <?php endforeach; ?>
+                                                    <tr><td>Iron grip:</td><td align='right'>+10</td></tr>
+                                                    <tr><td>Brandestoc I:</td><td align='right'>+99</td></tr>
+                                                </table>
+                                            </div>
+                                        " style="text-align:left;">(<?php echo prettyNumber($r['attacker_damage']); ?> per hit)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="triggerTooltip" style="text-align:left;">Hit Chance: 105,00%</div>
+                                        <div class="tooltip">
+                                            <table class="noBackground">
+                                            <tbody>
+                                            <tr>
+                                                <td nowrap="nowrap">Basic value:</td>
+                                                <td align=" right">50</td>
+                                            </tr>
+                                            <tr>
+                                                <td nowrap="nowrap">Bonus hit chance:</td>
+                                                <td align=" right">56.72</td>
+                                            </tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    <td>9 hits (of 9)</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="triggerTooltip" style="text-align:left;">Chance: 54,00%</div>
+                                        <div class="tooltip">
+                                            <table class="noBackground">
+                                            <tbody>
+                                            <tr>
+                                                <td nowrap="nowrap">Basic value:</td>
+                                                <td align=" right">20</td>
+                                            </tr>
+                                            <tr>
+                                                <td nowrap="nowrap">Bonus Talent:</td>
+                                                <td align=" right">33.10</td>
+                                            </tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="triggerTooltip" style="text-align:left;">Shadow Storm</div>
+                                        <div class="tooltip">
+                                            <table class="noBackground">
+                                            <tbody>
+                                            <tr><td style="font-size: 1.1em;" nowrap="nowrap">Shadow Storm</td></tr>
+                                            <tr><td>A volley of evil attacks at breakneck speed rupture your enemy`s defence.</td></tr>
+                                            <tr><td nowrap="nowrap">+2 Attack<br>Duration:2 Rounds</td></tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <?php endfor; ?>
+
+
+
+
+
+
+
+
+
+    <div id="round_details2" class="table-wrap clearfix" style="display:none;">
+        <div style="width:350px;z-index:10000;float:left;">
+    <table cellpadding="2" cellspacing="2" border="0" width="100%">
+        <tbody><tr>
+            <td colspan="2">
+                Xyir: 1.036,00 Damage&nbsp;
+                <span class="triggerTooltip" style="text-align:left;">
+                    (259,00 per hit)
+                </span>
+                <div class="tooltip">
+                    <table class="noBackground">
+            <tbody><tr>
+            <td colspan="2">
+                <table>
+                                            <tbody><tr>
+                                                                <td nowrap="nowrap">Basic value:</td>
+                                    <td align=" right">50</td>
+                                                                        <td nowrap="nowrap">Iron Skin:</td>
+                                    <td align=" right">-24</td>
+                                                            </tr>
+                                                <tr>
+                                                                <td nowrap="nowrap">Bonus damage:</td>
+                                    <td align=" right">109.31</td>
+                                                                        <td nowrap="nowrap">Moloch:</td>
+                                    <td align=" right">-6</td>
+                                                            </tr>
+                                        </tbody></table>
+            </td>
+        </tr>
+        </tbody></table>                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="triggerTooltip" style="text-align:left;">
+                    Hit Chance: 44,00%
+                </div>
+                <div class="tooltip">
+                    <table class="noBackground">
+                <tbody><tr>
+                <td nowrap="nowrap">Basic value:</td>
+                <td align=" right">50</td>
+            </tr>
+                        <tr>
+                <td nowrap="nowrap">Bonus hit chance:</td>
+                <td align=" right">19.80</td>
+            </tr>
+                        <tr>
+                <td nowrap="nowrap">Crippling hit:</td>
+                <td align=" right">+2</td>
+            </tr>
+            </tbody></table>                </div>
+            </td>
+            <td>
+                4 hits (of 6)            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="triggerTooltip" style="text-align:left;">
+                    Chance: 74,00%
+                </div>
+                <div class="tooltip">
+                    <table class="noBackground">
+                <tbody><tr>
+                <td nowrap="nowrap">Basic value:</td>
+                <td align=" right">20</td>
+            </tr>
+                        <tr>
+                <td nowrap="nowrap">Bonus Talent:</td>
+                <td align=" right">53.94</td>
+            </tr>
+            </tbody></table>                </div>
+            </td>
+            <td>
+                    <div class="triggerTooltip" style="text-align:left;">Fight reflexes</div>
+    <div class="tooltip">
+
+<table class="noBackground">
+    <tbody><tr>
+        <td style="font-size: 1.1em;" nowrap="nowrap">Fight reflexes</td>
+    </tr>
+    <tr>
+        <td>You are intoxicated and become so fast that you paralyse your opponent with fear.</td>
+    </tr>
+    <tr>
+        <td nowrap="nowrap">-10 Dexterity (on opponent)<br>+20 Bonus hit chance<br>Duration:3 Rounds</td>
+    </tr>
+</tbody></table>    </div>
+                </td>
+        </tr>
+    </tbody></table>
+</div>    </div>
+
+
+
+
+
+
+
+
+    </span>
+                <!-- CONTENT END -->
+            </div>
+        </div>
+        <!-- box CONTENT END -->
+        <!-- box FOOTER START -->
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
+            </div>
+        </div>
+        <!-- box CONTENT END -->
+    </div>
+    <!-- box-model END -->
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#fighter_details_header").click(function()
+        {
+            $("#fighter_details").toggle();
+        });
+    });
+
+    $(function ()
+    {
+        $("#fightround_details_header").click(function()
+        {
+            $("#fightround_details").toggle();
+            var requestData = {
+                'fightreportId': '85585110',
+                'checksum': 'e813d385f7634eb9cde921d16de5b5ac'
+            };
+            ajaxLoadContent('#fightround_details_contents', 'report/ajax_fightround_details_1on1', requestData, '1');
+        });
+    });
+</script>
+<script>
+    function ajaxLoadContent(targetSelector, targetAction, requestData, reloadCheck)
+    {
+        if ($(targetSelector).html() != '' && reloadCheck)
+        {
+            return;
+        }
+        $(targetSelector).html(
+            '<img src="/img/ajax/ajax_loader_large.gif" alt="loading.." />'
+        );
+
+        var successFunc = function(htmlContent)
+        {
+            $(targetSelector).html(htmlContent);
+
+            activateTooltipsForSelector(targetSelector);
+        }
+
+        ajaxSendRequestHtml(targetAction, requestData, successFunc);
+    }
+
+    function ajaxReplaceContent(targetSelector, targetAction, requestData)
+    {
+        var successFunc = function(htmlContent)
+        {
+            $(targetSelector).html(htmlContent);
+
+            activateTooltipsForSelector(targetSelector);
+        }
+
+        ajaxSendRequestHtml(targetAction, requestData, successFunc);
+    }
+
+    function ajaxSendRequestHtml(targetAction, requestData, successFunc)
+    {
+        $.get('/ajax/' + targetAction,
+            requestData,
+            successFunc,
+            'html');
+    }
+
+    function activateTooltipsForSelector(selector)
+    {
+        $(selector + ' .triggerTooltip').tooltip({
+            effect: 'toggle',
+            delay: 0,
+            position: 'center right',
+            relative: true
+        }).dynamic({ bottom: { direction: 'down', bounce: true } });
+    }
+</script>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#show_all_round_details").click(function() {
+            if($("*[id^=round_details]:visible").length > 0) {
+                $("*[id^=round_details]:visible").hide();
+            } else {
+                $("*[id^=round_details]").show();
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#show_round_details1").click(function() {
+            $("#round_details1").toggle();
+        });
+    });
+</script>

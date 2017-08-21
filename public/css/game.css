@@ -2229,6 +2229,20 @@ div .msgline td{
     background: transparent url(../img/layout/tooltips/separator.png) no-repeat center bottom;
 }
 
+.tooltipHeadInfo
+{
+    font-weight: 100;
+    color: #b09795;
+    font-size:1.2em;
+    padding-bottom:13px;
+    background: transparent url(../img/layout/tooltips/separator.png) no-repeat center bottom;
+}
+
+.tooltipHeadInfo p {
+    padding: 0;
+    margin: 0;
+}
+
 .tooltipContent
 {
     max-width:300px;
