@@ -767,7 +767,12 @@ class HuntController extends GameController
             $attacker_talent_tooltip = $report->attacker->base_talent_tooltip;
             $defender_talent_tooltip = $report->defender->base_talent_tooltip;
 
-            foreach ($attacker_active_talents as $talent) {
+            foreach ($attacker_active_talents as $index => $talent) {
+                if($talent->remaining == 0) {
+                    unset($attacker_active_talents[$index]);
+                    continue;
+                }
+
                 if($talent->cha != 0) {
                     $attacker_round_extra_cha += $talent->cha;
                 }
@@ -795,7 +800,12 @@ class HuntController extends GameController
                 }
             }
 
-            foreach ($defender_active_talents as $talent) {
+            foreach ($defender_active_talents as $index => $talent) {
+                if($talent->remaining == 0) {
+                    unset($defender_active_talents[$index]);
+                    continue;
+                }
+
                 if($talent->cha != 0) {
                     $defender_round_extra_cha += $talent->cha;
                 }
@@ -841,17 +851,27 @@ class HuntController extends GameController
             $defender_talent_tooltip[0] = ['name' => 'Basic value', 'val' => Config::BASIC_TALENT];
             $defender_talent_tooltip[1] = ['name' => 'Bonus talent', 'val' => $defender_bonus_talent];
 
-            if(mt_rand(1, 100) <= $attacker_talent_chance && count($attacker_active_talents) > 0) {
-                $active_talent_index = mt_rand(0, count($attacker_active_talents) - 1);
-                $attacker_round_active_talent = $attacker_active_talents[$active_talent_index];
-                $attacker_active_talents[] = $attacker_round_active_talent;
-            }
+            if(mt_rand(1, 100) <= $attacker_talent_chance && count($attacker_talents_active) > 0) {
+                $active_talent_index = mt_rand(0, count($attacker_talents_active) - 1);
+                $attacker_round_active_talent = $attacker_talents_active[$active_talent_index];
+                if(isset($attacker_active_talents[$attacker_round_active_talent->id])) {
+                    $attacker_active_talents[$attacker_round_active_talent->id]->remaining += $attacker_round_active_talent->duration;
+                } else {
+                    $attacker_round_active_talent->remaining = $attacker_round_active_talent->duration;
+                    $attacker_active_talents[] = $attacker_round_active_talent;
+                }
+            } else {$attacker_round_active_talent = null;}
 
-            if(mt_rand(1, 100) <= $defender_talent_chance && count($defender_active_talents) > 0) {
-                $active_talent_index = mt_rand(0, count($defender_active_talents) - 1);
-                $defender_round_active_talent = $defenderactive_talents[$active_talent_index];
-                $defender_active_talents[] = $defender_round_active_talent;
-            }
+            if(mt_rand(1, 100) <= $defender_talent_chance && count($defender_talents_active) > 0) {
+                $active_talent_index = mt_rand(0, count($defender_talents_active) - 1);
+                $defender_round_active_talent = $defender_talents_active[$active_talent_index];
+                if(isset($defender_active_talents[$defender_round_active_talent->id])) {
+                    $defender_active_talents[$defender_round_active_talent->id]->remaining += $defender_round_active_talent->duration;
+                } else {
+                    $defender_round_active_talent->remaining = $defender_round_active_talent->duration;
+                    $defender_active_talents[] = $defender_round_active_talent;
+                }
+            } else {$defender_round_active_talent = null;}
 
             $attacker_hit_chance_tooltip = $report->attacker->base_hit_chance_tooltip;
             $defender_hit_chance_tooltip = $report->defender->base_hit_chance_tooltip;
@@ -938,6 +958,7 @@ class HuntController extends GameController
                 if($talent->ebnshc != 0) {
                     $defender_round_extra_bhitchance += $talent->ebnshc;
                 }
+                $talent->remaining--;
             }
 
             foreach ($defender_active_talents as $talent) {
@@ -999,6 +1020,7 @@ class HuntController extends GameController
                 if($talent->sbnshc != 0) {
                     $defender_round_extra_bhitchance += $talent->sbnshc;
                 }
+                $talent->remaining--;
             }
 
             $attacker_round_str = $attacker_total_str + $attacker_round_extra_str;

@@ -631,33 +631,25 @@
                             </tbody>
                         </table>
                     </div>
-                </div><!-- CONTENT END -->
+                </div>
             </div>
         </div>
-        <!-- box CONTENT END -->
-        <!-- box FOOTER START -->
         <div class="wrap-bottom-left">
             <div class="wrap-bottom-right">
                 <div class="wrap-bottom-middle"></div>
             </div>
         </div>
-        <!-- box CONTENT END -->
     </div>
-    <!-- box-model END -->
 </div>
 <div style="clear:both"></div>
 <h1 id="fightround_details_header" style="cursor:pointer;">Detailed fight rounds</h1>
 <div id="fightround_details" style="">
-    <!-- box-model START -->
     <div id="reportResult">
-        <!-- box HEADER START -->
         <div class="wrap-top-left clearfix">
             <div class="wrap-top-right clearfix">
                 <div class="wrap-top-middle clearfix"></div>
             </div>
         </div>
-        <!-- box HEADER END -->
-        <!-- box CONTENT START -->
         <div class="wrap-left clearfix">
             <div class="wrap-content wrap-right clearfix">
                 <span id="fightround_details_contents">
@@ -684,8 +676,6 @@
                                                 <?php foreach($r['attacker_tooltip_damage'] as $tt): ?>
                                                     <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
                                                 <?php endforeach; ?>
-                                                    <tr><td>Iron grip:</td><td align='right'>+10</td></tr>
-                                                    <tr><td>Brandestoc I:</td><td align='right'>+99</td></tr>
                                                 </table>
                                             </div>
                                         " style="text-align:left;">(<?php echo prettyNumber($r['attacker_damage']); ?> per hit)</span>
@@ -693,53 +683,89 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="triggerTooltip" style="text-align:left;">Hit Chance: 105,00%</div>
-                                        <div class="tooltip">
-                                            <table class="noBackground">
-                                            <tbody>
-                                            <tr>
-                                                <td nowrap="nowrap">Basic value:</td>
-                                                <td align=" right">50</td>
-                                            </tr>
-                                            <tr>
-                                                <td nowrap="nowrap">Bonus hit chance:</td>
-                                                <td align=" right">56.72</td>
-                                            </tr>
-                                            </tbody>
-                                            </table>
-                                        </div>
+                                        <div class="tooltip" title="
+                                            <div class='tooltipContent'>
+                                                <table>
+                                                <?php foreach($r['attacker_tooltip_hc'] as $tt): ?>
+                                                    <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
+                                                <?php endforeach; ?>
+                                                </table>
+                                            </div>
+                                        " style="text-align:left;">Hit Chance: <?php echo plusSignedNumberString($r['attacker_hc']); ?>%</div>
                                     </td>
-                                    <td>9 hits (of 9)</td>
+                                    <td><?php echo $r['attacker_hit_count']; ?> hits (of <?php echo $r['attacker_attack_count']; ?>)</td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <div class="triggerTooltip" style="text-align:left;">Chance: 54,00%</div>
-                                        <div class="tooltip">
-                                            <table class="noBackground">
-                                            <tbody>
-                                            <tr>
-                                                <td nowrap="nowrap">Basic value:</td>
-                                                <td align=" right">20</td>
-                                            </tr>
-                                            <tr>
-                                                <td nowrap="nowrap">Bonus Talent:</td>
-                                                <td align=" right">33.10</td>
-                                            </tr>
-                                            </tbody>
-                                            </table>
-                                        </div>
+                                        <div class="tooltip" title="
+                                            <div class='tooltipContent'>
+                                                <table>
+                                                <?php foreach($r['attacker_tooltip_talent'] as $tt): ?>
+                                                    <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
+                                                <?php endforeach; ?>
+                                                </table>
+                                            </div>
+                                        " style="text-align:left;">Chance: <?php echo plusSignedNumberString($r['attacker_tc']); ?>%</div>
                                     </td>
                                     <td>
-                                        <div class="triggerTooltip" style="text-align:left;">Shadow Storm</div>
-                                        <div class="tooltip">
-                                            <table class="noBackground">
-                                            <tbody>
-                                            <tr><td style="font-size: 1.1em;" nowrap="nowrap">Shadow Storm</td></tr>
-                                            <tr><td>A volley of evil attacks at breakneck speed rupture your enemy`s defence.</td></tr>
-                                            <tr><td nowrap="nowrap">+2 Attack<br>Duration:2 Rounds</td></tr>
-                                            </tbody>
-                                            </table>
-                                        </div>
+                                        <?php if($r['attacker_talent']): ?>
+                                            <div class="tooltip" title='<?php $this->partial('partials/talent_tooltip_content', ['talent_obj' => $r['attacker_talent']]) ?>' style="text-align:left;"><?php echo \Bitefight\Library\Translate::_tn($r['attacker_talent']->id); ?></div>
+                                        <?php else: ?>
+                                            <div style="text-align: left;">not activated</div>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                </table>
+                            </div>
+                            <div style="width: 350px; z-index: 10000; float: left;">
+                                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">hit: <?php echo prettyNumber($r['defender_total_damage']); ?> Damage&nbsp;
+                                        <span class="tooltip" title="
+                                            <div class='tooltipContent'>
+                                                <table>
+                                                <?php foreach($r['defender_tooltip_damage'] as $tt): ?>
+                                                    <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
+                                                <?php endforeach; ?>
+                                                </table>
+                                            </div>
+                                        " style="text-align:left;">(<?php echo prettyNumber($r['defender_damage']); ?> per hit)</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="tooltip" title="
+                                            <div class='tooltipContent'>
+                                                <table>
+                                                <?php foreach($r['defender_tooltip_hc'] as $tt): ?>
+                                                    <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
+                                                <?php endforeach; ?>
+                                                </table>
+                                            </div>
+                                        " style="text-align:left;">Hit Chance: <?php echo plusSignedNumberString($r['defender_hc']); ?>%</div>
+                                    </td>
+                                    <td><?php echo $r['defender_hit_count']; ?> hits (of <?php echo $r['defender_attack_count']; ?>)</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="tooltip" title="
+                                            <div class='tooltipContent'>
+                                                <table>
+                                                <?php foreach($r['defender_tooltip_talent'] as $tt): ?>
+                                                    <tr><td><?php echo $tt['name']; ?>:</td><td align='right'><?php echo plusSignedNumberString($tt['val']); ?></td></tr>
+                                                <?php endforeach; ?>
+                                                </table>
+                                            </div>
+                                        " style="text-align:left;">Chance: <?php echo plusSignedNumberString($r['defender_tc']); ?>%</div>
+                                    </td>
+                                    <td>
+                                        <?php if($r['defender_talent']): ?>
+                                            <div class="tooltip" title='<?php $this->partial('partials/talent_tooltip_content', ['talent_obj' => $r['defender_talent']]) ?>' style="text-align:left;"><?php echo \Bitefight\Library\Translate::_tn($r['defender_talent']->id); ?></div>
+                                        <?php else: ?>
+                                            <div style="text-align: left;">not activated</div>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -747,129 +773,15 @@
                             </div>
                         </div>
                     <?php endfor; ?>
-
-
-
-
-
-
-
-
-
-    <div id="round_details2" class="table-wrap clearfix" style="display:none;">
-        <div style="width:350px;z-index:10000;float:left;">
-    <table cellpadding="2" cellspacing="2" border="0" width="100%">
-        <tbody><tr>
-            <td colspan="2">
-                Xyir: 1.036,00 Damage&nbsp;
-                <span class="triggerTooltip" style="text-align:left;">
-                    (259,00 per hit)
                 </span>
-                <div class="tooltip">
-                    <table class="noBackground">
-            <tbody><tr>
-            <td colspan="2">
-                <table>
-                                            <tbody><tr>
-                                                                <td nowrap="nowrap">Basic value:</td>
-                                    <td align=" right">50</td>
-                                                                        <td nowrap="nowrap">Iron Skin:</td>
-                                    <td align=" right">-24</td>
-                                                            </tr>
-                                                <tr>
-                                                                <td nowrap="nowrap">Bonus damage:</td>
-                                    <td align=" right">109.31</td>
-                                                                        <td nowrap="nowrap">Moloch:</td>
-                                    <td align=" right">-6</td>
-                                                            </tr>
-                                        </tbody></table>
-            </td>
-        </tr>
-        </tbody></table>                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="triggerTooltip" style="text-align:left;">
-                    Hit Chance: 44,00%
-                </div>
-                <div class="tooltip">
-                    <table class="noBackground">
-                <tbody><tr>
-                <td nowrap="nowrap">Basic value:</td>
-                <td align=" right">50</td>
-            </tr>
-                        <tr>
-                <td nowrap="nowrap">Bonus hit chance:</td>
-                <td align=" right">19.80</td>
-            </tr>
-                        <tr>
-                <td nowrap="nowrap">Crippling hit:</td>
-                <td align=" right">+2</td>
-            </tr>
-            </tbody></table>                </div>
-            </td>
-            <td>
-                4 hits (of 6)            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="triggerTooltip" style="text-align:left;">
-                    Chance: 74,00%
-                </div>
-                <div class="tooltip">
-                    <table class="noBackground">
-                <tbody><tr>
-                <td nowrap="nowrap">Basic value:</td>
-                <td align=" right">20</td>
-            </tr>
-                        <tr>
-                <td nowrap="nowrap">Bonus Talent:</td>
-                <td align=" right">53.94</td>
-            </tr>
-            </tbody></table>                </div>
-            </td>
-            <td>
-                    <div class="triggerTooltip" style="text-align:left;">Fight reflexes</div>
-    <div class="tooltip">
-
-<table class="noBackground">
-    <tbody><tr>
-        <td style="font-size: 1.1em;" nowrap="nowrap">Fight reflexes</td>
-    </tr>
-    <tr>
-        <td>You are intoxicated and become so fast that you paralyse your opponent with fear.</td>
-    </tr>
-    <tr>
-        <td nowrap="nowrap">-10 Dexterity (on opponent)<br>+20 Bonus hit chance<br>Duration:3 Rounds</td>
-    </tr>
-</tbody></table>    </div>
-                </td>
-        </tr>
-    </tbody></table>
-</div>    </div>
-
-
-
-
-
-
-
-
-    </span>
-                <!-- CONTENT END -->
             </div>
         </div>
-        <!-- box CONTENT END -->
-        <!-- box FOOTER START -->
         <div class="wrap-bottom-left">
             <div class="wrap-bottom-right">
                 <div class="wrap-bottom-middle"></div>
             </div>
         </div>
-        <!-- box CONTENT END -->
     </div>
-    <!-- box-model END -->
 </div>
 <script type="text/javascript">
     $(function ()
