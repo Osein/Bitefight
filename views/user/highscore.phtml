@@ -6,7 +6,7 @@
     </div>
     <div class="wrap-left clearfix">
         <div class="wrap-content wrap-right clearfix">
-            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('menu_highscore'); ?></h2>
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.(isset($user) ? $user->race : 1).'small.gif'); ?>" alt=""><?php echo \Bitefight\Library\Translate::_('menu_highscore'); ?></h2>
             <div class="table-wrap">
                 <?php if(isset($user) && ($type == 'player' || $type == 'clan' && $user->clan_id > 0)): ?>
                     <form action="<?php echo getUrl('highscore/mypos'); ?>?type=<?php echo $type; ?>&race=<?php echo $race; ?>&order=<?php echo $order; ?><?php foreach ($show as $s2) {echo '&amp;show[]='.$s2;} ?>" method="POST">
