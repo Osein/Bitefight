@@ -1080,6 +1080,22 @@ class HuntController extends GameController
                 }
             }
 
+            if(isset($attacker_round_active_talent)) {
+                $attacker_round_talent = [
+                    'id' => $attacker_round_active_talent->id,
+                    'info' => getTalentPropertyArray($attacker_round_active_talent),
+                    'duration' => $attacker_round_active_talent->duration
+                ];
+            }
+
+            if(isset($defender_round_active_talent)) {
+                $defender_round_talent = [
+                    'id' => $defender_round_active_talent->id,
+                    'info' => getTalentPropertyArray($defender_round_active_talent),
+                    'duration' => $defender_round_active_talent->duration
+                ];
+            }
+
             $report->rounds[$r] = array(
                 'attacker_tooltip_damage' => $attacker_damage_tooltip,
                 'defender_tooltip_damage' => $defender_damage_tooltip,
@@ -1093,8 +1109,8 @@ class HuntController extends GameController
                 'defender_tc' => $defender_talent_chance,
                 'attacker_damage' => $attacker_round_damage,
                 'defender_damage' => $defender_round_damage,
-                'attacker_talent' => isset($attacker_round_active_talent) ? $attacker_round_active_talent : null,
-                'defender_talent' => isset($defender_round_active_talent) ? $defender_round_active_talent : null,
+                'attacker_talent' => isset($attacker_round_talent) ? $attacker_round_talent : null,
+                'defender_talent' => isset($defender_round_talent) ? $defender_round_talent : null,
                 'attacker_total_damage' => $attacker_round_total_damage,
                 'defender_total_damage' => $defender_round_total_damage,
                 'attacker_hit_count' => $attacker_round_hit_count,

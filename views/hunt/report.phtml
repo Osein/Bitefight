@@ -709,7 +709,7 @@
                                     </td>
                                     <td>
                                         <?php if($r['attacker_talent']): ?>
-                                            <div class="tooltip" title='<?php $this->partial('partials/talent_tooltip_content', ['talent_obj' => $r['attacker_talent']]) ?>' style="text-align:left;"><?php echo \Bitefight\Library\Translate::_tn($r['attacker_talent']->id); ?></div>
+                                            <div class="tooltip" title='<?php $this->partial('partials/report_talent_tooltip_content', ['talent_obj' => $r['attacker_talent']]) ?>' style="text-align:left;"><?php echo \Bitefight\Library\Translate::_tn($r['attacker_talent']['id']); ?></div>
                                         <?php else: ?>
                                             <div style="text-align: left;">not activated</div>
                                         <?php endif; ?>
@@ -762,7 +762,7 @@
                                     </td>
                                     <td>
                                         <?php if($r['defender_talent']): ?>
-                                            <div class="tooltip" title='<?php $this->partial('partials/talent_tooltip_content', ['talent_obj' => $r['defender_talent']]) ?>' style="text-align:left;"><?php echo \Bitefight\Library\Translate::_tn($r['defender_talent']->id); ?></div>
+                                            <div class="tooltip" title='<?php $this->partial('partials/report_talent_tooltip_content', ['talent_obj' => $r['defender_talent']]) ?>' style="text-align:left;"><?php echo \Bitefight\Library\Translate::_tn($r['defender_talent']['id']); ?></div>
                                         <?php else: ?>
                                             <div style="text-align: left;">not activated</div>
                                         <?php endif; ?>
