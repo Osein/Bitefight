@@ -2,7 +2,6 @@
 <p><?php echo \Bitefight\Library\Translate::_('hunt_header_line'); ?></p>
 <br>
 <div>
-    <!--
     <div id="wolfHunting">
         <div class="wrap-top-left">
             <div class="wrap-top-right">
@@ -11,40 +10,66 @@
         </div>
         <div class="wrap-left">
             <div class="wrap-content wrap-right">
-                <form action="http://s202.en.bitefight.gameforge.com/robbery/index?__token=8c4f8a208d2b45c201dd3f37501a4ed2" method="POST">
+                <form action="<?php echo getUrl('hunt/race/search'); ?>" method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
                     <h2>
-                        <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>
-                        Werewolf Hunt  ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>"  title="Action point" style="float: none; vertical-align: middle; margin: 0;" /> )
+                        <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">
+                        Werewolf Hunt  ( 1 <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" title="Action point" style="float: none; vertical-align: middle; margin: 0;"> )
                     </h2>
-                    <img src="<?php echo getAssetLink('img/hunt/pvp_header.jpg'); ?>"  title="Werewolf Hunt" width="340" height="125" />                        <p class="tdnp">
-                        Roam the streets for werewolves                        </p>
+                    <img src="<?php echo getAssetLink('img/hunt/new_race1hunt2.jpg'); ?>" title="Werewolf Hunt" width="340" height="125"><br/><br/>
+                    <p class="tdnp" style="text-align: center;">Roam the streets for <?php if($user->race == 1) echo 'werewolves'; else echo 'vampires'; ?></p>
                     <div class="tdi">
-                        search options: <br/>
-                        <select name="99b3bc17a46ef8acfd4d835fb4d775b7" size="1">
+                        search options: <br>
+                        <select name="enemy_type" size="1">
                             <option value="1">normal</option>
                             <option value="2">only search for stronger or equally strong rivals</option>
-                        </select><br/>
-                        <input id="totemsearch" type="checkbox" name="totemsearch" value="totemsearch" checked="checked" onchange="docheckbox('totemsearch')"> Search for lost souls too (include inactive users in the search).<br>
+                        </select><br>
+                        <!--<input id="totemsearch" type="checkbox" name="totemsearch" value="totemsearch" checked="checked" onchange="docheckbox('totemsearch')"> Search for lost souls too (include inactive users in the search).<br>-->
                         <div class="btn-left center">
                             <div class="btn-right">
                                 <input type="submit" class="btn" name="optionsearch" value="Go!">
                             </div>
                         </div>
                     </div>
+                    <!--
+                    <br>
+                    <div class="tdi">
+                        search options:<br>
+                        Battle value from <input class="input" type="text" name="lvlvon" size="5" value="2536" maxlength="10">
+                        to <input class="input" type="text" name="lvlbis" size="5" value="3961" maxlength="10">
+                        <input class="input" type="hidden" name="ef38240d8dbf1af58bb4f14417ae9aa2" value="77625"><br>
+                        <input id="totemsearch" type="checkbox" name="totemsearch" value="totemsearch" checked="checked" onchange="docheckbox('totemsearch')"> Search for lost souls too (include inactive users in the search).<br>
+                        <div class="btn-left center">
+                            <div class="btn-right">
+                                <input type="submit" class="btn" name="levelsearch" value="Go!">
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                    <?php if(isset($race_search_error_top)): ?>
+                        <div class="tdi">
+                            <strong style="font-size:1.8em; color:#fff"><?php echo $race_search_error_top; ?></strong>
+                        </div>
+                    <?php endif; ?>
                 </form>
-                <h2>
-                    <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt=""/>
-                    Look for a particular werewolf                    </h2>
-                <form action="http://s202.en.bitefight.gameforge.com/robbery/index?__token=8c4f8a208d2b45c201dd3f37501a4ed2" method="POST">
-                    <div class="tdi">Name:<br/>
-                        <input class="input" type="text" name="4bfcf6135a77aff17188907d6efc274b" size="30" value="" MAXLENGTH="30">
-                        <input type="hidden" name="namesearch" value="Go!">
+                <br>
+
+                <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Look for a particular werewolf</h2>
+                <form action="<?php echo getUrl('hunt/race/search/exact'); ?>" method="POST">
+                    <input type="hidden" name="<?php echo $this->security->getTokenKey() ?>" value="<?php echo $this->security->getToken() ?>"/>
+                    <div class="tdi">Name:<br>
+                        <input class="input" type="text" name="name" size="30" value="" maxlength="30">
                         <div class="btn-left center">
                             <div class="btn-right">
                                 <input type="submit" class="btn" name="namesearch" value="Go!">
                             </div>
                         </div>
                     </div>
+                    <?php if(isset($race_search_error)): ?>
+                    <div class="tdi">
+                        <strong style="font-size:1.8em; color:#fff"><?php echo $race_search_error; ?></strong>
+                    </div>
+                    <?php endif; ?>
                 </form>
             </div>
         </div>
@@ -54,8 +79,7 @@
             </div>
         </div>
     </div>
-    -->
-    <div id="humanHunting" style="margin-left: auto; margin-right: auto; float: initial;">
+    <div id="humanHunting">
         <div class="wrap-top-left">
             <div class="wrap-top-right">
                 <div class="wrap-top-middle"></div>

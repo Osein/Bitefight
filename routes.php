@@ -17,6 +17,7 @@ $router->addGet('/news', ['controller' => 'Base', 'action' => 'getNews']);
 $router->addGet('/highscore', ['controller' => 'Base', 'action' => 'getHighscore']);
 $router->addPost('/highscore/mypos', ['controller' => 'Base', 'action' => 'postHighscoreMyPosition']);
 $router->addGet('/profile/player/{id:[0-9]+}', ['controller' => 'Base', 'action' => 'getPreview']);
+$router->addGet('/report/fightreport/{id:[0-9]+}', ['controller' => 'Hunt', 'action' => 'getFightReport']);
 
 $register = new \Phalcon\Mvc\Router\Group(['controller' => 'Home']);
 $register->setPrefix('/register');
@@ -85,6 +86,8 @@ $hunt->setPrefix('/hunt');
 $hunt->addGet('/index', ['action' => 'getHunt']);
 $hunt->addGet('/human/{id:[1-5]}', ['action' => 'getHumanHunt']);
 $hunt->addGet('/attack/{id:[0-9]+}', ['action' => 'postRaceAttack']);
+$hunt->addPost('/race/search', ['action' => 'postRaceSearch']);
+$hunt->addPost('/race/search/exact', ['action' => 'postRaceSearchExact']);
 $router->mount($hunt);
 
 $clan = new \Phalcon\Mvc\Router\Group(['controller' => 'Clan']);

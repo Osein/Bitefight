@@ -53,6 +53,19 @@ class HuntController extends GameController
         $this->view->hunt3Reward = $this->getHuntReward(3);
         $this->view->hunt4Reward = $this->getHuntReward(4);
         $this->view->hunt5Reward = $this->getHuntReward(5);
+
+        $huntSearchError = $this->getFlashData('hunt_race_search_empty');
+
+        if(!empty($huntSearchError)) {
+            $this->view->setVar('race_search_error', $huntSearchError);
+        }
+
+        $huntSearchErrorTop = $this->getFlashData('hunt_race_search_empty_top');
+
+        if(!empty($huntSearchErrorTop)) {
+            $this->view->setVar('race_search_error_top', $huntSearchErrorTop);
+        }
+
         return $this->view->pick('hunt/index');
     }
 
@@ -228,6 +241,98 @@ class HuntController extends GameController
         }
     }
 
+    public function postRaceSearch()
+    {
+        $enemyType = $this->request->get('enemy_type');
+
+        if(!in_array($enemyType, [1, 2])) {
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
+        $enemy = ORM::for_table('user')
+            ->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])
+            ->left_outer_join('clan_rank', ['clan_rank.id', '=', 'user.clan_rank'])
+            ->left_outer_join('user_description', ['user.id', '=', 'user_description.user_id'])
+            ->select('user.*')->select_many('clan.logo_bg', 'clan.logo_sym')
+            ->select('clan.name', 'clan_name')->select('clan.tag', 'clan_tag')
+            ->select('clan_rank.rank_name')->select('clan_rank.war_minister')
+            ->select('user_description.descriptionHtml')
+            ->where('user.race', $this->user->race == 1 ? 2 : 1)
+            ->where_lte('user.battle_value', $this->user->battle_value * 1.25)
+            ->where_gte('user.battle_value', $this->user->battle_value * ($enemyType == 1 ? 0.8 : 1))
+            ->orderByExpr('RAND()')
+            ->find_one();
+
+        if(empty($enemy)) {
+            $this->setFlashData('hunt_race_search_empty_top', 'You were unable to find a victim');
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
+        $stat_max = max($enemy->str, $enemy->dex, $enemy->dex, $enemy->end, $enemy->cha);
+        $userLevel = getLevel($enemy->exp);
+        $previousLevelExp = getPreviousExpNeeded($userLevel);
+        $nextLevelExp = getExpNeeded($userLevel);
+        $levelExpDiff = $nextLevelExp - $previousLevelExp;
+
+        $this->view->exp_red_long = ($enemy->exp - $previousLevelExp) / $levelExpDiff * 200;
+
+        $this->view->str_red_long = $enemy->str / $stat_max * 200;
+        $this->view->def_red_long = $enemy->def / $stat_max * 200;
+        $this->view->end_red_long = $enemy->end / $stat_max * 200;
+        $this->view->dex_red_long = $enemy->dex / $stat_max * 200;
+        $this->view->cha_red_long = $enemy->cha / $stat_max * 200;
+
+        $this->view->setVar('puser', $enemy);
+        $this->view->setVar('search_again', true);
+        $this->view->setVar('enemy_type', $enemyType);
+
+        return $this->view->pick('hunt/preview');
+    }
+
+    public function postRaceSearchExact()
+    {
+        $name = $this->request->get('name');
+
+        if(empty($name)) {
+            $this->setFlashData('hunt_race_search_empty', 'You were unable to find a victim');
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
+        $enemy = ORM::for_table('user')->where('user.name', $name)
+            ->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])
+            ->left_outer_join('clan_rank', ['clan_rank.id', '=', 'user.clan_rank'])
+            ->left_outer_join('user_description', ['user.id', '=', 'user_description.user_id'])
+            ->select('user.*')->select_many('clan.logo_bg', 'clan.logo_sym')
+            ->select('clan.name', 'clan_name')->select('clan.tag', 'clan_tag')
+            ->select('clan_rank.rank_name')->select('clan_rank.war_minister')
+            ->select('user_description.descriptionHtml')
+            ->where('user.race', $this->user->race == 1 ? 2 : 1)
+            ->find_one();
+
+        if(empty($enemy)) {
+            $this->setFlashData('hunt_race_search_empty', 'You were unable to find a victim');
+            return $this->response->redirect(getUrl('hunt/index'));
+        }
+
+        $stat_max = max($enemy->str, $enemy->dex, $enemy->dex, $enemy->end, $enemy->cha);
+        $userLevel = getLevel($enemy->exp);
+        $previousLevelExp = getPreviousExpNeeded($userLevel);
+        $nextLevelExp = getExpNeeded($userLevel);
+        $levelExpDiff = $nextLevelExp - $previousLevelExp;
+
+        $this->view->exp_red_long = ($enemy->exp - $previousLevelExp) / $levelExpDiff * 200;
+
+        $this->view->str_red_long = $enemy->str / $stat_max * 200;
+        $this->view->def_red_long = $enemy->def / $stat_max * 200;
+        $this->view->end_red_long = $enemy->end / $stat_max * 200;
+        $this->view->dex_red_long = $enemy->dex / $stat_max * 200;
+        $this->view->cha_red_long = $enemy->cha / $stat_max * 200;
+
+        $this->view->setVar('puser', $enemy);
+
+        return $this->view->pick('hunt/preview');
+    }
+
     public function postRaceAttack($id)
     {
         $attacker = ORM::for_table('user')->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])->select('user.*')->select('clan.tag')->where('user.id', $this->user->id)->find_one();
@@ -262,6 +367,8 @@ class HuntController extends GameController
         $report->defender->battle_value = $defender->battle_value;
         $report->defender->wall = $defender->h_wall;
         $report->defender->land = $defender->h_land;
+        $report->attacker->total_damage = 0;
+        $report->defender->total_damage = 0;
 
         $report->attacker->items = array();
         $report->defender->items = array();
@@ -757,6 +864,8 @@ class HuntController extends GameController
         $report->rounds = array();
 
         for($r = 1; $r <= 10; $r++) {
+            $round_object = array();
+
             $attacker_round_extra_cha = 0;
             $defender_round_extra_cha = 0;
             $attacker_round_extra_talent = 0;
@@ -839,8 +948,8 @@ class HuntController extends GameController
             $total_cha = $attacker_round_cha + $defender_round_cha;
             $attacker_bonus_talent_multiplier = $attacker_round_cha / $total_cha;
             $defender_bonus_talent_multiplier = $defender_round_cha / $total_cha;
-            $attacker_bonus_talent = ($report->attacker->total_bonus_talent + $attacker_round_extra_bonus_talent) * $attacker_bonus_talent_multiplier;
-            $defender_bonus_talent = ($report->defender->total_bonus_talent + $defender_round_extra_bonus_talent) * $defender_bonus_talent_multiplier;
+            $attacker_bonus_talent = round(($report->attacker->total_bonus_talent + $attacker_round_extra_bonus_talent) * $attacker_bonus_talent_multiplier, 2);
+            $defender_bonus_talent = round(($report->defender->total_bonus_talent + $defender_round_extra_bonus_talent) * $defender_bonus_talent_multiplier, 2);
 
             $attacker_talent_chance = Config::BASIC_TALENT + $attacker_bonus_talent;
             $defender_talent_chance = Config::BASIC_TALENT + $defender_bonus_talent;
@@ -860,7 +969,13 @@ class HuntController extends GameController
                     $attacker_round_active_talent->remaining = $attacker_round_active_talent->duration;
                     $attacker_active_talents[] = $attacker_round_active_talent;
                 }
-            } else {$attacker_round_active_talent = null;}
+
+                $round_object['attacker_talent'] = [
+                    'id' => $attacker_round_active_talent->id,
+                    'info' => getTalentPropertyArray($attacker_round_active_talent),
+                    'duration' => $attacker_round_active_talent->duration
+                ];
+            }
 
             if(mt_rand(1, 100) <= $defender_talent_chance && count($defender_talents_active) > 0) {
                 $active_talent_index = mt_rand(0, count($defender_talents_active) - 1);
@@ -871,7 +986,13 @@ class HuntController extends GameController
                     $defender_round_active_talent->remaining = $defender_round_active_talent->duration;
                     $defender_active_talents[] = $defender_round_active_talent;
                 }
-            } else {$defender_round_active_talent = null;}
+
+                $round_object['defender_talent'] = [
+                    'id' => $defender_round_active_talent->id,
+                    'info' => getTalentPropertyArray($defender_round_active_talent),
+                    'duration' => $defender_round_active_talent->duration
+                ];
+            }
 
             $attacker_hit_chance_tooltip = $report->attacker->base_hit_chance_tooltip;
             $defender_hit_chance_tooltip = $report->defender->base_hit_chance_tooltip;
@@ -1039,11 +1160,11 @@ class HuntController extends GameController
             $attacker_bonus_hc_multiplier = $attacker_round_dex / ($attacker_round_dex + $defender_round_def);
             $defender_bonus_hc_multiplier = $defender_round_dex / ($defender_round_dex + $attacker_round_def);
 
-            $attacker_bonus_damage = ($report->attacker->total_bonus_damage + $attacker_round_extra_bdamage) * $attacker_bonus_damage_multiplier;
-            $defender_bonus_damage = ($report->defender->total_bonus_damage + $defender_round_extra_bdamage) * $defender_bonus_damage_multiplier;
+            $attacker_bonus_damage = round(($report->attacker->total_bonus_damage + $attacker_round_extra_bdamage) * $attacker_bonus_damage_multiplier, 2);
+            $defender_bonus_damage = round(($report->defender->total_bonus_damage + $defender_round_extra_bdamage) * $defender_bonus_damage_multiplier, 2);
 
-            $attacker_bonus_hc = ($report->attacker->total_bonus_hit_chance + $attacker_round_extra_bhitchance) * $attacker_bonus_hc_multiplier;
-            $defender_bonus_hc = ($report->defender->total_bonus_hit_chance + $defender_round_extra_bhitchance) * $defender_bonus_hc_multiplier;
+            $attacker_bonus_hc = round(($report->attacker->total_bonus_hit_chance + $attacker_round_extra_bhitchance) * $attacker_bonus_hc_multiplier, 2);
+            $defender_bonus_hc = round(($report->defender->total_bonus_hit_chance + $defender_round_extra_bhitchance) * $defender_bonus_hc_multiplier, 2);
 
             $attacker_damage_tooltip[1] = ['name' => 'Bonus damage', 'val' => $attacker_bonus_damage];
             $attacker_damage_tooltip[0] = ['name' => 'Basic value', 'val' => Config::BASIC_DAMAGE];
@@ -1068,35 +1189,24 @@ class HuntController extends GameController
 
             for($i = 1; $i <= $attacker_round_attack; $i++) {
                 if(mt_rand(1, 100) <= $attacker_round_hit_chance) {
-                    $attacker_round_total_damage += $attacker_round_damage;
+                    $attacker_round_total_damage += round($attacker_round_damage, 2);
                     $attacker_round_hit_count++;
                 }
             }
 
             for($i = 1; $i <= $defender_round_attack; $i++) {
                 if(mt_rand(1, 100) <= $defender_round_hit_chance) {
-                    $defender_round_total_damage += $defender_round_damage;
+                    $defender_round_total_damage += round($defender_round_damage, 2);
                     $defender_round_hit_count++;
                 }
             }
 
-            if(isset($attacker_round_active_talent)) {
-                $attacker_round_talent = [
-                    'id' => $attacker_round_active_talent->id,
-                    'info' => getTalentPropertyArray($attacker_round_active_talent),
-                    'duration' => $attacker_round_active_talent->duration
-                ];
-            }
+            $report->attacker->total_damage += $attacker_round_total_damage;
+            $report->defender->total_damage += $defender_round_total_damage;
+            $defender->hp_now = max(0, $defender->hp_now - $attacker_round_total_damage);
+            $attacker->hp_now = max(0, $attacker->hp_now - $defender_round_total_damage);
 
-            if(isset($defender_round_active_talent)) {
-                $defender_round_talent = [
-                    'id' => $defender_round_active_talent->id,
-                    'info' => getTalentPropertyArray($defender_round_active_talent),
-                    'duration' => $defender_round_active_talent->duration
-                ];
-            }
-
-            $report->rounds[$r] = array(
+            $report->rounds[$r] = array_merge($round_object, array(
                 'attacker_tooltip_damage' => $attacker_damage_tooltip,
                 'defender_tooltip_damage' => $defender_damage_tooltip,
                 'attacker_tooltip_hc' => $attacker_hit_chance_tooltip,
@@ -1109,31 +1219,88 @@ class HuntController extends GameController
                 'defender_tc' => $defender_talent_chance,
                 'attacker_damage' => $attacker_round_damage,
                 'defender_damage' => $defender_round_damage,
-                'attacker_talent' => isset($attacker_round_talent) ? $attacker_round_talent : null,
-                'defender_talent' => isset($defender_round_talent) ? $defender_round_talent : null,
                 'attacker_total_damage' => $attacker_round_total_damage,
                 'defender_total_damage' => $defender_round_total_damage,
                 'attacker_hit_count' => $attacker_round_hit_count,
                 'defender_hit_count' => $defender_round_hit_count,
                 'attacker_attack_count' => $attacker_round_attack,
                 'defender_attack_count' => $defender_round_attack
-            );
+            ));
         }
 
         $report->attacker->hp_end = $attacker->hp_now;
         $report->defender->hp_end = $defender->hp_now;
 
-        //Page view
-
         $report->attacker->max_stat = max($report->attacker->str + $report->attacker->str_extra, $report->attacker->def + $report->attacker->def_extra, $report->attacker->dex + $report->attacker->dex_extra, $report->attacker->end + $report->attacker->end_extra, $report->attacker->cha + $report->attacker->cha_extra);
         $report->defender->max_stat = max($report->defender->str + $report->defender->str_extra, $report->defender->def + $report->defender->def_extra, $report->defender->dex + $report->defender->dex_extra, $report->defender->end + $report->defender->end_extra, $report->defender->cha + $report->defender->cha_extra);
 
+        $report_time = time();
+        $report->earned_gold = 0;
+        $report->earned_bonus_gold = 0;
+
+        if($report->attacker->total_damage > $report->defender->total_damage) {
+            $defender_gold = $defender->gold;
+
+            if($defender->h_treasure > $report_time) {
+                $defender_gold -= getLevel($defender->exp) * 4800;
+            }
+
+            if($defender->h_royal > $report_time) {
+                $defender_gold -= getLevel($defender->exp) * 19200;
+            }
+
+            if($defender_gold > 0) {
+                $report->earned_gold = $defender_gold / 10;
+            }
+        } else {
+            $attacker_gold = $attacker->gold;
+
+            if($attacker->h_treasure > $report_time) {
+                $attacker_gold -= getLevel($attacker->exp) * 4800;
+            }
+
+            if($attacker->h_royal > $report_time) {
+                $attacker_gold -= getLevel($attacker->exp) * 19200;
+            }
+
+            if($attacker_gold > 0) {
+                $report->earned_gold = $attacker_gold / 10;
+            }
+        }
+
+        $dbReport = ORM::for_table('report')->create();
+        $dbReport->attacker_id = $report->attacker->id;
+        $dbReport->defender_id = $report->defender->id;
+        $dbReport->report = json_encode($report);
+        $dbReport->attack_time = time();
+        $dbReport->save();
+        $reportId = $dbReport->id();
+        return $this->response->redirect(getUrl('report/fightreport/'.$reportId.'?to=robbery'));
+    }
+
+    public function getFightReport($id)
+    {
+        $report = ORM::for_table('report')->find_one($id);
+        $to = $this->request->get('to');
+
+        if(!$report) {
+            return $this->notFound();
+        }
+
+        $fightObj = json_decode($report->report, true);
+
+        $attacker = ORM::for_table('user')->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])->select('user.*')->select('clan.tag')->where('user.id', $fightObj['attacker']['id'])->find_one();
+        $defender = ORM::for_table('user')->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])->select('user.*')->select('clan.tag')->where('user.id', $fightObj['defender']['id'])->find_one();
+
         $this->view->setVars([
-            'report' => $report,
             'attacker' => $attacker,
-            'defender' => $defender
+            'defender' => $defender,
+            'report' => $fightObj,
+            'attack_date' => $report->attack_time,
+            'to' => $to,
+            'reportId' => $report->id
         ]);
 
-        $this->view->pick('hunt/report');
+        return $this->view->pick('hunt/report');
     }
 }
