@@ -88,10 +88,6 @@ class MessageController extends GameController
             $folder->id = 0;
         }
 
-        if($folder->user_id !== $this->user->id) {
-            return $this->response->redirect(getUrl('message'));
-        }
-
         if($folder_id == -1) {
             $messages = ORM::for_table('message')
                 ->where('sender_id', $this->user->id)
@@ -103,6 +99,10 @@ class MessageController extends GameController
                 ->where('sender_id', $this->user->id)
                 ->count();
         } else {
+            if($folder->user_id !== $this->user->id) {
+                return $this->response->redirect(getUrl('message'));
+            }
+
             $messages = ORM::for_table('message')
                 ->select_many('message.*', 'user.name')
                 ->where('folder_id', $folder_id)
