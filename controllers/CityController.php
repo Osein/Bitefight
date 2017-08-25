@@ -279,26 +279,26 @@ class CityController extends GameController
             return $this->response->redirect(getUrl('city/shop?lvlfrom='.$levelTo.'&lvlto='.$levelFrom.($itemModel!='weapons'?'&model='.$itemModel:'')));
         }
 
-        $dbq = ORM::for_table('item')
-            ->select('item.*')->select('user_item.volume')
-            ->left_outer_join('user_item', ['user_item.item_id', '=', 'item.id'])
-            ->where_gte('level', min($levelFrom, $userLevel))
-            ->where_lte('level', max($userLevel, $levelTo))
-            ->where('model', $modelId)
-            ->where('user_item.user_id', $this->user->id)
-            ->orderByDesc('level');
+        $pdo = ORM::get_db();
+        $stmt = $pdo->prepare('SELECT COUNT(1) AS count FROM item WHERE item.level >= ? AND item.level <= ? AND item.model = ?');
+        $stmt->execute([$levelFrom, $levelTo, $modelId]);
+        $item_count = intval($stmt->fetchColumn());
+
+        $sql = 'SELECT item.*, user_item.volume FROM item
+                LEFT JOIN user_item ON user_item.item_id = item.id AND user_item.user_id = ?
+                WHERE item.level >= ? AND item.level <= ? AND item.model = ?';
 
         if($pfilter == 'premium') {
-            $dbq = $dbq->where_gt('scost', 0);
+            $sql .= ' AND item.scost > 0';
         } elseif($pfilter == 'nonpremium') {
-            $dbq = $dbq->where('scost', 0);
+            $sql .= ' AND item.scost = 0';
         }
 
-        $item_count = $dbq->count();
+        $sql .= ' ORDER BY item.level DESC LIMIT 20 OFFSET '.(($page - 1) * 20);
 
-        $results = $dbq->limit(20)
-            ->offset(($page - 1) * 20)
-            ->find_many();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$this->user->id, min($levelFrom, $userLevel), max($userLevel, $levelTo), $modelId]);
+        $results = $stmt->fetchAll(\PDO::FETCH_OBJ);
 
         $user_item_max_count = 3 + ($this->user->h_domicile * 2);
 
