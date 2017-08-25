@@ -86,6 +86,11 @@ class MessageController extends GameController
             $folder->user_id = $this->user->id;
             $folder->folder_name = 'Inbox';
             $folder->id = 0;
+        } elseif($folder_id == -1) {
+            $folder = new \stdClass();
+            $folder->user_id = $this->user->id;
+            $folder->folder_name = 'Outbox';
+            $folder->id = -1;
         }
 
         if($folder_id == -1) {
