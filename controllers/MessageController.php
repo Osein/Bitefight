@@ -379,30 +379,26 @@ class MessageController extends GameController
 
     public function jsonReadMessage() {
         $this->view->disable();
-        $rmcheck = explode('|', $this->request->get('rmcheck'));
         $token = $this->request->get('_token');
         $tokenKey = $this->request->get('_tkey');
+        $msgnr = $this->request->get('msgnr', Filter::FILTER_INT, 0);
 
-        if(count($rmcheck) != 2 || !$this->security->checkToken($tokenKey, $token, false)) {
+        $msg = ORM::for_table('message')->where('receiver_id', $this->user->id)->find_one($msgnr);
+
+        if(!$this->security->checkToken($tokenKey, $token, false) || !$msg) {
             return $this->notFound();
         }
 
-        $user_id = $rmcheck[0];
-        $message_id = $rmcheck[1];
+        $msg->status = 2;
+        $msg->save();
 
-        if($user_id != $this->user->id) {
-            return $this->notFound();
-        }
-
-        ORM::raw_execute('UPDATE message SET status = 2 WHERE receiver_id = ? AND id = ?', [$user_id, $message_id]);
-
-        $newMessageCount = ORM::for_table('message')->where('receiver_id', $this->user->id)->where('status', 1)->count();
+        $newMessageCount = ORM::for_table('message')
+            ->where('receiver_id', $this->user->id)
+            ->where('status', 1)
+            ->count();
 
         $response = new Response();
-        $response->setJsonContent(array(
-            'msgicon' => $newMessageCount > 0 ? 2 : 1,
-            'msgmenu' => $newMessageCount > 0 ? 'newmessage' : ''
-        ));
+        $response->setJsonContent($newMessageCount > 0 ? ['msgicon' => 1, 'msgmenu' => 'newmessage'] : ['msgicon' => 2]);
         return $response;
     }
 

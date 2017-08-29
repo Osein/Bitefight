@@ -165,9 +165,7 @@
             }
             showMessage = true;
         }
-        if ($('#message_'+msgnr+'_overlay_marks_as_read').length > 0) {
-            ajaxMailRead(msgnr);
-        }
+        ajaxMailRead(msgnr);
         var doc_width = navigator.userAgent.indexOf('MSIE') >= 0 ? document.documentElement.clientWidth : window.innerWidth;
         $(dialogDivId).css("display", "block");
 
@@ -290,31 +288,27 @@
 
     function ajaxMailRead(msgnr, isSynchronous)
     {
-        isSynchronous = typeof(isSynchronous) != 'undefined' ? isSynchronous : false;
+        isSynchronous = typeof(isSynchronous) !== 'undefined' ? isSynchronous : false;
 
-        if ($('#message_'+msgnr+'_read_key').length > 0)
-        {
-            $.ajax({
-                type: 'GET',
-                url: '<?php echo getUrl('message/ajax/readmessage'); ?>',
-                dataType: 'json',
-                success: function(data)
+        $.ajax({
+            type: 'GET',
+            url: '<?php echo getUrl('message/ajax/readmessage'); ?>',
+            dataType: 'json',
+            success: function(data)
+            {
+                if (data.msgicon === 2)
                 {
-                    if (data.msgicon == 2)
-                    {
-                        $('#msg_status_'+msgnr).attr('src', '<?php echo getAssetLink('img/symbols/mail_status2.png'); ?>');
-                    }
-                    $('#msgmenu').attr('class', data.msgmenu);
-                },
-                data: {
-                    rmcheck: $('#message_'+msgnr+'_read_key').html(),
-                    _tkey: "<?php echo $this->security->getTokenKey() ?>",
-                    _token: "<?php echo $this->security->getToken() ?>"
-                },
-                async: !isSynchronous
-            });
-
-        }
+                    $('#msg_status_'+msgnr).attr('src', '<?php echo getAssetLink('img/symbols/mail_status2.png'); ?>');
+                }
+                $('#msgmenu').attr('class', data.msgmenu);
+            },
+            data: {
+                _tkey: "<?php echo $this->security->getTokenKey() ?>",
+                _token: "<?php echo $this->security->getToken() ?>",
+                msgnr: msgnr
+            },
+            async: !isSynchronous
+        });
     }
 </script>
 <div id="inbox">
@@ -438,15 +432,9 @@
                                                 <?php echo e($msg->message); ?>
                                             <?php endif; ?>
                                         </div>
-                                        <div id="message_<?php echo $msg->id; ?>_read_key"><?php echo $user->id; ?>|<?php echo $msg->id; ?></div>
-
                                         <?php if($msg->type == MESSAGE_TYPE_USER_MESSAGE): ?>
                                         <div id="message_<?php echo $msg->id; ?>_answer"><a href="#" onclick="showAnswerMessageSplash('<?php echo $msg->id; ?>')">( answer )</a></div>
                                         <div id="message_<?php echo $msg->id; ?>_answer_key"><?php echo $msg->sender_id; ?>|<?php echo $user->id; ?>|<?php echo $msg->id; ?></div>
-                                        <?php endif; ?>
-
-                                        <?php if($msg->type == MESSAGE_TYPE_USER_MESSAGE || $msg->type == MESSAGE_TYPE_CLAN_MESSAGE): ?>
-                                            <div id="message_<?php echo $msg->id; ?>_overlay_marks_as_read">true</div>
                                         <?php endif; ?>
 
                                         <?php if(isset($msg->previous_id)): ?><div id="message_<?php echo $msg->id; ?>_previous_id"><?php echo $msg->previous_id; ?></div><?php endif; ?>
