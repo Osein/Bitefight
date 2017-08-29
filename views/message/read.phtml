@@ -414,13 +414,13 @@
                                     <span id="message_<?php echo $msg->id; ?>_time"><?php echo date('d.m.Y H:i', strtotime($msg->sent_at)); ?></span>
                                 </td>
                                 <td class="tdn" width="20%" valign="top" style="padding:1px 5px;">
-                                    <span id="message_<?php echo $msg->id; ?>_sender"><?php echo e($msg->name); ?></span>
+                                    <span id="message_<?php echo $msg->id; ?>_sender"><?php echo e(getMessageSenderNameFromMessage($msg)); ?></span>
                                     <div id="message_<?php echo $msg->id; ?>_receiver_id" style="display:none;"><?php echo $msg->sender_id; ?></div>
                                 </td>
                                 <td class="tdn" valign="top" style="padding:1px 5px;">
                                 <span id="message_<?php echo $msg->id; ?>_subject" class="">
                                     <a href="#"
-                                       <?php if($msg->type == MESSAGE_TYPE_CLAN_MESSAGE || $msg->type == MESSAGE_TYPE_USER_MESSAGE): ?>
+                                       <?php if(true): ?>
                                        onclick="showMessageSplash('<?php echo $msg->id; ?>');"
                                        <?php else: ?>
                                        onclick="ajaxMailRead(<?php echo $msg->id; ?>, true); return true;"

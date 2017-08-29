@@ -115,6 +115,14 @@ class HuntController extends GameController
 
             if($userNewLevel > $userLastLevel) {
                 $this->user->battle_value += 4;
+
+                $levelUpMessage = ORM::for_table('message')->create();
+                $levelUpMessage->sender_id = 0;
+                $levelUpMessage->receiver_id = $this->user->id;
+                $levelUpMessage->folder_id = 0;
+                $levelUpMessage->subject = 'You have levelled up';
+                $levelUpMessage->message = 'Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$userNewLevel;
+                $levelUpMessage->save();
             }
 
             $this->user->gold += $rewardGold;

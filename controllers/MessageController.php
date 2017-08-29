@@ -396,10 +396,12 @@ class MessageController extends GameController
 
         ORM::raw_execute('UPDATE message SET status = 2 WHERE receiver_id = ? AND id = ?', [$user_id, $message_id]);
 
+        $newMessageCount = ORM::for_table('message')->where('receiver_id', $this->user->id)->where('status', 1)->count();
+
         $response = new Response();
         $response->setJsonContent(array(
-            'msgicon' => 2,
-            'msgmenu' => 'newmessage'
+            'msgicon' => $newMessageCount > 0 ? 2 : 1,
+            'msgmenu' => $newMessageCount > 0 ? 'newmessage' : ''
         ));
         return $response;
     }

@@ -13,6 +13,7 @@ const MESSAGE_TYPE_USER_MESSAGE = 1;
 const MESSAGE_TYPE_RACE_HUNT = 2;
 const MESSAGE_TYPE_CLAN_MESSAGE = 3;
 const MESSAGE_TYPE_GROTTO = 4;
+const MESSAGE_TYPE_SYSTEM = 5;
 
 function getClanStatusColor($last_activity) {
     $delta = time() - $last_activity;
@@ -23,6 +24,18 @@ function getClanStatusColor($last_activity) {
         return 'green';
     } else {
         return 'red';
+    }
+}
+
+function getMessageSenderNameFromMessage($msg) {
+    if($msg->sender_id < 1) {
+        switch($msg->sender_id) {
+            case 0:
+                return 'System';
+            break;
+        }
+    } else {
+        return $msg->name;
     }
 }
 
