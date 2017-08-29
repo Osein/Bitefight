@@ -32,7 +32,10 @@ function getMessageSenderNameFromMessage($msg) {
         switch($msg->sender_id) {
             case 0:
                 return 'System';
-            break;
+                break;
+            case -1:
+                return 'System';
+                break;
         }
     } else {
         return $msg->name;

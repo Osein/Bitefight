@@ -420,13 +420,14 @@
                                     <div id="message_<?php echo $msg->id; ?>_receiver_id" style="display:none;"><?php echo $msg->sender_id; ?></div>
                                 </td>
                                 <td class="tdn" valign="top" style="padding:1px 5px;">
-                                <span id="message_<?php echo $msg->id; ?>_subject" class="">
-                                    <a href="#"
-                                       <?php if(true): ?>
+                                <span id="message_<?php echo $msg->id; ?>_subject">
+                                    <a href="<?php echo !is_null($msg->report_id) ? getUrl('report/fightreport/'.$msg->report_id.'?to=msgfolder&folderid='.$folder->id) : '' ?>"
+                                       <?php if(is_null($msg->report_id)): ?>
                                        onclick="showMessageSplash('<?php echo $msg->id; ?>');"
                                        <?php else: ?>
                                        onclick="ajaxMailRead(<?php echo $msg->id; ?>, true); return true;"
                                        <?php endif; ?>
+                                            class="<?php if(!is_null($msg->report_id)) { echo $msg->report_won == 1 ? 'fight_won' : 'fight_lost'; } ?>"
                                     ><?php echo e($msg->subject); ?></a>
                                     <div id="message_<?php echo $msg->id; ?>_content" style="display:none;">
                                         <div id="message_<?php echo $msg->id; ?>_content_subject"><?php echo e($msg->subject); ?></div>

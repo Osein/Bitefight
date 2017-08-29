@@ -1283,6 +1283,27 @@ class HuntController extends GameController
         $dbReport->attack_time = time();
         $dbReport->save();
         $reportId = $dbReport->id();
+
+        $msgAttackerLink = 'You attacked '.e($defender->name).' deceitfully!';
+        $message = ORM::for_table('message')->create();
+        $message->sender_id = -1;
+        $message->receiver_id = $attacker->id;
+        $message->folder_id = 0;
+        $message->subject = $msgAttackerLink;
+        $message->message = $msgAttackerLink;
+        $message->report_id = $reportId;
+        $message->save();
+
+        $msgDefenderLink = e($attacker->name).' attacked you ignobly!';
+        $message = ORM::for_table('message')->create();
+        $message->sender_id = -1;
+        $message->receiver_id = $defender->id;
+        $message->folder_id = 0;
+        $message->subject = $msgDefenderLink;
+        $message->message = $msgDefenderLink;
+        $message->report_id = $reportId;
+        $message->save();
+
         return $this->response->redirect(getUrl('report/fightreport/'.$reportId.'?to=robbery'));
     }
 

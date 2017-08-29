@@ -1826,15 +1826,15 @@ div .msgline td{
     text-decoration: underline;
 }
 
-#message_overview .fight_won a,
-#message_overview .fight_won a:hover,
-#message_overview .fight_won a:link {
+#message_overview .fight_won,
+#message_overview .fight_won:hover,
+#message_overview .fight_won:link {
     color: #ffb608;
 }
 
-#message_overview .fight_lost a,
-#message_overview .fight_lost a:hover,
-#message_overview .fight_lost a:link {
+#message_overview .fight_lost,
+#message_overview .fight_lost:hover,
+#message_overview .fight_lost:link {
     color: red;
 }
 
