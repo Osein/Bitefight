@@ -1292,6 +1292,7 @@ class HuntController extends GameController
         $message->subject = $msgAttackerLink;
         $message->message = $msgAttackerLink;
         $message->report_id = $reportId;
+        $message->report_won = $report->attacker->total_damage > $report->defender->total_damage;
         $message->save();
 
         $msgDefenderLink = e($attacker->name).' attacked you ignobly!';
@@ -1302,6 +1303,7 @@ class HuntController extends GameController
         $message->subject = $msgDefenderLink;
         $message->message = $msgDefenderLink;
         $message->report_id = $reportId;
+        $message->report_won = $report->defender->total_damage > $report->attacker->total_damage;
         $message->save();
 
         return $this->response->redirect(getUrl('report/fightreport/'.$reportId.'?to=robbery'));
