@@ -38,14 +38,7 @@
 
     function showAnswerForm(msgnr)
     {
-        if (navigator.userAgent.indexOf('MSIE') >= 0)
-        {
-            var doc_width  = document.documentElement.clientWidth;
-        }
-        else
-        {
-            var doc_width  = window.innerWidth;
-        }
+        var doc_width = navigator.userAgent.indexOf('MSIE') >= 0 ? document.documentElement.clientWidth : window.innerWidth;
         $(dialogDivId).css("display", "block");
 
         var off = $(dialogDivId).offsetWidth;
@@ -104,7 +97,7 @@
             '&_tkey=<?php echo $this->security->getTokenKey() ?>',
             function(data)
             {
-                if (data.errorstatus == 0)
+                if (data.errorstatus === 0)
                 {
                     showMsgSendSuccess($('#msgnr').html(), data.error, data.msgicon, data.msgmenu);
                 }
@@ -117,12 +110,11 @@
 
     function showMsgSendSuccess(msgnr, message, msgicon, menuicon)
     {
-        $('#answer_error').css('display', 'block');
-        $('#answer_error').html('<p class="info">'+message+'</p>');
+        $('#answer_error').css('display', 'block').html('<p class="info">'+message+'</p>');
         $('#answer_form').css('display', 'none');
         $('#answer_form2').css('display', 'none');
         $('#answer_form3').css('display', 'block');
-        if (msgicon == 3)
+        if (msgicon === 3)
         {
             $('#msg_status_'+msgnr).attr('src', '<?php echo getAssetLink('img/symbols/mail_status3.png'); ?>');
         }
@@ -131,8 +123,7 @@
 
     function showMsgSendFail(error)
     {
-        $('#answer_error').css('display', 'block');
-        $('#answer_error').html('<p class="info">'+error+'</p>');
+        $('#answer_error').css('display', 'block').html('<p class="info">'+error+'</p>');
     }
 
     function CheckLen(Target)
@@ -177,14 +168,7 @@
         if ($('#message_'+msgnr+'_overlay_marks_as_read').length > 0) {
             ajaxMailRead(msgnr);
         }
-        if (navigator.userAgent.indexOf('MSIE') >= 0)
-        {
-            var doc_width  = document.documentElement.clientWidth;
-        }
-        else
-        {
-            var doc_width  = window.innerWidth;
-        }
+        var doc_width = navigator.userAgent.indexOf('MSIE') >= 0 ? document.documentElement.clientWidth : window.innerWidth;
         $(dialogDivId).css("display", "block");
 
         var off = $(dialogDivId).offsetWidth;
@@ -391,7 +375,13 @@
                         <select name="do" size="1">
                             <option value="del">delete</option>
                             <option value="read" selected="selected">mark as read</option>
-
+                            <?php if($folder->id != 0): ?>
+                            <option value="move-to-0">move to inbox</option>
+                            <?php endif; ?>
+                            <?php foreach($folders as $f): ?>
+                                <?php if($folder->id == $f->id) continue; ?>
+                                <option value="move-to-<?php echo $f->id; ?>">move to <?php echo e($f->folder_name); ?></option>
+                            <?php endforeach; ?>
                         </select>
                         <div class="btn-left left">
                             <div class="btn-right">
@@ -466,44 +456,33 @@
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-                        <?php if(ceil($msg_count / 15) > 0): ?>
-                            <tr>
-                                <td align="center" class="no-bg" colspan="4">
-                                    Page:
+                        <tr>
+                            <td align="center" class="no-bg" colspan="4">
+                                Page:
+                                <?php for($i = 1; $i <= ceil($msg_count / 15); $i++): ?>
+                                    <?php if($page == $i): echo $i; ?>
+                                    <?php else: ?>
+                                        <a href="<?php echo getUrl('message/read/?folder='.$folder->id.'&page='.$i); ?>"><?php echo $i; ?></a>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+                                <script>
+                                    function redirectToPage(option) {
+                                        var pageNumber = option.value;
+                                        window.location.href = "https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=0&page=" + pageNumber;
+                                    }
+                                </script>
+
+                                <select size="1" onchange="redirectToPage(this)">
                                     <?php for($i = 1; $i <= ceil($msg_count / 15); $i++): ?>
-                                        <?php if($page == $i): echo $i; ?>
-                                        <?php else: ?>
-                                            <a href="<?php echo getUrl('message/read/?folder='.$folder->id.'&page='.$i); ?>"><?php echo $i; ?></a>
-                                        <?php endif; ?>
+                                        <option value="<?php echo $i; ?>" <?php if($page == $i) echo 'selected=""'; ?>><?php echo $i; ?></option>
                                     <?php endfor; ?>
-                                    <script>
-                                        function redirectToPage(option) {
-                                            var pageNumber = option.value;
-                                            window.location.href = "https://s202-en.bitefight.gameforge.com:443/msg/read/?folder=0&page=" + pageNumber;
-                                        }
-                                    </script>
+                                </select>
 
-                                    <select size="1" onchange="redirectToPage(this)">
-                                        <?php for($i = 1; $i <= ceil($msg_count / 15); $i++): ?>
-                                            <option value="<?php echo $i; ?>" <?php if($page == $i) echo 'selected=""'; ?>><?php echo $i; ?></option>
-                                        <?php endfor; ?>
-                                    </select>
-
-                                </td>
-                            </tr>
-                        <?php endif; ?>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
-                <script type="text/javascript" language="javascript">
-                    function show_hide_menus(ele)    {
-                        if (document.getElementById(ele).style.display=='') {
-                            document.getElementById(ele).style.display='none';
-                        } else {
-                            document.getElementById(ele).style.display='';
-                        }
-                    }
-                </script>
             </form>
         </div>
     </div>

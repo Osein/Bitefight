@@ -135,6 +135,7 @@ class MessageController extends GameController
             }
         }
 
+        $this->view->folders = ORM::for_table('user_message_folder')->where('user_id', $this->user->id)->find_many();
         $this->view->folder = $folder;
         $this->view->msg_count = $messageCount;
         $this->view->messages = $messages;
@@ -173,6 +174,27 @@ class MessageController extends GameController
                     foreach ($messages as $msg) {
                         $msg->delete();
                     }
+                } else {
+                    $do_exploded = explode('move-to-', $do);
+
+                    if(!isset($do_exploded[1])) {
+                        return $this->notFound();
+                    }
+
+                    $folder_id = intval($do_exploded[1]);
+
+                    if($folder_id != 0) {
+                        $folder_check = ORM::for_table('user_message_folder')->find_one($folder_id);
+
+                        if(!$folder_check) {
+                            return $this->notFound();
+                        }
+                    }
+
+                    foreach ($messages as $msg) {
+                        $msg->folder_id = $folder_id;
+                        $msg->save();
+                    }
                 }
             }
         } elseif($select == 'all') {
@@ -180,6 +202,24 @@ class MessageController extends GameController
                 ORM::raw_execute('UPDATE message SET status = 2 WHERE receiver_id = ?', [$this->user->id]);
             } elseif($do == 'del') {
                 ORM::raw_execute('DELETE FROM message WHERE receiver_id = ?', [$this->user->id]);
+            } else {
+                $do_exploded = explode('move-to-', $do);
+
+                if(!isset($do_exploded[1])) {
+                    return $this->notFound();
+                }
+
+                $folder_id = intval($do_exploded[1]);
+
+                if($folder_id != 0) {
+                    $folder_check = ORM::for_table('user_message_folder')->find_one($folder_id);
+
+                    if(!$folder_check) {
+                        return $this->notFound();
+                    }
+                }
+
+                ORM::raw_execute('UPDATE message SET folder_id = ? WHERE folder_id = ?', [$folder_id, $folder]);
             }
         } elseif($select == 'unmasked') {
             $msgIds = array();
