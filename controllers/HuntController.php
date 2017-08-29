@@ -1313,6 +1313,14 @@ class HuntController extends GameController
     {
         $report = ORM::for_table('report')->find_one($id);
         $to = $this->request->get('to');
+        $msg_folder_id = $this->request->get('folderid');
+        $page = $this->request->get('page');
+
+        if($to == 'msgfolder') {
+            $backlink = getUrl('message/read?folder='.$msg_folder_id.($page ? '&page='.$page : ''));
+        } else {
+            $backlink = getUrl('hunt/index');
+        }
 
         if(!$report) {
             return $this->notFound();
@@ -1327,9 +1335,9 @@ class HuntController extends GameController
             'attacker' => $attacker,
             'defender' => $defender,
             'report' => $fightObj,
+            'reportId' => $report->id,
+            'backlink' => $backlink,
             'attack_date' => $report->attack_time,
-            'to' => $to,
-            'reportId' => $report->id
         ]);
 
         return $this->view->pick('hunt/report');
