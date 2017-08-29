@@ -398,7 +398,7 @@ class MessageController extends GameController
             ->count();
 
         $response = new Response();
-        $response->setJsonContent($newMessageCount > 0 ? ['msgicon' => 1, 'msgmenu' => 'newmessage'] : ['msgicon' => 2]);
+        $response->setJsonContent(['msgicon' => 2, 'msgmenu' => $newMessageCount > 0 ? 'newmessage' : '']);
         return $response;
     }
 
