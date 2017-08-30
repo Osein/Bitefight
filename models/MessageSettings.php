@@ -24,14 +24,14 @@ class MessageSettings
         //'GROTTO'             => 50,
         //'ADVENTURE'          => 51,
         //'MISSION'            => 80,
-        //'CLAN_FOUNDED'       => 100,
-        //'LEFT_CLAN'          => 101,
-        //'DISBANDED_CLAN'     => 102,
-        //'CLAN_DISBANDED'     => 103,
-        //'CLAN_MAIL'          => 20,
-        //'CLAN_APP_REJECTED'  => 105,
-        //'CLAN_APP_ACCEPTED'  => 106,
-        //'CLAN_MEMBER_LEFT'   => 110,
+        'CLAN_FOUNDED'       => 100,
+        'LEFT_CLAN'          => 101,
+        'DISBANDED_CLAN'     => 102,
+        'CLAN_DISBANDED'     => 103,
+        'CLAN_MAIL'          => 20,
+        'CLAN_APP_REJECTED'  => 105,
+        'CLAN_APP_ACCEPTED'  => 106,
+        'CLAN_MEMBER_LEFT'   => 110,
         //'REPORT_ANSWER'      => 240,
     ];
 
@@ -56,19 +56,22 @@ class MessageSettings
     const FOLDER_ID_INBOX = -1;
 
     /**
-     * @param $type
+     * @param int $type
+     * @param int $user_id
      * @return bool|ORM|\stdClass
      */
-    public static function getUserSetting($type)
+    public static function getUserSetting($type, $user_id = null)
     {
+        $user_id = is_null($user_id) ? Di::getDefault()->get('session')->get('user_id') : $user_id;
+
         $setting = ORM::for_table('user_message_settings')
-            ->where('user_id', Di::getDefault()->get('session')->get('user_id'))
+            ->where('user_id', $user_id)
             ->where('setting', self::getMessageSettingTypeFromSettingViewId($type))
             ->find_one();
 
         if(!$setting) {
             $setting = new \stdClass();
-            $setting->user_id = Di::getDefault()->get('session')->get('user_id');
+            $setting->user_id = $user_id;
             $setting->setting = strtolower($key);
             $setting->folder_id = 0;
             $setting->mark_read = 0;

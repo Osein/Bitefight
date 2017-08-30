@@ -477,7 +477,7 @@ class MessageController extends GameController
 
             ORM::raw_execute('UPDATE user_message_settings SET folder_id = 0 WHERE user_id = ? AND folder_id = ?',
                 [$this->user->id, $folder_id]);
-            
+
             return $this->response->redirect(getUrl('message/folders'));
         } elseif($action == 'rename') {
             $this->setFlashData('folder_rename_id', $this->request->get('folderid'));

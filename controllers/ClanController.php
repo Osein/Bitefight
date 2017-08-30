@@ -11,6 +11,7 @@ namespace Bitefight\Controllers;
 
 use Bitefight\Library\Translate;
 use Bitefight\Models\ClanRank;
+use Bitefight\Models\MessageSettings;
 use ORM;
 use PDO;
 use Phalcon\Filter;
@@ -201,6 +202,17 @@ class ClanController extends GameController
         $clan->race = $this->user->race;
         $clan->save();
 
+        $msgfolder = MessageSettings::getUserSetting(MessageSettings::CLAN_FOUNDED);
+
+        $msg = ORM::for_table('message')->create();
+        $msg->sender_id = 0;
+        $msg->receiver_id = $this->user->id;
+        $msg->folder_id = $msgfolder->id;
+        $msg->subject = 'Clan information';
+        $msg->message = 'Your clan has been founded: '.$name.' ['.$tag.']';
+        $msg->status = $msgfolder->mark_read == 1 ? 2 : 1;
+        $msg->save();
+
         $this->user->clan_id = $clan->id();
         $this->user->clan_rank = 1;
 
@@ -221,8 +233,70 @@ class ClanController extends GameController
             return $this->response->redirect(getUrl('clan/index'));
         }
 
+        $clan = ORM::for_table('clan')->find_one($this->user->clan_id);
+
         if ($this->user->clan_rank == 1) {
             ORM::raw_execute('DELETE FROM clan WHERE id = ?', [$this->user->clan_id]);
+
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::DISBANDED_CLAN);
+
+            $msg = ORM::for_table('message')->create();
+            $msg->sender_id = 0;
+            $msg->receiver_id = $this->user->id;
+            $msg->folder_id = $msgsetting->id;
+            $msg->subject = 'Clan information';
+            $msg->message = 'You have successfully disbanded the clan: '.$clan->name.' ['.$clan->tag.']';
+            $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+            $msg->save();
+
+            $userIds = ORM::for_table('user')->select('id')->where('clan_id', $clan->id)->find_many();
+            foreach ($userIds as $uid) {
+                if($uid == $this->user->id) {
+                    continue;
+                }
+
+                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_DISBANDED, $uid);
+
+                $msg = ORM::for_table('message')->create();
+                $msg->sender_id = 0;
+                $msg->receiver_id = $uid;
+                $msg->folder_id = $msgsetting->id;
+                $msg->subject = 'Clan information';
+                $msg->message = 'Your master disbanded the clan: '.$clan->name.' ['.$clan->tag.']';
+                $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                $msg->save();
+            }
+
+            ORM::raw_execute('UPDATE user SET clan_id = 0, clan_rank = 0 WHERE clan_id = ?', [$clan->id]);
+        } else {
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::LEFT_CLAN);
+
+            $msg = ORM::for_table('message')->create();
+            $msg->sender_id = 0;
+            $msg->receiver_id = $this->user->id;
+            $msg->folder_id = $msgsetting->id;
+            $msg->subject = 'Clan information';
+            $msg->message = 'You have left the following clan: '.$clan->name.' ['.$clan->tag.']';
+            $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+            $msg->save();
+
+            $userIds = ORM::for_table('user')->select('id')->where('clan_id', $clan->id)->find_many();
+            foreach ($userIds as $uid) {
+                if($uid == $this->user->id) {
+                    continue;
+                }
+
+                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_MEMBER_LEFT, $uid);
+
+                $msg = ORM::for_table('message')->create();
+                $msg->sender_id = 0;
+                $msg->receiver_id = $uid;
+                $msg->folder_id = $msgsetting->id;
+                $msg->subject = 'Clan information';
+                $msg->message = 'The following player has left your clan: '.$this->user->name;
+                $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                $msg->save();
+            }
         }
 
         $this->user->clan_id = 0;
@@ -473,6 +547,35 @@ class ClanController extends GameController
         if($kick_user) {
             $kick_user->clan_id = 0;
             $kick_user->save();
+
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::LEFT_CLAN, $kick_user->id);
+
+            $msg = ORM::for_table('message')->create();
+            $msg->sender_id = 0;
+            $msg->receiver_id = $kick_user->id;
+            $msg->folder_id = $msgsetting->id;
+            $msg->subject = 'Clan information';
+            $msg->message = 'You have left the following clan: '.$clan->name.' ['.$clan->tag.']';
+            $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+            $msg->save();
+
+            $userIds = ORM::for_table('user')->select('id')->where('clan_id', $clan->id)->find_many();
+            foreach ($userIds as $uid) {
+                if($uid == $this->user->id) {
+                    continue;
+                }
+
+                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_MEMBER_LEFT, $uid);
+
+                $msg = ORM::for_table('message')->create();
+                $msg->sender_id = 0;
+                $msg->receiver_id = $uid;
+                $msg->folder_id = $msgsetting->id;
+                $msg->subject = 'Clan information';
+                $msg->message = 'The following player has left your clan: '.$kick_user->name;
+                $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                $msg->save();
+            }
         }
 
         return $this->response->redirect(getUrl('clan/memberrights'));
@@ -653,14 +756,37 @@ class ClanController extends GameController
         $rejectText = $this->request->get('abltext');
         $accept = $this->request->get('ann');
 
+        $clan = ORM::for_table('clan')->find_one($this->user->clan_id);
+        $user = ORM::for_table('user')->find_one($application->user_id);
+
         if($accept) {
-            $user = ORM::for_table('user')->find_one($application->user_id);
             $user->clan_id = $this->user->clan_id;
             $user->clan_rank = 3;
             $user->save();
             $application->delete();
+
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_APP_ACCEPTED, $user->id);
+
+            $msg = ORM::for_table('message')->create();
+            $msg->sender_id = 0;
+            $msg->receiver_id = $user->id;
+            $msg->folder_id = $msgsetting->id;
+            $msg->subject = 'Clan application reply';
+            $msg->message = 'You are now a member of the clan '.$clan->name;
+            $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+            $msg->save();
         } elseif($reject) {
-            // send message to user
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_APP_ACCEPTED, $user->id);
+
+            $msg = ORM::for_table('message')->create();
+            $msg->sender_id = 0;
+            $msg->receiver_id = $user->id;
+            $msg->folder_id = $msgsetting->id;
+            $msg->subject = 'Clan application reply';
+            $msg->message = 'Your application to the clan '.$clan->name.' has been rejected';
+            $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+            $msg->save();
+
             $application->delete();
         }
 
