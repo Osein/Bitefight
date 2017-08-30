@@ -308,6 +308,16 @@ class MessageController extends GameController
             $responseData->error = 'Message can not have higher than 2000 characters';
         }
 
+        $spamCheck = ORM::for_table('message')
+            ->where('sender_id', $this->user->id)
+            ->where_gte('sent_at', time() - 300)
+            ->count();
+
+        if($spamCheck > 5) {
+            $responseData->errorstatus = 1;
+            $responseData->error = 'You can\'t send more than 5 messages in 5 minutes';
+        }
+
         if(!$responseData->errorstatus) {
             $message = ORM::for_table('message')->create();
             $message->sender_id = $this->user->id;
