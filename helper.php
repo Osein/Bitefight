@@ -36,6 +36,9 @@ function getMessageSenderNameFromMessage($msg) {
             case -1:
                 return 'System';
                 break;
+            case -2:
+                return 'Graveyard employee';
+                break;
         }
     } else {
         return $msg->name;

@@ -423,9 +423,9 @@
                                 <span id="message_<?php echo $msg->id; ?>_subject">
                                     <a href="<?php echo !is_null($msg->report_id) ? getUrl('report/fightreport/'.$msg->report_id.'?to=msgfolder&folderid='.$folder->id) : '' ?>"
                                        <?php if(is_null($msg->report_id)): ?>
-                                       onclick="showMessageSplash('<?php echo $msg->id; ?>');"
+                                       onclick="showMessageSplash('<?php echo $msg->id; ?>'); return false;"
                                        <?php else: ?>
-                                       onclick="ajaxMailRead(<?php echo $msg->id; ?>, true); return true;"
+                                       onclick="ajaxMailRead(<?php echo $msg->id; ?>, true);"
                                        <?php endif; ?>
                                             class="<?php if(!is_null($msg->report_id)) { echo $msg->report_won == 1 ? 'fight_won' : 'fight_lost'; } ?>"
                                     ><?php echo e($msg->subject); ?></a>
@@ -435,8 +435,8 @@
                                             <a class="copyright" href="/msg/complain/cmail?id=<?php /*echo $msg->id; */?>&amp;cc=2b55453">( report )</a>
                                         </div>-->
                                         <div id="message_<?php echo $msg->id; ?>_content_text">
-                                            <?php if($msg->type == MESSAGE_TYPE_RACE_HUNT || $msg->type == MESSAGE_TYPE_GROTTO): ?>
-                                                <a href="/report/fightreport/83753058" onclick="ajaxMailRead(117727712, true); return true;">Battle Report</a>
+                                            <?php if($msg->report_id > 0): ?>
+                                                <a href="<?php echo !is_null($msg->report_id) ? getUrl('report/fightreport/'.$msg->report_id.'?to=msgfolder&folderid='.$folder->id) : '' ?>" onclick="ajaxMailRead(<?php echo $msg->id; ?>, true);">Battle Report</a>
                                             <?php else: ?>
                                                 <?php echo e($msg->message); ?>
                                             <?php endif; ?>

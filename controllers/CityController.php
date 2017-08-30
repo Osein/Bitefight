@@ -139,19 +139,6 @@ class CityController extends GameController
             ->find_one();
         $time = time();
 
-        if ($activity && $activity->end_time >= $time) {
-            $this->view->delta = $activity->end_time - $time;
-            return;
-        } elseif ($activity) {
-            if ($activity->end_time > $activity->start_time) {
-                $rewardMultiplier = ($activity->end_time - $activity->start_time) / 900;
-                $goldReward = $rewardMultiplier * (getLevel($this->user->exp) * 50 + $this->getBonusGraveyardGold());
-                $activity->end_time = $activity->start_time;
-                $activity->save();
-                $this->user->gold += $goldReward;
-            }
-        }
-
         $level = getLevel($this->user->exp);
 
         if ($level < 10) {
@@ -172,6 +159,43 @@ class CityController extends GameController
             $this->view->work_rank = Translate::_('city_graveyard_graveyard_manager');
         } else {
             $this->view->work_rank = Translate::_('city_graveyard_graveyard_master');
+        }
+
+        if ($activity && $activity->end_time >= $time) {
+            $this->view->delta = $activity->end_time - $time;
+            return;
+        } elseif ($activity) {
+            if ($activity->end_time > $activity->start_time) {
+                $rewardMultiplier = ($activity->end_time - $activity->start_time) / 900;
+                $bonusGold = $this->getBonusGraveyardGold();
+                $goldReward = $rewardMultiplier * getLevel($this->user->exp) * 50;
+                $totalReward = $goldReward + $bonusGold;
+                $activity->end_time = $activity->start_time;
+                $activity->save();
+                $this->user->gold += $totalReward;
+                $oldLevel = getLevel($this->user->exp);
+                $expReward = pow($this->user->exp, 0.25);
+                $this->user->exp += $expReward;
+                $newLevel = getLevel($this->user->exp);
+
+                $graveyardMessage = ORM::for_table('message')->create();
+                $graveyardMessage->sender_id = 0;
+                $graveyardMessage->receiver_id = $this->user->id;
+                $graveyardMessage->folder_id = 0;
+                $graveyardMessage->subject = 'Work finished';
+                $graveyardMessage->message = 'After successful shift working as the '.$this->view->work_rank.' you get a salary of '.prettyNumber($totalReward).' <img src="'.getAssetLink('img/symbols/res2.gif').'" alt="Gold" align="absmiddle" border="0"> and '.$expReward.' experience points!';
+                $graveyardMessage->save();
+
+                if($newLevel > $oldLevel) {
+                    $levelUpMessage = ORM::for_table('message')->create();
+                    $levelUpMessage->sender_id = 0;
+                    $levelUpMessage->receiver_id = $this->user->id;
+                    $levelUpMessage->folder_id = 0;
+                    $levelUpMessage->subject = 'You have levelled up';
+                    $levelUpMessage->message = 'Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$newLevel;
+                    $levelUpMessage->save();
+                }
+            }
         }
 
         $this->view->bonus_gold = $this->getBonusGraveyardGold();
@@ -240,7 +264,7 @@ class CityController extends GameController
             return $this->notFound();
         }
 
-        $activity->end_time = $activity->start_time;
+        $activity->end_time = $activity->start_time - 1;
         $activity->save();
         return $this->response->redirect(getUrl('city/graveyard'));
     }
