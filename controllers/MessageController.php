@@ -99,6 +99,7 @@ class MessageController extends GameController
                 ->offset(($page - 1) * 15)
                 ->limit(15)
                 ->orderByDesc('sent_at')
+                ->orderByDesc('id')
                 ->find_many();
 
             $messageCount = ORM::for_table('message')
@@ -116,6 +117,7 @@ class MessageController extends GameController
                 ->left_outer_join('user', ['user.id', '=', 'message.sender_id'])
                 ->offset(($page - 1) * 15)
                 ->orderByDesc('sent_at')
+                ->orderByDesc('id')
                 ->limit(15)
                 ->find_many();
 
