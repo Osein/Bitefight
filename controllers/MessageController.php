@@ -470,8 +470,14 @@ class MessageController extends GameController
             $this->setFlashData('folder_create_error', 'Folder created');
             return $this->response->redirect(getUrl('message/folders'));
         } elseif($action == 'delete') {
+            $folder_id = $this->request->get('folderid');
+
             ORM::raw_execute('DELETE FROM user_message_folder WHERE user_id = ? AND id = ?',
                 [$this->user->id, $this->request->get('folderid')]);
+
+            ORM::raw_execute('UPDATE user_message_settings SET folder_id = 0 WHERE user_id = ? AND folder_id = ?',
+                [$this->user->id, $folder_id]);
+            
             return $this->response->redirect(getUrl('message/folders'));
         } elseif($action == 'rename') {
             $this->setFlashData('folder_rename_id', $this->request->get('folderid'));
