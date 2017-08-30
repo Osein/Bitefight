@@ -21,11 +21,11 @@
                                 <td class="tdn"><?php echo \Bitefight\Models\MessageSettings::getMessageSettingStringByType($setting->setting); ?></td>
                                 <td class="tdn">
                                     <select class="input" name="x2" size="1">
-                                        <option value="-1" <?php if($setting->folder_id == -1) echo 'selected=""'; ?>><?php echo \Bitefight\Library\Translate::_('message_folder_select', ['folder' => \Bitefight\Library\Translate::_('inbox')]); ?></option>
+                                        <option value="0" <?php if($setting->folder_id == 0) echo 'selected=""'; ?>><?php echo \Bitefight\Library\Translate::_('message_folder_select', ['folder' => \Bitefight\Library\Translate::_('inbox')]); ?></option>
                                         <?php foreach($folders as $folder): ?>
                                             <option value="<?php echo $folder->id; ?>"  <?php if($setting->folder_id == $folder->id) echo 'selected=""'; ?>><?php echo \Bitefight\Library\Translate::_('message_folder_select', ['folder' => e($folder->folder_name)]); ?></option>
                                         <?php endforeach; ?>
-                                        <option value="0" <?php if($setting->folder_id == 0) echo 'selected=""'; ?>><?php echo \Bitefight\Library\Translate::_('message_delete_immediately'); ?></option>
+                                        <option value="-2" <?php if($setting->folder_id == -2) echo 'selected=""'; ?>><?php echo \Bitefight\Library\Translate::_('message_delete_immediately'); ?></option>
                                     </select>
                                 </td>
                                 <td><input type="checkbox" name="m2" <?php if($setting->mark_read) echo 'checked=""'; ?>> <?php echo \Bitefight\Library\Translate::_('messages_mark_read'); ?></td>

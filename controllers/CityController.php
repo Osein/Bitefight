@@ -133,98 +133,21 @@ class CityController extends GameController
     public function getGraveyard()
     {
         $this->view->pick('city/graveyard');
+        $this->view->work_rank = $this->getGraveyardRank();
+
         $activity = ORM::for_table('user_activity')
             ->where('user_id', $this->user->id)
             ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
             ->find_one();
+
         $time = time();
-
-        $level = getLevel($this->user->exp);
-
-        if ($level < 10) {
-            $this->view->work_rank = Translate::_('city_graveyard_gravedigger');
-        } elseif ($level < 25) {
-            $this->view->work_rank = Translate::_('city_graveyard_graveyard_gardener');
-        } elseif ($level < 55) {
-            $this->view->work_rank = Translate::_('city_graveyard_corpse_predator');
-        } elseif ($level < 105) {
-            $this->view->work_rank = Translate::_('city_graveyard_graveyard_guard');
-        } elseif ($level < 195) {
-            $this->view->work_rank = Translate::_('city_graveyard_employee_manager');
-        } elseif ($level < 335) {
-            $this->view->work_rank = Translate::_('city_graveyard_tombstone_designer');
-        } elseif ($level < 511) {
-            $this->view->work_rank = Translate::_('city_graveyard_crypt_designer');
-        } elseif ($level < 1024) {
-            $this->view->work_rank = Translate::_('city_graveyard_graveyard_manager');
-        } else {
-            $this->view->work_rank = Translate::_('city_graveyard_graveyard_master');
-        }
 
         if ($activity && $activity->end_time >= $time) {
             $this->view->delta = $activity->end_time - $time;
             return;
-        } elseif ($activity) {
-            if ($activity->end_time > $activity->start_time) {
-                $rewardMultiplier = ($activity->end_time - $activity->start_time) / 900;
-                $bonusGold = $this->getBonusGraveyardGold();
-                $goldReward = $rewardMultiplier * getLevel($this->user->exp) * 50;
-                $totalReward = $goldReward + $bonusGold;
-                $activity->end_time = $activity->start_time;
-                $activity->save();
-                $this->user->gold += $totalReward;
-                $oldLevel = getLevel($this->user->exp);
-                $expReward = pow($this->user->exp, 0.25);
-                $this->user->exp += $expReward;
-                $newLevel = getLevel($this->user->exp);
-
-                $graveyardMessage = ORM::for_table('message')->create();
-                $graveyardMessage->sender_id = 0;
-                $graveyardMessage->receiver_id = $this->user->id;
-                $graveyardMessage->folder_id = 0;
-                $graveyardMessage->subject = 'Work finished';
-                $graveyardMessage->message = 'After successful shift working as the '.$this->view->work_rank.' you get a salary of '.prettyNumber($totalReward).' <img src="'.getAssetLink('img/symbols/res2.gif').'" alt="Gold" align="absmiddle" border="0"> and '.$expReward.' experience points!';
-                $graveyardMessage->save();
-
-                if($newLevel > $oldLevel) {
-                    $levelUpMessage = ORM::for_table('message')->create();
-                    $levelUpMessage->sender_id = 0;
-                    $levelUpMessage->receiver_id = $this->user->id;
-                    $levelUpMessage->folder_id = 0;
-                    $levelUpMessage->subject = 'You have levelled up';
-                    $levelUpMessage->message = 'Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$newLevel;
-                    $levelUpMessage->save();
-                }
-            }
         }
 
         $this->view->bonus_gold = $this->getBonusGraveyardGold();
-    }
-
-    public function getBonusGraveyardGold()
-    {
-        $userTalentStr = ORM::for_table('user_talent')
-            ->left_outer_join('talent', ['user_talent.talent_id', '=', 'talent.id'])
-            ->selectExpr('SUM(talent.str)', 'totalTalentStr')
-            ->where('user_talent.user_id', $this->user->id)
-            ->find_one();
-
-        $userTotalStr = $this->user->str + $userTalentStr->totalTalentStr;
-
-        $bonusWithStr = $userTotalStr * 0.5;
-        $level = getLevel($this->user->exp);
-
-        if ($level > 19) {
-            $bonusWithStr = $userTotalStr * 2;
-        } elseif ($level > 14) {
-            $bonusWithStr = $userTotalStr * 1.5;
-        } elseif ($level > 4) {
-            $bonusWithStr = $userTotalStr * 1;
-        }
-
-        $bonusWithLevel = ($level * (0.1035 * $level));
-
-        return ceil($bonusWithLevel + $bonusWithStr);
     }
 
     public function postGraveyard()

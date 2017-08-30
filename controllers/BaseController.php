@@ -9,6 +9,8 @@
 namespace Bitefight\Controllers;
 
 use Bitefight\Config;
+use Bitefight\Library\Translate;
+use Bitefight\Models\MessageSettings;
 use ORM;
 use Phalcon\Filter;
 use Phalcon\Mvc\Controller;
@@ -38,11 +40,6 @@ class BaseController extends Controller
             $this->user = ORM::for_table('user')->find_one($this->session->get('user_id'));
             $this->view->user = $this->user;
 
-            $this->view->user_new_message_count = ORM::for_table('message')
-                ->where('receiver_id', $this->user->id)
-                ->where('status', 1)
-                ->count();
-
             $this->view->clan_application_count = ORM::for_table('clan_application')
                 ->where('clan_id', $this->user->clan_id)
                 ->count();
@@ -50,6 +47,13 @@ class BaseController extends Controller
             $lastUpdate = $this->user->last_activity;
             $timeNow = time();
             $timeDiff = $timeNow - $lastUpdate;
+            $userLevel = getLevel($this->user->exp);
+
+            $graveyardActivity = ORM::for_table('user_activity')
+                ->where('user_id', $this->user->id)
+                ->where('activity_type', ACTIVITY_TYPE_GRAVEYARD)
+                ->where_lte('end_time', $timeNow)
+                ->find_one();
 
             if ($timeDiff > 0) {
                 if ($this->user->ap_now < $this->user->ap_max) {
@@ -66,6 +70,38 @@ class BaseController extends Controller
 
                 $this->user->last_activity = $timeNow;
             }
+
+            if($graveyardActivity) {
+                $rewardMultiplier = ($graveyardActivity->end_time - $graveyardActivity->start_time) / 900;
+                $bonusGold = $this->getBonusGraveyardGold();
+                $goldReward = $rewardMultiplier * $userLevel * 50;
+                $totalReward = $goldReward + $bonusGold;
+                $graveyardActivity->end_time = $timeNow - 1;
+                $graveyardActivity->save();
+                $expReward = ceil(pow($this->user->exp, 0.25));
+
+                $graveyardMessageFolderSetting = MessageSettings::getUserSetting(MessageSettings::WORK);
+
+                $graveyardMessage = ORM::for_table('message')->create();
+                $graveyardMessage->sender_id = 0;
+                $graveyardMessage->receiver_id = $this->user->id;
+                $graveyardMessage->folder_id = $graveyardMessageFolderSetting->folder_id;
+                $graveyardMessage->subject = 'Work finished';
+                $graveyardMessage->message = 'After successful shift working as the '.$this->view->work_rank.' you get a salary of '.prettyNumber($totalReward).' <img src="'.getAssetLink('img/symbols/res2.gif').'" alt="Gold" align="absmiddle" border="0"> and '.$expReward.' experience points!';
+                $graveyardMessage->status = $graveyardMessageFolderSetting->mark_read == 1 ? 2 : 1;
+                $graveyardMessage->save();
+
+                $this->checkUserLevelUpForExp($this->user->exp, $expReward);
+                $this->user->exp += $expReward;
+                $this->user->gold += $totalReward;
+
+                $graveyardActivity->delete();
+            }
+
+            $this->view->user_new_message_count = ORM::for_table('message')
+                ->where('receiver_id', $this->user->id)
+                ->where('status', 1)
+                ->count();
         }
 
         $this->oldFlashData = $this->session->get('bf.flash', array());
@@ -595,5 +631,70 @@ class BaseController extends Controller
 
         $this->view->menu_active = 'clan_memberlist_ext';
         $this->view->pick('clan/memberlist_ext');
+    }
+
+    public function getBonusGraveyardGold()
+    {
+        $userTalentStr = ORM::for_table('user_talent')
+            ->left_outer_join('talent', ['user_talent.talent_id', '=', 'talent.id'])
+            ->selectExpr('SUM(talent.str)', 'totalTalentStr')
+            ->where('user_talent.user_id', $this->user->id)
+            ->find_one();
+
+        $userTotalStr = $this->user->str + $userTalentStr->totalTalentStr;
+
+        $bonusWithStr = $userTotalStr * 0.5;
+        $level = getLevel($this->user->exp);
+
+        if ($level > 19) {
+            $bonusWithStr = $userTotalStr * 2;
+        } elseif ($level > 14) {
+            $bonusWithStr = $userTotalStr * 1.5;
+        } elseif ($level > 4) {
+            $bonusWithStr = $userTotalStr * 1;
+        }
+
+        $bonusWithLevel = ($level * (0.1035 * $level));
+
+        return ceil($bonusWithLevel + $bonusWithStr);
+    }
+
+    public function getGraveyardRank() {
+        $level = getLevel($this->user->exp);
+
+        if ($level < 10) {
+            return Translate::_('city_graveyard_gravedigger');
+        } elseif ($level < 25) {
+            return Translate::_('city_graveyard_graveyard_gardener');
+        } elseif ($level < 55) {
+            return Translate::_('city_graveyard_corpse_predator');
+        } elseif ($level < 105) {
+            return Translate::_('city_graveyard_graveyard_guard');
+        } elseif ($level < 195) {
+            return Translate::_('city_graveyard_employee_manager');
+        } elseif ($level < 335) {
+            return Translate::_('city_graveyard_tombstone_designer');
+        } elseif ($level < 511) {
+            return Translate::_('city_graveyard_crypt_designer');
+        } elseif ($level < 1024) {
+            return Translate::_('city_graveyard_graveyard_manager');
+        } else {
+            return Translate::_('city_graveyard_graveyard_master');
+        }
+    }
+
+    public function checkUserLevelUpForExp($currentExp, $reward) {
+        $oldLevel = getLevel($currentExp);
+        $newLevel = getLevel($currentExp + $reward);
+
+        if($newLevel > $oldLevel) {
+            $levelUpMessage = ORM::for_table('message')->create();
+            $levelUpMessage->sender_id = 0;
+            $levelUpMessage->receiver_id = $this->user->id;
+            $levelUpMessage->folder_id = 0;
+            $levelUpMessage->subject = 'You have levelled up';
+            $levelUpMessage->message = 'Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$newLevel;
+            $levelUpMessage->save();
+        }
     }
 }

@@ -16,6 +16,25 @@ use ReflectionClass;
 class MessageSettings
 {
 
+    private static $settings = [
+        'WORK'               => 2,
+        //'ATTACKED'           => 4,
+        //'GOT_ATTACKED'       => 3,
+        //'CLAN_WARS'          => 9,
+        //'GROTTO'             => 50,
+        //'ADVENTURE'          => 51,
+        //'MISSION'            => 80,
+        //'CLAN_FOUNDED'       => 100,
+        //'LEFT_CLAN'          => 101,
+        //'DISBANDED_CLAN'     => 102,
+        //'CLAN_DISBANDED'     => 103,
+        //'CLAN_MAIL'          => 20,
+        //'CLAN_APP_REJECTED'  => 105,
+        //'CLAN_APP_ACCEPTED'  => 106,
+        //'CLAN_MEMBER_LEFT'   => 110,
+        //'REPORT_ANSWER'      => 240,
+    ];
+
     const WORK = 2;
     const ATTACKED = 4;
     const GOT_ATTACKED = 3;
@@ -37,12 +56,26 @@ class MessageSettings
     const FOLDER_ID_INBOX = -1;
 
     /**
-     * @return array
+     * @param $type
+     * @return bool|ORM|\stdClass
      */
-    private static function get_class_constants()
+    public static function getUserSetting($type)
     {
-        $reflect = new ReflectionClass(get_class(new MessageSettings()));
-        return $reflect->getConstants();
+        $setting = ORM::for_table('user_message_settings')
+            ->where('user_id', Di::getDefault()->get('session')->get('user_id'))
+            ->where('setting', self::getMessageSettingTypeFromSettingViewId($type))
+            ->find_one();
+
+        if(!$setting) {
+            $setting = new \stdClass();
+            $setting->user_id = Di::getDefault()->get('session')->get('user_id');
+            $setting->setting = strtolower($key);
+            $setting->folder_id = 0;
+            $setting->mark_read = 0;
+            return $setting;
+        } else {
+            return $setting;
+        }
     }
 
     /**
@@ -50,15 +83,7 @@ class MessageSettings
      */
     private static function get_setting_constants()
     {
-        $constants = self::get_class_constants();
-
-        foreach ($constants as $key => $val) {
-            if($val < 1 || $val > 240) {
-                unset($constants[$key]);
-            }
-        }
-
-        return $constants;
+        return self::$settings;
     }
 
     /**
@@ -109,7 +134,7 @@ class MessageSettings
                 $settingIds[$val] = new \stdClass();
                 $settingIds[$val]->user_id = Di::getDefault()->get('session')->get('user_id');
                 $settingIds[$val]->setting = strtolower($key);
-                $settingIds[$val]->folder_id = -1;
+                $settingIds[$val]->folder_id = 0;
                 $settingIds[$val]->mark_read = 0;
             }
         }
