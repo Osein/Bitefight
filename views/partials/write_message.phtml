@@ -31,7 +31,7 @@
         content += '<table id="write_form" width="100%" border="0" cellpadding="0" cellspacing="0">';
         content += '<tr>';
         content += '<td><b>Sender</b>:</td>';
-        content += '<td><?php echo isset($senderName) ? e($senderName) : ''; ?></td>';
+        content += '<td><?php echo $user->name; ?></td>';
         content += '</tr>';
         content += '<tr>';
         content += '<td><b>Recipient</b>:</td>';
