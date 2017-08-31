@@ -13,7 +13,7 @@
                     <img src="<?php echo getAssetLink('img/symbols/race'.$puser->race.'.gif') ?>" border="0" width="168">
                 <?php endif; ?>
                 <?php if($puser->clan_id > 0): ?>
-                <a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><img src="<?php echo getAssetLink('img/clan/'.$puser->logo_bg.'-'.$puser->logo_sym.'.png'); ?>" border="0"></a>
+                <a href="<?php echo getUrl('clan/'.$puser->clan_id); ?>"><img src="<?php echo getAssetLink('img/clan/'.$puser->logo_bg.'-'.$puser->logo_sym.'.png'); ?>" border="0"></a>
                 <?php endif; ?>
             </div>
         </div>
