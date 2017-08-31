@@ -64,6 +64,7 @@
                                         </div>
                                     </div>
                                 </div>-->
+                                <?php if(isset($user)): ?>
                                 <br class="clearfloat">
                                 <div class="center">
                                     <?php $this->partial('partials/write_message', ['receiverName' => $puser->name]) ?>
@@ -73,6 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
