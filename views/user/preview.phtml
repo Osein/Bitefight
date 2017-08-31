@@ -41,7 +41,7 @@
                                 <p><?php echo \Bitefight\Library\Translate::_('entire_booty_count', ['count' => prettyNumber($puser->s_booty)]); ?></p>
                                 <?php if($puser->clan_id > 0): ?>
                                 <h3><?php echo \Bitefight\Library\Translate::_('clan'); ?>:</h3>
-                                <p><a href="<?php echo getUrl('clan/view/'.$puser->clan_id); ?>"><?php echo e($puser->clan_name); ?> [<?php echo e($puser->clan_tag); ?>]</a></p>
+                                <p><a href="<?php echo getUrl('clan/'.$puser->clan_id); ?>"><?php echo e($puser->clan_name); ?> [<?php echo e($puser->clan_tag); ?>]</a></p>
                                 <h3><?php echo \Bitefight\Library\Translate::_('rank'); ?>:</h3>
                                 <p><?php echo e($puser->rank_name); ?><?php if($puser->war_minister) { echo ' ('.\Bitefight\Library\Translate::_('war_minister').')'; } ?>
                                 </p>
