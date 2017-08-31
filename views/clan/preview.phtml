@@ -45,7 +45,7 @@
                         <td>Capital</td>
                         <td><?php echo prettyNumber($clan->gold_count); ?> <img src="https://s202-en.bitefight.gameforge.com:443/img/symbols/res2.gif" title="Gold" align="absmiddle" border="0"></td>
                     </tr>
-                    <?php if($user->clan_id < 1 && $clan->member_count < $clan->max_members): ?>
+                    <?php if(isset($user) && $user->clan_id < 1 && $clan->member_count < $clan->max_members): ?>
                         <tr>
                             <td class="no-bg" colspan="2">
                                 <div class="btn-left left"><div class="btn-right">
