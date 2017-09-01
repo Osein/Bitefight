@@ -139,9 +139,16 @@ class BaseController extends Controller
             return false;
         }
 
-        if(!$this->session->get('user_id', false) && !in_array($dispatcher->getControllerName(), ['Home', 'Base'])) {
-            $this->response->redirect(getUrl(''));
-            return false;
+        if($this->session->get('user_id', false)) {
+            if($dispatcher->getControllerName() == 'Home' && !in_array($dispatcher->getActionName(), ['getRaceSelect', 'postRaceSelect'])) {
+                $this->response->redirect(getUrl('user/profile'));
+                return false;
+            }
+        } else {
+            if (!in_array($dispatcher->getControllerName(), ['Home', 'Base'])) {
+                $this->response->redirect(getUrl(''));
+                return false;
+            }
         }
 
         return true;
@@ -734,17 +741,17 @@ class BaseController extends Controller
             }
 
             $userIds = ORM::for_table('user')->select('id')->where('clan_id', $clan->id)->find_many();
-            foreach ($userIds as $uid) {
-                if($uid == $this->user->id) {
+            foreach ($userIds as $user) {
+                if($user->id == $this->user->id) {
                     continue;
                 }
 
-                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_DISBANDED, $uid);
+                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_DISBANDED, $user->id);
 
                 if($msgsetting->folder_id != -2) {
                     $msg = ORM::for_table('message')->create();
                     $msg->sender_id = MESSAGE_SENDER_SYSTEM;
-                    $msg->receiver_id = $uid;
+                    $msg->receiver_id = $user->id;
                     $msg->folder_id = $msgsetting->folder_id;
                     $msg->subject = 'Clan information';
                     $msg->message = 'Your master disbanded the clan: '.$clan->name.' ['.$clan->tag.']';

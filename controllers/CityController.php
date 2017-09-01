@@ -377,7 +377,9 @@ class CityController extends GameController
         $this->user->hellstone -= 50;
         $this->user->race = 0;
 
-        $this->leaveClan();
+        if($this->user->clan_id > 0) {
+            $this->leaveClan();
+        }
 
         return $this->response->redirect(getUrl('city/voodoo'));
     }

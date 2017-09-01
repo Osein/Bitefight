@@ -64,9 +64,11 @@ class MessageSettings
     {
         $user_id = is_null($user_id) ? Di::getDefault()->get('session')->get('user_id') : $user_id;
 
+        $key = self::getMessageSettingTypeFromSettingViewId($type);
+
         $setting = ORM::for_table('user_message_settings')
             ->where('user_id', $user_id)
-            ->where('setting', self::getMessageSettingTypeFromSettingViewId($type))
+            ->where('setting', $key)
             ->find_one();
 
         if(!$setting) {
