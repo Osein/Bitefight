@@ -41,10 +41,11 @@
         <script>
             var bf = {};
             bf.page = {};
+            <?php if(isset($user)): ?>
             bf.user = {
-                id: <?php echo $user->id; ?>,
-
-            }
+                id: <?php echo $user->id; ?>
+            };
+            <?php endif; ?>
         </script>
 
         <?php echo headJs('jquery-3.2.1.js'); ?>
