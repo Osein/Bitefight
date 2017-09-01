@@ -27,7 +27,7 @@
 <?php else: ?>
     <ul id="menuHead">
         <li <?php if ($menu_active == 'news') echo 'class="active"'; ?>><a href="<?php echo getUrl('news'); ?>" target="_top" class=""><?php echo \Bitefight\Library\Translate::_('menu_news'); ?></a></li>
-        <li <?php if ($menu_active == 'profile') echo 'class="active"'; ?>><a href="<?php echo getUrl('profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_overview'); ?></a></li>
+        <li <?php if ($menu_active == 'profile') echo 'class="active"'; ?>><a href="<?php echo getUrl('user/profile'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_overview'); ?></a></li>
         <li <?php if ($menu_active == 'message') echo 'class="active"'; ?>><a href="<?php echo getUrl('message'); ?>" target="_top" <?php if($user_new_message_count) echo 'class="newmessage"'; ?> id="msgmenu"><?php echo \Bitefight\Library\Translate::_('menu_message'); ?></a></li>
         <li <?php if ($menu_active == 'hideout') echo 'class="active"'; ?>><a href="<?php echo getUrl('hideout'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_hideout'); ?></a></li>
         <li <?php if ($menu_active == 'city') echo 'class="active"'; ?>><a href="<?php echo getUrl('city/index'); ?>" target="_top"><?php echo \Bitefight\Library\Translate::_('menu_city'); ?></a></li>
