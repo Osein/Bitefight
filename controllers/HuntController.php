@@ -329,18 +329,17 @@ class HuntController extends GameController
 
     public function postRaceAttack($id)
     {
-        $attacker = ORM::for_table('user')->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])->select('user.*')->select('clan.tag')->where('user.id', $this->user->id)->find_one();
-        $defender = ORM::for_table('user')->left_outer_join('clan', ['clan.id', '=', 'user.clan_id'])->select('user.*')->select('clan.tag')->where('user.id', $id)->find_one();
+        $defender = ORM::for_table('user')->find_one($id);
 
         if(!$defender || $this->user->ap_now < 1) {
             $this->notFound();
         }
 
-        $attacker->ap_now--;
+        $this->user->ap_now--;
 
         $attacker_items = ORM::for_table('user_item')
             ->left_outer_join('item', ['item.id', '=', 'user_item.item_id'])
-            ->where_raw('user_item.user_id = ? AND (user_item.equipped = 1 OR user_item.expire > ?)', [$attacker->id, time()])
+            ->where_raw('user_item.user_id = ? AND (user_item.equipped = 1 OR user_item.expire > ?)', [$this->user->id, time()])
             ->find_many();
 
         $defender_items = ORM::for_table('user_item')
@@ -353,11 +352,11 @@ class HuntController extends GameController
         $report->defender = new StdClass();
         $report->rounds = array();
 
-        $report->attacker->id = $attacker->id;
+        $report->attacker->id = $this->user->id;
         $report->defender->id = $defender->id;
-        $report->attacker->level = getLevel($attacker->exp);
+        $report->attacker->level = getLevel($this->user->exp);
         $report->defender->level = getLevel($defender->exp);
-        $report->attacker->battle_value = $attacker->battle_value;
+        $report->attacker->battle_value = $this->user->battle_value;
         $report->defender->battle_value = $defender->battle_value;
         $report->defender->wall = $defender->h_wall;
         $report->defender->land = $defender->h_land;
@@ -367,15 +366,15 @@ class HuntController extends GameController
         $report->attacker->items = array();
         $report->defender->items = array();
 
-        $report->attacker->str = $attacker->str;
+        $report->attacker->str = $this->user->str;
         $report->defender->str = $defender->str;
-        $report->attacker->def = $attacker->def;
+        $report->attacker->def = $this->user->def;
         $report->defender->def = $defender->def;
-        $report->attacker->dex = $attacker->dex;
+        $report->attacker->dex = $this->user->dex;
         $report->defender->dex = $defender->dex;
-        $report->attacker->end = $attacker->end;
+        $report->attacker->end = $this->user->end;
         $report->defender->end = $defender->end;
-        $report->attacker->cha = $attacker->cha;
+        $report->attacker->cha = $this->user->cha;
         $report->defender->cha = $defender->cha;
 
         $report->attacker->str_extra = 0;
@@ -599,7 +598,7 @@ class HuntController extends GameController
             }
         }
 
-        $report->attacker->hp_start = $attacker->hp_now;
+        $report->attacker->hp_start = $this->user->hp_now;
         $report->defender->hp_start = $defender->hp_now;
 
         $attacker_total_attack = 5;
@@ -618,7 +617,7 @@ class HuntController extends GameController
 
         $attacker_talents = ORM::for_table('user_talent')
             ->left_outer_join('talent', ['talent.id', '=', 'user_talent.talent_id'])
-            ->where('user_talent.user_id', $attacker->id)
+            ->where('user_talent.user_id', $this->user->id)
             ->find_many();
 
         $attacker_talents_active = [];
@@ -1198,7 +1197,7 @@ class HuntController extends GameController
             $report->attacker->total_damage += $attacker_round_total_damage;
             $report->defender->total_damage += $defender_round_total_damage;
             $defender->hp_now = max(0, $defender->hp_now - $attacker_round_total_damage);
-            $attacker->hp_now = max(0, $attacker->hp_now - $defender_round_total_damage);
+            $this->user->hp_now = max(0, $this->user->hp_now - $defender_round_total_damage);
 
             $report->rounds[$r] = array_merge($round_object, array(
                 'attacker_tooltip_damage' => $attacker_damage_tooltip,
@@ -1222,7 +1221,7 @@ class HuntController extends GameController
             ));
         }
 
-        $report->attacker->hp_end = $attacker->hp_now;
+        $report->attacker->hp_end = $this->user->hp_now;
         $report->defender->hp_end = $defender->hp_now;
 
         $report->attacker->max_stat = max($report->attacker->str + $report->attacker->str_extra, $report->attacker->def + $report->attacker->def_extra, $report->attacker->dex + $report->attacker->dex_extra, $report->attacker->end + $report->attacker->end_extra, $report->attacker->cha + $report->attacker->cha_extra);
@@ -1231,36 +1230,95 @@ class HuntController extends GameController
         $report_time = time();
         $report->earned_gold = 0;
         $report->earned_bonus_gold = 0;
+        $defender_level = getLevel($defender->exp);
+        $attacker_level = getLevel($this->user->exp);
+        $defender_total_stat = $defender_total_str + $defender_total_def + $defender_total_dex + $defender_total_end + $defender_total_cha;
+        $attacker_total_stat = $attacker_total_str + $attacker_total_def + $attacker_total_dex + $attacker_total_end + $attacker_total_cha;
+        $report->exp_reward = rand(2,7);
 
         if($report->attacker->total_damage > $report->defender->total_damage) {
             $defender_gold = $defender->gold;
 
             if($defender->h_treasure > $report_time) {
-                $defender_gold -= getLevel($defender->exp) * 4800;
+                $defender_gold -= $defender_level * 4800;
             }
 
             if($defender->h_royal > $report_time) {
-                $defender_gold -= getLevel($defender->exp) * 19200;
+                $defender_gold -= $defender_level * 19200;
             }
 
             if($defender_gold > 0) {
                 $report->earned_gold = $defender_gold / 10;
             }
-        } else {
-            $attacker_gold = $attacker->gold;
 
-            if($attacker->h_treasure > $report_time) {
-                $attacker_gold -= getLevel($attacker->exp) * 4800;
+            $extra_gold = 0;
+
+            if($defender_level > $attacker_level) {
+                $extra_gold += ($defender_level - $attacker_level) * 50;
             }
 
-            if($attacker->h_royal > $report_time) {
-                $attacker_gold -= getLevel($attacker->exp) * 19200;
+            if($defender_total_stat > $attacker_total_stat) {
+                $extra_gold += ceil(($defender_total_stat - $attacker_total_stat) * 5 * 1.21);
+            }
+
+            $report->earned_bonus_gold = $extra_gold;
+
+            $this->user->gold += $report->earned_gold + $extra_gold;
+            $defender->gold -= $report->earned_gold;
+            $this->user->s_booty += $report->earned_gold + $extra_gold;
+            $this->user->exp += $report->exp_reward;
+            $this->user->s_victory++;
+            $defender->s_defeat++;
+            $this->user->s_gold_captured += $report->earned_gold + $extra_gold;
+            $defender->s_gold_lost += $report->earned_gold;
+            $this->user->s_damage_caused += $report->attacker->total_damage;
+            $this->user->s_hp_lost += $report->defender->total_damage;
+            $defender->s_damage_caused += $report->defender->total_damage;
+            $defender->s_hp_lost += $report->attacker->total_damage;
+        } else {
+            $attacker_gold = $this->user->gold;
+
+            if($this->user->h_treasure > $report_time) {
+                $attacker_gold -= $attacker_level * 4800;
+            }
+
+            if($this->user->h_royal > $report_time) {
+                $attacker_gold -= $attacker_level * 19200;
             }
 
             if($attacker_gold > 0) {
-                $report->earned_gold = $attacker_gold / 10;
+                $report->earned_gold = ceil($attacker_gold / 10);
             }
+
+            $extra_gold = 0;
+
+            if($attacker_level > $defender_level) {
+                $extra_gold += ($attacker_level - $defender_level) * 50;
+            }
+
+            if($defender_total_stat > $attacker_total_stat) {
+                $extra_gold += ceil(($attacker_total_stat - $defender_total_stat) * 5 * 1.21);
+            }
+
+            $report->earned_bonus_gold = $extra_gold;
+
+            $defender->gold += $report->earned_gold + $extra_gold;
+            $this->user->gold -= $report->earned_gold;
+            $defender->s_booty += $report->earned_gold + $extra_gold;
+            $defender->exp += $report->exp_reward;
+            $defender->s_victory++;
+            $this->user->s_defeat++;
+            $defender->s_gold_captured += $report->earned_gold + $extra_gold;
+            $this->user->s_gold_lost += $report->earned_gold;
+            $defender->s_damage_caused += $report->defender->total_damage;
+            $defender->s_hp_lost += $report->attacker->total_damage;
+            $this->user->s_damage_caused += $report->attacker->total_damage;
+            $this->user->s_hp_lost += $report->defender->total_damage;
         }
+
+        $this->user->s_fight++;
+        $defender->s_fight++;
+        $defender->save();
 
         $dbReport = ORM::for_table('report')->create();
         $dbReport->attacker_id = $report->attacker->id;
@@ -1273,7 +1331,7 @@ class HuntController extends GameController
         $msgAttackerLink = 'You attacked '.e($defender->name).' deceitfully!';
         $message = ORM::for_table('message')->create();
         $message->sender_id = MESSAGE_SENDER_SYSTEM;
-        $message->receiver_id = $attacker->id;
+        $message->receiver_id = $this->user->id;
         $message->folder_id = 0;
         $message->subject = $msgAttackerLink;
         $message->message = $msgAttackerLink;
@@ -1281,7 +1339,7 @@ class HuntController extends GameController
         $message->report_won = $report->attacker->total_damage > $report->defender->total_damage;
         $message->save();
 
-        $msgDefenderLink = e($attacker->name).' attacked you ignobly!';
+        $msgDefenderLink = e($this->user->name).' attacked you ignobly!';
         $message = ORM::for_table('message')->create();
         $message->sender_id = MESSAGE_SENDER_SYSTEM;
         $message->receiver_id = $defender->id;
