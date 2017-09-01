@@ -976,9 +976,9 @@ class ClanController extends GameController
         }
 
         $pdo = ORM::get_db();
-        $sql = 'SELECT user.name, user.id, user_message_settings.folder_id, user_message_settings.mark_read FROM user LEFT JOIN user_message_settings ON user.id = user_message_settings.user_id AND user_message_settings.setting = "'.MessageSettings::getMessageSettingTypeFromSettingViewId(MessageSettings::CLAN_MAIL).'" WHERE user.clan_id = ?';
+        $sql = 'SELECT user.name, user.id, user_message_settings.folder_id, user_message_settings.mark_read FROM user LEFT JOIN user_message_settings ON user.id = user_message_settings.user_id AND user_message_settings.setting = "'.MessageSettings::getMessageSettingTypeFromSettingViewId(MessageSettings::CLAN_MAIL).'" LEFT JOIN user_message_block umb ON umb.user_id = user.id AND umb.blocked_id = ? WHERE user.clan_id = ? AND umb.blocked_id IS NULL';
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$this->user->clan_id]);
+        $stmt->execute([$this->user->id, $this->user->clan_id]);
         $users = $stmt->fetchAll(PDO::FETCH_OBJ);
 
         foreach ($users as $user) {

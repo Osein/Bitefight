@@ -268,11 +268,10 @@ class MessageController extends GameController
             $name = $this->request->get('name', Filter::FILTER_STRING, '');
 
             if(!empty($name)) {
-                $users = ORM::for_table('user')
-                    ->select('name')
-                    ->where_like('name', '%'.$name.'%')
-                    ->limit(10)
-                    ->find_many();
+                $pdo = ORM::get_db();
+                $stmt = $pdo->prepare('SELECT user.name FROM user LEFT JOIN user_message_block umb ON user.id = umb.user_id AND umb.blocked_id = ? WHERE umb.user_id IS null AND user.name LIKE ?');
+                $stmt->execute([$this->user->id, '%'.$name.'%']);
+                $users = $stmt->fetchAll(PDO::FETCH_OBJ);
 
                 foreach ($users as $user) {
                     $list[] = $user->name;
@@ -316,6 +315,16 @@ class MessageController extends GameController
         if($spamCheck > 5) {
             $responseData->errorstatus = 1;
             $responseData->error = 'You can\'t send more than 5 messages in 5 minutes';
+        }
+
+        $blockCheck = ORM::for_table('user_message_block')
+            ->where('blocked_id', $this->user->id)
+            ->where('user_id', $receiver->id)
+            ->count();
+
+        if($blockCheck) {
+            $responseData->errorstatus = 1;
+            $responseData->error = 'You can\'t send message to a person that blocked you';
         }
 
         if(!$responseData->errorstatus) {
