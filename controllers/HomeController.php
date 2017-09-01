@@ -239,4 +239,25 @@ class HomeController extends BaseController
 
         return $this->response->redirect(getUrl('user/lostpw'));
     }
+
+    public function getRaceSelect()
+    {
+        $this->view->pick('home/raceselect');
+    }
+
+    public function postRaceSelect($id)
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('city/voodoo'));
+        }
+
+        if($this->user->race == 0) {
+            $this->user->race = $id;
+        }
+
+        return $this->response->redirect(getUrl('user/profile'));
+    }
 }

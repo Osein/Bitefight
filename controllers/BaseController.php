@@ -40,6 +40,23 @@ class BaseController extends Controller
             $this->user = ORM::for_table('user')->find_one($this->session->get('user_id'));
             $this->view->user = $this->user;
 
+            if($this->user->race == 0) {
+                $dispatcher = $this->dispatcher;
+
+                if($dispatcher->getControllerName() != 'Home' && ($dispatcher->getActionName() != 'getRaceSelect' || $dispatcher->getActionName() != 'postRaceSelect')) {
+                    $dispatcher->forward([
+                        'controller' => 'Home',
+                        'action'     => 'getRaceSelect',
+                    ]);
+
+                    return false;
+                }
+            }
+
+            if($this->user->premium <= time() && $this->user->ap_max > 126) {
+
+            }
+
             $this->view->clan_application_count = ORM::for_table('clan_application')
                 ->where('clan_id', $this->user->clan_id)
                 ->count();
@@ -122,16 +139,9 @@ class BaseController extends Controller
             return false;
         }
 
-        if($this->session->get('user_id', false)) {
-            if($dispatcher->getControllerName() == 'Home') {
-                $this->response->redirect(getUrl('user/profile'));
-                return false;
-            }
-        } else {
-            if(!in_array($dispatcher->getControllerName(), ['Home', 'Base'])) {
-                $this->response->redirect(getUrl(''));
-                return false;
-            }
+        if(!$this->session->get('user_id', false) && !in_array($dispatcher->getControllerName(), ['Home', 'Base'])) {
+            $this->response->redirect(getUrl(''));
+            return false;
         }
 
         return true;
@@ -701,5 +711,85 @@ class BaseController extends Controller
 
             $this->user->battle_value += 4;
         }
+    }
+
+    public function leaveClan()
+    {
+        $clan = ORM::for_table('clan')->find_one($this->user->clan_id);
+
+        if ($this->user->clan_rank == 1) {
+            ORM::raw_execute('DELETE FROM clan WHERE id = ?', [$this->user->clan_id]);
+
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::DISBANDED_CLAN);
+
+            if($msgsetting->folder_id != -2) {
+                $msg = ORM::for_table('message')->create();
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
+                $msg->receiver_id = $this->user->id;
+                $msg->folder_id = $msgsetting->folder_id;
+                $msg->subject = 'Clan information';
+                $msg->message = 'You have successfully disbanded the clan: '.$clan->name.' ['.$clan->tag.']';
+                $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                $msg->save();
+            }
+
+            $userIds = ORM::for_table('user')->select('id')->where('clan_id', $clan->id)->find_many();
+            foreach ($userIds as $uid) {
+                if($uid == $this->user->id) {
+                    continue;
+                }
+
+                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_DISBANDED, $uid);
+
+                if($msgsetting->folder_id != -2) {
+                    $msg = ORM::for_table('message')->create();
+                    $msg->sender_id = MESSAGE_SENDER_SYSTEM;
+                    $msg->receiver_id = $uid;
+                    $msg->folder_id = $msgsetting->folder_id;
+                    $msg->subject = 'Clan information';
+                    $msg->message = 'Your master disbanded the clan: '.$clan->name.' ['.$clan->tag.']';
+                    $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                    $msg->save();
+                }
+            }
+
+            ORM::raw_execute('UPDATE user SET clan_id = 0, clan_rank = 0 WHERE clan_id = ?', [$clan->id]);
+        } else {
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::LEFT_CLAN);
+
+            if($msgsetting->folder_id != -2) {
+                $msg = ORM::for_table('message')->create();
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
+                $msg->receiver_id = $this->user->id;
+                $msg->folder_id = $msgsetting->folder_id;
+                $msg->subject = 'Clan information';
+                $msg->message = 'You have left the following clan: '.$clan->name.' ['.$clan->tag.']';
+                $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                $msg->save();
+            }
+
+            $userIds = ORM::for_table('user')->select('id')->where('clan_id', $clan->id)->find_many();
+            foreach ($userIds as $uid) {
+                if($uid == $this->user->id) {
+                    continue;
+                }
+
+                $msgsetting = MessageSettings::getUserSetting(MessageSettings::CLAN_MEMBER_LEFT, $uid);
+
+                if($msgsetting->folder_id != -2) {
+                    $msg = ORM::for_table('message')->create();
+                    $msg->sender_id = MESSAGE_SENDER_SYSTEM;
+                    $msg->receiver_id = $uid;
+                    $msg->folder_id = $msgsetting->folder_id;
+                    $msg->subject = 'Clan information';
+                    $msg->message = 'The following player has left your clan: '.$this->user->name;
+                    $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                    $msg->save();
+                }
+            }
+        }
+
+        $this->user->clan_id = 0;
+        $this->user->clan_rank = 0;
     }
 }

@@ -1,0 +1,245 @@
+<div id="voodoo">
+    <!-- box HEADER START -->
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <!-- box HEADER END -->
+    <!-- box CONTENT START -->
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <!-- CONTENT START -->
+            <h2><img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">Voodoo Shop</h2>
+            <div class="buildingDesc clearfix">
+                <img class="npc-logo" src="<?php echo getAssetLink('img/city/npc/0_6.jpg'); ?>" align="left">
+
+                <h3>You feel a magical energy streaming through you...</h3>
+
+                <p>Welcome to the Voodoo Shop, a really wondrous place. With a short look into the shop you can guess what kind of mysterious items might be hidden here. Suddenly a goblin appears behind the dusty bar and bows to you: "What can I do for you, Sir?"</p>
+
+                <p class="gold">Your possessions:  <?php echo prettyNumber($user->gold); ?>            <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
+                    + <?php echo prettyNumber($user->hellstone); ?>            <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></p>
+            </div>
+            <!--
+            <script type="text/javascript">
+                var showPayment = false;
+
+                function hidePaymentSplash()
+                {
+                    showPayment = false;
+                    if (navigator.userAgent.indexOf('MSIE 6.0') >= 0) {
+                    } else {
+                        hideBreakDiv();
+                    }
+                    var dialogDivId = 'paymentScreen';
+                    document.getElementById(dialogDivId).style.display = 'none';
+                    document.getElementById(dialogDivId).style.zIndex = -1;
+                    document.getElementById('iframe').src = '';
+                }
+
+                function showPaymentSplash(url)
+                {
+                    if (showPayment) {
+                        hidePaymentSplash();
+                        return;
+                    } else {
+                        if (navigator.userAgent.indexOf('MSIE 6.0') >= 0) {
+                        } else {
+                            showBreakDiv();
+                        }
+                        showPayment = true;
+                    }
+
+                    var dialogDivId = 'paymentScreen';
+
+                    if (navigator.userAgent.indexOf('MSIE') >= 0) {
+                        var width  = document.documentElement.clientWidth;
+                    } else {
+                        var width  = window.innerWidth;
+                    }
+                    document.getElementById(dialogDivId).style.display = 'block';
+
+                    var off = document.getElementById(dialogDivId).offsetWidth;
+                    var left = Math.floor((width / 2) - (off / 2));
+                    var top = 30;
+                    document.getElementById(dialogDivId).style.left = left+'px';
+                    document.getElementById(dialogDivId).style.top = top+'px';
+                    document.getElementById(dialogDivId).style.left = '-130px';
+                    document.getElementById(dialogDivId).style.top = '0px';
+                    document.getElementById(dialogDivId).style.zIndex = 501;
+                    document.getElementById('iframe').src = url;
+                }
+
+                function showBreakDiv()
+                {
+                    var div=document.createElement('div');
+                    div.id = 'breakDiv';
+                    div.className = 'break_div';
+                    div.onmousedown = function() {hidePaymentSplash();};
+                    div.style.zIndex = 500;
+                    div.style.overflow = 'hidden';
+                    if (navigator.userAgent.indexOf('MSIE 6.0') >= 0) {
+                        document.body.style.width='100%';
+                        document.body.style.height='100%';
+                        div.style.width=document.body.offsetWidth+'px';
+                        div.style.height=document.body.offsetHeight+'px';
+                    } else {
+                        div.style.position='fixed';
+                        div.style.width='100%';
+                        div.style.height='100%';
+                    }
+                    document.body.appendChild(div);
+                }
+
+                function hideBreakDiv()
+                {
+                    if (document.getElementById('breakDiv'))
+                        document.body.removeChild(document.getElementById('breakDiv'));
+                }
+            </script>
+            <div id="paymentScreen" class="payment_screen">
+                <iframe id="iframe" src="" width="820" height="650" frameborder="0" class="payment_frame"></iframe>
+                <div class="popup_buttons">
+                    <div class="btn-left center">
+                        <div class="btn-right">
+                            <input type="submit" class="btn" value="Close" onclick="javascript:window.location='https://s202-en.bitefight.gameforge.com:443/city/voodoo';">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2><img alt="" src="/img/symbols/race1small.gif">Hellstones </h2>
+            <div class="table-wrap">
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr>
+                        <td class="no-bg" valign="center" width="150"><img src="/img/voodoo/ts.jpg" alt=""></td>
+                        <td class="no-bg" valign="top">
+                            <h3>Hellstones</h3>
+
+                            <p>These mystic crystals were first found in the mines of Muldagor. They possess such an enormous amount energy, that their use offers entirely new possibilities of creating the most powerful items and tools ever known.</p>
+                        </td>
+                        <td class="no-bg" valign="center" align="center" width="250">
+                            <div class="btn-left right">
+                                <div class="btn-right">
+                                    <a href="#" class="btn" onclick="showPaymentSplash('https://purchase.gamepay.de/xml/purchase.en/jumpin?game_id=bitefight&amp;user_id=77625&amp;server=202&amp;username=Xyir&amp;email=4everscream%40gmail.com&amp;lang=en&amp;product_id=bitefight-c-ts&amp;display=selectpm&amp;checksum=5877899e4d52276569fc919ad406a93b');">buy now</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>-->
+            <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">Become a Shadow-Lord now</h2>
+            <div class="table-wrap">
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr>
+                        <td class="no-bg" valign="center"><img src="<?php echo getAssetLink('img/voodoo/shadowlord.jpg'); ?>" alt=""></td>
+                        <td class="no-bg" valign="top">
+                            <h3>How do I benefit in becoming a Shadow-Lord?</h3>
+                            <p>
+                                You get nothing for now LOLLLLL
+                                <!--- No advertisements (no banners, popups etc.)<br>-->
+                                <!--- Per activation, you receive a whole day`s pay in Gold<br>-->
+                                <!--- Doubled action point regeneration rate<br>-->
+                                <!--- Maximum number of action points +50%<br>-->
+                                <!--- Hunt statistics<br>-->
+                                <!--- Advanced opponent search<br>-->
+                                <!--- Individual character pictures<br>-->
+                                <!--- And an additional 100% healing potion<br>-->
+                                <!--- 5 additional folders for your messaging system<br>-->
+                            </p>
+                        </td>
+                        <td class="no-bg" valign="top" align="center">
+                            <h3 style="padding:0 10px 15px; text-align:right;"><span style="color:orangered">14 days<br> for only <br>15 hellstones</span></h3>
+                            <div class="btn-left right">
+                                <div class="btn-right">
+                                    <a class="btn" <?php if($user->hellstone > 13): ?>href="<?php echo getUrl('city/voodoo/shadowlord?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>"<?php endif; ?> target="_top">buy now</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <?php if($user->premium > time()): ?>
+                    <tr>
+                        <td class="no-bg" colspan="3" align="center">
+                            <p class="info">You will be a Shadow-Lord until    : <?php echo date('D, d.m.Y - H:i:s', $user->premium); ?></p>
+                        </td>
+                    </tr>
+                    <?php endif; ?>
+                    </tbody></table>    </div>
+            <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>">Premium items</h2>
+            <div class="table-wrap">
+                <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                    <tbody><tr id="premItem_1">
+                        <td class="no-bg" valign="center" width="150">
+                            <img src="<?php echo getAssetLink('img/voodoo/premium_item1.jpg'); ?>" alt=""></td>
+                        <td class="no-bg" valign="top">
+                            <h3>Metamorphosis stone</h3>
+                            <p>You can change your race with the metamorphosis stone.<br>(You will automatically leave your clan; if you have founded a clan, it will be dissolved)</p>
+                            <p class="gold">sale price: 50&nbsp;<img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"></p>
+                        </td>
+                        <td class="no-bg" valign="center" align="center" width="250">
+                            <div id="confirmscreen_1" style="display:none;">
+                                <table class="noBackground">
+                                    <tbody><tr>
+                                        <td colspan="2">
+                                            <span style="color:#FFCC33;">Are you sure you want to use the item now?</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td width="50%">
+                                            <div class="btn-left right">
+                                                <div class="btn-right">
+                                                    <a class="btn" <?php if($user->hellstone >= 50): ?>href="<?php echo getUrl('city/voodoo/metamorphosis?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>"<?php else: ?>onclick="notConfirm(1)"<?php endif; ?> target="_top">Yes</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td width="50%">
+                                            <div class="btn-left right">
+                                                <div class="btn-right">
+                                                    <button class="btn" onclick="notConfirm(1)">No</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            </div>
+                            <div id="usescreen_1">
+                                <div class="btn-left right">
+                                    <div class="btn-right">
+                                        <button class="btn" onclick="confirmUserPremium(1)">Buy and use this item</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody></table>
+            </div>
+            <!--h2><img alt="" src="/img/symbols/race1small.gif">Hideout of Xyir</h2>
+    <div class="table-wrap">
+        <table class="upgrade" align="center" cellpadding="2" cellspacing="2" border="0">
+                </table>
+    </div-->
+            <script type="text/javascript">
+                function confirmUserPremium(nr)
+                {
+                    $('#usescreen_'+nr).css('display', 'none');
+                    $('#confirmscreen_'+nr).css('display', 'block');
+                }
+
+                function notConfirm(nr)
+                {
+                    $('#usescreen_'+nr).css('display', '');
+                    $('#confirmscreen_'+nr).css('display', 'none');
+                }
+            </script>
+            <!-- CONTENT END -->
+        </div>
+    </div>
+    <!-- box CONTENT END -->
+    <!-- box FOOTER START -->
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+    <!-- box CONTENT END -->
+</div>

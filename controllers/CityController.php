@@ -336,4 +336,50 @@ class CityController extends GameController
         return $this->response->redirect($redirect_link);
     }
 
+    public function getVoodoo()
+    {
+        $this->view->menu_active = 'voodoo';
+        $this->view->pick('city/voodoo');
+    }
+
+    public function postVoodooShadowlord()
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('city/voodoo'));
+        }
+
+        if($this->user->hellstone < 15) {
+            return $this->notFound();
+        }
+
+        $this->user->hellstone -= 15;
+        $this->user->premium = time() + 1209600;
+
+        return $this->response->redirect(getUrl('city/voodoo'));
+    }
+
+    public function postVoodooMetamorphosis()
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('city/voodoo'));
+        }
+
+        if($this->user->hellstone < 50) {
+            return $this->notFound();
+        }
+
+        $this->user->hellstone -= 50;
+        $this->user->race = 0;
+
+        $this->leaveClan();
+
+        return $this->response->redirect(getUrl('city/voodoo'));
+    }
+
 }

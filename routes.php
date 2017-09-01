@@ -44,6 +44,7 @@ $user->addGet('/profile/logo', ['action' => 'getProfileLogo']);
 $user->addPost('/profile/logo', ['action' => 'postProfileLogo']);
 $user->addGet('/settings', ['action' => 'getSettings']);
 $user->addPost('/settings', ['action' => 'postSettings']);
+$user->addGet('/raceselect/{id:[1-2]}', ['controller' => 'Home', 'action' => 'postRaceSelect']);
 $router->mount($user);
 
 $router->addGet('/hideout', ['controller' => 'User', 'action' => 'getHideout']);
@@ -79,6 +80,9 @@ $city->addPost('/graveyard/cancel', ['action' => 'postGraveyardCancel']);
 $city->addGet('/shop', ['action' => 'getShop']);
 $city->addPost('/shop/item/buy/{id:[0-9]+}', ['action' => 'postShopItemBuy']);
 $city->addPost('/shop/item/sell/{id:[0-9]+}', ['action' => 'postShopItemSell']);
+$city->addGet('/voodoo', ['action' => 'getVoodoo']);
+$city->addGet('/voodoo/shadowlord', ['action' => 'postVoodooShadowlord']);
+$city->addGet('/voodoo/metamorphosis', ['action' => 'postVoodooMetamorphosis']);
 $router->mount($city);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);
