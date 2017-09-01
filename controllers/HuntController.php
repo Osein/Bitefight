@@ -1272,7 +1272,7 @@ class HuntController extends GameController
 
         $msgAttackerLink = 'You attacked '.e($defender->name).' deceitfully!';
         $message = ORM::for_table('message')->create();
-        $message->sender_id = -1;
+        $message->sender_id = MESSAGE_SENDER_SYSTEM;
         $message->receiver_id = $attacker->id;
         $message->folder_id = 0;
         $message->subject = $msgAttackerLink;
@@ -1283,7 +1283,7 @@ class HuntController extends GameController
 
         $msgDefenderLink = e($attacker->name).' attacked you ignobly!';
         $message = ORM::for_table('message')->create();
-        $message->sender_id = -1;
+        $message->sender_id = MESSAGE_SENDER_SYSTEM;
         $message->receiver_id = $defender->id;
         $message->folder_id = 0;
         $message->subject = $msgDefenderLink;

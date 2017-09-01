@@ -206,7 +206,7 @@ class ClanController extends GameController
 
         if($msgfolder->folder_id != -2) {
             $msg = ORM::for_table('message')->create();
-            $msg->sender_id = 0;
+            $msg->sender_id = MESSAGE_SENDER_SYSTEM;
             $msg->receiver_id = $this->user->id;
             $msg->folder_id = $msgfolder->folder_id;
             $msg->subject = 'Clan information';
@@ -244,7 +244,7 @@ class ClanController extends GameController
 
             if($msgsetting->folder_id != -2) {
                 $msg = ORM::for_table('message')->create();
-                $msg->sender_id = 0;
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                 $msg->receiver_id = $this->user->id;
                 $msg->folder_id = $msgsetting->folder_id;
                 $msg->subject = 'Clan information';
@@ -263,7 +263,7 @@ class ClanController extends GameController
 
                 if($msgsetting->folder_id != -2) {
                     $msg = ORM::for_table('message')->create();
-                    $msg->sender_id = 0;
+                    $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                     $msg->receiver_id = $uid;
                     $msg->folder_id = $msgsetting->folder_id;
                     $msg->subject = 'Clan information';
@@ -279,7 +279,7 @@ class ClanController extends GameController
 
             if($msgsetting->folder_id != -2) {
                 $msg = ORM::for_table('message')->create();
-                $msg->sender_id = 0;
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                 $msg->receiver_id = $this->user->id;
                 $msg->folder_id = $msgsetting->folder_id;
                 $msg->subject = 'Clan information';
@@ -298,7 +298,7 @@ class ClanController extends GameController
 
                 if($msgsetting->folder_id != -2) {
                     $msg = ORM::for_table('message')->create();
-                    $msg->sender_id = 0;
+                    $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                     $msg->receiver_id = $uid;
                     $msg->folder_id = $msgsetting->folder_id;
                     $msg->subject = 'Clan information';
@@ -562,7 +562,7 @@ class ClanController extends GameController
 
             if ($msgsetting->folder_id != -2) {
                 $msg = ORM::for_table('message')->create();
-                $msg->sender_id = 0;
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                 $msg->receiver_id = $kick_user->id;
                 $msg->folder_id = $msgsetting->folder_id;
                 $msg->subject = 'Clan information';
@@ -581,7 +581,7 @@ class ClanController extends GameController
 
                 if($msgsetting->folder_id != -2) {
                     $msg = ORM::for_table('message')->create();
-                    $msg->sender_id = 0;
+                    $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                     $msg->receiver_id = $uid;
                     $msg->folder_id = $msgsetting->folder_id;
                     $msg->subject = 'Clan information';
@@ -783,7 +783,7 @@ class ClanController extends GameController
 
             if($msgsetting->folder_id != -2) {
                 $msg = ORM::for_table('message')->create();
-                $msg->sender_id = 0;
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                 $msg->receiver_id = $user->id;
                 $msg->folder_id = $msgsetting->folder_id;
                 $msg->subject = 'Clan application reply';
@@ -796,7 +796,7 @@ class ClanController extends GameController
 
             if($msgsetting->folder_id != -2) {
                 $msg = ORM::for_table('message')->create();
-                $msg->sender_id = 0;
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
                 $msg->receiver_id = $user->id;
                 $msg->folder_id = $msgsetting->folder_id;
                 $msg->subject = 'Clan application reply';

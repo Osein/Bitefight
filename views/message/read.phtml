@@ -435,13 +435,15 @@
                                             <a class="copyright" href="/msg/complain/cmail?id=<?php /*echo $msg->id; */?>&amp;cc=2b55453">( report )</a>
                                         </div>-->
                                         <div id="message_<?php echo $msg->id; ?>_content_text">
-                                            <?php if($msg->report_id > 0): ?>
+                                            <?php if(!is_null($msg->report_id)): ?>
                                                 <a href="<?php echo !is_null($msg->report_id) ? getUrl('report/fightreport/'.$msg->report_id.'?to=msgfolder&folderid='.$folder->id) : '' ?>" onclick="ajaxMailRead(<?php echo $msg->id; ?>, true);">Battle Report</a>
+                                            <?php elseif(!is_null($msg->gy_reward)): ?>
+                                                After successful shift working as the you get a salary of <?php echo prettyNumber($msg->gy_reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"> and <?php echo prettyNumber($msg->gy_exp); ?> experience points!
                                             <?php else: ?>
                                                 <?php echo e($msg->message); ?>
                                             <?php endif; ?>
                                         </div>
-                                        <?php if($msg->type == MESSAGE_TYPE_USER_MESSAGE): ?>
+                                        <?php if($msg->sender_id > 0 && !empty($msg->name)): ?>
                                         <div id="message_<?php echo $msg->id; ?>_answer"><a href="#" onclick="showAnswerMessageSplash('<?php echo $msg->id; ?>')">( answer )</a></div>
                                         <div id="message_<?php echo $msg->id; ?>_answer_key"><?php echo $msg->sender_id; ?>|<?php echo $user->id; ?>|<?php echo $msg->id; ?></div>
                                         <?php endif; ?>

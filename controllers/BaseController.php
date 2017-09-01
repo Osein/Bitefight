@@ -84,7 +84,7 @@ class BaseController extends Controller
 
                 if($graveyardMessageFolderSetting->folder_id != -2) {
                     $graveyardMessage = ORM::for_table('message')->create();
-                    $graveyardMessage->sender_id = 0;
+                    $graveyardMessage->sender_id = MESSAGE_SENDER_GRAVEYARD;
                     $graveyardMessage->receiver_id = $this->user->id;
                     $graveyardMessage->folder_id = $graveyardMessageFolderSetting->folder_id;
                     $graveyardMessage->subject = 'Work finished';
@@ -692,7 +692,7 @@ class BaseController extends Controller
 
         if($newLevel > $oldLevel) {
             $levelUpMessage = ORM::for_table('message')->create();
-            $levelUpMessage->sender_id = 0;
+            $levelUpMessage->sender_id = MESSAGE_SENDER_SYSTEM;
             $levelUpMessage->receiver_id = $this->user->id;
             $levelUpMessage->folder_id = 0;
             $levelUpMessage->subject = 'You have levelled up';

@@ -15,6 +15,9 @@ const MESSAGE_TYPE_CLAN_MESSAGE = 3;
 const MESSAGE_TYPE_GROTTO = 4;
 const MESSAGE_TYPE_SYSTEM = 5;
 
+const MESSAGE_SENDER_GRAVEYARD = -2;
+const MESSAGE_SENDER_SYSTEM = 0;
+
 function getClanStatusColor($last_activity) {
     $delta = time() - $last_activity;
 
@@ -41,7 +44,11 @@ function getMessageSenderNameFromMessage($msg) {
                 break;
         }
     } else {
-        return $msg->name;
+        if(empty($msg->name)) {
+            return 'Deleted user';
+        } else {
+            return $msg->name;
+        }
     }
 }
 
