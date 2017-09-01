@@ -82,17 +82,18 @@ class BaseController extends Controller
 
                 $graveyardMessageFolderSetting = MessageSettings::getUserSetting(MessageSettings::WORK);
 
-                $graveyardMessage = ORM::for_table('message')->create();
-                $graveyardMessage->sender_id = 0;
-                $graveyardMessage->receiver_id = $this->user->id;
-                $graveyardMessage->folder_id = $graveyardMessageFolderSetting->folder_id;
-                $graveyardMessage->subject = 'Work finished';
-                $graveyardMessage->message = 'After successful shift working as the '.$this->view->work_rank.' you get a salary of '.prettyNumber($totalReward).' <img src="'.getAssetLink('img/symbols/res2.gif').'" alt="Gold" align="absmiddle" border="0"> and '.$expReward.' experience points!';
-                $graveyardMessage->status = $graveyardMessageFolderSetting->mark_read == 1 ? 2 : 1;
-                $graveyardMessage->save();
+                if($graveyardMessageFolderSetting->folder_id != -2) {
+                    $graveyardMessage = ORM::for_table('message')->create();
+                    $graveyardMessage->sender_id = 0;
+                    $graveyardMessage->receiver_id = $this->user->id;
+                    $graveyardMessage->folder_id = $graveyardMessageFolderSetting->folder_id;
+                    $graveyardMessage->subject = 'Work finished';
+                    $graveyardMessage->message = 'After successful shift working as the '.$this->view->work_rank.' you get a salary of '.prettyNumber($totalReward).' <img src="'.getAssetLink('img/symbols/res2.gif').'" alt="Gold" align="absmiddle" border="0"> and '.$expReward.' experience points!';
+                    $graveyardMessage->status = $graveyardMessageFolderSetting->mark_read == 1 ? 2 : 1;
+                    $graveyardMessage->save();
+                }
 
                 $this->checkUserLevelUpForExp($this->user->exp, $expReward);
-                $this->user->exp += $expReward;
                 $this->user->gold += $totalReward;
 
                 $graveyardActivity->delete();
@@ -687,6 +688,8 @@ class BaseController extends Controller
         $oldLevel = getLevel($currentExp);
         $newLevel = getLevel($currentExp + $reward);
 
+        $this->user->exp += $reward;
+
         if($newLevel > $oldLevel) {
             $levelUpMessage = ORM::for_table('message')->create();
             $levelUpMessage->sender_id = 0;
@@ -695,6 +698,8 @@ class BaseController extends Controller
             $levelUpMessage->subject = 'You have levelled up';
             $levelUpMessage->message = 'Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$newLevel;
             $levelUpMessage->save();
+
+            $this->user->battle_value += 4;
         }
     }
 }

@@ -578,7 +578,7 @@ class MessageController extends GameController
             ->where('user_id', $this->user->id)
             ->find_many();
 
-        $userMessageFolders = array(-1, 0);
+        $userMessageFolders = array(-2, 0);
         $userMessageFoldersRes = ORM::for_table('user_message_folder')
             ->where('user_id', $this->user->id)
             ->find_many();
@@ -604,7 +604,7 @@ class MessageController extends GameController
                 $settingExists = false;
 
                 foreach ($userSettings as $settingObj) {
-                    if($settingObj->setting == $settingType) {
+                    if(strtolower($settingObj->setting) == strtolower($settingType)) {
                         $settingObj->folder_id = $val;
                         $settingObj->mark_read = $settingReadCheckbox;
                         $settingObj->save();

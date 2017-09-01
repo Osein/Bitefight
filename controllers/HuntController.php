@@ -109,21 +109,7 @@ class HuntController extends GameController
         $success = false;
 
         if ($rand <= $huntChance) {
-            $userLastLevel = getLevel($this->user->exp);
-            $this->user->exp += $rewardExp;
-            $userNewLevel = getLevel($this->user->exp);
-
-            if($userNewLevel > $userLastLevel) {
-                $this->user->battle_value += 4;
-
-                $levelUpMessage = ORM::for_table('message')->create();
-                $levelUpMessage->sender_id = 0;
-                $levelUpMessage->receiver_id = $this->user->id;
-                $levelUpMessage->folder_id = 0;
-                $levelUpMessage->subject = 'You have levelled up';
-                $levelUpMessage->message = 'Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$userNewLevel;
-                $levelUpMessage->save();
-            }
+            $this->checkUserLevelUpForExp($this->user->exp, $rewardExp);
 
             $this->user->gold += $rewardGold;
             $this->user->s_booty += $rewardGold;

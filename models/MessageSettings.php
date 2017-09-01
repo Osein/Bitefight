@@ -52,8 +52,8 @@ class MessageSettings
     const CLAN_MEMBER_LEFT = 110;
     const REPORT_ANSWER = 240;
 
-    const FOLDER_ID_DELETE_IMMEDIATELY = 0;
-    const FOLDER_ID_INBOX = -1;
+    const FOLDER_ID_DELETE_IMMEDIATELY = -2;
+    const FOLDER_ID_INBOX = 0;
 
     /**
      * @param int $type
