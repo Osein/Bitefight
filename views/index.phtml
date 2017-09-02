@@ -52,6 +52,10 @@
             </div>
         </div>
 
+        <?php if(isset($missionInfo)): ?>
+        <?php $this->partial('partials/info_popup', ['mission' => $missionInfo]); ?>
+        <?php endif; ?>
+
         <div id="footer">
             <div id="beast"></div>
             <div id="skull"></div>

@@ -1,55 +1,3 @@
-<div id="infoPopup" class="message_screen blackoutdialog" style="width: 500px; display: block; left: 470px; top: 293px; z-index: 501;">
-    <div class="wrap-top-left clearfix">
-        <div class="wrap-top-right clearfix">
-            <div class="wrap-top-middle clearfix"></div>
-        </div>
-    </div>
-    <div class="wrap-left clearfix">
-        <div class="wrap-content wrap-right clearfix">
-
-            <h2>
-                <img alt="" src="/img/symbols/race1small.gif">
-
-                Mission accomplished</h2>            <div class="blackoutdialog_content">
-                <div class="blackoutdialog_float">
-                    <p style="margin-left: 10px; margin-right: 10px;">
-                        You have completed one of your missions.<br><br><strong>Kill a particular demon: (6 / 6)</strong>                </p>
-                </div>
-                <div class="clearfloat"></div>
-                <div style="width: 100%; text-align: center;">
-
-                    <div class="button left" style="width: 205px;">
-                        <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
-
-                        <div class="btn-left button_float" style="margin: 0;"></div>
-                        <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="document.location.href='http://s202.en.bitefight.gameforge.com/city/missions?__token=3388257e117c6da1d6578140b87f2870'">
-                            To the tavern    </button>
-                        <div class="btn-right button_float"></div>
-                        <div class="clearfloat"></div>
-                    </div>
-
-                    <div class="button right" style="width: 205px;">
-                        <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
-
-                        <div class="btn-left button_float" style="margin: 0;"></div>
-                        <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="blackoutDialog(false, 'infoPopup')">
-                            Close    </button>
-                        <div class="btn-right button_float"></div>
-                        <div class="clearfloat"></div>
-                    </div>
-                    <div class="clearfloat"></div>
-                </div>
-                <div class="clearfloat"></div>
-            </div>
-        </div>
-    </div>
-    <div class="wrap-bottom-left">
-        <div class="wrap-bottom-right">
-            <div class="wrap-bottom-middle"></div>
-        </div>
-    </div>
-</div>
-<div id="breakDiv" class="blackoutdialog_break_div" style="z-index: 500; overflow: hidden; position: fixed; width: 100%; height: 100%;"></div>
 <script type="text/javascript">
     var blackoutDialogDivId;
 
@@ -147,6 +95,47 @@
         }
     }
 
-    blackoutDialog(true, 'infoPopup');
+    $(document).ready(function() {blackoutDialog(true, 'infoPopup');});
 
 </script>
+<div id="infoPopup" class="message_screen blackoutdialog">
+    <div class="wrap-top-left clearfix">
+        <div class="wrap-top-right clearfix">
+            <div class="wrap-top-middle clearfix"></div>
+        </div>
+    </div>
+    <div class="wrap-left clearfix">
+        <div class="wrap-content wrap-right clearfix">
+            <h2><img alt="" src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>"> Mission accomplished</h2>
+            <div class="blackoutdialog_content">
+                <div class="blackoutdialog_float">
+                    <p style="margin-left: 10px; margin-right: 10px;">You have completed one of your missions.<br><br><strong><?php if($mission->type == \Bitefight\Models\UserMission::TYPE_HUMAN_HUNT) echo 'Successful man hunts'; ?> (<?php echo $mission->count; ?> / <?php echo $mission->count; ?>)</strong></p>
+                </div>
+                <div class="clearfloat"></div>
+                <div style="width: 100%; text-align: center;">
+                    <div class="button left" style="width: 205px;">
+                        <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+                        <div class="btn-left button_float" style="margin: 0;"></div>
+                        <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="document.location.href='<?php echo getUrl('city/missions'); ?>'">To the tavern</button>
+                        <div class="btn-right button_float"></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="button right" style="width: 205px;">
+                        <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+                        <div class="btn-left button_float" style="margin: 0;"></div>
+                        <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="blackoutDialog(false, 'infoPopup')">Close</button>
+                        <div class="btn-right button_float"></div>
+                        <div class="clearfloat"></div>
+                    </div>
+                    <div class="clearfloat"></div>
+                </div>
+                <div class="clearfloat"></div>
+            </div>
+        </div>
+    </div>
+    <div class="wrap-bottom-left">
+        <div class="wrap-bottom-right">
+            <div class="wrap-bottom-middle"></div>
+        </div>
+    </div>
+</div>

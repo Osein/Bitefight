@@ -16,6 +16,7 @@ use Phalcon\Filter;
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
 use Phalcon\Mvc\View;
+use stdClass;
 
 class BaseController extends Controller
 {
@@ -51,6 +52,14 @@ class BaseController extends Controller
 
                     return false;
                 }
+            }
+
+            $completedMissions = $this->session->get('completedMissions');
+
+            if(!empty($completedMissions)) {
+                $this->view->missionInfo = $completedMissions[0];
+                array_shift($completedMissions);
+                $this->session->set('completedMissions', $completedMissions);
             }
 
             if($this->user->premium <= time() && $this->user->ap_max > 126) {

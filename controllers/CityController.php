@@ -9,8 +9,11 @@
 namespace Bitefight\Controllers;
 
 use Bitefight\Library\Translate;
+use Bitefight\Models\MessageSettings;
+use Bitefight\Models\UserMission;
 use ORM;
 use Phalcon\Filter;
+use stdClass;
 
 class CityController extends GameController
 {
@@ -382,6 +385,176 @@ class CityController extends GameController
         }
 
         return $this->response->redirect(getUrl('city/voodoo'));
+    }
+
+    public function getTaverne()
+    {
+        $this->view->pick('city/taverne');
+    }
+
+    public function getMissions()
+    {
+        $missions = ORM::for_table('user_mission')
+            ->where('user_id', $this->user->id)
+            ->orderByDesc('accepted')
+            ->find_many();
+
+        if(count($missions) < 10 || $missions[0]->day != date('d')) {
+            $missions = UserMission::replaceOpenMissions($this->user);
+        }
+
+        $totalActiveMissions = 0;
+        $finishedMissionCount = 0;
+
+        $missionTypes = [
+            UserMission::TYPE_HUMAN_HUNT => [
+                'accepted' => 0,
+                'canAccept' => true
+            ]
+        ];
+
+        foreach ($missions as $mission) {
+            if($mission->accepted) {
+                $missionTypes[$mission->type]['accepted']++;
+                $totalActiveMissions++;
+
+                if($missionTypes[$mission->type]['accepted'] == 2) {
+                    $missionTypes[$mission->type]['canAccept'] = false;
+                }
+            }
+
+            if($mission->time > 0) {
+                if($mission->accepted_time + 3600 * $mission->time > time()) {
+                    $mission->status = 2;
+                    $mission->save();
+                }
+            }
+
+            if($mission->status > 0) {
+                $finishedMissionCount++;
+            }
+        }
+
+        $this->view->missions = $missions;
+        $this->view->total_active = $totalActiveMissions;
+        $this->view->types = $missionTypes;
+        $this->view->finished_count = $finishedMissionCount;
+        $this->view->pick('city/mission');
+    }
+
+    public function acceptMission($mission_id)
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        ORM::raw_execute('UPDATE user_mission SET accepted = 1, accept_time = ? WHERE user_id = ? AND id = ?', [time(), $this->user->id, $mission_id]);
+        return $this->response->redirect(getUrl('city/missions'));
+    }
+
+    public function cancelMission($mission_id)
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        if($this->user->hellstone < 2) {
+            return $this->notFound();
+        }
+
+        $this->user->hellstone -= 2;
+        ORM::raw_execute('UPDATE user_mission SET accepted = 0 WHERE user_id = ? AND id = ?', [$this->user->id, $mission_id]);
+        return $this->response->redirect(getUrl('city/missions'));
+    }
+
+    public function replaceOpenMissions()
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        if($this->user->hellstone < 6) {
+            return $this->notFound();
+        }
+
+        $this->user->hellstone -= 6;
+        UserMission::replaceOpenMissions($this->user);
+        return $this->response->redirect(getUrl('city/missions'));
+    }
+
+    public function replaceOpenMissionsForAp()
+    {
+        $token = $this->request->get('_token');
+        $tokenKey = $this->request->get('_tkey');
+
+        if (!$this->security->checkToken($tokenKey, $token)) {
+            return $this->response->redirect(getUrl('clan/index'));
+        }
+
+        if($this->user->ap_now < 20) {
+            return $this->notFound();
+        }
+
+        $this->user->ap_now -= 20;
+        UserMission::replaceOpenMissions($this->user);
+        return $this->response->redirect(getUrl('city/missions'));
+    }
+
+    public function finishMission($mission)
+    {
+        $mission = ORM::for_table('user_mission')
+            ->where('user_id', $this->user->id)
+            ->where('accepted', 1)
+            ->where('status', 0)
+            ->find_one($mission);
+
+        if(!$mission) {
+            return $this->notFound();
+        }
+
+        $time = time();
+
+        if($mission->time > 0 && $mission->accepted_time + 3600 * $mission->time > $time) {
+            $mission->status = 2;
+            $mission->save();
+            return $this->response->redirect(getUrl('city/missions'));
+        }
+
+        if($mission->progress == $mission->count) {
+            $msgsetting = MessageSettings::getUserSetting(MessageSettings::MISSION);
+
+            if ($msgsetting->folder_id != -2) {
+                $huntTypeString = 'Successful man hunts';
+
+                $msg = ORM::for_table('message')->create();
+                $msg->sender_id = MESSAGE_SENDER_SYSTEM;
+                $msg->receiver_id = $this->user->id;
+                $msg->folder_id = $msgsetting->folder_id;
+                $msg->subject = 'Mission accomplished';
+                $msg->message = 'You have completed one of your missions.<br><br>'.$huntTypeString.' ('.$mission->progress.' / '.$mission->count.')';
+                $msg->status = $msgsetting->mark_read == 1 ? 2 : 1;
+                $msg->save();
+            }
+
+            $this->user->gold += $mission->gold;
+            $this->user->ap_now = min($this->user->ap_max, $this->user->ap_now + $mission->ap);
+            $this->user->fragment += $mission->frag;
+            $this->user->hp_now = min($this->user->hp_max, $this->user->hp_now + $this->user->hp_max * $mission->heal);
+
+            $mission->status = 1;
+            $mission->save();
+
+            return $this->response->redirect(getUrl('city/missions'));
+        }
     }
 
 }

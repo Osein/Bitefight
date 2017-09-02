@@ -83,6 +83,13 @@ $city->addPost('/shop/item/sell/{id:[0-9]+}', ['action' => 'postShopItemSell']);
 $city->addGet('/voodoo', ['action' => 'getVoodoo']);
 $city->addGet('/voodoo/shadowlord', ['action' => 'postVoodooShadowlord']);
 $city->addGet('/voodoo/metamorphosis', ['action' => 'postVoodooMetamorphosis']);
+$city->addGet('/taverne', ['action' => 'getTaverne']);
+$city->addGet('/missions', ['action' => 'getMissions']);
+$city->addGet('/missions/acceptMission/{id:[0-9]+}', ['action' => 'acceptMission']);
+$city->addGet('/missions/cancelMission/{id:[0-9]+}', ['action' => 'cancelMission']);
+$city->addGet('/missions/replaceOpenMissions', ['action' => 'replaceOpenMissions']);
+$city->addGet('/missions/replaceOpenMissionsForAp', ['action' => 'replaceOpenMissionsForAp']);
+$city->addGet('/missions/finishMission/{id:[0-9]+}', ['action' => 'finishMission']);
 $router->mount($city);
 
 $hunt = new \Phalcon\Mvc\Router\Group(['controller' => 'Hunt']);

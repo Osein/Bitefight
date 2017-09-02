@@ -23,7 +23,7 @@ class MessageSettings
         //'CLAN_WARS'          => 9,
         //'GROTTO'             => 50,
         //'ADVENTURE'          => 51,
-        //'MISSION'            => 80,
+        'MISSION'            => 80,
         'CLAN_FOUNDED'       => 100,
         'LEFT_CLAN'          => 101,
         'DISBANDED_CLAN'     => 102,

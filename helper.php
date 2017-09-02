@@ -18,6 +18,21 @@ const MESSAGE_TYPE_SYSTEM = 5;
 const MESSAGE_SENDER_GRAVEYARD = -2;
 const MESSAGE_SENDER_SYSTEM = 0;
 
+function getHumanHuntNameFromNo($huntNo)
+{
+    if($huntNo == 1) {
+        return 'Farm';
+    } elseif($huntNo == 2) {
+        return 'Village';
+    } elseif($huntNo == 3) {
+        return 'Small Town';
+    } elseif($huntNo == 4) {
+        return 'City';
+    } else {
+        return 'Metropolis';
+    }
+}
+
 function getClanStatusColor($last_activity) {
     $delta = time() - $last_activity;
 

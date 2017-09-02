@@ -440,7 +440,7 @@
                                             <?php elseif(!is_null($msg->gy_reward)): ?>
                                                 After successful shift working as the you get a salary of <?php echo prettyNumber($msg->gy_reward); ?> <img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"> and <?php echo prettyNumber($msg->gy_exp); ?> experience points!
                                             <?php else: ?>
-                                                <?php echo e($msg->message); ?>
+                                                <?php echo ($msg->sender_id == MESSAGE_SENDER_SYSTEM ? $msg->message : e($msg->message)); ?>
                                             <?php endif; ?>
                                         </div>
                                         <?php if($msg->sender_id > 0 && !empty($msg->name)): ?>

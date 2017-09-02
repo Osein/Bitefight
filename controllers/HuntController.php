@@ -10,6 +10,7 @@ namespace Bitefight\Controllers;
 
 use Bitefight\Config;
 use Bitefight\Library\Translate;
+use Bitefight\Models\UserMission;
 use ORM;
 use Phalcon\Http\Response;
 use Phalcon\Mvc\View;
@@ -114,7 +115,40 @@ class HuntController extends GameController
             $this->user->gold += $rewardGold;
             $this->user->s_booty += $rewardGold;
 
-            // With %3 chance user can get fragments
+            $missions = ORM::for_table('user_mission')
+                ->where_raw('(user_id = ? AND type = ?) AND (special = ? OR special = ?)', [$this->user->id, UserMission::TYPE_HUMAN_HUNT, $id, 0])
+                ->where('accepted', 1)
+                ->where_raw('progress < count')
+                ->where('status', 0)
+                ->find_many();
+            $time = time();
+
+            foreach ($missions as $mission) {
+                if($mission->time > 0) {
+                    if($mission->accepted_time + 3600 * $mission->time > $time) {
+                        $mission->status = 2;
+                        $mission->save();
+                    }
+                } else {
+                    $mission->progress++;
+                    $mission->save();
+
+                    if($mission->progress == $mission->count) {
+                        $missionObj = new StdClass;
+                        $missionObj->type = $mission->type;
+                        $missionObj->count = $mission->count;
+                        if($this->session->has('completedMissions')) {
+                            $completedMissions = $this->session->get('completedMissions');
+                            $completedMissions[] = $missionObj;
+                            $this->session->set('completedMissions', $completedMissions);
+                        } else {
+                            $completedMissions = [$missionObj];
+                            $this->session->set('completedMissions', $completedMissions);
+                        }
+                    }
+                }
+            }
+
             if ($rand < 4) {
                 $this->user->fragment += 1;
                 $this->view->rewardFragment = 1;

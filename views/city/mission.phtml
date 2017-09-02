@@ -1,0 +1,155 @@
+<div class="wrap-top-left clearfix">
+    <div class="wrap-top-right clearfix">
+        <div class="wrap-top-middle clearfix"></div>
+    </div>
+</div>
+<div class="wrap-left clearfix">
+    <div class="wrap-content wrap-right clearfix">
+        <!-- CONTENT START -->
+
+        <h2>
+            <img src="<?php echo getAssetLink('img/symbols/race'.$user->race.'small.gif'); ?>" alt="">
+            Missions        </h2>
+
+        <p>You can accept missions and view the status of your accepted missions here. You can also finish completed missions to make space for new missions. You will receive a reward for a mission when you finish it. You can activate a maximum of 3 missions, of which a maximum of 2 can have the same target. You can finish a maximum of 2 missions per day. Everything above the value feeds on your concentration and performance, meaning you need the power of Hellstones. If one of your missions fails, you have to finish it anyway, before accepting a new mission. However, you can make accepted missions disappear from your list by using Hellstones. New missions that you can then accept are announced every 24 hours.</p>
+
+        <p class="gold">Overview:</p>
+
+
+        <div style="text-align:left;">
+            <ul>
+                <li>
+                    A maximum of 5 missions can be active. The first 3 missions are free, the remaining missions each cost 5 Hellstones.                </li>
+                <li>
+                    You can have a maximum of 2 missions with the same target                </li>
+                <li>
+                    A maximum of 5 missions can be finished per day. The first 2 missions are free, the remaining missions each cost 1 Hellstone.                </li>
+                <li>
+                    Failed missions also need to be finished                </li>
+                <li>
+                    Cancelling a mission costs 2 HS                </li>
+                <li>
+                    At 00:00, new missions are generated for non-accepted and finished missions                </li>
+            </ul>
+        </div>
+        <br>
+
+        <div style="clear:both;">
+            <?php foreach($missions as $mission): ?>
+            <table style="width:100%;margin-bottom:20px;">
+                <tbody>
+                    <tr>
+                        <td style="width:40%;vertical-align:top;text-align:left;"><p class="gold">Target: </p>
+                            <p><?php if($mission->type == \Bitefight\Models\UserMission::TYPE_HUMAN_HUNT) echo 'Successful man hunts'; ?> (<?php echo $mission->progress; ?> / <?php echo $mission->count; ?>)</p></td>
+                        <td style="width:40%;vertical-align:top;text-align:left;">
+                            <p class="gold">Reward:</p>
+                            <?php if($mission->frag > 0): ?>
+                            <p><?php echo $mission->frag; ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res_splinters.png'); ?>" alt="Fragments" align="absmiddle" border="0"></p>
+                            <?php endif; ?>
+                            <?php if($mission->ap > 0): ?>
+                            <p><?php echo $mission->ap; ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" align="absmiddle" border="0"></p>
+                            <?php endif; ?>
+                            <?php if($mission->heal > 0): ?>
+                            <p>Healing: <?php echo $mission->heal; ?>%</p>
+                            <?php endif; ?>
+                            <p><?php echo prettyNumber($mission->gold); ?>&nbsp;<img src="<?php echo getAssetLink('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"></p>
+                        </td>
+                        <td>
+                            <?php if(!$mission->accepted && $total_active < 5 && $types[$mission->type]['canAccept']): ?>
+                                <div class="button" style="width: 205px;">
+                                    <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+
+                                    <div class="btn-left button_float" style="margin: 0;"></div>
+                                    <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="document.location.href='<?php echo getUrl('city/missions/acceptMission/'.$mission->id.'?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>'">Accept<?php if($total_active > 1): ?> (5 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0">)<?php endif; ?></button>
+                                    <div class="btn-right button_float"></div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            <?php elseif($mission->progress == $mission->count && $finished_count < 5 && $mission->status == 0): ?>
+                                <div class="button" style="width: 205px;">
+                                    <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+
+                                    <div class="btn-left button_float" style="margin: 0;"></div>
+                                    <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="document.location.href='<?php echo getUrl('city/missions/finishMission/'.$mission->id); ?>'">
+                                        Finish<?php if($finished_count > 1): ?> (1 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0">)<?php endif; ?></button>
+                                    <div class="btn-right button_float"></div>
+                                    <div class="clearfloat"></div>
+                                </div>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align:top;text-align:left;">
+                            <p class="gold">Conditions:</p>
+                            <p>
+                                <?php if($mission->time > 0): ?>
+                                Within <?php echo $mission->time; ?>:00:00<br>
+                                <?php endif; ?>
+                                <?php if($mission->type == \Bitefight\Models\UserMission::TYPE_HUMAN_HUNT && $mission->special > 0): ?>
+                                Man hunt only with difficulty level: <?php echo getHumanHuntNameFromNo($mission->special); ?>
+                                <?php endif; ?>
+                            </p>
+                        </td>
+                        <td style="vertical-align:top;text-align:left;">
+                            <p class="gold">Status:</p>
+                            <p>
+                                <?php if($mission->status > 0): ?>
+                                    <?php if($mission->status == 1) echo 'Finished (Completed)'; ?>
+                                    <?php if($mission->status == 2) echo 'Finished (Failed)' ?>
+                                <?php else: ?>
+                                    <?php if($mission->accepted): echo 'Active'; ?>
+                                    <?php elseif($total_active < 5 && $types[$mission->type]['canAccept']): echo 'Open';  ?>
+                                    <?php else: echo 'Closed'; ?>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                            </p>
+                        </td>
+                        <td>
+                            <?php if($mission->accepted && $mission->status == 0): ?>
+                            <div class="button" style="width: 205px;">
+                                <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+
+                                <div class="btn-left button_float" style="margin: 0;"></div>
+                                <button class="btn" type="submit" style="margin: 0; width: 179px;" onclick="document.location.href='<?php echo getUrl('city/missions/cancelMission/'.$mission->id.'?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>'">Cancel (2 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0">)</button>
+                                <div class="btn-right button_float"></div>
+                                <div class="clearfloat"></div>
+                            </div>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <?php endforeach; ?>
+        </div>
+        <br class="clearfloat">
+
+
+        <div class="button left" style="width: 296px;">
+            <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+
+            <div class="btn-left button_float" style="margin: 0;"></div>
+            <button class="btn" type="submit" style="margin: 0; width: 270px;" onclick="document.location.href='<?php echo getUrl('city/missions/replaceOpenMissions?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>'">
+                Regenerate open missions (6 <img src="<?php echo getAssetLink('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0">)    </button>
+            <div class="btn-right button_float"></div>
+            <div class="clearfloat"></div>
+        </div>
+
+
+        <div class="button left" style="width: 296px;">
+            <div class="buttonOverlay" title="" onmouseover="$(this).next().next('button').trigger('mouseover');" onclick="$(this).next().next('button').trigger('click');"></div>
+
+            <div class="btn-left button_float" style="margin: 0;"></div>
+            <button class="btn" type="submit" style="margin: 0; width: 270px;" onclick="document.location.href='<?php echo getUrl('city/missions/replaceOpenMissionsForAp?_tkey='.$this->security->getTokenKey().'&_token='.$this->security->getToken()); ?>'">
+                Regenerate open missions (20  <img src="<?php echo getAssetLink('img/symbols/ap.gif'); ?>" alt="Action points" align="absmiddle" border="0">)    </button>
+            <div class="btn-right button_float"></div>
+            <div class="clearfloat"></div>
+        </div>
+
+        <br class="clearfloat">
+        <!-- CONTENT END -->
+    </div>
+</div>
+<div class="wrap-bottom-left">
+    <div class="wrap-bottom-right">
+        <div class="wrap-bottom-middle"></div>
+    </div>
+</div>
