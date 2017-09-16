@@ -610,12 +610,6 @@ class ClanController extends GameController
             return $this->response->redirect(getUrl(''));
         }
 
-        $userRights = $this->getUserRankOptions();
-
-        if(!$userRights->add_member) {
-            return $this->notFound();
-        }
-
         $pdo = ORM::getDb();
         $stmt = $pdo->prepare('
             SELECT clan.name, clan.tag, clan_application.id AS application_id
