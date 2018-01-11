@@ -1,4 +1,4 @@
-![alt text](https://github.com/Osein/bitefight/blob/master/public/img/home_splash.jpg?raw=true "Bitefight Private Server")
+<span style="display:block;text-align:center">![alt text](https://github.com/Osein/bitefight/blob/master/public/img/home_splash.jpg?raw=true "Bitefight Private Server")</span>
 
 
 [![Discord](https://img.shields.io/discord/401039368678277131.svg?style=for-the-badge)](https://discord.gg/rg7Dbte)
