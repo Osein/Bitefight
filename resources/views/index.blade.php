@@ -24,8 +24,8 @@
 	</script>
 
 	<script src="{{asset('js/jquery-3.2.1.js')}}"></script>
-	<script src="{{asset('jquery-plugin.js')}}"></script>
-	<script src="{{asset('jquery-countdown-2.1.0.js')}}"></script>
+	<script src="{{asset('js/jquery-plugin.js')}}"></script>
+	<script src="{{asset('js/jquery-countdown-2.1.0.js')}}"></script>
 	<script src="{{asset('js/jquery-ui-1.12.1.js')}}"></script>
 	<script src="{{asset('js/jquery-ui-chatbox.js')}}"></script>
 	<script src="{{asset('js/tipped.js')}}"></script>
@@ -59,7 +59,7 @@
 <div id="footer">
 	<div id="beast"></div>
 	<div id="skull"></div>
-	<div id="copyright">{{__('general.footer_string', ['version' => '0.1', 'time' => 0.5])}}</div>
+	<div id="copyright">{{__('general.footer_string', ['version' => env('VERSION'), 'time' => (microtime(true) - LARAVEL_START)])}}</div>
 </div>
 
 </body>
