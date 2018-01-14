@@ -19,3 +19,4 @@ Auth::routes();
 Route::get('/', 'HomeController@getIndex');
 Route::get('/news', 'Controller@getNews');
 Route::get('/highscore', 'Controller@getHighscore');
+Route::get('/ajax/register', 'HomeController@registerAjaxCheck');

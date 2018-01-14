@@ -100,10 +100,40 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'agb' => [
+            'required' => 'Please accept the Terms Of Use and the Privacy Policy to participate.',
         ],
+
+		'name' => [
+			'required' => 'Player name must have at least three characters!',
+			'unique' => 'Player name already in use!'
+		],
+
+		'pass' => [
+			'required' => 'The password must have at least 3 characters'
+		],
+
+		'email' => [
+			'required' => 'Please enter your e-mail address',
+			'email' => 'This e-mail address is invalid.',
+			'unique' => 'This e-mail address already belongs to a creature of the night.'
+		],
+
 		'invalid_login' => 'The entered username or password is wrong.',
+		'validation_username_character_error' => 'Please enter at least 3 characters for your name.',
+		'validation_username_used' => 'Chosen username is already in use.',
+		'validation_email_invalid' => 'Please enter an invalid email.',
+		'validation_email_used' => 'Chosen email is already in use.',
+		'validation_terms_required' => 'Please accept the terms and conditions.',
+		'validation_password_character_error' => 'Please enter a valid password.',
+		'validation_ajax_username_short' => 'name too short',
+		'validation_ajax_username_used' => 'name in use',
+		'validation_ajax_email_invalid' => 'invalid mail',
+		'validation_ajax_email_used' => 'mail in use',
+		'validation_login_invalid_credentials' => 'Invalid credentials.',
+		'validation_clan_name_used' => 'Sorry, this clan name is already in use',
+		'validation_clan_tag_used' => 'Sorry, this clan tag is already in use',
+		'validation_clan_name_or_tag_short' => 'Please enter at least two characters into name and tag.',
     ],
 
     /*

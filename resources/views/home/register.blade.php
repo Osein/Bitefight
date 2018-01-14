@@ -95,7 +95,7 @@
 						    });
 
 						    function ajaxCheck(name){
-							    $.getJSON("/register/ajaxcheck",
+							    $.getJSON("{{url('/ajax/register')}}",
 								    $("#"+name).serialize(),
 								    function(data){
 									    if (data.status){
@@ -108,6 +108,11 @@
 						</script>
 						<h3>{{__('home.home_register_header')}}</h3>
 						<p>{!! __('home.home_register_unnecessary_info') !!}</p>
+
+						@foreach($errors->all() as $error)
+							<div class="error">{{$error}}</div>
+						@endforeach
+
 						<br>
 						<form id="registerForm" name="registerForm"  method="POST">
 							{{csrf_field()}}
@@ -118,7 +123,7 @@
 											<tr>
 												<td>{{__('home.home_register_name_label')}}:</td>
 												<td>
-													<input class="input" type="text" id="name" name="name" size="32" MAXLENGTH="32" value="{{old('name')}}" autofocus>
+													<input class="input" type="text" id="name" name="name" size="32" MAXLENGTH="32" value="{{old('name')}}" autofocus autocomplete="username">
 													<span id="name_status">
                                                     <img src="{{asset('img/symbols/cross.gif')}}" style="vertical-align:middle;"/>
                                                 </span>
@@ -127,7 +132,7 @@
 											<tr>
 												<td>{{__('home.home_register_password_label')}}:</td>
 												<td>
-													<input class="input" type="password" name="pass" id="pass" maxlength="20" size="20">
+													<input class="input" type="password" name="pass" id="pass" maxlength="20" size="20" autocomplete="current-password">
 												</td>
 											</tr>
 											<tr>
