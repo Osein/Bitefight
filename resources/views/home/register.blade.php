@@ -115,6 +115,7 @@
 
 						<br>
 						<form id="registerForm" name="registerForm"  method="POST">
+							<input type="hidden" name="race" value="{{$race}}">
 							{{csrf_field()}}
 							<table cellpadding="0" cellspacing="0" border="0">
 								<tr>

@@ -60,6 +60,8 @@ class User extends Authenticatable
 
 	public $timestamps = false;
 
+	protected $guarded = ['id'];
+
 	/**
 	 * @return int
 	 */
@@ -129,24 +131,6 @@ class User extends Authenticatable
 	public function setPassword(string $password): User
 	{
 		$this->password = $password;
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getRememberToken(): string
-	{
-		return $this->rememberToken;
-	}
-
-	/**
-	 * @param string $rememberToken
-	 * @return User
-	 */
-	public function setRememberToken(string $rememberToken): User
-	{
-		$this->rememberToken = $rememberToken;
 		return $this;
 	}
 
