@@ -1,17 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<title>{{env('APP_NAME')}}</title>
 	<link rel="stylesheet" href="{{asset('css/game.css')}}">
 	<link rel="stylesheet" href="{{asset('css/tipped.css')}}">
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta http-equiv="cache-control" content="no-cache"/>
-	<meta http-equiv="cache-control" content="no-store"/>
-	<meta http-equiv="cache-control" content="max-age=0"/>
-	<meta http-equiv="cache-control" content="must-revalidate"/>
-	<meta http-equiv="expires" content="0"/>
-	<meta http-equiv="pragma" content="no-cache"/>
+
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<script>
 		var bf = {};

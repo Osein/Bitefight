@@ -103,6 +103,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+		'invalid_login' => 'The entered username or password is wrong.',
     ],
 
     /*

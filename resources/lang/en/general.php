@@ -9,6 +9,8 @@ return [
 	|
 	*/
 
+	'game_name' => 'Bitefight',
+
 	'menu_header_bitefight' => 'Bitefight',
 	'menu_infobar_gold' => 'Gold',
 	'menu_infobar_hellstone' => 'Hellstones',
@@ -91,5 +93,38 @@ return [
 	'gate_openings' => 'Gate openings',
 	'last_gate_opening' => 'last gate opening',
 	'henchmen_power' => 'Henchmen power',
+
+	'name' => 'Name',
+	'password' => 'Password',
+	'login' => 'Login',
+	'lost_password' => 'Lost Password',
+	'e-mail' => 'E-mail',
+	'email' => 'Email',
+	'show' => 'show',
+
+	'race' => 'Race',
+	'all_races' => 'All races',
+	'player' => 'Player',
+	'clan' => 'Clan',
+	'entire_booty' => 'Entire booty',
+	'entire_booty_count' => '%count% blood',
+	'rank' => 'Rank',
+	'war_minister' => 'War minister',
+	'character_description' => 'Character description',
+	'characteristics_of_user' => 'The characteristics of %user%',
+
+	'notepad' => 'Notepad',
+	'characters' => 'Characters',
+
+	'not_active' => 'not active',
+	'treasure_chest' => 'Treasure Chest',
+	'royal_chest' => 'Royal Chest',
+	'gargoyle_guardian' => 'Gargoyle Guardian',
+	'book_of_the_damned' => 'Book of the Damned',
+	'domicile' => 'Domicile',
+	'wall' => 'Wall',
+	'path' => 'Path',
+	'landscape' => 'Landscape',
+	'tip' => 'Tip',
 
 ];
