@@ -931,7 +931,7 @@ class User extends Authenticatable
 	 * @param $exp
 	 * @return int
 	 */
-    public static function getLevel($exp): int
+    public static function getLevel($exp = null): int
 	{
 		return floor( sqrt( $exp / 5 ) ) + 1;
 	}
@@ -941,7 +941,7 @@ class User extends Authenticatable
 	 * @param $level
 	 * @return int
 	 */
-	public static function getExpNeeded($level): int
+	public static function getExpNeeded($level = null): int
 	{
 		return ((pow( $level, 2 ) * 5) + (5 * floor($level / 5)));
 	}
@@ -951,8 +951,16 @@ class User extends Authenticatable
 	 * @param $level
 	 * @return int
 	 */
-	function getPreviousExpNeeded($level): int
+	public static function getPreviousExpNeeded($level = null): int
 	{
 		return self::getExpNeeded($level - 1);
+	}
+
+	/**
+	 * @param int $race
+	 * @return string
+	 */
+	public static function getRaceString($race = 1) {
+		return $race === 1 ? __('general.vampire') : __('general.werewolf');
 	}
 }

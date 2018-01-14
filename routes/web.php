@@ -20,3 +20,7 @@ Route::get('/', 'HomeController@getIndex');
 Route::get('/news', 'Controller@getNews');
 Route::get('/highscore', 'Controller@getHighscore');
 Route::get('/ajax/register', 'HomeController@registerAjaxCheck');
+
+Route::prefix('/profile')->group(function() {
+	Route::get('/index', 'ProfileController@getIndex');
+});

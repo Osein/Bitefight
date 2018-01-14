@@ -11,4 +11,11 @@ namespace App\Http\Controllers;
 class GameController extends Controller
 {
 
+	/**
+	 * GameController constructor.
+	 */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 }
