@@ -64,7 +64,7 @@ class CreateUsersTable extends Migration
 			$table->unsignedInteger('h_land');
 			$table->unsignedInteger('last_activity')->default(0);
 			$table->unsignedSmallInteger('name_change');
-			$table->boolean('vacation');
+			$table->unsignedInteger('vacation');
 			$table->boolean('show_picture');
         });
     }
