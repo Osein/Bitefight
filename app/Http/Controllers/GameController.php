@@ -17,5 +17,8 @@ class GameController extends Controller
 	public function __construct()
 	{
 		$this->middleware('auth');
+
+		view()->share('user_new_message_count', 0);
+		view()->share('clan_application_count', 0);
 	}
 }
