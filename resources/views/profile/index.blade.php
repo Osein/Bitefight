@@ -84,14 +84,14 @@
 								</tr>
 								<tr>
 									<td nowrap>Highscore position:</td>
-									<td nowrap></td>
+									<td nowrap>{{prettyNumber($highscore_position)}}</td>
 								</tr>
-								<!--
+								@if(\Illuminate\Support\Facades\Auth::user()->getClanId() > 0)
 								<tr>
 									<td nowrap>Clan Highscore position:</td>
-									<td nowrap>72</td>
+									<td nowrap>fix</td>
 								</tr>
-								-->
+								@endif
 							</table>
 						</div>
 					</div>

@@ -13,3 +13,13 @@
 function prettyNumber($number) {
 	return number_format($number, 0, ',', '.');
 }
+
+function getItemModelFromModelNo($modelNo) {
+	$modelArray = array('weapons', 'potions', 'helmets', 'armour', 'jewellery', 'gloves', 'boots', 'shields');
+
+	return $modelArray[$modelNo-1];
+}
+
+function getSkillCost($skillLevel) {
+	return floor(pow($skillLevel - 4, 2.4));
+}
