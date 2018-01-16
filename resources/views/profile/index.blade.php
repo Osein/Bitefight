@@ -103,6 +103,145 @@
 				</div>
 			</div>
 		</div>
+		<div id="tabs-2">
+			<div id="skills_tab">
+				<div class="wrap-top-left clearfix">
+					<div class="wrap-top-right clearfix">
+						<div class="wrap-top-middle clearfix"></div>
+					</div>
+				</div>
+				<div class="wrap-left clearfix">
+					<div class="wrap-content wrap-right clearfix">
+						<div class="table-wrap">
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								<tr>
+									<td>Strength:</td>
+									<td nowrap>
+										<div class="tooltip left"  title="@include('partials.profile_tooltip_content', ['content' => $stat_str_tooltip])" style="text-align:left;">
+											<img src="{{asset('img/b1.gif')}}" alt=""><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$str_red_long}}">@if($str_total_long-$str_red_long > 0)<img src="{{asset('img/b6.gif')}}" alt="" height="12" width="{{$str_total_long-$str_red_long}}"><img src="{{asset('img/b7.gif')}}" alt="">@else<img src="{{asset('img/b3.gif')}}" alt="">@endif <span class="fontsmall">({{prettyNumber($stat_str_total)}})</span>
+										</div>
+									</td>
+									<td>
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($str_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $str_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $str_cost)
+											<form id="upgradeStrength" action="{{url('user/profile/training')}}" method="post">
+												{{csrf_field()}}
+												<input type="hidden" name="stat_type" value="str">
+												<img style="cursor: hand" onclick='document.forms["upgradeStrength"].submit();' src="{{asset('img/symbols/iconplus.png')}}">
+											</form>
+											@else
+											<img src="{{asset('img/symbols/iconplus_inactiv.png')}}"/>
+											@endif
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Defence:</td>
+									<td nowrap>
+										<div class="tooltip left"  title="@include('partials.profile_tooltip_content', ['content' => $stat_def_tooltip])" style="text-align:left;">
+											<img src="{{asset('img/b1.gif')}}" alt=""><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$def_red_long}}">@if($def_total_long-$def_red_long > 0)<img src="{{asset('img/b6.gif')}}" alt="" height="12" width="{{$def_total_long-$def_red_long}}"><img src="{{asset('img/b7.gif')}}" alt="">@else<img src="{{asset('img/b3.gif')}}" alt="">@endif <span class="fontsmall">({{prettyNumber($stat_def_total)}})</span>
+										</div>
+									</td>
+									<td>
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($def_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $def_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $def_cost)
+											<form id="upgradeDefence" action="{{url('user/profile/training')}}" method="post">
+												{{csrf_field()}}
+												<input type="hidden" name="stat_type" value="def">
+												<img style="cursor: hand" onclick='document.forms["upgradeDefence"].submit();' src="{{asset('img/symbols/iconplus.png')}}">
+											</form>
+											@else
+											<img src="{{asset('img/symbols/iconplus_inactiv.png')}}"/>
+											@endif
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Dexterity:</td>
+									<td nowrap>
+										<div class="tooltip left"  title="@include('partials.profile_tooltip_content', ['content' => $stat_dex_tooltip])" style="text-align:left;">
+											<img src="{{asset('img/b1.gif')}}" alt=""><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$dex_red_long}}">@if($dex_total_long-$dex_red_long > 0)<img src="{{asset('img/b6.gif')}}" alt="" height="12" width="{{$dex_total_long-$dex_red_long}}"><img src="{{asset('img/b7.gif')}}" alt="">@else<img src="{{asset('img/b3.gif')}}" alt="">@endif <span class="fontsmall">({{prettyNumber($stat_dex_total)}})</span>
+										</div>
+									</td>
+									<td>
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($dex_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $dex_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $dex_cost)
+											<form id="upgradeDexterity" action="{{url('user/profile/training')}}" method="post">
+												{{csrf_field()}}
+												<input type="hidden" name="stat_type" value="dex">
+												<img style="cursor: hand" onclick='document.forms["upgradeDexterity"].submit();' src="{{asset('img/symbols/iconplus.png')}}">
+											</form>
+											@else
+											<img src="{{asset('img/symbols/iconplus_inactiv.png')}}"/>
+											@endif
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Endurance:</td>
+									<td nowrap>
+										<div class="tooltip left"  title="@include('partials.profile_tooltip_content', ['content' => $stat_end_tooltip])" style="text-align:left;">
+											<img src="{{asset('img/b1.gif')}}" alt=""><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$end_red_long}}">@if($end_total_long-$end_red_long > 0)<img src="{{asset('img/b6.gif')}}" alt="" height="12" width="{{$end_total_long-$end_red_long}}"><img src="{{asset('img/b7.gif')}}" alt="">@else<img src="{{asset('img/b3.gif')}}" alt="">@endif <span class="fontsmall">({{prettyNumber($stat_end_total)}})</span>
+										</div>
+									</td>
+									<td>
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($end_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $end_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $end_cost)
+											<form id="upgradeEndurance" action="{{url('user/profile/training')}}" method="post">
+												{{csrf_field()}}
+												<input type="hidden" name="stat_type" value="end">
+												<img style="cursor: hand" onclick='document.forms["upgradeEndurance"].submit();' src="{{asset('img/symbols/iconplus.png')}}">
+											</form>
+											@else
+											<img src="{{asset('img/symbols/iconplus_inactiv.png')}}"/>
+											@endif
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Charisma:</td>
+									<td nowrap>
+										<div class="tooltip left"  title="@include('partials.profile_tooltip_content', ['content' => $stat_cha_tooltip])" style="text-align:left;">
+											<img src="{{asset('img/b1.gif')}}" alt=""><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$cha_red_long}}">@if($cha_total_long-$cha_red_long > 0)<img src="{{asset('img/b6.gif')}}" alt="" height="12" width="{{$cha_total_long-$cha_red_long}}"><img src="{{asset('img/b7.gif')}}" alt="">@else<img src="{{asset('img/b3.gif')}}" alt="">@endif <span class="fontsmall">({{prettyNumber($stat_cha_total)}})</span>
+										</div>
+									</td>
+									<td>
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($cha_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $cha_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $cha_cost)
+											<form id="upgradeCharisma" action="{{url('user/profile/training')}}" method="post">
+												{{csrf_field()}}
+												<input type="hidden" name="stat_type" value="cha">
+												<img style="cursor: hand" onclick='document.forms["upgradeCharisma"].submit();' src="{{asset('img/symbols/iconplus.png')}}">
+											</form>
+											@else
+											<img src="{{asset('img/symbols/iconplus_inactiv.png')}}"/>
+											@endif
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Experience:</td>
+									<td colspan="2"><img src="{{asset('img/b1.gif')}}" alt="" ><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$exp_red_long}}"><img src="{{asset('img/b4.gif')}}" alt="" height="12" width="{{400 - $exp_red_long}}"><img src="{{asset('img/b5.gif')}}" alt="" ><span class="fontsmall"><br>({{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getExp())}} / {{prettyNumber($required_exp)}})</span></td>
+								</tr>
+								<tr>
+									<td>Health:</td>
+									<td colspan="2">
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $stat_hp_tooltip])">
+											<img src="{{asset('img/b1.gif')}}" alt="" ><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$hp_red_long}}"><img src="{{asset('img/b4.gif')}}" alt="" height="12" width="{{400 - $hp_red_long}}">@if(\Illuminate\Support\Facades\Auth::user()->getHpNow() < $stat_hp_total)<img src="{{asset('img/b5.gif')}}" alt="" >@else<img src="{{asset('img/b3.gif')}}" alt="" >@endif<br><span class="fontsmall left">({{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getHpNow())}} / {{prettyNumber($stat_hp_total)}})</span>
+										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="wrap-bottom-left">
+					<div class="wrap-bottom-right">
+						<div class="wrap-bottom-middle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--
 		<div id="tabs-6" style="display:none;">
 			<div id="aspects_tab">
