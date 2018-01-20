@@ -694,4 +694,174 @@
 		</div>
 		-->
 	</div>
+	@if($user_item_count)
+	<script type="text/javascript">
+		jQuery().ready(function(){
+			$('#accordion').accordion({
+				heightStyle: "content"
+			});
+		});
+	</script>
+
+	<br class="clearfloat" />
+	<br class="clearfloat" />
+	<br class="clearfloat" />
+
+	<div id="items">
+		<div class="wrap-top-left clearfix">
+			<div class="wrap-top-right clearfix">
+				<div class="wrap-top-middle clearfix"></div>
+			</div>
+		</div>
+		<div class="wrap-left clearfix">
+			<div class="wrap-content wrap-right clearfix">
+				<div class="table-wrap">
+					@if(!empty($user_active_items))
+					<h2>&nbsp;Items are active ( {{count($user_active_items)}} )</h2>
+					<table cellpadding="2" cellspacing="2" border="0" width="100%">
+						<tbody>
+						@foreach($user_active_items as $i)
+						<tr>
+							<td class="active itemslot">
+								<img src="{{asset('img/items/'.$i->model.'/'.$i->id.'.jpg')}}" alt="Energy Potion" @if($i->scost) {{'style="border: 1px solid #6f86a9;"'}} @endif >
+							</td>
+							<td class="active">
+								<strong>{{$i->name}}</strong>
+								<br><br>
+								@if($i->str != 0)        Strenght: {{plusSignedNumberString($i->str)}}<br> @endif
+								@if($i->def != 0)        Defence: {{plusSignedNumberString($i->def)}}<br> @endif
+								@if($i->dex != 0)        Dexterity: {{plusSignedNumberString($i->dex)}}<br> @endif
+								@if($i->end != 0)        Endurance: {{plusSignedNumberString($i->end)}}<br> @endif
+								@if($i->cha != 0)        Charisma: {{plusSignedNumberString($i->cha)}}<br> @endif
+								@if($i->sbsctlnt != 0)   Basic talent: {{plusSignedNumberString($i->sbsctlnt)}}<br> @endif
+								@if($i->sbnstlnt != 0)   Bonus talent: {{plusSignedNumberString($i->sbnstlnt)}}<br> @endif
+								@if($i->id == 156)       Man hunt: gold and booty x2<br> @endif
+								@if($i->apup != 0)       Energy: {{plusSignedNumberString($i->apup)}}<br> @endif
+								<br>
+								Duration of effect <span id="item_active_counter_{{$i->id}}"></span>
+								<script type="text/javascript">
+									$(function () {
+										$("#item_active_counter_{{$i->id}}").countdown({
+											until: +{{$i->expire - time()}},
+											compact: true,
+											compactLabels: ['y', 'm', 'w', 'd'],
+											description: ''
+										});
+									});
+								</script>
+							</td>
+						</tr>
+						@endforeach
+						</tbody>
+					</table>
+					@endif
+					<h2>&nbsp;Items ( {{$user_item_count}} / {{$user_item_max_count}} )</h2>
+					<div id="accordion" class="ui-accordion-icons">
+						@if(!empty($potions))
+						<h3>
+							<a href="#">Potions ( {{$potion_count}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($potions as $potion)
+                                	<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($potion); ?>
+                            	@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($weapons))
+						<h3>
+							<a href="#">Weapons ( {{count($weapons)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($weapons as $weapon)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($weapon); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($helmets))
+						<h3>
+							<a href="#">Helmets ( {{count($helmets)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($helmets as $helmet)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($helmet); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($armour))
+						<h3>
+							<a href="#">Armour ( {{count($armour)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($armour as $armr)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($armr); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($jewellery))
+						<h3>
+							<a href="#">Jewellery ( {{count($jewellery)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($jewellery as $jwllry)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($jwllry); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($gloves))
+						<h3>
+							<a href="#">Gloves ( {{count($gloves)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($gloves as $glvs)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($glvs); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($boots))
+						<h3>
+							<a href="#">Boots ( {{count($boots)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($boots as $boot)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($boot); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+						@if(!empty($shields))
+						<h3>
+							<a href="#">Shields ( {{count($shields)}} )</a>
+						</h3>
+						<div>
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								@foreach($shields as $shield)
+									<?php /** @noinspection PhpUndefinedVariableInspection */ printProfileItemRow($shield); ?>
+								@endforeach
+							</table>
+						</div>
+						@endif
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="wrap-bottom-left">
+			<div class="wrap-bottom-right">
+				<div class="wrap-bottom-middle"></div>
+			</div>
+		</div>
+	</div>
+	@endif
 @endsection
