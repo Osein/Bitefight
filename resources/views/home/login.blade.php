@@ -20,11 +20,11 @@
                                     <table cellpadding="2" cellspacing="2" border="0" width="100%">
                                         <tr>
                                             <td>{{__('general.name')}}:</td>
-                                            <td><input class="input" type="text" name="user" MAXLENGTH="32" value="{{ old('user') }}" autofocus></td>
+                                            <td><input class="input" type="text" name="name" MAXLENGTH="32" value="{{ old('user') }}" autofocus></td>
                                         </tr>
                                         <tr>
                                             <td>{{__('general.password')}}:</td>
-                                            <td><input class="input" type="password" name="pass" MAXLENGTH="20">
+                                            <td><input class="input" type="password" name="password" MAXLENGTH="20">
                                                 <br />
                                                 <a href="{{ route('password.request') }}" target="_top" id="pwlostLink">{{__('home.home_login_forgot_password')}}</a>
                                             </td>
