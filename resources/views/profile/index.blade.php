@@ -242,6 +242,175 @@
 				</div>
 			</div>
 		</div>
+		<div id="tabs-3">
+			<div id="stats_tab">
+				<div class="wrap-top-left clearfix">
+					<div class="wrap-top-right clearfix">
+						<div class="wrap-top-middle clearfix"></div>
+					</div>
+				</div>
+				<div class="wrap-left clearfix">
+					<div class="wrap-content wrap-right clearfix">
+						<div class="table-wrap">
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								<tr>
+									<td>Entire booty:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSBooty())}}</td>
+								</tr>
+								<tr>
+									<td>Fights:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSFight())}}</td>
+								</tr>
+								<tr>
+									<td>Victories:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSVictory())}}</td>
+								</tr>
+								<tr>
+									<td>Defeats:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSDefeat())}}</td>
+								</tr>
+								<tr>
+									<td>Draws:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSDraw())}}</td>
+								</tr>
+								<tr>
+									<td>Gold captured:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSGoldCaptured())}} <img src="{{asset('img/symbols/res2.gif')}}"  alt="Gold" align="absmiddle" border="0" /></td>
+								</tr>
+								<tr>
+									<td>Gold lost:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSGoldLost())}} <img src="{{asset('img/symbols/res2.gif')}}"  alt="Gold" align="absmiddle" border="0" /></td>
+								</tr>
+								<tr>
+									<td>Damage caused:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSDamageCaused())}}</td>
+								</tr>
+								<tr>
+									<td>Hit points lost:</td>
+									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSHpLost())}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="wrap-bottom-left">
+					<div class="wrap-bottom-right">
+						<div class="wrap-bottom-middle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tabs-4">
+			<div id="skillmodis_tab">
+				<div class="wrap-top-left clearfix">
+					<div class="wrap-top-right clearfix">
+						<div class="wrap-top-middle clearfix"></div>
+					</div>
+				</div>
+				<div class="wrap-left clearfix">
+					<div class="wrap-content wrap-right clearfix">
+						<div class="table-wrap">
+							<table cellpadding="2" cellspacing="2" border="0" width="100%">
+								<tr>
+									<td>Attack:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_attack_tooltip])">{{prettyNumber($fm_attack_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Basic damage:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_bsc_dmg_tooltip])">{{prettyNumber($fm_bsc_dmg_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Bonus damage:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_bns_dmg_tooltip])">{{prettyNumber($fm_bns_dmg_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Hit Chance:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_bsc_hc_tooltip])">{{prettyNumber($fm_bsc_hc_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Bonus hit chance:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_bns_hc_tooltip])">{{prettyNumber($fm_bns_hc_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Basic talent:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_bsc_tlnt_tooltip])">{{prettyNumber($fm_bsc_tlnt_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Bonus Talent:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_bns_tlnt_tooltip])">{{prettyNumber($fm_bns_tlnt_total)}}</div>
+									</td>
+								</tr>
+								<tr>
+									<td>Regeneration:</td>
+									<td>
+										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $fm_regen_tooltip])">{{prettyNumber($fm_regen_total)}}</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="wrap-bottom-left">
+					<div class="wrap-bottom-right">
+						<div class="wrap-bottom-middle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tabs-5">
+			<div id="talents_tab">
+				<div class="wrap-top-left clearfix">
+					<div class="wrap-top-right clearfix">
+						<div class="wrap-top-middle clearfix"></div>
+					</div>
+				</div>
+				<div class="wrap-left clearfix">
+					<div class="wrap-content wrap-right clearfix">
+						<div class="table-wrap">
+							<div class="tooltip" title="<table class='noBackground'><tr><td nowrap colspan='2' style='font-size: 1.1em;'>Next points</td></tr><tr><td nowrap>Level: <?php echo $next_tlnt_level; ?></td><td nowrap>2</td></tr></table>">
+								<table cellpadding="2" cellspacing="2" border="0" width="100%">
+									<tr>
+										<td>Available points</td>
+										<td>{{\Illuminate\Support\Facades\Auth::user()->getTalentPoints() - $user_tlnt_used_count}}</td>
+									</tr>
+									<tr>
+										<td>Used points</td>
+										<td>{{$user_tlnt_used_count}}</td>
+									</tr>
+									<tr>
+										<td>Maximum points</td>
+										<td>{{$user_tlnt_max}}</td>
+									</tr>
+								</table>
+							</div>
+							<div class="btn-left right">
+								<div class="btn-right">
+									<a href="{{url('/profile/talents')}}" class="btn">buy now</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="wrap-bottom-left">
+					<div class="wrap-bottom-right">
+						<div class="wrap-bottom-middle"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--
 		<div id="tabs-6" style="display:none;">
 			<div id="aspects_tab">
