@@ -12,8 +12,16 @@ use Database\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class ProfileController extends GameController
+class ProfileController extends Controller
 {
+
+	/**
+ 	* ProfileController constructor.
+ 	*/
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
 	public function getIndex()
 	{

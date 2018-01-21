@@ -1,11 +1,9 @@
 @extends('index')
 
 @section('content')
-	<!--
 	<p id="upgrademsg">
-		<a href="http://s202.en.bitefight.gameforge.com/city/voodoo" >Become a Shadow-Lord now! Hunt for longer and much more...</a>
+		<a href="{{url('/voodoo')}}" >Become a Shadow-Lord now! Hunt for longer and much more...</a>
 	</p>
-	-->
 
 	<script type="text/javascript">
 		jQuery().ready(function(){
