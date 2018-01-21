@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\CheckGameRoutine;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Middleware\SaveUserMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -53,7 +54,8 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
-			CheckGameRoutine::class
+			CheckGameRoutine::class,
+			SaveUserMiddleware::class
         ],
 
         'api' => [

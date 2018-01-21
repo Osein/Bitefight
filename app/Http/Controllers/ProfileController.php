@@ -8,16 +8,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\InvalidRequestException;
 use Database\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class ProfileController extends Controller
 {
 
-	/**
- 	* ProfileController constructor.
- 	*/
 	public function __construct()
 	{
 		$this->middleware('auth');
@@ -393,6 +392,26 @@ class ProfileController extends Controller
 			'next_tlnt_level' => pow($user_tlnt_lvl_sqrt + 1, 2),
 			'user_tlnt_used_count' => DB::table('user_talents')->where('user_id', $user->getId())->count()
 		]);
+	}
+
+	public function getLogo()
+	{
+		return view('profile.logo');
+	}
+
+	public function postLogo()
+	{
+		$gender = Input::get('gender');
+		$type = Input::get('type');
+
+		if(empty($gender) || empty($type)) {
+			throw new InvalidRequestException();
+		}
+
+		\user()->setGender($gender);
+		\user()->setImageType($type);
+
+		return redirect(url('/profile/logo'));
 	}
 
 }

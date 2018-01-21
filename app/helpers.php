@@ -6,6 +6,28 @@
  * Time: 9:35 PM
  */
 
+if (! function_exists('user_race_logo_small')) {
+	/**
+	 * @return \Illuminate\Support\HtmlString
+	 */
+	function user_race_logo_small()
+	{
+		return new \Illuminate\Support\HtmlString(
+				'<img src="'.
+				asset('img/symbols/race'.user()->getRace().'small.gif').'" alt="'.
+				(user()->getRace() == 1 ? __('general.vampire') : __('general.werewolf')).'" />');
+	}
+}
+
+if(! function_exists('user')) {
+	/**
+	 * @return \Database\Models\User|null
+	 */
+	function user() {
+		return \Illuminate\Support\Facades\Auth::user();
+	}
+}
+
 /**
  * @param int $number
  * @return string

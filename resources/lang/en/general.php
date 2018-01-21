@@ -127,4 +127,16 @@ return [
 	'landscape' => 'Landscape',
 	'tip' => 'Tip',
 
+	// 404 Page Not Found Strings
+	'404_error_page_title' => '404 Bad Request',
+	'404_error_page_header' => 'Bad Request',
+	'404_error_page_p1' => 'The request could not be understood by the server.',
+	'404_error_page_p2' => 'Reason: The back-button is not supported.',
+	'404_error_page_p3' => 'Redirect in 2 seconds',
+
+	// 500 Exception Page Strings
+	'500_error_page_title' => '500 Internal Server Error',
+	'500_error_page_header' => 'Internal server error',
+	'500_error_page_p1' => 'We have dispatched agile vampires and wolves to fix errors, so don\'t be scared.',
+	'500_error_page_p2' => 'Come back again later.',
 ];
