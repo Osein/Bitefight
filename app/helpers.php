@@ -30,7 +30,7 @@ function hellstone_image_tag() {
 }
 
 function fragment_image_tag() {
-	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/res_splinters.gif').'"  alt="'.__('general.fragment').'" align="absmiddle" border="0" />');
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/res_splinters.png').'"  alt="'.__('general.fragment').'" align="absmiddle" border="0" />');
 }
 
 function action_point_image_tag() {
@@ -38,7 +38,7 @@ function action_point_image_tag() {
 }
 
 function health_image_tag() {
-	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/herz.gif').'"  alt="'.__('general.menu_infobar_health').'" align="absmiddle" border="0" />');
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/herz.png').'"  alt="'.__('general.menu_infobar_health').'" align="absmiddle" border="0" />');
 }
 
 function level_image_tag() {
