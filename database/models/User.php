@@ -2,7 +2,9 @@
 
 namespace Database\Models;
 
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * @property int id
@@ -57,6 +59,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  */
 class User extends Authenticatable
 {
+
+	use Notifiable;
 
 	public $timestamps = false;
 

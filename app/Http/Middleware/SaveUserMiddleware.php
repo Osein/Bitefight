@@ -17,7 +17,11 @@ class SaveUserMiddleware
     {
 		$ret = $next($request);
 
-		user()->save();
+		$user = user();
+
+		if($user) {
+			$user->save();
+		}
 
         return $ret;
     }

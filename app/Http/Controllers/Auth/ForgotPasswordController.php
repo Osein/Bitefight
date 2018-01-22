@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 
 class ForgotPasswordController extends Controller
 {
@@ -29,4 +30,23 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+	/**
+	 * Validate the email for the given request.
+	 *
+	 * @param  \Illuminate\Http\Request $request
+	 * @return void
+	 */
+	protected function validateEmail(Request $request)
+	{
+		$this->validate($request, [
+			'email' => 'required|email|exists:users',
+			'name' => 'required|string|exists:users'
+		]);
+	}
+
+	public function showLinkRequestForm()
+	{
+		return view('home.passwords.forgot');
+	}
 }

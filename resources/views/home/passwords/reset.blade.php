@@ -1,70 +1,71 @@
-@extends('layouts.app')
+@extends('index')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
 
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('password.request') }}">
-                        {{ csrf_field() }}
+    <script type="text/javascript">
+		$('#header').find('h1').text('{{__('general.lost_password')}}');
+    </script>
+    <div id="login">
+        <div class="wrap-top-left clearfix">
+            <div class="wrap-top-right clearfix">
+                <div class="wrap-top-middle clearfix"></div>
+            </div>
+        </div>
+        <div class="wrap-left clearfix">
+            <div class="wrap-content wrap-right clearfix">
+                <h2>{{__('home.home_forgot_pass_header')}}</h2>
+                <form action="{{ route('password.request') }}" method="POST">
+                    {{csrf_field()}}
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                    <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ $email or old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                    @foreach($errors->all() as $error)
+                        <div class="error">
+                            {{$error}}
                         </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Reset Password
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    @endforeach
+                    <div class="table-wrap">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tbody><tr>
+                                <td align="center" valign="top"><img src="{{asset('img/symbols/race1.gif')}}" alt="{{__('general.vampire')}}"></td>
+                                <td valign="top">
+                                    <table cellpadding="2" cellspacing="2" border="0" width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <td>{{__('general.e-mail')}}</td>
+                                            <td><input class="input" type="text" name="email" size="30" maxlength="130" value="{{ $email or old('email') }}" required autofocus></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Password</td>
+                                            <td>
+                                                <input id="password" type="password" class="form-control" name="password" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Confirm Password</td>
+                                            <td>
+                                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td><input type="submit" class="btn-small" value="{{__('general.send')}}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td align="center" valign="top"><img src="{{asset('img/symbols/race2.gif')}}" alt="{{__('general.werewolf')}}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="wrap-bottom-left">
+            <div class="wrap-bottom-right">
+                <div class="wrap-bottom-middle"></div>
             </div>
         </div>
     </div>
-</div>
 @endsection
