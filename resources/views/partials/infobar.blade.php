@@ -8,13 +8,14 @@
 	<div class="wrap-left clearfix">
 		<div class="wrap-content wrap-right clearfix">
 			<div class="gold" style="margin-bottom:0px;">
-				{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getGold())}}&nbsp;<img src="{{asset('img/symbols/res2.gif')}}" alt="{{__('general.menu_infobar_gold')}}" align="absmiddle" border="0">&nbsp;&nbsp;
-				{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getHellstone())}}&nbsp;<img src="{{asset('img/symbols/res3.gif')}}" alt="{{__('general.menu_infobar_hellstone')}}" align="absmiddle" border="0">&nbsp;&nbsp;
-				{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getFragment())}}&nbsp;<img src="{{asset('img/symbols/res_splinters.png')}}" alt="{{__('general.menu_infobar_fragments')}}" align="absmiddle" border="0">&nbsp;&nbsp;
-				{{prettyNumber(floor(\Illuminate\Support\Facades\Auth::user()->getApNow()))}}&nbsp;/&nbsp;{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getApMax())}}&nbsp;<img src="{{asset('img/symbols/ap.gif')}}" alt="{{__('general.menu_infobar_action_points')}}" align="absmiddle" border="0">&nbsp;&nbsp;
-				{{prettyNumber(floor(\Illuminate\Support\Facades\Auth::user()->getHpNow()))}}&nbsp;/&nbsp;{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getHpMax())}}&nbsp;<img src="{{asset('img/symbols/herz.png')}}" alt="{{__('general.menu_infobar_health')}}" align="absmiddle" border="0">&nbsp;&nbsp;
-				<img src="{{asset('img/symbols/level.gif')}}" alt="{{__('general.menu_infobar_level')}}" align="absmiddle" border="0">&nbsp;{{prettyNumber(\Database\Models\User::getLevel(\Illuminate\Support\Facades\Auth::user()->getExp()))}}&nbsp;&nbsp;
-				<img src="{{asset('img/symbols/fightvalue.gif')}}" alt="{{__('general.menu_infobar_battle_value')}}" align="absmiddle" border="0">&nbsp;{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getBattleValue())}}</div>
+				{{prettyNumber(user()->getGold())}}&nbsp;{{gold_image_tag()}}&nbsp;&nbsp;
+				{{prettyNumber(user()->getHellstone())}}&nbsp;{{hellstone_image_tag()}}&nbsp;&nbsp;
+				{{prettyNumber(user()->getFragment())}}&nbsp;{{fragment_image_tag()}}&nbsp;&nbsp;
+				{{prettyNumber(floor(user()->getApNow()))}}&nbsp;/&nbsp;{{prettyNumber(user()->getApMax())}}&nbsp;{{action_point_image_tag()}}&nbsp;&nbsp;
+				{{prettyNumber(floor(user()->getHpNow()))}}&nbsp;/&nbsp;{{prettyNumber(user()->getHpMax())}}&nbsp;{{health_image_tag()}}&nbsp;&nbsp;
+				{{level_image_tag()}}&nbsp;{{prettyNumber(\Database\Models\User::getLevel(user()->getExp()))}}&nbsp;&nbsp;
+				{{battle_value_image_tag()}}&nbsp;{{prettyNumber(user()->getBattleValue())}}
+			</div>
 		</div>
 	</div>
 	<div class="wrap-bottom-left">

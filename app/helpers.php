@@ -12,11 +12,41 @@ if (! function_exists('user_race_logo_small')) {
 	 */
 	function user_race_logo_small()
 	{
+		$race = user() ? user()->getRace() : env('DEFAULT_SERVER_RACE');
+
 		return new \Illuminate\Support\HtmlString(
 				'<img src="'.
-				asset('img/symbols/race'.user()->getRace().'small.gif').'" alt="'.
-				(user()->getRace() == 1 ? __('general.vampire') : __('general.werewolf')).'" />');
+				asset('img/symbols/race'.$race.'small.gif').'" alt="'.
+				($race == 1 ? __('general.vampire') : __('general.werewolf')).'" />');
 	}
+}
+
+function gold_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/res2.gif').'"  alt="'.__('general.gold').'" align="absmiddle" border="0" />');
+}
+
+function hellstone_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/res3.gif').'"  alt="'.__('general.hellstone').'" align="absmiddle" border="0" />');
+}
+
+function fragment_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/res_splinters.gif').'"  alt="'.__('general.fragment').'" align="absmiddle" border="0" />');
+}
+
+function action_point_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/ap.gif').'"  alt="'.__('general.menu_infobar_action_points').'" align="absmiddle" border="0" />');
+}
+
+function health_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/herz.gif').'"  alt="'.__('general.menu_infobar_health').'" align="absmiddle" border="0" />');
+}
+
+function level_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/level.gif').'"  alt="'.__('general.menu_infobar_level').'" align="absmiddle" border="0" />');
+}
+
+function battle_value_image_tag() {
+	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/fightvalue.gif').'"  alt="'.__('general.menu_infobar_battle_value').'" align="absmiddle" border="0" />');
 }
 
 if(! function_exists('user')) {
@@ -115,7 +145,7 @@ function printItemDetails($i, $shop = false) {
 
 	<strong><?php echo $i->name; ?> </strong><br>
 	(Your inventory: <?php echo intval($i->volume); ?> item(s))<br><br>
-	Resale value: <?php echo prettyNumber($i->slcost); ?><img src="<?php echo asset('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br><br>
+	Resale value: <?php echo prettyNumber($i->slcost); ?><?php echo gold_image_tag() ?><br><br>
 	<?php if($i->str != 0): ?>        Strenght: <?php echo plusSignedNumberString($i->str); ?><br> <?php endif; ?>
 	<?php if($i->def != 0): ?>        Defence: <?php echo plusSignedNumberString($i->def); ?><br> <?php endif; ?>
 	<?php if($i->dex != 0): ?>        Dexterity: <?php echo plusSignedNumberString($i->dex); ?><br> <?php endif; ?>
@@ -141,9 +171,9 @@ function printItemDetails($i, $shop = false) {
 	<?php if($i->cooldown > 0): ?>    Cooldown time: <?php echo $cooldownString; ?><br> <?php endif; ?>
 	<br>
 	<?php if($shop): ?>
-		sale price: <?php echo prettyNumber($i->gcost); ?><img src="<?php echo asset('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0">
-		<?php if($i->scost > 0): ?>+ <?php echo prettyNumber($i->scost); ?>&nbsp;<img src="<?php echo asset('img/symbols/res3.gif'); ?>" alt="Hellstones" align="absmiddle" border="0"><?php endif; ?><br>
-		Resale value: <?php echo prettyNumber($i->slcost); ?><img src="<?php echo asset('img/symbols/res2.gif'); ?>" alt="Gold" align="absmiddle" border="0"><br>
+		sale price: <?php echo prettyNumber($i->gcost); ?><?php echo gold_image_tag() ?>
+		<?php if($i->scost > 0): ?>+ <?php echo prettyNumber($i->scost); ?>&nbsp;<?php echo hellstone_image_tag() ?><?php endif; ?><br>
+		Resale value: <?php echo prettyNumber($i->slcost); ?><?php echo gold_image_tag() ?><br>
 	<?php endif; ?>
 	Requirement: level <?php echo prettyNumber($i->level); ?><br>
 	<?php

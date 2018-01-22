@@ -9,7 +9,7 @@
 		</div>
 		<div class="wrap-left clearfix">
 			<div class="wrap-content wrap-right clearfix">
-				<h2><img src="{{asset('img/symbols/race'.(\Illuminate\Support\Facades\Auth::user() ? \Illuminate\Support\Facades\Auth::user()->getRace() : 1).'small.gif')}}" alt="">{{__('general.menu_news')}}</h2>
+				<h2>{{user_race_logo_small()}}{{__('general.menu_news')}}</h2>
 				<div class="table-wrap">
 					<table cellpadding="2" cellspacing="10" border="0" width="100%">
 						<tbody>

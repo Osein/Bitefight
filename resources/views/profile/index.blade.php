@@ -43,7 +43,7 @@
 								<div class="wrap-left">
 									<div class="wrap-content wrap-right">
 										<a id="userLogo" href="{{url('/profile/logo')}}" >
-											<img src="{{asset('img/logo/'.\Illuminate\Support\Facades\Auth::user()->getRace().'/'.\Illuminate\Support\Facades\Auth::user()->getGender().'/'.\Illuminate\Support\Facades\Auth::user()->getImageType().'.jpg')}}" border="0" width="168" alt="playerlogo">
+											<img src="{{asset('img/logo/'.user()->getRace().'/'.user()->getGender().'/'.user()->getImageType().'.jpg')}}" border="0" width="168" alt="playerlogo">
 											<br>
 											<span>edit picture</span>
 										</a>
@@ -62,29 +62,29 @@
 								</tr>
 								<tr>
 									<td nowrap>Race:</td>
-									<td nowrap>{{\Database\Models\User::getRaceString(\Illuminate\Support\Facades\Auth::user()->getRace())}}<!--&nbsp;&nbsp;<a href="/city/voodoo#premItem_1" title="To the metamorphosis stone"><img src="http://s202.en.bitefight.gameforge.com/img/symbols/metastone.gif"></a>--></td>
+									<td nowrap>{{user()->getRaceString(user()->getRace())}}<!--&nbsp;&nbsp;<a href="/city/voodoo#premItem_1" title="To the metamorphosis stone"><img src="http://s202.en.bitefight.gameforge.com/img/symbols/metastone.gif"></a>--></td>
 								</tr>
 								<tr>
 									<td nowrap>Player ID:</td>
-									<td nowrap>{{\Illuminate\Support\Facades\Auth::user()->getId()}}</td>
+									<td nowrap>{{user()->getId()}}</td>
 								</tr>
 								<tr>
 									<td nowrap>Player name:</td>
-									<td nowrap><a href="{{url('/player/'.\Illuminate\Support\Facades\Auth::user()->getId())}}">{{\Illuminate\Support\Facades\Auth::user()->getName()}}</a></td>
+									<td nowrap><a href="{{url('/player/'.user()->getId())}}">{{user()->getName()}}</a></td>
 								</tr>
 								<tr>
 									<td nowrap>Level:</td>
-									<td nowrap>{{prettyNumber(\Database\Models\User::getLevel(\Illuminate\Support\Facades\Auth::user()->getExp()))}}</td>
+									<td nowrap>{{prettyNumber(user()->getLevel(user()->getExp()))}}</td>
 								</tr>
 								<tr>
 									<td nowrap>Battle value:</td>
-									<td nowrap>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getBattleValue())}}</td>
+									<td nowrap>{{prettyNumber(user()->getBattleValue())}}</td>
 								</tr>
 								<tr>
 									<td nowrap>Highscore position:</td>
 									<td nowrap>{{prettyNumber($highscore_position)}}</td>
 								</tr>
-								@if(\Illuminate\Support\Facades\Auth::user()->getClanId() > 0)
+								@if(user()->getClanId() > 0)
 								<tr>
 									<td nowrap>Clan Highscore position:</td>
 									<td nowrap>fix</td>
@@ -120,8 +120,8 @@
 										</div>
 									</td>
 									<td>
-										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($str_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $str_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
-											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $str_cost)
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($str_cost)}}{{gold_image_tag()}}</td></tr>@if(user()->getGold() < $str_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(user()->getGold() >= $str_cost)
 											<form id="upgradeStrength" action="{{url('user/profile/training')}}" method="post">
 												{{csrf_field()}}
 												<input type="hidden" name="stat_type" value="str">
@@ -141,8 +141,8 @@
 										</div>
 									</td>
 									<td>
-										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($def_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $def_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
-											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $def_cost)
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($def_cost)}}{{gold_image_tag()}}</td></tr>@if(user()->getGold() < $def_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(user()->getGold() >= $def_cost)
 											<form id="upgradeDefence" action="{{url('user/profile/training')}}" method="post">
 												{{csrf_field()}}
 												<input type="hidden" name="stat_type" value="def">
@@ -162,8 +162,8 @@
 										</div>
 									</td>
 									<td>
-										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($dex_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $dex_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
-											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $dex_cost)
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($dex_cost)}}{{gold_image_tag()}}</td></tr>@if(user()->getGold() < $dex_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(user()->getGold() >= $dex_cost)
 											<form id="upgradeDexterity" action="{{url('user/profile/training')}}" method="post">
 												{{csrf_field()}}
 												<input type="hidden" name="stat_type" value="dex">
@@ -183,8 +183,8 @@
 										</div>
 									</td>
 									<td>
-										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($end_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $end_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
-											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $end_cost)
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($end_cost)}}{{gold_image_tag()}}</td></tr>@if(user()->getGold() < $end_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(user()->getGold() >= $end_cost)
 											<form id="upgradeEndurance" action="{{url('user/profile/training')}}" method="post">
 												{{csrf_field()}}
 												<input type="hidden" name="stat_type" value="end">
@@ -204,8 +204,8 @@
 										</div>
 									</td>
 									<td>
-										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($cha_cost)}}<img src="{{asset('img/symbols/res2.gif')}}" alt="Gold" align="absmiddle" border="0"></td></tr>@if(\Illuminate\Support\Facades\Auth::user()->getGold() < $cha_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
-											@if(\Illuminate\Support\Facades\Auth::user()->getGold() >= $cha_cost)
+										<div class="tooltip" title='<div style="width: 150px;"><table class="noBackground"><tbody><tr><td nowrap="">costs: {{prettyNumber($cha_cost)}}{{gold_image_tag()}}</td></tr>@if(user()->getGold() < $cha_cost)<tr><td>Unfortunately you don`t have enough gold coins!</td></tr>@endif</tbody></table></div>'>
+											@if(user()->getGold() >= $cha_cost)
 											<form id="upgradeCharisma" action="{{url('user/profile/training')}}" method="post">
 												{{csrf_field()}}
 												<input type="hidden" name="stat_type" value="cha">
@@ -219,13 +219,13 @@
 								</tr>
 								<tr>
 									<td>Experience:</td>
-									<td colspan="2"><img src="{{asset('img/b1.gif')}}" alt="" ><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$exp_red_long}}"><img src="{{asset('img/b4.gif')}}" alt="" height="12" width="{{400 - $exp_red_long}}"><img src="{{asset('img/b5.gif')}}" alt="" ><span class="fontsmall"><br>({{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getExp())}} / {{prettyNumber($required_exp)}})</span></td>
+									<td colspan="2"><img src="{{asset('img/b1.gif')}}" alt="" ><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$exp_red_long}}"><img src="{{asset('img/b4.gif')}}" alt="" height="12" width="{{400 - $exp_red_long}}"><img src="{{asset('img/b5.gif')}}" alt="" ><span class="fontsmall"><br>({{prettyNumber(user()->getExp())}} / {{prettyNumber($required_exp)}})</span></td>
 								</tr>
 								<tr>
 									<td>Health:</td>
 									<td colspan="2">
 										<div class="tooltip left" title="@include('partials.profile_tooltip_content', ['content' => $stat_hp_tooltip])">
-											<img src="{{asset('img/b1.gif')}}" alt="" ><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$hp_red_long}}"><img src="{{asset('img/b4.gif')}}" alt="" height="12" width="{{400 - $hp_red_long}}">@if(\Illuminate\Support\Facades\Auth::user()->getHpNow() < $stat_hp_total)<img src="{{asset('img/b5.gif')}}" alt="" >@else<img src="{{asset('img/b3.gif')}}" alt="" >@endif<br><span class="fontsmall left">({{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getHpNow())}} / {{prettyNumber($stat_hp_total)}})</span>
+											<img src="{{asset('img/b1.gif')}}" alt="" ><img src="{{asset('img/b2.gif')}}" alt="" height="12" width="{{$hp_red_long}}"><img src="{{asset('img/b4.gif')}}" alt="" height="12" width="{{400 - $hp_red_long}}">@if(user()->getHpNow() < $stat_hp_total)<img src="{{asset('img/b5.gif')}}" alt="" >@else<img src="{{asset('img/b3.gif')}}" alt="" >@endif<br><span class="fontsmall left">({{prettyNumber(user()->getHpNow())}} / {{prettyNumber($stat_hp_total)}})</span>
 										</div>
 									</td>
 								</tr>
@@ -253,39 +253,39 @@
 							<table cellpadding="2" cellspacing="2" border="0" width="100%">
 								<tr>
 									<td>Entire booty:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSBooty())}}</td>
+									<td>{{prettyNumber(user()->getSBooty())}}</td>
 								</tr>
 								<tr>
 									<td>Fights:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSFight())}}</td>
+									<td>{{prettyNumber(user()->getSFight())}}</td>
 								</tr>
 								<tr>
 									<td>Victories:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSVictory())}}</td>
+									<td>{{prettyNumber(user()->getSVictory())}}</td>
 								</tr>
 								<tr>
 									<td>Defeats:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSDefeat())}}</td>
+									<td>{{prettyNumber(user()->getSDefeat())}}</td>
 								</tr>
 								<tr>
 									<td>Draws:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSDraw())}}</td>
+									<td>{{prettyNumber(user()->getSDraw())}}</td>
 								</tr>
 								<tr>
 									<td>Gold captured:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSGoldCaptured())}} <img src="{{asset('img/symbols/res2.gif')}}"  alt="Gold" align="absmiddle" border="0" /></td>
+									<td>{{prettyNumber(user()->getSGoldCaptured())}} {{gold_image_tag()}}</td>
 								</tr>
 								<tr>
 									<td>Gold lost:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSGoldLost())}} <img src="{{asset('img/symbols/res2.gif')}}"  alt="Gold" align="absmiddle" border="0" /></td>
+									<td>{{prettyNumber(user()->getSGoldLost())}} {{gold_image_tag()}}</td>
 								</tr>
 								<tr>
 									<td>Damage caused:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSDamageCaused())}}</td>
+									<td>{{prettyNumber(user()->getSDamageCaused())}}</td>
 								</tr>
 								<tr>
 									<td>Hit points lost:</td>
-									<td>{{prettyNumber(\Illuminate\Support\Facades\Auth::user()->getSHpLost())}}</td>
+									<td>{{prettyNumber(user()->getSHpLost())}}</td>
 								</tr>
 							</table>
 						</div>
@@ -382,7 +382,7 @@
 								<table cellpadding="2" cellspacing="2" border="0" width="100%">
 									<tr>
 										<td>Available points</td>
-										<td>{{\Illuminate\Support\Facades\Auth::user()->getTalentPoints() - $user_tlnt_used_count}}</td>
+										<td>{{user()->getTalentPoints() - $user_tlnt_used_count}}</td>
 									</tr>
 									<tr>
 										<td>Used points</td>
