@@ -56,6 +56,7 @@ use Illuminate\Notifications\Notifiable;
  * @property int name_change
  * @property int vacation
  * @property int show_picture
+ * @property int premium
  */
 class User extends Authenticatable
 {
@@ -927,6 +928,24 @@ class User extends Authenticatable
 	public function setShowPicture(bool $show_picture): User
 	{
 		$this->show_picture = $show_picture;
+		return $this;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getPremium(): int
+	{
+		return $this->premium;
+	}
+
+	/**
+	 * @param int $premium
+	 * @return User
+	 */
+	public function setPremium(int $premium)
+	{
+		$this->premium = $premium;
 		return $this;
 	}
 

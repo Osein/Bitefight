@@ -26,3 +26,5 @@ Route::prefix('/profile')->group(function() {
 	Route::get('/logo', 'ProfileController@getLogo');
 	Route::post('/logo', 'ProfileController@postLogo');
 });
+
+Route::get('/voodoo', 'CityController@getVoodoo');

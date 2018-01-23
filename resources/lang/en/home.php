@@ -32,4 +32,10 @@ return [
 	'home_register_activation_info' => 'An e-mail containing your activation link will be sent to your email address. Please activate the account within the next 3 days.',
 	'home_register_accept_agb' => 'I accept the Terms and Conditions.',
 
+	// Highscore Strings
+	'highscore_my_position' => 'My position',
+	'highscore_player_highscore' => 'Player - Highscore',
+	'highscore_clan_highscore' => 'Clan - Highscore',
+	'highscore_show_limit' => '(Maximum of 5 options possible)',
+
 ];
