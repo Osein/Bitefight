@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckGameRoutine;
+use App\Http\Middleware\CheckMetamorphosisRaceSelect;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SaveUserMiddleware;
@@ -54,6 +55,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+			CheckMetamorphosisRaceSelect::class,
 			CheckGameRoutine::class,
 			SaveUserMiddleware::class
         ],

@@ -47,7 +47,10 @@
 								<h3 style="padding:0 10px 15px; text-align:right;"><span style="color:orangered">14 days<br> for only <br>15 hellstones</span></h3>
 								<div class="btn-left right">
 									<div class="btn-right">
-										<a class="btn" @if(user()->hellstone > 14) href="{{url('city/voodoo/shadowlord?_')}}" @endif target="_top">buy now</a>
+										<form method="post">
+											{{csrf_field()}}
+											<input type="submit" class="btn" name="buy_shadow_lord" value="buy now" @if(user()->getHellstone() < 15) disabled @endif>
+										</form>
 									</div>
 								</div>
 							</td>
@@ -83,7 +86,10 @@
 											<td width="50%">
 												<div class="btn-left right">
 													<div class="btn-right">
-														<a class="btn" @if(user()->getHellstone() >= 50) href="{{url('/test')}}" @else onclick="notConfirm(1)" @endif target="_top">Yes</a>
+														<form method="post">
+															{{csrf_field()}}
+															<input type="submit" class="btn" name="buy_methamorphosis" value="Yes" @if(user()->getHellstone() < 50) disabled @endif>
+														</form>
 													</div>
 												</div>
 											</td>

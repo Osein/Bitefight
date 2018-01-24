@@ -414,4 +414,26 @@ class ProfileController extends Controller
 		return redirect(url('/profile/logo'));
 	}
 
+	public function getRaceSelect()
+	{
+		if(user()->getRace() != 0) {
+			throw new InvalidRequestException();
+		}
+
+		return view('profile.race_select');
+	}
+
+	public function postRaceSelect()
+	{
+		$race = Input::get('race');
+
+		if(user()->getRace() != 0 || $race < 1 || $race > 2) {
+			throw new InvalidRequestException();
+		}
+
+		user()->setRace($race);
+
+		return redirect(url('/profile/index'));
+	}
+
 }
