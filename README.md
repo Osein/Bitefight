@@ -4,6 +4,7 @@
     <a href="https://discord.gg/rg7Dbte">
         <img src="https://img.shields.io/discord/401039368678277131.svg?style=for-the-badge"
             alt="chat on Discord"></a>
+    <img src="https://img.shields.io/badge/version-0.0.2-orange.svg?style=for-the-badge"/>
 </p>
 
 # Bitefight Clone Script (In Progress)
