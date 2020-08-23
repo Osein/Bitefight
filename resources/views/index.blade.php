@@ -35,31 +35,32 @@
 
 <body>
 
-<div id="header">
-	<!-- if gates of underworld are open <div id="feuerheader"></div> <div id="decoLampGateOpen"></div> -->
-	<h1>{{__('general.menu_header_bitefight')}}</h1>
-	<div id="decoLamp"></div>
-</div>
-
-<div id="container" class="clearfix">
-	<div id="menu">
-		@include('partials.menu')
+	<div id="header">
+		<!-- if gates of underworld are open <div id="feuerheader"></div> <div id="decoLampGateOpen"></div> -->
+		<h1>@yield('header', __('general.menu_header_bitefight'))</h1>
+		<div id="decoLamp"></div>
 	</div>
-	<div id="content">
-		@include('partials.infobar')
-		@yield('content')
+
+	<div id="container" class="clearfix">
+		<div id="menu">
+			@include('partials.menu')
+		</div>
+		<div id="content">
+			@include('partials.email_not_activated')
+			@include('partials.infobar')
+			@yield('content')
+		</div>
 	</div>
-</div>
 
-<?php if(isset($missionInfo)): ?>
-        <?php $this->partial('partials/info_popup', ['mission' => $missionInfo]); ?>
-        <?php endif; ?>
+	@if(isset($finishedMissions) && count($finishedMissions) > 0)
+		@include('partials.mission_info_popup', ['missions' => $finishedMissions])
+	@endif
 
-<div id="footer">
-	<div id="beast"></div>
-	<div id="skull"></div>
-	<div id="copyright">{{__('general.footer_string', ['version' => env('VERSION'), 'time' => (microtime(true) - LARAVEL_START)])}}</div>
-</div>
+	<div id="footer">
+		<div id="beast"></div>
+		<div id="skull"></div>
+		<div id="copyright">{{__('general.footer_string', ['version' => env('VERSION'), 'time' => (microtime(true) - LARAVEL_START)])}}</div>
+	</div>
 
 </body>
 </html>

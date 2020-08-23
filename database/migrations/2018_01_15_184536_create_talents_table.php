@@ -46,7 +46,6 @@ class CreateTalentsTable extends Migration
 			$table->smallInteger('ebnshc');
 			$table->smallInteger('ebnsdmg');
 			$table->smallInteger('ebnstlnt');
-            $table->timestamps();
         });
 
 		Artisan::call( 'import:talents');

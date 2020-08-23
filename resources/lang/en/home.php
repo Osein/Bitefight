@@ -38,4 +38,6 @@ return [
 	'highscore_clan_highscore' => 'Clan - Highscore',
 	'highscore_show_limit' => '(Maximum of 5 options possible)',
 
+    'news_empty' => 'No news from the elders of the night.',
+
 ];

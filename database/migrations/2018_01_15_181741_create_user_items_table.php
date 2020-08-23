@@ -17,9 +17,9 @@ class CreateUserItemsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('item_id');
-            $table->unsignedTinyInteger('volume');
-            $table->boolean('equipped');
-            $table->unsignedInteger('expire');
+            $table->unsignedTinyInteger('volume')->default(1);
+            $table->boolean('equipped')->default(0);
+            $table->unsignedInteger('expire')->default(0);
 
             $table->index('user_id');
             $table->index(['user_id', 'item_id']);

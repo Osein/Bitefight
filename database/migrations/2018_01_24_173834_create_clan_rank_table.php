@@ -17,15 +17,15 @@ class CreateClanRankTable extends Migration
             $table->increments('id');
 			$table->unsignedInteger('clan_id');
 			$table->string('rank_name', 32);
-			$table->boolean('read_message');
-			$table->boolean('write_message');
-			$table->boolean('read_clan_message');
-			$table->boolean('add_members');
-			$table->boolean('delete_message');
-			$table->boolean('send_clan_message');
-			$table->boolean('spend_gold');
-			$table->boolean('war_minister');
-			$table->boolean('vocalise_ritual');
+			$table->boolean('read_message')->default(0);
+			$table->boolean('write_message')->default(0);
+			$table->boolean('read_clan_message')->default(0);
+			$table->boolean('add_members')->default(0);
+			$table->boolean('delete_message')->default(0);
+			$table->boolean('send_clan_message')->default(0);
+			$table->boolean('spend_gold')->default(0);
+			$table->boolean('war_minister')->default(0);
+			$table->boolean('vocalise_ritual')->default(0);
         });
 
         \Illuminate\Support\Facades\DB::table('clan_rank')->insert([

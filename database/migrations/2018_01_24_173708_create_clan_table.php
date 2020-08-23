@@ -15,17 +15,17 @@ class CreateClanTable extends Migration
     {
         Schema::create('clan', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedTinyInteger('race');
-            $table->string('name', 32);
-            $table->string('tag', 32);
-            $table->unsignedTinyInteger('logo_bg');
-            $table->unsignedTinyInteger('logo_sym');
-            $table->string('website');
-            $table->unsignedInteger('website_set_by');
-            $table->unsignedInteger('website_counter');
-            $table->unsignedTinyInteger('capital');
-			$table->unsignedTinyInteger('stufe');
-			$table->unsignedInteger('found_date');
+            $table->unsignedTinyInteger('race')->default(1);
+            $table->string('name', 32)->default('');
+            $table->string('tag', 32)->default('');
+            $table->unsignedTinyInteger('logo_bg')->default(1);
+            $table->unsignedTinyInteger('logo_sym')->default(1);
+            $table->string('website')->default('');
+            $table->unsignedInteger('website_set_by')->default(0);
+            $table->unsignedInteger('website_counter')->default(0);
+            $table->unsignedInteger('capital')->default(0);
+			$table->unsignedTinyInteger('stufe')->default(0);
+			$table->unsignedInteger('found_date')->default(0);
         });
     }
 

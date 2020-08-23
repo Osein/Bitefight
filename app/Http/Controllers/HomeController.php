@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Request;
 
 class HomeController extends Controller
 {
-    public function getIndex()
+	public function getIndex()
 	{
 		return view('home.index');
 	}

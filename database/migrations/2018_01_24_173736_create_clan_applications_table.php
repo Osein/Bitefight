@@ -17,7 +17,7 @@ class CreateClanApplicationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('clan_id');
             $table->unsignedInteger('user_id');
-            $table->string('note', 2000);
+            $table->string('note', 2000)->default('');
             $table->unsignedInteger('application_time');
         });
     }

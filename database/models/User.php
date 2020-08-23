@@ -5,6 +5,7 @@ namespace Database\Models;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int id
@@ -64,6 +65,8 @@ class User extends Authenticatable
 	use Notifiable;
 
 	public $timestamps = false;
+
+	protected $table = 'users';
 
 	protected $guarded = ['id'];
 
@@ -139,23 +142,23 @@ class User extends Authenticatable
 		return $this;
 	}
 
-	/**
-	 * @return int
-	 */
-	public function getRace(): int
-	{
-		return $this->race;
-	}
+    /**
+     * @return int
+     */
+    public function getRace(): int
+    {
+        return $this->race;
+    }
 
-	/**
-	 * @param int $race
-	 * @return User
-	 */
-	public function setRace(int $race): User
-	{
-		$this->race = $race;
-		return $this;
-	}
+    /**
+     * @param int $race
+     * @return User
+     */
+    public function setRace(int $race): User
+    {
+        $this->race = $race;
+        return $this;
+    }
 
 	/**
 	 * @return int
@@ -949,41 +952,21 @@ class User extends Authenticatable
 		return $this;
 	}
 
-	/**
-	 * Returns user level
-	 * @param $exp
-	 * @return int
-	 */
-    public static function getLevel($exp): int
+	public function processExpIfLevelUp($exp)
 	{
-		return floor( sqrt( $exp / 5 ) ) + 1;
+		$oldLevel = getLevel($this->exp);
+		$newLevel = getLevel($this->exp + $exp);
+
+		$this->exp += $exp;
+
+		if($newLevel > $oldLevel) {
+			$message = new Message;
+			$message->setReceiverId($this->getId());
+			$message->setSubject('You have levelled up');
+			$message->setMessage('Congratulations! You have gained enough experience to reach the next character level. Your new level: '.$newLevel);
+			$message->save();
+			$this->battle_value += 4;
+		}
 	}
 
-	/**
-	 * Returns required exp to level up
-	 * @param $level
-	 * @return int
-	 */
-	public static function getExpNeeded($level): int
-	{
-		return ((pow( $level, 2 ) * 5) + (5 * floor($level / 5)));
-	}
-
-	/**
-	 * Returns previous level's needed exp
-	 * @param $level
-	 * @return int
-	 */
-	public static function getPreviousExpNeeded($level): int
-	{
-		return self::getExpNeeded($level - 1);
-	}
-
-	/**
-	 * @param int $race
-	 * @return string
-	 */
-	public static function getRaceString($race = 1) {
-		return $race === 1 ? __('general.vampire') : __('general.werewolf');
-	}
 }

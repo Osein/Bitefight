@@ -26,7 +26,8 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    // If there is no env this is not an installed script, say local
+    'env' => env('APP_ENV', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -104,7 +105,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY', 'Idgz1PE3zO9iNc0E3oeH3CHDPX9MzZe3'),
 
     'cipher' => 'AES-256-CBC',
 

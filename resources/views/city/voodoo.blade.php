@@ -31,11 +31,10 @@
 							<td class="no-bg" valign="top">
 								<h3>How do I benefit in becoming a Shadow-Lord?</h3>
 								<p>
-									You get nothing for now LOLLLLL
 									<!--- No advertisements (no banners, popups etc.)<br>-->
-									<!--- Per activation, you receive a whole day`s pay in Gold<br>-->
-									<!--- Doubled action point regeneration rate<br>-->
-									<!--- Maximum number of action points +50%<br>-->
+									Per activation, you receive a whole day`s pay in Gold<br>
+									Doubled action point regeneration rate<br>
+									Maximum number of action points +50%<br>
 									<!--- Hunt statistics<br>-->
 									<!--- Advanced opponent search<br>-->
 									<!--- Individual character pictures<br>-->

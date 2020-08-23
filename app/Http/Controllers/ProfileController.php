@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\InvalidRequestException;
+use Database\Models\Clan;
 use Database\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,11 +28,24 @@ class ProfileController extends Controller
 		$user = Auth::user();
 
 		$hsRow = collect(DB::select('SELECT (SELECT COUNT(1) FROM users WHERE s_booty > ?) AS greater,
-                (SELECT COUNT(1) FROM users WHERE id < ? AND s_booty = ?) AS equal', [
+				(SELECT COUNT(1) FROM users WHERE id < ? AND s_booty = ?) AS equal', [
 			$user->getSBooty(), $user->getId(), $user->getSBooty()
 		]))->first();
 
 		$highscorePosition = $hsRow->greater + $hsRow->equal + 1;
+
+		$clanHighscorePosition = 0;
+
+		if($user->getClanId() > 0) {
+			$clanBooty = User::where('clan_id', $user->getClanId())->sum('s_booty');
+
+			$hsRow = collect(DB::select('SELECT (SELECT count(*) FROM clan LEFT JOIN users ON users.clan_id = clan.id HAVING SUM(users.s_booty) > ?) AS greater,
+				(SELECT count(1) FROM (SELECT SUM(users.s_booty) AS total_booty FROM clan LEFT JOIN users ON users.clan_id = clan.id WHERE clan.id < ? GROUP BY clan.id) r WHERE r.total_booty = ?) AS equal', [
+				$clanBooty, $user->getClanId(), $clanBooty
+			]))->first();
+
+			$clanHighscorePosition = $hsRow->greater + $hsRow->equal + 1;
+		}
 
 		$user_active_items = array();
 
@@ -132,59 +146,59 @@ class ProfileController extends Controller
 
 		foreach($talents as $t) {
 			if($t->attack > 0) {
-				$fm_attack_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->attack);
+				$fm_attack_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->attack);
 				$fm_attack_total += $t->attack;
 			}
 			if($t->str > 0) {
-				$stat_str_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->str);
+				$stat_str_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->str);
 				$stat_str_total += $t->str;
 			}
 			if($t->def > 0) {
-				$stat_def_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->def);
+				$stat_def_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->def);
 				$stat_def_total += $t->def;
 			}
 			if($t->dex > 0) {
-				$stat_dex_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->dex);
+				$stat_dex_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->dex);
 				$stat_dex_total += $t->dex;
 			}
 			if($t->end > 0) {
-				$stat_end_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->end);
+				$stat_end_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->end);
 				$stat_end_total += $t->end;
 			}
 			if($t->cha > 0) {
-				$stat_cha_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->cha);
+				$stat_cha_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->cha);
 				$stat_cha_total += $t->cha;
 			}
 			if($t->hpbonus > 0) {
-				$stat_hp_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->hpbonus);
+				$stat_hp_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->hpbonus);
 				$stat_hp_total += $t->hpbonus;
 			}
 			if($t->regen > 0) {
-				$fm_regen_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->regen);
+				$fm_regen_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->regen);
 				$fm_regen_total += $t->regen;
 			}
 			if($t->sbscdmg > 0) {
-				$fm_bsc_dmg_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->sbscdmg);
+				$fm_bsc_dmg_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->sbscdmg);
 				$fm_bsc_dmg_total += $t->sbscdmg;
 			}
 			if($t->sbnsdmg > 0) {
-				$fm_bns_dmg_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->sbnsdmg);
+				$fm_bns_dmg_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->sbnsdmg);
 				$fm_bns_dmg_total += $t->sbnsdmg;
 			}
 			if($t->sbschc > 0) {
-				$fm_bsc_hc_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->sbschc);
+				$fm_bsc_hc_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->sbschc);
 				$fm_bsc_hc_total += $t->sbschc;
 			}
 			if($t->sbnshc > 0) {
-				$fm_bns_hc_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->sbnshc);
+				$fm_bns_hc_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->sbnshc);
 				$fm_bns_hc_total += $t->sbnshc;
 			}
 			if($t->sbsctlnt > 0) {
-				$fm_bsc_tlnt_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->sbsctlnt);
+				$fm_bsc_tlnt_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->sbsctlnt);
 				$fm_bsc_tlnt_total += $t->sbsctlnt;
 			}
 			if($t->sbnstlnt > 0) {
-				$fm_bns_tlnt_tooltip['detail'][] = array(__('talent_id_'.$t->id.'_name'), $t->sbnstlnt);
+				$fm_bns_tlnt_tooltip['detail'][] = array(__('talents.talent_id_'.$t->id.'_name'), $t->sbnstlnt);
 				$fm_bns_tlnt_total += $t->sbnstlnt;
 			}
 		}
@@ -307,16 +321,17 @@ class ProfileController extends Controller
 		$end_red_long = $user->getEnd() / $max_stat * 300;
 		$cha_red_long = $user->getCha() / $max_stat * 300;
 
-		$userLevel = User::getLevel($user->getExp());
+		$userLevel = getLevel($user->getExp());
 
 		$user_tlnt_lvl_sqrt = floor(sqrt($userLevel));
 
-		$previousLevelExp = User::getPreviousExpNeeded($userLevel);
-		$nextLevelExp = User::getExpNeeded($userLevel);
+		$previousLevelExp = getPreviousExpNeeded($userLevel);
+		$nextLevelExp = getExpNeeded($userLevel);
 		$levelExpDiff = $nextLevelExp - $previousLevelExp;
 
 		return view('profile.index', [
 			'highscore_position' => $highscorePosition,
+			'clan_highscore_position' => $clanHighscorePosition,
 
 			'str_total_long' => $str_total_long,
 			'def_total_long' => $def_total_long,
@@ -434,6 +449,162 @@ class ProfileController extends Controller
 		user()->setRace($race);
 
 		return redirect(url('/profile/index'));
+	}
+
+	public function postTrainingUpdate()
+	{
+		$stat = Input::get('stat_type');
+
+		if(!in_array($stat, ['str', 'def', 'dex', 'end', 'cha'])) {
+			throw new InvalidRequestException();
+		}
+
+		$goldCost = getSkillCost(user()->{$stat});
+
+		if(\user()->getGold() < $goldCost) {
+			throw new InvalidRequestException();
+		}
+
+		\user()->setGold(\user()->getGold() - $goldCost);
+		\user()->{$stat}++;
+
+		return redirect(url('/profile/index#tabs-2'));
+	}
+
+	public function getTalents()
+	{
+		$filter = Input::get('filter', 2);
+
+		$talentsResult = DB::table('talents')
+			->select('user_talents.user_id', 'talents.*')
+			->leftJoin('user_talents', function($join) {
+				$join->on('user_talents.talent_id', '=', 'talents.id');
+				$join->on('user_talents.user_id', '=', DB::raw(\user()->getId()));
+			})
+			->orderBy('talents.id', 'asc');
+
+		if($filter == 1) {
+			$talentsResult = $talentsResult->whereNotNull('user_talents.user_id');
+		} elseif($filter == 2) {
+			$talentsResult = $talentsResult->whereNull('user_talents.user_id')
+				->where('talents.level', '<', getLevel(\user()->getExp()));
+		}
+
+		$talentsResult = $talentsResult->get();
+		$talents = array();
+
+		foreach ($talentsResult as $talent) {
+			if($talent->pair) {
+				$talents[$talent->pair][] = $talent;
+				continue;
+			}
+
+			$talents[$talent->id] = array($talent);
+		}
+
+		$userTalentCount = DB::table('user_talents')->where('user_id', \user()->getId())->count();
+
+		$user_tlnt_lvl_sqrt = floor(sqrt(getLevel(\user()->getExp())));
+
+		return view('profile.talents', [
+			'max_points' => $user_tlnt_lvl_sqrt * 2 - 1,
+			'next_talent_level' => pow($user_tlnt_lvl_sqrt + 1, 2),
+			'available' => \user()->getTalentPoints() - $userTalentCount,
+			'new_talent_price' => pow(\user()->getTalentPoints(), 2.5) * 100,
+			'talent_reset_price' => floor(pow(14, \user()->getTalentResets()) * 33),
+			'used_points' => $userTalentCount,
+			'talents' => $talents,
+			'filter' => $filter,
+		]);
+	}
+
+	public function postTalentsForm()
+	{
+		$buyPoint = Input::get('buypoint');
+		$resetPointGold = Input::get('resetpointg');
+		$resetPointHellstone = Input::get('resetpoinths');
+		$filter = Input::get('filter');
+
+		if(!empty($buyPoint)) {
+			$user_tlnt_lvl_sqrt = floor(sqrt(getLevel(\user()->getExp())));
+			$max_points = $user_tlnt_lvl_sqrt * 2 - 1;
+
+			$new_talent_price = pow(\user()->getTalentPoints(), 2.5) * 100;
+
+			if(\user()->getTalentPoints() < $max_points && \user()->getGold() >= $new_talent_price) {
+				\user()->setGold(\user()->getGold() - $new_talent_price);
+				\user()->setTalentPoints(\user()->getTalentPoints() + 1);
+			}
+		}
+
+		if(!empty($resetPointGold)) {
+			$userTalentCount = DB::table('user_talents')->where('user_id', \user()->getId())->count();
+			$talent_reset_price = floor(pow(14, \user()->getTalentResets()) * 33);
+
+			if($userTalentCount > 1 && \user()->getGold() >= $talent_reset_price) {
+				\user()->setGold(\user()->getGold() - $talent_reset_price);
+				\user()->setTalentResets(\user()->getTalentResets() + 1);
+				\user()->setBattleValue(\user()->getBattleValue() - ($userTalentCount - 1) * 12);
+				DB::table('user_talent')->where('user_id', \user()->getId())
+					->where('talent_id', '!=', 1)->delete();
+			}
+		}
+
+		if(!empty($resetPointHellstone)) {
+			$userTalentCount = DB::table('user_talents')->where('user_id', \user()->getId())->count();
+
+			if($userTalentCount > 1 && \user()->getHellstone() >= 19) {
+				\user()->setHellstone(\user()->getHellstone() - 19);
+				\user()->setTalentResets(1);
+				\user()->setBattleValue(\user()->getBattleValue() - ($userTalentCount - 1) * 12);
+				DB::table('user_talent')->where('user_id', \user()->getId())
+					->where('talent_id', '!=', 1)->delete();
+			}
+		}
+
+		return redirect(urlGetParams('/profile/talents', ['filter' => $filter]));
+	}
+
+	public function postTalentsUse()
+	{
+		$talent_id = Input::get('talent_id');
+		$filter = Input::get('filter');
+
+		if(empty($talent_id) || $talent_id < 2) {
+			throw new InvalidRequestException();
+		}
+
+		$talentCount = DB::table('user_talents')->where('user_id', \user()->getId())->count();
+
+		if($talentCount >= \user()->getTalentPoints()) {
+			throw new InvalidRequestException();
+		}
+
+		DB::table('user_talents')->insert([
+			'user_id' => \user()->getId(),
+			'talent_id' => $talent_id
+		]);
+
+		\user()->setBattleValue(\user()->getBattleValue() + 12);
+
+		return redirect(urlGetParams('/profile/talents', ['filter' => $filter]));
+	}
+
+	public function postTalentResetSingle()
+	{
+		$talent_id = Input::get('talent_id');
+		$filter = Input::get('filter');
+
+		if(empty($talent_id) || $talent_id < 2 || \user()->getHellstone() < 2) {
+			throw new InvalidRequestException();
+		}
+
+		DB::table('user_talents')->where('user_id', \user()->getId())->where('talent_id', $talent_id)->delete();
+
+		\user()->setHellstone(\user()->getHellstone() - 2);
+		\user()->setBattleValue(\user()->getBattleValue() - 12);
+
+		return redirect(urlGetParams('/profile/talents', ['filter' => $filter]));
 	}
 
 }

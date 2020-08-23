@@ -6,19 +6,128 @@
  * Time: 9:35 PM
  */
 
-if (! function_exists('user_race_logo_small')) {
-	/**
-	 * @return \Illuminate\Support\HtmlString
-	 */
-	function user_race_logo_small()
-	{
-		$race = user() ? user()->getRace() : env('DEFAULT_SERVER_RACE');
+/**
+ * @param \Database\Models\User $user
+ * @return string
+ */
+function getGraveyardRank($user) {
+    $level = getLevel($user->getExp());
 
-		return new \Illuminate\Support\HtmlString(
-				'<img src="'.
-				asset('img/symbols/race'.$race.'small.gif').'" alt="'.
-				($race == 1 ? __('general.vampire') : __('general.werewolf')).'" />');
+    if ($level < 10) {
+        return __('city.city_graveyard_gravedigger');
+    } elseif ($level < 25) {
+        return __('city.city_graveyard_graveyard_gardener');
+    } elseif ($level < 55) {
+        return __('city.city_graveyard_corpse_predator');
+    } elseif ($level < 105) {
+        return __('city.city_graveyard_graveyard_guard');
+    } elseif ($level < 195) {
+        return __('city.city_graveyard_employee_manager');
+    } elseif ($level < 335) {
+        return __('city.city_graveyard_tombstone_designer');
+    } elseif ($level < 511) {
+        return __('city.city_graveyard_crypt_designer');
+    } elseif ($level < 1024) {
+        return __('city.city_graveyard_graveyard_manager');
+    } else {
+        return __('city.city_graveyard_graveyard_master');
+    }
+}
+
+/**
+ * @param \Database\Models\User $user
+ * @return int
+ */
+function getBonusGraveyardGold($user)
+{
+    $userTalentStr = \Database\Models\UserTalent::leftJoin('talents', 'talents.id', '=', 'user_talents.talent_id')
+        ->select(\Illuminate\Support\Facades\DB::raw('SUM(talents.str) as totalTalentStr'))
+        ->where('user_talents.user_id', $user->getId())
+        ->first();
+
+    $userTotalStr = $user->getStr() + $userTalentStr->totalTalentStr;
+
+    $bonusWithStr = $userTotalStr * 0.5;
+    $level = getLevel($user->getExp());
+
+    if ($level > 19) {
+        $bonusWithStr = $userTotalStr * 2;
+    } elseif ($level > 14) {
+        $bonusWithStr = $userTotalStr * 1.5;
+    } elseif ($level > 4) {
+        $bonusWithStr = $userTotalStr * 1;
+    }
+
+    $bonusWithLevel = ($level * (0.1035 * $level));
+
+    return ceil($bonusWithLevel + $bonusWithStr);
+}
+
+function highscoreShowToName($val) {
+	if($val == 'level') {return __('general.level');}
+	elseif($val == 'raid') {return __('general.booty');}
+	elseif($val == 'fightvalue') {return __('general.battle_value');}
+	elseif($val == 'fights') {return __('general.fights');}
+	elseif($val == 'fight1') {return __('general.victories');}
+	elseif($val == 'fight2') {return __('general.defeats');}
+	elseif($val == 'fight0') {return __('general.draw');}
+	elseif($val == 'lanter') {return __('general.lanterns');}
+	elseif($val == 'goldwin') {return __('general.looted_gold');}
+	elseif($val == 'goldlost') {return __('general.lost_gold');}
+	elseif($val == 'hits1') {return __('general.damage_caused');}
+	elseif($val == 'hits2') {return __('general.hit_points_lost');}
+	elseif($val == 'trophypoints') {return __('general.trophy_points');}
+	elseif($val == 'castle') {return __('general.level');}
+	elseif($val == 'warraid') {return __('general.war_booty');}
+	elseif($val == 'members') {return __('general.members');}
+	elseif($val == 'ppm') {return __('general.average_booty');}
+	elseif($val == 'seals') {return __('general.seals');}
+	elseif($val == 'gatesopen') {return __('general.gate_openings');}
+	elseif($val == 'lastgateopen') {return __('general.last_gate_opening');}
+	else {return __('general.henchmen_power');}
+}
+
+function isUserPremiumActivated($user = null)
+{
+	/**
+	 * @var \Database\Models\User $user
+	 */
+	if(!$user) {
+		if(!user()) return false;
+		else return user()->getApMax() > 130;
+	} else {
+		return $user->getApMax() > 130;
 	}
+
+}
+
+function getPreviousExpNeeded($level): int
+{
+	return getExpNeeded($level - 1);
+}
+
+function getRaceString($race = 1) {
+	return $race === 1 ? __('general.vampire') : __('general.werewolf');
+}
+
+function getExpNeeded($level): int
+{
+	return ((pow( $level, 2 ) * 5) + (5 * floor($level / 5)));
+}
+
+function getLevel($exp): int
+{
+	return floor( sqrt( $exp / 5 ) ) + 1;
+}
+
+function user_race_logo_small()
+{
+	$race = user() ? user()->getRace() : env('DEFAULT_SERVER_RACE');
+
+	return new \Illuminate\Support\HtmlString(
+		'<img src="'.
+		asset('img/symbols/race'.$race.'small.gif').'" alt="'.
+		getRaceString($race).'" />');
 }
 
 function gold_image_tag() {
@@ -49,19 +158,10 @@ function battle_value_image_tag() {
 	return new \Illuminate\Support\HtmlString('<img src="'.asset('img/symbols/fightvalue.gif').'"  alt="'.__('general.menu_infobar_battle_value').'" align="absmiddle" border="0" />');
 }
 
-if(! function_exists('user')) {
-	/**
-	 * @return \Database\Models\User|null
-	 */
-	function user() {
-		return \Illuminate\Support\Facades\Auth::user();
-	}
+function user() {
+	return \Illuminate\Support\Facades\Auth::user();
 }
 
-/**
- * @param int $number
- * @return string
- */
 function prettyNumber($number) {
 	return number_format($number, 0, ',', '.');
 }
@@ -107,7 +207,7 @@ function printProfileItemRow($i) {
 			<?php elseif(!$i->equipped && $i->expire <= time()): ?>
 				<div class="btn-left left">
 					<div class="btn-right">
-						<form method="post" action="<?php echo url('user/profile/item/equip/'.$i->id); ?>">
+						<form method="post" action="<?php echo url('/profile/item/equip/'.$i->id); ?>">
 							<?php echo csrf_field(); ?>
 							<button class="btn">Use this item</button>
 						</form>
@@ -353,4 +453,206 @@ function getItemPropertyArray($obj) {
 	}
 
 	return $properties;
+}
+
+function urlGetParams($url, $params=array()) {
+	$url = url($url);
+
+	foreach ($params as $key => $val) {
+		if(empty($val) || ($key == 'premiumfilter' && $val == 'all')) {
+			unset($params[$key]);
+		}
+	}
+
+	if(isset($params['page']) && $params['page'] == 1) {
+		unset($params['page']);
+	}
+
+	if(empty($params)) return $url;
+
+	if(strpos($url,'?') === false && !empty($params)) $url .= '?';
+
+	foreach($params as $key => $value) {
+		if(substr($url, -1) != '?') {
+			$url .= '&';
+		}
+
+		$url .= $key.'='.$value;
+	}
+
+	return $url;
+}
+
+function parseBBCodes($text) {
+
+	preg_match_all('~!S:"(.*?)"!~s', $text, $users, PREG_SET_ORDER);
+
+	foreach($users as $user) {
+		$userDb = ORM::for_table('user')
+			->selectExpr('id')
+			->where('name', $user[1])
+			->find_one();
+
+		if($userDb) {
+			$text = str_replace('S:"'.$user[1].'"', 'S:'.$user[1].':'.$userDb->id, $text);
+		} else {
+			$text = str_replace('!S:"'.$user[1].'"!', $user[1], $text);
+		}
+	}
+
+	preg_match_all('~!N:"(.*?)"!~s', $text, $clannames, PREG_SET_ORDER);
+
+	foreach($clannames as $clanname) {
+		$clanDb = ORM::for_table('clan')
+			->selectExpr('id')
+			->where('name', $clanname[1])
+			->find_one();
+
+		if($clanDb) {
+			$text = str_replace('N:"'.$clanname[1].'"', 'N:'.$clanname[1].':'.$clanDb->id, $text);
+		} else {
+			$text = str_replace('!N:"'.$clanname[1].'"!', $clanname[1], $text);
+		}
+	}
+
+	preg_match_all('~!A:"(.*?)"!~s', $text, $clantags, PREG_SET_ORDER);
+
+	foreach($clantags as $clantag) {
+		$clanDb = ORM::for_table('clan')
+			->selectExpr('id')
+			->where('tag', $clantag[1])
+			->find_one();
+
+		if($clanDb) {
+			$text = str_replace('A:"'.$clantag[1].'"', 'A:'.$clantag[1].':'.$clanDb->id, $text);
+		} else {
+			$text = str_replace('!A:"'.$clantag[1].'"!', $clantag[1], $text);
+		}
+	}
+
+	$find = array(
+		'~\[b\](.*?)\[/b\]~s',
+		'~\[i\](.*?)\[/i\]~s',
+		'~\[f s=(.*?)\](.*?)\[/f\]~s',
+		'~\[f c=(.*?)\](.*?)\[/f\]~s',
+		'~\[f f="(.*?)"\](.*?)\[/f\]~s',
+		'~!S:(.*?):(.*?)!~s',
+		'~!N:(.*?):(.*?)!~s',
+		'~!A:(.*?):(.*?)!~s',
+	);
+
+	$replace = array(
+		'<b>$1</b>',
+		'<i>$1</i>',
+		'<span style="font-size:$1px;">$2</span>',
+		'<span style="color:$1;">$2</span>',
+		'<font face="$1">$2</font>',
+		'<a href="'.url('profile/player/$2').'">$1</a>',
+		'<a href="'.url('clan/view/$2').'">$1</a>',
+		'<a href="'.url('clan/view/$2').'">$1</a>'
+	);
+
+	return str_replace(PHP_EOL, '<br>', preg_replace($find,$replace,e($text)));
+}
+
+function getClanStatusString($last_activity)
+{
+	return floor((time() - $last_activity) / 3600).'d '.gmdate("H:i:s", time() - $last_activity);
+}
+
+function getNameChangeCost($count, $exp) {
+	return pow(2, $count) * getLevel($exp) * 4800;
+}
+
+function getClanHideoutCost($stufe) {
+	if($stufe == 1) {return 3;} elseif($stufe == 2) {return 296;}
+	elseif($stufe == 3) {return 4130;} elseif($stufe == 4) {return 26796;}
+	elseif($stufe == 5) {return 114283;} elseif($stufe == 6) {return 375818;}
+	elseif($stufe == 7) {return 1018158;} elseif($stufe == 8) {return 2425286;}
+	elseif($stufe == 9) {return 5215001;} elseif($stufe == 10) {return 10343751;}
+	elseif($stufe == 11) {return 19218989;} elseif($stufe == 12) {return 33834222;}
+	elseif($stufe == 13) {return 56925897;} elseif($stufe == 14) {return 92153181;}
+	elseif($stufe == 15) {return 144301645;} elseif($stufe == 16) {return 219511858;}
+	elseif($stufe == 17) {return 325533800;} else {return 472008025;}
+}
+
+function getHideoutCost($type, $level) {
+	if($type=='domi') {return pow(4, $level);}
+	elseif($type=='wall') {return pow(10, $level);}
+	elseif($type=='path') {return pow(9, $level);}
+	else {return pow(8, $level);}
+}
+
+function getWallEffect($level) {
+	if(!$level) return 0;
+	if($level == 1) return -1;
+	return ($level - 1) * -3;
+}
+
+function getLandEffect($level) {
+	if(!$level) return 0;
+	if($level == 1 || $level == 2) return $level * 2;
+	if($level < 6) return ($level - 1) * 2;
+	return 12;
+}
+
+function getItemModelIdFromModel($model) {
+	$model_array = array(
+		'weapons' => 1,
+		'potions' => 2,
+		'helmets' => 3,
+		'armour' => 4,
+		'jewellery' => 5,
+		'gloves' => 6,
+		'boots' => 7,
+		'shields' => 8
+	);
+
+	return isset($model_array[$model])?$model_array[$model]:$model_array['weapons'];
+}
+
+function getMessageSenderNameFromMessage($msg) {
+	if($msg->sender_id < 1) {
+		switch($msg->sender_id) {
+			default:
+				return 'System';
+				break;
+			case -2:
+				return 'Graveyard employee';
+				break;
+		}
+	} else {
+		if(empty($msg->name)) {
+			return 'Deleted user';
+		} else {
+			return $msg->name;
+		}
+	}
+}
+
+function getHumanHuntNameFromNo($huntNo)
+{
+	if($huntNo == 1) {
+		return 'Farm';
+	} elseif($huntNo == 2) {
+		return 'Village';
+	} elseif($huntNo == 3) {
+		return 'Small Town';
+	} elseif($huntNo == 4) {
+		return 'City';
+	} else {
+		return 'Metropolis';
+	}
+}
+
+function getUserStatusColor($last_activity) {
+	$delta = time() - $last_activity;
+
+	if($delta < 300) {
+		return 'lime';
+	} elseif($delta < 900) {
+		return 'green';
+	} else {
+		return 'red';
+	}
 }

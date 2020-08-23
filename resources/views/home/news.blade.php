@@ -13,29 +13,33 @@
 				<div class="table-wrap">
 					<table cellpadding="2" cellspacing="10" border="0" width="100%">
 						<tbody>
-						@foreach($news as $new)
-						<tr id="short_news_{{$new->id}}" class="news_{{$new->id}}">
-							<td width="100%" style="cursor: pointer;">
-								<b style="font-size:1.2em;">{{$new->title}}</b>
-								<span style="float: right;">
-                                    <b>{{date('d.m.Y H:i', $new->added_time)}}</b>&nbsp;&nbsp;<img border="0" src="{{asset('img/symbols/expand.png')}}">
-                                </span>
-							</td>
-						</tr>
-						<tr id="full_news_{{$new->id}}" class="news_{{$new->id}} hidden">
-							<td width="100%" style="cursor: pointer;">
-                                <span>
-                                    <b style="font-size:1.2em;">{{$new->title}}</b>
-                                    <span style="float: right;">
-                                        <b>{{date('d.m.Y H:i', $new->added_time)}}</b>&nbsp;&nbsp;<img border="0" src="{{asset('img/symbols/collapse.png')}}">
-                                    </span>
-                                </span>
-								<br>
-								<hr>
-								{{$new->message}}
-							</td>
-						</tr>
-						@endforeach
+						@forelse($news as $new)
+							<tr id="short_news_{{$new->id}}" class="news_{{$new->id}}">
+								<td width="100%" style="cursor: pointer;">
+									<b style="font-size:1.2em;">{{$new->title}}</b>
+									<span style="float: right;">
+										<b>{{date('d.m.Y H:i', $new->added_time)}}</b>&nbsp;&nbsp;<img border="0" src="{{asset('img/symbols/expand.png')}}">
+									</span>
+								</td>
+							</tr>
+							<tr id="full_news_{{$new->id}}" class="news_{{$new->id}} hidden">
+								<td width="100%" style="cursor: pointer;">
+									<span>
+										<b style="font-size:1.2em;">{{$new->title}}</b>
+										<span style="float: right;">
+											<b>{{date('d.m.Y H:i', $new->added_time)}}</b>&nbsp;&nbsp;<img border="0" src="{{asset('img/symbols/collapse.png')}}">
+										</span>
+									</span>
+									<br>
+									<hr>
+									{{$new->message}}
+								</td>
+							</tr>
+						@empty
+							<tr>
+								<td>{{__('home.news_empty')}}</td>
+							</tr>
+						@endforelse
 						</tbody>
 					</table>
 				</div>

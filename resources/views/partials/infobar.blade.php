@@ -13,7 +13,7 @@
 				{{prettyNumber(user()->getFragment())}}&nbsp;{{fragment_image_tag()}}&nbsp;&nbsp;
 				{{prettyNumber(floor(user()->getApNow()))}}&nbsp;/&nbsp;{{prettyNumber(user()->getApMax())}}&nbsp;{{action_point_image_tag()}}&nbsp;&nbsp;
 				{{prettyNumber(floor(user()->getHpNow()))}}&nbsp;/&nbsp;{{prettyNumber(user()->getHpMax())}}&nbsp;{{health_image_tag()}}&nbsp;&nbsp;
-				{{level_image_tag()}}&nbsp;{{prettyNumber(\Database\Models\User::getLevel(user()->getExp()))}}&nbsp;&nbsp;
+				{{level_image_tag()}}&nbsp;{{prettyNumber(getLevel(user()->getExp()))}}&nbsp;&nbsp;
 				{{battle_value_image_tag()}}&nbsp;{{prettyNumber(user()->getBattleValue())}}
 			</div>
 		</div>
