@@ -1,21 +1,40 @@
 <p align="center"><img src="https://github.com/Osein/bitefight/blob/master/public/img/home_splash.jpg?raw=true" alt="Bitefight Private Server"></p>
 
-<p align="center">
-    <img src="https://img.shields.io/travis/Osein/bitefight.svg?style=for-the-badge"/>
-    <img src="https://img.shields.io/badge/version-0.0.2-orange.svg?style=for-the-badge"/>
-    <a href="https://discord.gg/rg7Dbte"><img src="https://img.shields.io/discord/401039368678277131.svg?style=for-the-badge" alt="chat on Discord"></a>
-</p>
+# Bitefight Clone
 
-# Bitefight Clone Script (In Progress)
-* When the download is complete, just extract the folder. 
-* Run on linux :
-* `cd BITEFIGHT && composer install && npm install && npm run dev`
-* Run on Windows :
-* `cd BITEFIGHT & composer install & npm install & npm run dev`
-* After that, you just have to setup the .env file with your credentials(cp .env.example .env)
-* Then
-* `php artisan make:migration --seed`
+[![Build Status](https://img.shields.io/travis/Osein/Bitefight/master)](https://travis-ci.org/Osein/Bitefight)
 
-## Testing
+Dillinger is a cloud-enabled, mobile-ready, offline-storage, AngularJS powered HTML5 Markdown editor.
 
-You can test script on: http://osein.tk
+  - Type some Markdown on the left
+  - See HTML in the right
+  - Magic
+  - 
+### Installation
+
+Bitefight clone runs under [Laravel](https://laravel.org/) v8.
+It need php >= 7.3 to run correctly.
+
+Install the website using those commands :
+
+```sh
+$ composer install
+$ npm install
+$ npm run dev
+$ php artisan migrate --seed
+$ php artisan serve
+```
+
+For production environments...
+
+```sh
+$ composer install
+$ npm install
+$ npm run prod
+$ php artisan migrate --seed
+```
+
+### Todos
+
+ - Update controller to L8
+ - Update Models and relationships
