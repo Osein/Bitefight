@@ -53,6 +53,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'agb' => ['required'],
+            'race' => ['required', 'between:1,2']
         ]);
     }
 
@@ -64,6 +66,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $initialStr = env('INITIAL_STR');
+		$initialDef = env('INITIAL_DEF');
+		$initialDex = env('INITIAL_DEX');
+		$initialEnd = env('INITIAL_END');
+		$initialCha = env('INITIAL_CHA');
+
+		$initialExp = env('STARTING_EXP');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
