@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Models\{User, UserTalent};
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,8 +53,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'agb' => ['required'],
-            'race' => ['required', 'between:1,2']
+            'race' => '1'
         ]);
     }
 
@@ -72,12 +71,14 @@ class RegisterController extends Controller
 		$initialEnd = env('INITIAL_END');
 		$initialCha = env('INITIAL_CHA');
 
-		$initialExp = env('STARTING_EXP');
-        return User::create([
+        $initialExp = env('STARTING_EXP');
+        $initialLevel = floor( sqrt( $initialExp / 5 ) ) + 1;
+
+        $user = User::create([
             'name' => $data['name'],
 			'email' => $data['email'],
-			'password' => bcrypt($data['pass']),
-			'race' => $data['race'],
+			'password' => Hash::make($data['password']),
+			'race' => '1',
 			'gender' => env('DEFAULT_GENDER'),
 			'image_type' => env('DEFAULT_IMAGE_LEVEL'),
 			'exp' => $initialExp,
@@ -119,5 +120,12 @@ class RegisterController extends Controller
 			'show_picture' => env('INITIAL_SHOW_USER_PICTURE'),
 			'premium' => env('INITIAL_PREMIUM_DAYS') > 0 ? time() + env('INITIAL_PREMIUM_DAYS') * 86400 : 0
         ]);
+
+        $talent = new Usertalent;
+        $talent->user_id = $user->id;
+        $talent->talent_id = 1;
+        $talent->save();
+
+        return $user;
     }
 }

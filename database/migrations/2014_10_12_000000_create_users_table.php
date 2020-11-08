@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->unsignedTinyInteger('race');
             $table->unsignedTinyInteger('gender');
             $table->unsignedTinyInteger('image_type');
-            $table->unsignedInteger('clan_id');
-            $table->unsignedInteger('clan_rank_id');
+            $table->unsignedInteger('clan_id')->nullable();
+            $table->unsignedInteger('clan_rank_id')->nullable();
             $table->unsignedInteger('clan_dtime')->default(0);
             $table->unsignedInteger('clan_btime')->default(0);
 			$table->unsignedInteger('exp');
